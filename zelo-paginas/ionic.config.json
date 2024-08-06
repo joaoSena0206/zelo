@@ -1,0 +1,7 @@
+{
+  "name": "zelo-paginas",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
