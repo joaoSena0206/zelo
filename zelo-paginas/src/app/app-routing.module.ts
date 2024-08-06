@@ -10,11 +10,7 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
-    path: 'cadastro-trabalhador',
-    loadChildren: () => import('./cadastro-trabalhador/cadastro-trabalhador.module').then( m => m.CadastroTrabalhadorPageModule)
   },
-
 ];
 
 @NgModule({
