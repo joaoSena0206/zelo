@@ -12,10 +12,14 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+
+    path: 'cadastro-cliente',
+    loadChildren: () => import('./cliente/cadastro-cliente/cadastro-cliente.module').then( m => m.CadastroClientePageModule)
+  },
+  {
     path: 'cadastro-trabalhador',
     loadChildren: () => import('./trabalhador/cadastro-trabalhador/cadastro-trabalhador.module').then( m => m.CadastroTrabalhadorPageModule)
-  },
-
+  }
 ];
 
 @NgModule({
