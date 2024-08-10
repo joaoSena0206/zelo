@@ -11,25 +11,40 @@ ion-content
     --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 100%);
 }
 
+
+.wrapper
+{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
 .content
 {
-    padding: 55px 31px;
+    padding: 0 31px;
     background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 100%);
-    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .content__seta
 {
     font-size: 30px;
     flex-shrink: 0;
+    margin-top: 31px;
+    margin-bottom: clamp(10px, 31px, 10px);
+    margin-left: 31px;
 }
 
 .content__h1
 {
     color: white;
     font-weight: 700;
-    font-size: 40px;
-    margin: 31px 0 20px 0;
+    font-size: clamp(1.5rem, 10vw, 2rem);
+    margin-bottom: 20px;
 }
 
 
@@ -91,6 +106,7 @@ ion-content
     font-weight: 700;
     align-self: center;
     margin: 18px 0;
+    width: clamp(200px, 300px, 80%);
 }
 
 .form__p
