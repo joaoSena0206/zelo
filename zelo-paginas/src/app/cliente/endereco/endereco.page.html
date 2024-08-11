@@ -12,19 +12,19 @@
                     <ion-input class="form__input" placeholder="Identificação"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input [maskito]="cepMask" [maskitoElement]="maskPredicate" class="form__input" placeholder="CEP"></ion-input>
+                    <ion-input (ionInput)="buscarCep($event.target.value)" [maskito]="cepMask" [maskitoElement]="maskPredicate" class="form__input" placeholder="CEP"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" disabled placeholder="Estado"></ion-input>
+                    <ion-input #estado class="form__input" disabled placeholder="Estado"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" disabled placeholder="Cidade"></ion-input>
+                    <ion-input #cidade class="form__input" disabled placeholder="Cidade"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" disabled placeholder="Bairro"></ion-input>
+                    <ion-input #bairro class="form__input" disabled placeholder="Bairro"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input type="text" disabled placeholder="Rua" class="form__input" ></ion-input>
+                    <ion-input #rua type="text" disabled placeholder="Rua" class="form__input" ></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
                     <ion-input class="form__input" placeholder="Número"></ion-input>
