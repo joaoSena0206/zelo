@@ -12,13 +12,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-
     path: 'cadastro-cliente',
     loadChildren: () => import('./cliente/cadastro-cliente/cadastro-cliente.module').then( m => m.CadastroClientePageModule)
-  },
-  {
-    path: 'cadastro-trabalhador',
-    loadChildren: () => import('./trabalhador/cadastro-trabalhador/cadastro-trabalhador.module').then( m => m.CadastroTrabalhadorPageModule)
   },
   {
     path: 'termos',
@@ -28,6 +23,11 @@ const routes: Routes = [
     path: 'login-cliente',
     loadChildren: () => import('./cliente/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
   },
+  {
+    path: 'endereco',
+    loadChildren: () => import('./cliente/endereco/endereco.module').then( m => m.EnderecoPageModule)
+  },
+
 
 ];
 

@@ -1,5 +1,6 @@
 import { Component, ElementRef, input, OnInit, ViewChild } from '@angular/core';
-import { IonIcon } from '@ionic/angular';
+import { IonIcon, IonInput } from '@ionic/angular';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -9,16 +10,23 @@ import { IonIcon } from '@ionic/angular';
 export class CadastroClientePage implements OnInit {
     date: any;
     
+    regexNome: RegExp = /[^a-zA-Zà-úÀ-úçÇñÑ_ ]+/g;
+
+    readonly cpfMask: MaskitoOptions = {
+        mask: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+    };
+
+    readonly celMask: MaskitoOptions = {
+        mask: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]
+    };
+
+    readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+    
     constructor() {
         
     }
 
     ngOnInit() {
-    }
-
-    ngAfterViewInit()
-    {
-    
     }
 
     estadoSenha(event: any)
@@ -50,5 +58,14 @@ export class CadastroClientePage implements OnInit {
         {
             quadrado.src = "../../../assets/icon/cliente/quadrado.svg"
         }
+    }
+
+    filtroInput(event: any, regex: RegExp)
+    {
+        const input = event.target as HTMLIonInputElement;
+        const vl = input.value;
+        const vlFiltrado = vl?.toString().replace(regex, "");
+
+        event.target.value = vlFiltrado;
     }
 }
