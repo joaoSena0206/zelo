@@ -8,8 +8,9 @@ import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
     styleUrls: ['./endereco.page.scss'],
 })
 export class EnderecoPage implements OnInit {
-    regexNome: RegExp = /[^a-zA-Zà-úÀ-úçÇñÑ_ ]+/g;
-
+    readonly cepMask: MaskitoOptions = {
+        mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]
+    };
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
     
