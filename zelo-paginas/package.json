@@ -30,6 +30,7 @@
     "@ionic/angular": "^8.0.0",
     "@maskito/angular": "^3.0.0",
     "@maskito/core": "^3.0.0",
+    "cpf-cnpj-validator": "^1.0.3",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

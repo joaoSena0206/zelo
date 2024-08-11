@@ -10,13 +10,16 @@ import { CadastroClientePage } from './cadastro-cliente.page';
 
 import { MaskitoDirective } from '@maskito/angular';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     CadastroClientePageRoutingModule,
-    MaskitoDirective
+    MaskitoDirective,
+    ReactiveFormsModule
   ],
   declarations: [CadastroClientePage]
 })

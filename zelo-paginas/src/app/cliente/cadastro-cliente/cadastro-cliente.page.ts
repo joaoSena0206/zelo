@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import { Renderer2 } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { cpf } from 'cpf-cnpj-validator';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -7,7 +10,19 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
     styleUrls: ['./cadastro-cliente.page.scss'],
 })
 export class CadastroClientePage implements OnInit {
+    form = new FormGroup({
+        nome: new FormControl("", Validators.required),
+        cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(11)])
+    });
+    
     date: any;
+    erro: any = {
+        nome: "",
+        cpf: ""
+    };
+    nomeClass: any = "form__input";
+
+    erronome: string = "";
     
     regexNome: RegExp = /[^a-zA-Zà-úÀ-úçÇñÑ_ ]+/g;
 
@@ -21,11 +36,16 @@ export class CadastroClientePage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
     
-    constructor() {
+    constructor(private renderer: Renderer2) {
         
     }
 
     ngOnInit() {
+    }
+
+    ngAfterViewInit()
+    {
+
     }
 
     estadoSenha(event: any)
@@ -51,10 +71,12 @@ export class CadastroClientePage implements OnInit {
 
         if (quadrado.src == "../../../assets/icon/cliente/quadrado.svg")
         {
+            quadrado.setAttribute("marcado", "true");
             quadrado.src = "../../../assets/icon/cliente/quadrado_marcado.svg"
         }
         else
         {
+            quadrado.setAttribute("marcado", "false");
             quadrado.src = "../../../assets/icon/cliente/quadrado.svg"
         }
     }
@@ -67,4 +89,48 @@ export class CadastroClientePage implements OnInit {
 
         event.target.value = vlFiltrado;
     }
+
+    acharNomeControl(control: FormControl)
+    {
+        let controlName = "";
+        
+        for(let item in this.form.controls)
+        {
+            if(control === this.form.get(item))
+            {
+                controlName = item;
+            }
+        }
+
+        return controlName;
+    }
+
+    validacaoInput(control: FormControl)
+    {
+        let nome = this.acharNomeControl(control);
+        let vlControl = control.value as String;
+
+        if (control.hasError("required"))
+        {
+            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
+        }
+
+        if (control.hasError("tamanhoMinimo"))
+        {
+            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} deve ter ${control.errors?.['tamanhoMinimo']} caracteres`;
+        }
+    }
 }
+
+export function validadorTamanhoMinimo(tamanho: Number): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+        const vl = control.value.replace(/\./g, "").replace("-", "");
+
+        if (vl.length < tamanho)
+        {
+            return {tamanhoMinimo: tamanho};
+        }
+
+        return null;
+    };
+};
