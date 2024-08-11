@@ -41,8 +41,6 @@ export class EnderecoPage implements OnInit {
                 this.inputBairro.value = dados.bairro;
                 this.inputRua.value = dados.logradouro;
             });
-
-
         }
     }
 }
