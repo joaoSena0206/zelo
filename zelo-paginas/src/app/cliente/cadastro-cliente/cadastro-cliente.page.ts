@@ -23,8 +23,8 @@ export class CadastroClientePage implements OnInit {
 
     estadoSenha(event: any)
     {
-        const olho = event.target;
-        const input = event.target.parentElement
+        const olho = event.target as HTMLIonIconElement;
+        const input = event.target.parentElement as HTMLIonInputElement;
 
         if (input.type == "password")
         {
@@ -35,6 +35,20 @@ export class CadastroClientePage implements OnInit {
         {
             olho.name = "eye-outline";
             input.type = "password";
+        }
+    }
+
+    marcarQuadrado(event: any)
+    {
+        const quadrado = event.target as HTMLIonIconElement;
+
+        if (quadrado.src == "../../../assets/icon/cliente/quadrado.svg")
+        {
+            quadrado.src = "../../../assets/icon/cliente/quadrado_marcado.svg"
+        }
+        else
+        {
+            quadrado.src = "../../../assets/icon/cliente/quadrado.svg"
         }
     }
 }
