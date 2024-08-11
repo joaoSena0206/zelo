@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'cadastro-cliente',
     pathMatch: 'full'
   },
   {
@@ -19,7 +19,16 @@ const routes: Routes = [
   {
     path: 'cadastro-trabalhador',
     loadChildren: () => import('./trabalhador/cadastro-trabalhador/cadastro-trabalhador.module').then( m => m.CadastroTrabalhadorPageModule)
-  }
+  },
+  {
+    path: 'termos',
+    loadChildren: () => import('./geral/termos/termos.module').then( m => m.TermosPageModule)
+  },
+  {
+    path: 'login-cliente',
+    loadChildren: () => import('./cliente/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
+  },
+
 ];
 
 @NgModule({

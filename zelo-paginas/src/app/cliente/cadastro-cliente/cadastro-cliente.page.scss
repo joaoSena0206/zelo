@@ -11,6 +11,11 @@ ion-content
     --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 100%);
 }
 
+.mudarBackground
+{
+    --background: linear-gradient(90deg, #CB2316 0%, #65110B 100%);
+}
+
 
 .wrapper
 {
@@ -59,12 +64,16 @@ ion-content
 
 .ion_item__icon
 {
+    color: black;
     position: absolute;
     top: 50%;
     bottom: 50%;
     transform: translate(-50%, -50%);
     right: 19px;
-    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    z-index: 2;
 }
 
 
