@@ -52,7 +52,7 @@ ion-content
 {
     --padding-start: 0;
     --inner-padding-end: 0;
-
+    margin: 10px;
     margin-bottom: 11px;
     position: relative;
 }
@@ -75,6 +75,13 @@ ion-content
     border-radius: 26px;
     display: flex;
     flex-direction: column;
+}
+
+.area_codigo{
+    display: flex;
+    height: 62px;
+    width: 50px;
+    border-radius: 11px;
 }
 
 .form__input

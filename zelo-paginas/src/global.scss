@@ -27,6 +27,6 @@
 
 .native-input[type=date]::-webkit-calendar-picker-indicator 
 {
-    filter: invert(1);
+    color: black;
     font-size: 18px;
 }

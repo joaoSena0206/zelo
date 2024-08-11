@@ -19,7 +19,12 @@ const routes: Routes = [
   {
     path: 'cadastro-trabalhador',
     loadChildren: () => import('./trabalhador/cadastro-trabalhador/cadastro-trabalhador.module').then( m => m.CadastroTrabalhadorPageModule)
+  },
+  {
+    path: 'confirmar-celular',
+    loadChildren: () => import('./trabalhador/confirmar-celular/confirmar-celular.module').then( m => m.ConfirmarCelularPageModule)
   }
+
 ];
 
 @NgModule({
