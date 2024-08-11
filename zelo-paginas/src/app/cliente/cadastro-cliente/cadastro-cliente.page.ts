@@ -36,12 +36,12 @@ export class CadastroClientePage implements OnInit {
 
         if (input.type == "password")
         {
-            olho.name = "eye-off-outline";
+            olho.name = "eye-outline";
             input.type = "text";
         }
         else
         {
-            olho.name = "eye-outline";
+            olho.name = "eye-off-outline";
             input.type = "password";
         }
     }
