@@ -8,12 +8,15 @@ import { EnderecoPageRoutingModule } from './endereco-routing.module';
 
 import { EnderecoPage } from './endereco.page';
 
+import { MaskitoDirective } from '@maskito/angular';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EnderecoPageRoutingModule
+    EnderecoPageRoutingModule,
+    MaskitoDirective
   ],
   declarations: [EnderecoPage]
 })

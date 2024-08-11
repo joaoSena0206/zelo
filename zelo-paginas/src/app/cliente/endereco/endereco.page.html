@@ -9,10 +9,10 @@
     
             <ion-list class="form" lines="none">
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="CEP"></ion-input>
+                    <ion-input (ionInput)="filtroInput($event, regexNome)" class="form__input" placeholder="CEP"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="CPF"></ion-input>
+                    <ion-input [maskito]="cpfMask" [maskitoElement]="maskPredicate" class="form__input" placeholder="CPF"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
                     <ion-input id="data" type="text" placeholder="Data de nascimento" readonly class="form__input" value="{{ date | date : 'dd/MM/yyyy' }}"></ion-input>
@@ -26,7 +26,7 @@
                     <ion-input type="email" class="form__input" placeholder="Email"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input type="tel" class="form__input" placeholder="Celular"></ion-input>
+                    <ion-input [maskito]="celMask" [maskitoElement]="maskPredicate" type="tel" class="form__input" placeholder="Celular"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
                     <ion-input type="password" class="form__input" placeholder="Crie sua senha">
