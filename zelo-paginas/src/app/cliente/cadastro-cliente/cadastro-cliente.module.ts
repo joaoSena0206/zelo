@@ -8,12 +8,15 @@ import { CadastroClientePageRoutingModule } from './cadastro-cliente-routing.mod
 
 import { CadastroClientePage } from './cadastro-cliente.page';
 
+import { MaskitoDirective } from '@maskito/angular';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CadastroClientePageRoutingModule
+    CadastroClientePageRoutingModule,
+    MaskitoDirective
   ],
   declarations: [CadastroClientePage]
 })

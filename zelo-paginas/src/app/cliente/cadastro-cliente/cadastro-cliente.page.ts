@@ -1,5 +1,6 @@
 import { Component, ElementRef, input, OnInit, ViewChild } from '@angular/core';
 import { IonIcon, IonInput } from '@ionic/angular';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -10,17 +11,22 @@ export class CadastroClientePage implements OnInit {
     date: any;
     
     regexNome: RegExp = /[^a-zA-Zà-úÀ-úçÇñÑ_ ]+/g;
+
+    readonly cpfMask: MaskitoOptions = {
+        mask: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+    };
+
+    readonly celMask: MaskitoOptions = {
+        mask: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]
+    };
+
+    readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
     
     constructor() {
         
     }
 
     ngOnInit() {
-    }
-
-    ngAfterViewInit()
-    {
-    
     }
 
     estadoSenha(event: any)
