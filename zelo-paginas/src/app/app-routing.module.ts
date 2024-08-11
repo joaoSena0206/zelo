@@ -24,6 +24,11 @@ const routes: Routes = [
     path: 'termos',
     loadChildren: () => import('./geral/termos/termos.module').then( m => m.TermosPageModule)
   },
+  {
+    path: 'login-cliente',
+    loadChildren: () => import('./cliente/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
+  },
+
 ];
 
 @NgModule({
