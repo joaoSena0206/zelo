@@ -44,7 +44,7 @@
                     <p class="div_termos__p">Aceitar os <ion-text class="div_termos__text" [routerLink]="['/termos']">termos</ion-text></p>
                 </div>
     
-                <ion-button class="form__btn">Confirmar</ion-button>
+                <ion-button (click)="enviarDados()" class="form__btn">Confirmar</ion-button>
     
                 <p class="form__p">Já possui conta? <ion-text class="form__text" [routerLink]="['/login-cliente']">Entrar</ion-text></p>
             </ion-list>

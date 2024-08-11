@@ -1,5 +1,4 @@
-import { Component, ElementRef, input, OnInit, ViewChild } from '@angular/core';
-import { IonIcon, IonInput } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 
 @Component({

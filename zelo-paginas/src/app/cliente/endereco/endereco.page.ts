@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, viewChild, ViewChild } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
 
 @Component({
