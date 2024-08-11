@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'login-cliente',
     loadChildren: () => import('./cliente/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
   },
+  {
+    path: 'endereco',
+    loadChildren: () => import('./cliente/endereco/endereco.module').then( m => m.EnderecoPageModule)
+  },
+
 
 ];
 

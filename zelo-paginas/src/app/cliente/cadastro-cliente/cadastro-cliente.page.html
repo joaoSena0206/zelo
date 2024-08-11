@@ -9,7 +9,7 @@
     
             <ion-list class="form" lines="none">
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="Nome completo"></ion-input>
+                    <ion-input (ionInput)="filtroInput($event, regexNome)" class="form__input" placeholder="Nome completo"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
                     <ion-input class="form__input" placeholder="CPF"></ion-input>
