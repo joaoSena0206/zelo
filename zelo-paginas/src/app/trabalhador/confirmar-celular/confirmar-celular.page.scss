@@ -28,6 +28,7 @@ ion-content
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .content__seta
@@ -57,16 +58,6 @@ ion-content
     position: relative;
 }
 
-.ion_item__icon
-{
-    position: absolute;
-    top: 50%;
-    bottom: 50%;
-    transform: translate(-50%, -50%);
-    right: 19px;
-    font-size: 18px;
-}
-
 
 .form
 {
@@ -78,25 +69,30 @@ ion-content
 }
 
 .area_codigo{
-    display: flex;
-    height: 62px;
-    width: 50px;
+    display: flex; 
     border-radius: 11px;
+    align-items: center;
+    justify-content: center;
 }
 
 .form__input
 {
     --placeholder-opacity: 1;
-    --padding-start: 27px;
-    --padding-end: 27px;
+    text-align: center;
 
     display: flex;
     align-items: center;
+    height: 62px;
     width: 100%;
+    max-width: 50px;
     background: rgba(217,217,217, 0.56);
     font-weight: 700;
-    border-radius: 26px;
-    font-size: 15px;
+    border-radius: 11px;
+    
+}
+
+p{
+    margin-bottom: 10px;
 }
 
 .form__btn
@@ -120,34 +116,4 @@ ion-content
 {
     text-align: center;
     margin: 0;
-}
-
-
-.div_termos__quadrado
-{
-    width: 17px;
-    height: 17px;
-    background-color: #E4E4E4;
-    margin-right: 9px;
-}
-
-.div_termos
-{
-    display: flex;
-    align-items: top;
-    margin-top: 11px;
-    margin-left: 17px;
-}
-
-.div_termos__p
-{
-    margin: 0;
-    font-weight: 400;
-    font-size: 15px;
-}
-
-.div_termos__text, .form__text
-{
-    color: #CB2316;
-    font-weight: 700;
 }
