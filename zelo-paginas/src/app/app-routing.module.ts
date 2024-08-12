@@ -27,7 +27,12 @@ const routes: Routes = [
   {
     path: 'tipo-saque',
     loadChildren: () => import('./trabalhador/tipo-saque/tipo-saque.module').then( m => m.TipoSaquePageModule)
+  },
+  {
+    path: 'documento',
+    loadChildren: () => import('./trabalhador/documento/documento.module').then( m => m.DocumentoPageModule)
   }
+
 
 
 ];
