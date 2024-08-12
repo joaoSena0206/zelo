@@ -12,23 +12,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'cadastro-cliente',
-    loadChildren: () => import('./cliente/cadastro-cliente/cadastro-cliente.module').then( m => m.CadastroClientePageModule)
-  },
-  {
     path: 'termos',
     loadChildren: () => import('./geral/termos/termos.module').then( m => m.TermosPageModule)
   },
-  {
-    path: 'login-cliente',
-    loadChildren: () => import('./cliente/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
-  },
-  {
-    path: 'endereco',
-    loadChildren: () => import('./cliente/endereco/endereco.module').then( m => m.EnderecoPageModule)
-  },
-
-
 ];
 
 @NgModule({
