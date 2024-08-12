@@ -23,7 +23,12 @@ const routes: Routes = [
   {
     path: 'confirmar-celular',
     loadChildren: () => import('./trabalhador/confirmar-celular/confirmar-celular.module').then( m => m.ConfirmarCelularPageModule)
+  },
+  {
+    path: 'tipo-saque',
+    loadChildren: () => import('./trabalhador/tipo-saque/tipo-saque.module').then( m => m.TipoSaquePageModule)
   }
+
 
 ];
 
