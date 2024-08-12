@@ -11,7 +11,4 @@ export class CadastroClientePage implements OnInit {
 
   ngOnInit() {
   }
-
-  
-
 }
