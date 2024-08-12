@@ -12,7 +12,8 @@ import { cpf } from 'cpf-cnpj-validator';
 export class CadastroClientePage implements OnInit {
     form = new FormGroup({
         nome: new FormControl("", Validators.required),
-        cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(11)])
+        cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(11)]),
+        data: new FormControl("", Validators.required)
     });
     
     date: any;
@@ -45,7 +46,7 @@ export class CadastroClientePage implements OnInit {
 
     ngAfterViewInit()
     {
-
+        
     }
 
     estadoSenha(event: any)
