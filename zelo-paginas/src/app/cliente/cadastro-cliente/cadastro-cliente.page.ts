@@ -15,7 +15,8 @@ export class CadastroClientePage implements OnInit {
         cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(), validadorCpf()]),
         data: new FormControl("", [Validators.required, validadorIdade()]),
         email: new FormControl("", [Validators.required, Validators.email]),
-        celular: new FormControl("", [Validators.required, validadorCel()])
+        celular: new FormControl("", [Validators.required, validadorCel()]),
+        senha: new FormControl("", [Validators.required, validadorSenha()])
     });
 
     inputData: any;
@@ -188,5 +189,20 @@ export function validadorIdade(): ValidatorFn {
         }
 
         return null;
+    };
+};
+
+export function validadorSenha(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let senha = control.value;
+        let regexEspeciais = /[!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\;'/]/g;
+        let regexNumeros = /\d/g;
+        let regexLetras = /[a-zA-Z]/g;
+
+        if (senha.length >= 8 && regexEspeciais.test(senha) && regexNumeros.test(senha) && regexLetras.test(senha)) {
+            return null;
+        }
+
+        return { invalida: { msg: "Senha necessita de pelo menos 8 caracteres: letras, números, e caractéres especiais" } };
     };
 };

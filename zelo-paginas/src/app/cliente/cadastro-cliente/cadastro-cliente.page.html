@@ -69,11 +69,17 @@
                     erro.celular }}</span>
 
                 <ion-item class="ion_item">
-                    <ion-input #senha type="password" class="form__input" placeholder="Crie sua senha">
+                    <ion-input formControlName="senha" (ionInput)="validacaoInput(form.controls['senha'])"
+                        [class.inputErro]="form.controls['senha'].invalid && form.controls['senha'].dirty"
+                        type="password" class="form__input" placeholder="Crie sua senha">
                         <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
                             name="eye-off-outline" aria-hidden="true"></ion-icon>
                     </ion-input>
                 </ion-item>
+                <span
+                    [ngClass]="form.controls['senha'].invalid && form.controls['senha'].dirty ? 'erro' : 'escondido'">{{
+                    erro.senha }}</span>
+
                 <ion-item class="ion_item">
                     <ion-input #confirmarSenha type="password" class="form__input" placeholder="Confirme sua senha">
                         <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
