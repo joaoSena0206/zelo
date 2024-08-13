@@ -12,14 +12,15 @@ import { cpf } from 'cpf-cnpj-validator';
 export class CadastroClientePage implements OnInit {
     form = new FormGroup({
         nome: new FormControl("", Validators.required),
-        cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(11)]),
+        cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(), validadorCpf()]),
         data: new FormControl("", [Validators.required, validadorIdade()])
     });
     
     inputData: any;
     erro: any = {
         nome: "",
-        cpf: ""
+        cpf: "",
+        data: ""
     };
     nomeClass: any = "form__input";
 
@@ -116,27 +117,57 @@ export class CadastroClientePage implements OnInit {
         {
             this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
         }
-
-        if (control.hasError("tamanhoMinimo"))
+        else
         {
-            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} deve ter ${control.errors?.['tamanhoMinimo']} caracteres`;
-        }
+            let erros = control.errors;
+
+            if (erros != null)
+            {
+                Object.keys(erros).forEach(erro => {
+                    this.erro[nome] = erros[erro].msg;
+                });
+            }
+        }  
     }
 
     mostrarData()
     {
-        let data = this.form.controls['data'].value ? new Date(this.form.controls['data'].value) : null;
-        this.inputData = data?.toLocaleDateString();
+        let data = this.form.controls['data'].value;
+
+        if (data != null)
+        {
+            let date = new Date(data);
+            this.inputData = date.toLocaleDateString();
+        }
     }
 }
 
-export function validadorTamanhoMinimo(tamanho: Number): ValidatorFn {
+
+export function validadorCpf(): ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {
         let vl = control.value.replace(/\./g, "").replace("-", "");
 
-        if (vl.length < tamanho)
+        if (vl.length == 11)
         {
-            return {tamanhoMinimo: tamanho};
+            if (!cpf.isValid(vl))
+            {
+                return {invalido: {msg: "CPF inválido!"}};
+            }
+        
+            return null;
+        }
+
+        return null;
+    };
+};
+
+export function validadorTamanhoMinimo(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+        let vl = control.value.replace(/\./g, "").replace("-", "");
+
+        if (vl.length < 11)
+        {
+            return {tamanhoMinimo: { msg: "CPF deve ter 11 dígitos!"}};
         }
 
         return null;
@@ -157,7 +188,7 @@ export function validadorIdade(): ValidatorFn {
 
         if (idade < 18)
         {
-            return {idade: true};
+            return {idade: {msg: "Idade deve ser maior que 18 anos!"}};
         }
 
         return null;
