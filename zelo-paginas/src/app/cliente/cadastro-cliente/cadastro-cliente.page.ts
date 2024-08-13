@@ -16,7 +16,11 @@ export class CadastroClientePage implements OnInit {
         data: new FormControl("", [Validators.required, validadorIdade()]),
         email: new FormControl("", [Validators.required, Validators.email]),
         celular: new FormControl("", [Validators.required, validadorCel()]),
-        senha: new FormControl("", [Validators.required, validadorSenha()])
+        senhas: new FormGroup({
+            senha: new FormControl("", [Validators.required, validadorSenha()]),
+            confirmarSenha: new FormControl("")
+        }, validadorSenhaConfere()),
+        
     });
 
     inputData: any;
@@ -48,6 +52,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
+        
     }
 
     ngAfterViewInit() {
@@ -92,11 +97,21 @@ export class CadastroClientePage implements OnInit {
     acharNomeControl(control: FormControl) {
         let controlName = "";
 
-        for (let item in this.form.controls) {
-            if (control === this.form.get(item)) {
-                controlName = item;
+        Object.keys(this.form.controls).forEach(item => {
+            if (item == "senhas")
+            {
+                Object.keys(this.form.controls["senhas"].controls).forEach(senha => {
+                    if (this.form.controls["senhas"].get(senha) === control)
+                    {
+                        controlName = senha;
+                    }
+                });
             }
-        }
+            else if (this.form.get(item) === control)
+            {
+                controlName = item;
+            } 
+        });
 
         return controlName;
     }
@@ -204,5 +219,19 @@ export function validadorSenha(): ValidatorFn {
         }
 
         return { invalida: { msg: "Senha necessita de pelo menos 8 caracteres: letras, números, e caractéres especiais" } };
+    };
+};
+
+export function validadorSenhaConfere(): ValidatorFn {
+    return (form: AbstractControl): ValidationErrors | null => {
+        let senha = form.get("senha")?.value;
+        let confirmarSenha = form.get("confirmarSenha")?.value;
+
+        if (senha != confirmarSenha)
+        {
+            return {confere: {msg: "Senhas não conferem"}};
+        }
+
+        return null;
     };
 };

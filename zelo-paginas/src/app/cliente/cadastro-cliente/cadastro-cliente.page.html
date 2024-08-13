@@ -68,24 +68,32 @@
                     [ngClass]="form.controls['celular'].invalid && form.controls['celular'].dirty ? 'erro' : 'escondido'">{{
                     erro.celular }}</span>
 
-                <ion-item class="ion_item">
-                    <ion-input formControlName="senha" (ionInput)="validacaoInput(form.controls['senha'])"
-                        [class.inputErro]="form.controls['senha'].invalid && form.controls['senha'].dirty"
-                        type="password" class="form__input" placeholder="Crie sua senha">
-                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
-                            name="eye-off-outline" aria-hidden="true"></ion-icon>
-                    </ion-input>
-                </ion-item>
-                <span
-                    [ngClass]="form.controls['senha'].invalid && form.controls['senha'].dirty ? 'erro' : 'escondido'">{{
-                    erro.senha }}</span>
+                <div formGroupName="senhas" style="display: flex; flex-direction: column;">
+                    <ion-item class="ion_item">
+                        <ion-input formControlName="senha"
+                            (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
+                            [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && form.controls['senhas'].controls['senha'].dirty"
+                            type="password" class="form__input" placeholder="Crie sua senha">
+                            <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                name="eye-off-outline" aria-hidden="true"></ion-icon>
+                        </ion-input>
+                    </ion-item>
+                    <span
+                        [ngClass]="form.controls['senhas'].controls['senha'].invalid && form.controls['senhas'].controls['senha'].dirty ? 'erro' : 'escondido'">{{
+                        erro.senha }}</span>
 
-                <ion-item class="ion_item">
-                    <ion-input #confirmarSenha type="password" class="form__input" placeholder="Confirme sua senha">
-                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
-                            name="eye-off-outline" aria-hidden="true"></ion-icon>
-                    </ion-input>
-                </ion-item>
+                    <ion-item class="ion_item">
+                        <ion-input formControlName="confirmarSenha"
+                            [class.inputErro]="form.controls['senhas'].hasError('confere') && form.controls['senhas'].controls['confirmarSenha'].dirty"
+                            type="password" class="form__input" placeholder="Confirme sua senha">
+                            <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                name="eye-off-outline" aria-hidden="true"></ion-icon>
+                        </ion-input>
+                    </ion-item>
+                    <span
+                        [ngClass]="form.controls['senhas'].hasError('confere') && form.controls['senhas'].controls['confirmarSenha'].dirty ? 'erro' : 'escondido'">{{
+                        form.controls['senhas'].errors?.['confere'].msg }}</span>
+                </div>
 
                 <div class="div_termos">
                     <ion-icon marcado="false" (click)="marcarQuadrado($event)" class="div_termos__quadrado"
