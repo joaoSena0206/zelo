@@ -14,7 +14,8 @@ export class CadastroClientePage implements OnInit {
         nome: new FormControl("", Validators.required),
         cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(), validadorCpf()]),
         data: new FormControl("", [Validators.required, validadorIdade()]),
-        email: new FormControl("", [Validators.required, Validators.email])
+        email: new FormControl("", [Validators.required, Validators.email]),
+        celular: new FormControl("", [Validators.required, validadorCel()])
     });
 
     inputData: any;
@@ -22,7 +23,8 @@ export class CadastroClientePage implements OnInit {
         nome: "",
         cpf: "",
         data: "",
-        email: ""
+        email: "",
+        celular: ""
     };
     nomeClass: any = "form__input";
 
@@ -105,8 +107,7 @@ export class CadastroClientePage implements OnInit {
         if (control.hasError("required")) {
             this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
         }
-        else if (control.hasError("email"))
-        {
+        else if (control.hasError("email")) {
             this.erro[nome] = `Email inválido!`;
         }
         else {
@@ -149,10 +150,22 @@ export function validadorCpf(): ValidatorFn {
 
 export function validadorTamanhoMinimo(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-        let vl = control.value.replace(/\./g, "").replace("-", "");
+        let vl = control.value.replace(/[^/\d/ ]+/g, "");
 
         if (vl.length < 11) {
             return { tamanhoMinimo: { msg: "CPF deve ter 11 dígitos!" } };
+        }
+
+        return null;
+    };
+};
+
+export function validadorCel(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let cel = control.value.replace(/[^/\d/]+/g, "");
+
+        if (cel.length < 11) {
+            return { celTamanho: { msg: 'O celular deve ter 9 dígitos, fora o DD!' } };
         }
 
         return null;
