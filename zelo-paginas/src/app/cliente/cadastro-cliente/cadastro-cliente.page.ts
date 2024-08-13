@@ -20,20 +20,20 @@ export class CadastroClientePage implements OnInit {
             senha: new FormControl("", [Validators.required, validadorSenha()]),
             confirmarSenha: new FormControl("")
         }, validadorSenhaConfere()),
-        
+        termos: new FormControl("", validadorTermos())
     });
 
     inputData: any;
     erro: any = {
-        nome: "",
-        cpf: "",
-        data: "",
-        email: "",
-        celular: ""
+        nome: "Nome obrigatório!",
+        cpf: "Cpf obrigatório!",
+        data: "Data obrigatório!",
+        email: "Email obrigatório!",
+        celular: "Celular obrigatório!",
+        senha: "Senha obrigatório!"
     };
     nomeClass: any = "form__input";
-
-    erronome: string = "";
+    quadradoSrc: any = "../../../assets/icon/cliente/quadrado.svg";
 
     regexNome: RegExp = /[^a-zA-Zà-úÀ-úçÇñÑ_ ]+/g;
 
@@ -52,7 +52,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
-        
+
     }
 
     ngAfterViewInit() {
@@ -73,16 +73,16 @@ export class CadastroClientePage implements OnInit {
         }
     }
 
-    marcarQuadrado(event: any) {
-        const quadrado = event.target as HTMLIonIconElement;
+    marcarQuadrado() {
+        if (this.quadradoSrc == "../../../assets/icon/cliente/quadrado.svg") {
+            this.form.controls['termos'].setValue("marcado");
 
-        if (quadrado.src == "../../../assets/icon/cliente/quadrado.svg") {
-            quadrado.setAttribute("marcado", "true");
-            quadrado.src = "../../../assets/icon/cliente/quadrado_marcado.svg"
+            this.quadradoSrc = "../../../assets/icon/cliente/quadrado_marcado.svg"
         }
         else {
-            quadrado.setAttribute("marcado", "false");
-            quadrado.src = "../../../assets/icon/cliente/quadrado.svg"
+            this.form.controls['termos'].setValue("");
+
+            this.quadradoSrc = "../../../assets/icon/cliente/quadrado.svg"
         }
     }
 
@@ -98,19 +98,16 @@ export class CadastroClientePage implements OnInit {
         let controlName = "";
 
         Object.keys(this.form.controls).forEach(item => {
-            if (item == "senhas")
-            {
+            if (item == "senhas") {
                 Object.keys(this.form.controls["senhas"].controls).forEach(senha => {
-                    if (this.form.controls["senhas"].get(senha) === control)
-                    {
+                    if (this.form.controls["senhas"].get(senha) === control) {
                         controlName = senha;
                     }
                 });
             }
-            else if (this.form.get(item) === control)
-            {
+            else if (this.form.get(item) === control) {
                 controlName = item;
-            } 
+            }
         });
 
         return controlName;
@@ -125,6 +122,8 @@ export class CadastroClientePage implements OnInit {
         }
         else if (control.hasError("email")) {
             this.erro[nome] = `Email inválido!`;
+
+            return;
         }
         else {
             let erros = control.errors;
@@ -133,6 +132,10 @@ export class CadastroClientePage implements OnInit {
                 Object.keys(erros).forEach(erro => {
                     this.erro[nome] = erros[erro].msg;
                 });
+            }
+            else
+            {
+                this.erro[nome] = "";
             }
         }
     }
@@ -143,6 +146,15 @@ export class CadastroClientePage implements OnInit {
         if (data != null && data != "") {
             let date = new Date(data);
             this.inputData = date.toLocaleDateString();
+        }
+    }
+
+    enviar() {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+        }
+        else {
+            console.log("foi");
         }
     }
 }
@@ -169,7 +181,7 @@ export function validadorTamanhoMinimo(): ValidatorFn {
         let vl = control.value.replace(/[^/\d/ ]+/g, "");
 
         if (vl.length < 11) {
-            return { tamanhoMinimo: { msg: "CPF deve ter 11 dígitos!" } };
+            return { tamanhoMinimo: { msg: "Cpf deve ter 11 dígitos!" } };
         }
 
         return null;
@@ -227,9 +239,20 @@ export function validadorSenhaConfere(): ValidatorFn {
         let senha = form.get("senha")?.value;
         let confirmarSenha = form.get("confirmarSenha")?.value;
 
-        if (senha != confirmarSenha)
-        {
-            return {confere: {msg: "Senhas não conferem"}};
+        if (senha != confirmarSenha) {
+            return { confere: { msg: "Senhas não conferem" } };
+        }
+
+        return null;
+    };
+};
+
+export function validadorTermos(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let termo = control.value;
+
+        if (termo != "marcado") {
+            return { marcado: { msg: "Aceite os termos!" } };
         }
 
         return null;
