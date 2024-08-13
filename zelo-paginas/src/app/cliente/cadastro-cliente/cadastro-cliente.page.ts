@@ -13,10 +13,10 @@ export class CadastroClientePage implements OnInit {
     form = new FormGroup({
         nome: new FormControl("", Validators.required),
         cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(11)]),
-        data: new FormControl("", Validators.required)
+        data: new FormControl("", [Validators.required, validadorIdade()])
     });
     
-    date: any;
+    inputData: any;
     erro: any = {
         nome: "",
         cpf: ""
@@ -42,6 +42,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
+        
     }
 
     ngAfterViewInit()
@@ -121,15 +122,42 @@ export class CadastroClientePage implements OnInit {
             this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} deve ter ${control.errors?.['tamanhoMinimo']} caracteres`;
         }
     }
+
+    mostrarData()
+    {
+        let data = this.form.controls['data'].value ? new Date(this.form.controls['data'].value) : null;
+        this.inputData = data?.toLocaleDateString();
+    }
 }
 
 export function validadorTamanhoMinimo(tamanho: Number): ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {
-        const vl = control.value.replace(/\./g, "").replace("-", "");
+        let vl = control.value.replace(/\./g, "").replace("-", "");
 
         if (vl.length < tamanho)
         {
             return {tamanhoMinimo: tamanho};
+        }
+
+        return null;
+    };
+};
+
+export function validadorIdade(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+        let dataAtual = new Date();
+        let dataNascimento = new Date(control.value);
+
+        let idade = dataAtual.getFullYear() - dataNascimento.getFullYear();
+
+        if (dataAtual.getDay() >= dataNascimento.getDay() && dataAtual.getMonth() >= dataNascimento.getMonth())
+        {
+            idade -= 1;
+        }
+
+        if (idade < 18)
+        {
+            return {idade: true};
         }
 
         return null;

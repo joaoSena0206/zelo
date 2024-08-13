@@ -19,10 +19,14 @@
                 <span [ngClass]="form.controls['cpf'].invalid && form.controls['cpf'].dirty ? 'erro' : 'escondido'">{{ erro.cpf }}</span>
 
                 <ion-item class="ion_item">
-                    <ion-input formControlName="data" #data id="data" type="text" placeholder="Data de nascimento" readonly class="form__input" value="{{ date | date : 'dd/MM/yyyy' }}"></ion-input>
+                    <ion-input [(ngModel)]="inputData" [ngModelOptions]="{standalone: true}" id="data" type="text" placeholder="Data de nascimento" readonly class="form__input"></ion-input>
                     <ion-popover #popover trigger="data">
-                        <ng-template>
-                            <ion-datetime [(ngModel)]="date" [ngModelOptions]="{standalone: true}" #popoverDatetime (ionChange)="popover.dismiss()" presentation="date" locale="pt-BR"></ion-datetime>
+                        <ng-template style="position: relative;">
+                            <ion-datetime formControlName="data" #popoverDatetime presentation="date" locale="pt-BR"></ion-datetime>
+                            <div class="dateDiv">
+                                <ion-button class="dateDiv__btn" (click)="popover.dismiss(); mostrarData(); validacaoInput(form.controls['data'])">Ok</ion-button>
+                                <ion-button class="dateDiv__cancelarBtn" (click)="popover.dismiss()">Cancelar</ion-button>
+                            </div>
                         </ng-template>
                     </ion-popover>
                 </ion-item>
