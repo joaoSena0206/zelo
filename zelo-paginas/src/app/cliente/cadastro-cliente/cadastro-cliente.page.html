@@ -6,57 +6,86 @@
             <ion-text>
                 <h1 class="content__h1">Crie sua conta!</h1>
             </ion-text>
-    
+
             <ion-list [formGroup]="form" class="form" lines="none">
                 <ion-item class="ion_item">
-                    <ion-input formControlName="nome" (ionInput)="filtroInput($event, regexNome); validacaoInput(form.controls['nome'])" class="form__input" [class.inputErro]="form.controls['nome'].invalid && form.controls['nome'].dirty" placeholder="Nome completo"></ion-input>
+                    <ion-input formControlName="nome"
+                        (ionInput)="filtroInput($event, regexNome); validacaoInput(form.controls['nome'])"
+                        class="form__input"
+                        [class.inputErro]="form.controls['nome'].invalid && form.controls['nome'].dirty"
+                        placeholder="Nome completo"></ion-input>
                 </ion-item>
-                <span [ngClass]="form.controls['nome'].invalid && form.controls['nome'].dirty ? 'erro' : 'escondido'">{{ erro.nome }}</span>
+                <span [ngClass]="form.controls['nome'].invalid && form.controls['nome'].dirty ? 'erro' : 'escondido'">{{
+                    erro.nome }}</span>
 
                 <ion-item class="ion_item">
-                    <ion-input formControlName="cpf" (ionInput)="validacaoInput(form.controls['cpf'])" [maskito]="cpfMask" [maskitoElement]="maskPredicate" [class.inputErro]="form.controls['cpf'].invalid && form.controls['cpf'].dirty" class="form__input" placeholder="CPF"></ion-input>
+                    <ion-input formControlName="cpf" (ionInput)="validacaoInput(form.controls['cpf'])"
+                        [maskito]="cpfMask" [maskitoElement]="maskPredicate"
+                        [class.inputErro]="form.controls['cpf'].invalid && form.controls['cpf'].dirty"
+                        class="form__input" placeholder="CPF"></ion-input>
                 </ion-item>
-                <span [ngClass]="form.controls['cpf'].invalid && form.controls['cpf'].dirty ? 'erro' : 'escondido'">{{ erro.cpf }}</span>
+                <span [ngClass]="form.controls['cpf'].invalid && form.controls['cpf'].dirty ? 'erro' : 'escondido'">{{
+                    erro.cpf }}</span>
 
                 <ion-item class="ion_item">
-                    <ion-input [class.inputErro]="form.controls['data'].invalid && form.controls['data'].touched" (click)="form.controls['data'].markAsTouched(); form.controls['data'].value == '' ? erro.data = 'Data obrigatório' : erro.data = ''" [(ngModel)]="inputData" [ngModelOptions]="{standalone: true}" id="data" type="text" placeholder="Data de nascimento" readonly class="form__input"></ion-input>
+                    <ion-input [class.inputErro]="form.controls['data'].invalid && form.controls['data'].touched"
+                        (click)="form.controls['data'].markAsTouched(); form.controls['data'].value == '' ? erro.data = 'Data obrigatório' : erro.data = ''"
+                        [(ngModel)]="inputData" [ngModelOptions]="{standalone: true}" id="data" type="text"
+                        placeholder="Data de nascimento" readonly class="form__input"></ion-input>
                     <ion-popover #popover trigger="data">
                         <ng-template>
-                            <ion-datetime formControlName="data" #popoverDatetime presentation="date" locale="pt-BR"></ion-datetime>
+                            <ion-datetime formControlName="data" #popoverDatetime presentation="date"
+                                locale="pt-BR"></ion-datetime>
                             <div class="dateDiv">
-                                <ion-button (click)="popover.dismiss(); mostrarData(); validacaoInput(form.controls['data'])">Ok</ion-button>
-                                <ion-button class="dateDiv__cancelarBtn" (click)="popover.dismiss()">Cancelar</ion-button>
+                                <ion-button
+                                    (click)="popover.dismiss(); mostrarData(); validacaoInput(form.controls['data'])">Ok</ion-button>
+                                <ion-button class="dateDiv__cancelarBtn"
+                                    (click)="popover.dismiss()">Cancelar</ion-button>
                             </div>
                         </ng-template>
                     </ion-popover>
                 </ion-item>
-                <span [ngClass]="form.controls['data'].invalid && form.controls['data'].touched ? 'erro' : 'escondido'">{{ erro.data }}</span>
+                <span
+                    [ngClass]="form.controls['data'].invalid && form.controls['data'].touched ? 'erro' : 'escondido'">{{
+                    erro.data }}</span>
 
                 <ion-item class="ion_item">
-                    <ion-input #email type="email" class="form__input" placeholder="Email"></ion-input>
+                    <ion-input formControlName="email" (ionInput)="validacaoInput(form.controls['email'])"
+                        [class.inputErro]="form.controls['email'].invalid && form.controls['email'].dirty" type="email"
+                        class="form__input" placeholder="Email"></ion-input>
                 </ion-item>
+                <span
+                    [ngClass]="form.controls['email'].invalid && form.controls['email'].dirty ? 'erro' : 'escondido'">{{
+                    erro.email }}</span>
+
                 <ion-item class="ion_item">
-                    <ion-input #celular [maskito]="celMask" [maskitoElement]="maskPredicate" type="tel" class="form__input" placeholder="Celular"></ion-input>
+                    <ion-input #celular [maskito]="celMask" [maskitoElement]="maskPredicate" type="tel"
+                        class="form__input" placeholder="Celular"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
                     <ion-input #senha type="password" class="form__input" placeholder="Crie sua senha">
-                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only" name="eye-off-outline" aria-hidden="true"></ion-icon>
+                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                            name="eye-off-outline" aria-hidden="true"></ion-icon>
                     </ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
                     <ion-input #confirmarSenha type="password" class="form__input" placeholder="Confirme sua senha">
-                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only" name="eye-off-outline" aria-hidden="true"></ion-icon>
+                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                            name="eye-off-outline" aria-hidden="true"></ion-icon>
                     </ion-input>
                 </ion-item>
 
                 <div class="div_termos">
-                    <ion-icon marcado="false" (click)="marcarQuadrado($event)" class="div_termos__quadrado" src="../../../assets/icon/cliente/quadrado.svg"></ion-icon>
-                    <p class="div_termos__p">Aceitar os <ion-text class="div_termos__text" [routerLink]="['/termos']">termos</ion-text></p>
+                    <ion-icon marcado="false" (click)="marcarQuadrado($event)" class="div_termos__quadrado"
+                        src="../../../assets/icon/cliente/quadrado.svg"></ion-icon>
+                    <p class="div_termos__p">Aceitar os <ion-text class="div_termos__text"
+                            [routerLink]="['/termos']">termos</ion-text></p>
                 </div>
-    
+
                 <ion-button class="form__btn">Confirmar</ion-button>
-    
-                <p class="form__p">Já possui conta? <ion-text class="form__text" [routerLink]="['/login-cliente']">Entrar</ion-text></p>
+
+                <p class="form__p">Já possui conta? <ion-text class="form__text"
+                        [routerLink]="['/login-cliente']">Entrar</ion-text></p>
             </ion-list>
         </div>
     </div>

@@ -1,40 +1,34 @@
-*
-{
+* {
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     margin: 0;
 }
 
-ion-content
-{
+ion-content {
     --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
 }
 
-.wrapper
-{
+.wrapper {
     display: flex;
     flex-direction: column;
     padding-top: 30px;
 }
 
 
-.content
-{
+.content {
     padding: 0 31px;
     background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
     height: fit-content;
 }
 
-.content__seta
-{
+.content__seta {
     font-size: 30px;
     flex-shrink: 0;
     margin: 0 0 30px 30px;
 }
 
-.content__h1
-{
+.content__h1 {
     color: white;
     font-weight: 700;
     font-size: clamp(1rem, 10vw, 2rem);
@@ -42,8 +36,7 @@ ion-content
 }
 
 
-.ion_item
-{
+.ion_item {
     --padding-start: 0;
     --inner-padding-end: 0;
 
@@ -51,8 +44,7 @@ ion-content
     position: relative;
 }
 
-.ion_item__icon
-{
+.ion_item__icon {
     color: black;
     position: absolute;
     top: 50%;
@@ -66,8 +58,7 @@ ion-content
 }
 
 
-.form
-{
+.form {
     padding: 33px 19px;
     background-color: white;
     border-radius: 26px;
@@ -75,8 +66,7 @@ ion-content
     flex-direction: column;
 }
 
-.form__input
-{
+.form__input {
     --placeholder-opacity: 1;
     --padding-start: 27px;
     --padding-end: 27px;
@@ -84,15 +74,14 @@ ion-content
     display: flex;
     align-items: center;
     width: 100%;
-    background: rgba(217,217,217, 0.56);
+    background: rgba(217, 217, 217, 0.56);
     font-weight: 700;
     border-radius: 26px;
     font-size: 15px;
     height: 57px;
 }
 
-.form__btn
-{
+.form__btn {
     --background: #F66701;
     --border-radius: 26px;
     --padding-start: 71px;
@@ -108,63 +97,55 @@ ion-content
     width: clamp(200px, 300px, 80%);
 }
 
-.form__p
-{
+.form__p {
     text-align: center;
     margin: 0;
 }
 
 
-.div_termos__quadrado
-{
+.div_termos__quadrado {
     width: 17px;
     height: 17px;
     background-color: #E4E4E4;
     margin-right: 9px;
 }
 
-.div_termos
-{
+.div_termos {
     display: flex;
     align-items: top;
     margin-top: 11px;
     margin-left: 17px;
 }
 
-.div_termos__p
-{
+.div_termos__p {
     margin: 0;
     font-weight: 400;
     font-size: 15px;
 }
 
-.div_termos__text, .form__text
-{
+.div_termos__text,
+.form__text {
     color: #F66701;
     font-weight: 700;
 }
 
-.erro
-{
+.erro {
     color: red;
     font-size: 14px;
     margin-left: 25px;
     margin-bottom: 14px;
 }
 
-.inputErro
-{
+.inputErro {
     border: solid 1px red;
 }
 
-.escondido
-{
+.escondido {
     display: none;
 }
 
 
-.dateDiv
-{
+.dateDiv {
     width: 100%;
     background-color: white;
     display: flex;
