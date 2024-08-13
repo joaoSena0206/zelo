@@ -43,7 +43,6 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
-        
     }
 
     ngAfterViewInit()
@@ -134,7 +133,7 @@ export class CadastroClientePage implements OnInit {
     {
         let data = this.form.controls['data'].value;
 
-        if (data != null)
+        if (data != null && data != "")
         {
             let date = new Date(data);
             this.inputData = date.toLocaleDateString();
@@ -181,14 +180,14 @@ export function validadorIdade(): ValidatorFn {
 
         let idade = dataAtual.getFullYear() - dataNascimento.getFullYear();
 
-        if (dataAtual.getDay() >= dataNascimento.getDay() && dataAtual.getMonth() >= dataNascimento.getMonth())
+        if (dataAtual.getDate() < dataNascimento.getDate() && dataAtual.getMonth() + 1 <= dataNascimento.getMonth() + 1)
         {
             idade -= 1;
         }
 
         if (idade < 18)
         {
-            return {idade: {msg: "Idade deve ser maior que 18 anos!"}};
+            return {idade: {msg: "Deve ser maior que 18 anos!"}};
         }
 
         return null;
