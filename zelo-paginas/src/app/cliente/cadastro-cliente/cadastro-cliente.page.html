@@ -20,8 +20,9 @@
 
                 <ion-item class="ion_item">
                     <ion-input [(ngModel)]="inputData" [ngModelOptions]="{standalone: true}" id="data" type="text" placeholder="Data de nascimento" readonly class="form__input"></ion-input>
+                    <span [ngClass]="form.controls['data'].invalid && form.controls['data'].dirty ? 'erro' : 'escondido'">{{ erro.data }}</span>
                     <ion-popover #popover trigger="data">
-                        <ng-template style="position: relative;">
+                        <ng-template>
                             <ion-datetime formControlName="data" #popoverDatetime presentation="date" locale="pt-BR"></ion-datetime>
                             <div class="dateDiv">
                                 <ion-button class="dateDiv__btn" (click)="popover.dismiss(); mostrarData(); validacaoInput(form.controls['data'])">Ok</ion-button>
