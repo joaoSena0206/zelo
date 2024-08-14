@@ -16,13 +16,14 @@ ion-content
 {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 
 .content
 {
     padding: 0 31px;
-    background: linear-gradient(90deg, #CB2316 0%, #65110B 100%);
     flex-direction: column;
     justify-content: center;
 }
@@ -93,8 +94,6 @@ ion-card ion-button{
 
 .footer{
     background-color: #ffffff;
-    position: relative;
-    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,8 +107,3 @@ ion-card ion-button{
     }
 }
 
-@media (min-width: 910px){
-    .footer{
-        position: absolute;
-    }
-}

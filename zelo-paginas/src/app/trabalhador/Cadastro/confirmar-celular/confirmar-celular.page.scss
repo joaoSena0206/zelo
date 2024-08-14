@@ -16,6 +16,8 @@ ion-content
 {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 
@@ -33,9 +35,9 @@ ion-content
 {
     font-size: 30px;
     flex-shrink: 0;
-    margin-top: 31px;
-    margin-bottom: clamp(10px, 31px, 10px);
-    margin-left: 31px;
+    position: absolute;
+    top: 31px;
+    left: 31px;
 }
 
 .content__h1
