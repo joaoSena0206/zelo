@@ -15,6 +15,11 @@ const routes: Routes = [
     path: 'termos',
     loadChildren: () => import('./geral/termos/termos.module').then( m => m.TermosPageModule)
   },
+  {
+    path: 'opcoes-de-cadastro',
+    loadChildren: () => import('./geral/opcoes-de-cadastro/opcoes-de-cadastro.module').then( m => m.OpcoesDeCadastroPageModule)
+  },
+
 ];
 
 @NgModule({
