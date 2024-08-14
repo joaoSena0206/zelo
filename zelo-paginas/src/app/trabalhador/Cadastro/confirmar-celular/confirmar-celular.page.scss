@@ -21,7 +21,7 @@ ion-content
 
 .content
 {
-    
+    padding: 0 31px;
     background: linear-gradient(90deg, #CB2316 0%, #65110B 100%);
     display: flex;
     flex-direction: column;
@@ -120,4 +120,12 @@ ion-content
 
 .secundaria{
     padding: 0 31px;
+}
+
+@media (max-width: 400px) {
+    .form__input
+    {
+        height: 50px;
+        width: 100%;
+    }
 }

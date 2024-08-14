@@ -23,11 +23,13 @@ ion-content
 .content
 {
     padding: 0 31px;
-    background: linear-gradient(90deg, #CB2316 0%, #65110B 100%);
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    align-self: center;
 }
 
 .content__seta
