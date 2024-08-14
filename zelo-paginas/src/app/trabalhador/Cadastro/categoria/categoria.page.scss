@@ -14,7 +14,6 @@ ion-content
 
 .wrapper
 {
-    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -24,11 +23,8 @@ ion-content
 {
     padding: 0 31px;
     background: linear-gradient(90deg, #CB2316 0%, #65110B 100%);
-    height: 100vh;
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 .content__seta
@@ -36,7 +32,7 @@ ion-content
     font-size: 30px;
     flex-shrink: 0;
     margin-top: 31px;
-    margin-bottom: clamp(10px, 31px, 10px);
+    margin-bottom: 30px;
     margin-left: 31px;
 }
 
@@ -48,50 +44,37 @@ ion-content
     margin-bottom: 20px;
 }
 
-
-.ion_item
-{
-    --padding-start: 0;
-    --inner-padding-end: 0;
-    margin: 10px;
-    margin-bottom: 11px;
-    position: relative;
-}
-
-
-.form
-{
-    padding: 33px 19px;
-    background-color: white;
-    border-radius: 26px;
+ion-card{
+    width: 150px;
+    height: 184px;
+    background-color: #ffffff;
+    margin: 10px 10px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 15px;
 }
 
-.area_codigo{
-    display: flex; 
-    border-radius: 11px;
-    align-items: center;
+ion-card img{
+    height: 50px;
+    width: 50px;
+}
+
+ion-card ion-button{
+    --border-radius: 15px;
+    height: 50px;
+    --background: #D9D9D9;
+    color: black;
+}
+
+.geralCard{
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
-.form__input
-{
-    --placeholder-opacity: 1;
-    text-align: center;
-
-    display: flex;
-    align-items: center;
-    height: 62px;
-    width: 100%;
-    max-width: 50px;
-    background: rgba(217,217,217, 0.56);
-    font-weight: 700;
-    border-radius: 11px;
-    
-}
-
-.form__btn
+.btn
 {
     --background: #CB2316;
     --border-radius: 26px;
@@ -108,8 +91,12 @@ ion-content
     width: clamp(200px, 300px, 80%);
 }
 
-.form__p
-{
-    text-align: center;
-    margin: 0;
+.footer{
+    background-color: #ffffff;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px 15px 0 0;
 }
