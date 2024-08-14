@@ -77,12 +77,14 @@ export class CadastroTrabalhadorPage implements OnInit {
         if (this.quadradoSrc == "../../../assets/icon/cliente/quadrado.svg") {
             this.form.controls['termos'].setValue("marcado");
 
-            this.quadradoSrc = "../../../assets/icon/cliente/quadrado_marcado.svg"
+            this.quadradoSrc = "../../../assets/icon/cliente/quadrado_marcado.svg";
+            this.form.controls['termos'].markAsUntouched();
         }
         else {
             this.form.controls['termos'].setValue("");
 
-            this.quadradoSrc = "../../../assets/icon/cliente/quadrado.svg"
+            this.quadradoSrc = "../../../assets/icon/cliente/quadrado.svg";
+            this.form.controls['termos'].markAsUntouched();
         }
     }
 
