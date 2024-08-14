@@ -3,13 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginTrabalhadorPageModule } from './trabalhador/Login/login-trabalhador/login-trabalhador.module';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    loadChildren: () => import('./geral/home/home.module').then( m => m.HomePageModule)
-  },
+
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'cadastro-trabalhador',
     pathMatch: 'full'
   },
 
