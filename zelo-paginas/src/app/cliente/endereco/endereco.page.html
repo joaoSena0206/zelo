@@ -6,36 +6,58 @@
             <ion-text>
                 <h1 class="content__h1">Endereço</h1>
             </ion-text>
-    
+
             <ion-list [formGroup]="endereco" class="form" lines="none">
                 <ion-item class="ion_item">
-                    <ion-input formControlName="identificacao" class="form__input" placeholder="Identificação"></ion-input>
+                    <ion-input formControlName="identificacao"
+                        (ionInput)="validarControl(endereco.controls['identificacao'])"
+                        [class.inputErro]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty)"
+                        class="form__input" placeholder="Identificação"></ion-input>
+                </ion-item>
+                <span
+                    [ngClass]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.identificacao }}</span>
+
+                <ion-item class="ion_item">
+                    <ion-input formControlName="cep"
+                        [class.inputErro]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty)"
+                        (ionInput)="buscarCep(endereco.controls['cep']); validarControl(endereco.controls['cep'])"
+                        [maskito]="cepMask" [maskitoElement]="maskPredicate" class="form__input"
+                        placeholder="CEP"></ion-input>
+                </ion-item>
+                <span
+                    [ngClass]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.cep }}</span>
+
+                <ion-item class="ion_item">
+                    <ion-input formControlName="estado" class="form__input" placeholder="Estado"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input formControlName="cep" (ionInput)="buscarCep($event.target.value)" [maskito]="cepMask" [maskitoElement]="maskPredicate" class="form__input" placeholder="CEP"></ion-input>
+                    <ion-input formControlName="cidade" class="form__input" placeholder="Cidade"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input formControlName="estado" class="form__input" disabled placeholder="Estado"></ion-input>
+                    <ion-input formControlName="bairro" class="form__input" placeholder="Bairro"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input formControlName="cidade" class="form__input" disabled placeholder="Cidade"></ion-input>
+                    <ion-input formControlName="rua" type="text" placeholder="Rua" class="form__input"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input formControlName="bairro" class="form__input" disabled placeholder="Bairro"></ion-input>
+                    <ion-input formControlName="numero" (ionInput)="validarControl(endereco.controls['numero'])"
+                        [class.inputErro]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty)"
+                        class="form__input" placeholder="Número"></ion-input>
                 </ion-item>
-                <ion-item class="ion_item">
-                    <ion-input formControlName="rua" type="text" disabled placeholder="Rua" class="form__input" ></ion-input>
-                </ion-item>
-                <ion-item class="ion_item">
-                    <ion-input formControlName="numero" class="form__input" placeholder="Número"></ion-input>
-                </ion-item>
+                <span
+                    [ngClass]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.numero }}</span>
+
                 <ion-item class="ion_item">
                     <ion-input formControlName="complemento" class="form__input" placeholder="Complemento"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input formControlName="pontoReferencia" class="form__input" placeholder="Ponto de referência"></ion-input>
+                    <ion-input formControlName="pontoReferencia" class="form__input"
+                        placeholder="Ponto de referência"></ion-input>
                 </ion-item>
-    
+
                 <ion-button class="form__btn">Confirmar</ion-button>
             </ion-list>
         </div>
