@@ -8,12 +8,18 @@ import { CadastroTrabalhadorPageRoutingModule } from './cadastro-trabalhador-rou
 
 import { CadastroTrabalhadorPage } from './cadastro-trabalhador.page';
 
+import { MaskitoDirective } from '@maskito/angular';
+
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CadastroTrabalhadorPageRoutingModule
+    CadastroTrabalhadorPageRoutingModule,
+    MaskitoDirective,
+    ReactiveFormsModule
   ],
   declarations: [CadastroTrabalhadorPage]
 })
