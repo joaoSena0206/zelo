@@ -85,18 +85,26 @@ export class EnderecoPage implements OnInit {
             this.http.get(link).subscribe(res => {
                 let dados: any = res;
 
-                if (dados.erro == "true")
-                {
-                    this.endereco.controls['cep'].setErrors({invalido: {msg: "Cep inválido"}});
+                if (dados.erro == "true") {
+                    this.endereco.controls['cep'].setErrors({ invalido: { msg: "Cep inválido" } });
 
                     this.validarControl(this.endereco.controls['cep']);
                 }
-            
+
                 this.endereco.controls['estado'].setValue(dados.uf);
                 this.endereco.controls['cidade'].setValue(dados.localidade);
                 this.endereco.controls['bairro'].setValue(dados.bairro);
                 this.endereco.controls['rua'].setValue(dados.logradouro);
             });
+        }
+    }
+
+    enviar() {
+        if (this.endereco.invalid) {
+            this.endereco.markAllAsTouched();
+        }
+        else {
+            console.log("foi");
         }
     }
 }
