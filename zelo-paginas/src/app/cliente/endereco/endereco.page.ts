@@ -76,12 +76,19 @@ export class EnderecoPage implements OnInit {
         }
     }
 
-    buscarCep(cep: any) {
+    buscarCep(cepControl: FormControl) {
+        let cep = cepControl.value;
+
         if (cep.length == 9) {
             const link = `https://viacep.com.br/ws/${cep.replace("-", "")}/json/`;
 
             this.http.get(link).subscribe(res => {
                 let dados: any = res;
+
+                this.endereco.controls['estado'].setValue(dados.uf);
+                this.endereco.controls['cidade'].setValue(dados.localidade);
+                this.endereco.controls['bairro'].setValue(dados.bairro);
+                this.endereco.controls['rua'].setValue(dados.logradouro);
             });
         }
     }
