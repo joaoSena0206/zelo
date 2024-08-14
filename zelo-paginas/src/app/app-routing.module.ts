@@ -36,11 +36,11 @@ const routes: Routes = [
   },
   {
     path: 'confirmar-celular-senha',
-    loadChildren: () => import('./trabalhador/Login/login-trabalhador/confirmar-celular-senha/confirmar-celular-senha.module').then( m => m.ConfirmarCelularSenhaPageModule)
+    loadChildren: () => import('./trabalhador/Login/confirmar-celular-senha/confirmar-celular-senha.module').then( m => m.ConfirmarCelularSenhaPageModule)
   },
   {
     path: 'recuperar-senha',
-    loadChildren: () => import('./trabalhador/Login/login-trabalhador/recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
+    loadChildren: () => import('./trabalhador/Login/recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
   }
 
 
