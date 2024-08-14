@@ -17,9 +17,11 @@ ion-content {
 
 
 .content {
+    align-self: center;
     padding: 0 31px;
-    background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
     height: fit-content;
+    max-width: 600px;
+    width: 100%;
 }
 
 .content__seta {
