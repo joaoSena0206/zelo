@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
 
 @Component({
@@ -8,10 +9,17 @@ import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
     styleUrls: ['./endereco.page.scss'],
 })
 export class EnderecoPage implements OnInit {
-    @ViewChild("estado") inputEstado: HTMLIonInputElement;
-    @ViewChild("cidade") inputCidade: HTMLIonInputElement;
-    @ViewChild("bairro") inputBairro: HTMLIonInputElement;
-    @ViewChild("rua") inputRua: HTMLIonInputElement;
+    endereco = new FormGroup({
+        identificacao: new FormControl("", Validators.required),
+        cep: new FormControl("", Validators.required),
+        estado: new FormControl(""),
+        cidade: new FormControl(""),
+        bairro: new FormControl(""),
+        rua: new FormControl(""),
+        numero: new FormControl("", Validators.required),
+        complemento: new FormControl(""),
+        pontoReferencia: new FormControl("")
+    });
 
     readonly cepMask: MaskitoOptions = {
         mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]

@@ -7,33 +7,33 @@
                 <h1 class="content__h1">Endereço</h1>
             </ion-text>
     
-            <ion-list class="form" lines="none">
+            <ion-list [formGroup]="endereco" class="form" lines="none">
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="Identificação"></ion-input>
+                    <ion-input formControlName="identificacao" class="form__input" placeholder="Identificação"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input (ionInput)="buscarCep($event.target.value)" [maskito]="cepMask" [maskitoElement]="maskPredicate" class="form__input" placeholder="CEP"></ion-input>
+                    <ion-input formControlName="cep" (ionInput)="buscarCep($event.target.value)" [maskito]="cepMask" [maskitoElement]="maskPredicate" class="form__input" placeholder="CEP"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input #estado class="form__input" disabled placeholder="Estado"></ion-input>
+                    <ion-input formControlName="estado" class="form__input" disabled placeholder="Estado"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input #cidade class="form__input" disabled placeholder="Cidade"></ion-input>
+                    <ion-input formControlName="cidade" class="form__input" disabled placeholder="Cidade"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input #bairro class="form__input" disabled placeholder="Bairro"></ion-input>
+                    <ion-input formControlName="bairro" class="form__input" disabled placeholder="Bairro"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input #rua type="text" disabled placeholder="Rua" class="form__input" ></ion-input>
+                    <ion-input formControlName="rua" type="text" disabled placeholder="Rua" class="form__input" ></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="Número"></ion-input>
+                    <ion-input formControlName="numero" class="form__input" placeholder="Número"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="Complemento"></ion-input>
+                    <ion-input formControlName="complemento" class="form__input" placeholder="Complemento"></ion-input>
                 </ion-item>
                 <ion-item class="ion_item">
-                    <ion-input class="form__input" placeholder="Ponto de referência"></ion-input>
+                    <ion-input formControlName="pontoReferencia" class="form__input" placeholder="Ponto de referência"></ion-input>
                 </ion-item>
     
                 <ion-button class="form__btn">Confirmar</ion-button>
