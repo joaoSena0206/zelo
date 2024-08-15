@@ -6,9 +6,10 @@
 
 <ion-content [fullscreen]="true">
   <div class="content">
+
     <ion-button class="btn_situacao_trabalhador">
       <img class="img_btn_situacao" src="../../../assets/icon/Trabalhador/IconeAtivo.svg" alt="">
-      <p>Disponível</p>
+      <p style="margin: 15px;">Disponível</p>
     </ion-button>
 
     <div class="título_ultimos_pedidos">
@@ -18,13 +19,33 @@
 
     <div class="local_ultimos_trabalhos">
       <ion-card>
-        <img src="" alt="">
-        <p></p>
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
+        <p class="nm_cliente_pedido">Ivanir da Silva</p>
+        <p>Minha geladeira está descongelando sozinha...</p>
       </ion-card>
   
       <ion-card style="margin: 0 0 0 20px;">
-        <img src="" alt="">
-        <p></p>
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
       </ion-card>
     </div>
 
@@ -33,17 +54,86 @@
     </div>
 
     <ion-list>
-      <ion-item></ion-item>
-      <ion-item></ion-item>
-      <ion-item></ion-item>
-      <ion-item></ion-item>
-      <ion-item></ion-item>
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
     </ion-list>
 
   </div>
+
+
+  <ion-footer class="footer" style="position: fixed;" >
+    <ion-tabs class="ion_tabs">
+      <ion-tab-bar class="ion_tab_bar" slot="bottom">
+    
+        <ion-tab-button  tab="home">
+          <ion-icon class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Home.svg" alt="">
+          </ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="Historico">
+          <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Relógio.svg">
+          </ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="Perfil">
+          <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/IconePerfil.svg">
+          </ion-icon>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-footer>
+
 </ion-content>
 
-<ion-footer class="footer">
+<!-- <ion-footer class="footer">
   <div class="Clicado">
     <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
       <path d="M14.2365 34.8332V18.9998H23.5843V34.8332M4.88867 14.2498L18.9104 3.1665L32.9322 14.2498V31.6665C32.9322 32.5064 32.6039 33.3118 32.0195 33.9057C31.4352 34.4995 30.6426 34.8332 29.8162 34.8332H8.00461C7.17821 34.8332 6.38566 34.4995 5.80131 33.9057C5.21696 33.3118 4.88867 32.5064 4.88867 31.6665V14.2498Z" 
@@ -63,4 +153,6 @@
     </svg>
   </div>
  
-</ion-footer>
+</ion-footer>  -->
+
+ 

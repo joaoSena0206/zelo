@@ -10,7 +10,7 @@
 }
 
 .content{
-    padding: 22px;
+    padding: 22px 22px 100px 22px;
 }
 
 .Clicado{
@@ -18,6 +18,9 @@
     padding: 10px;
     border-radius: 10px;
     stroke: white;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
 .footer{
@@ -25,6 +28,9 @@
     padding: 20px;
     justify-content: space-around;
     align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
 }
 
 .btn_situacao_trabalhador{
@@ -33,10 +39,13 @@
     border-radius: 15px;
     display: flex;
     justify-content: start;
+    position: relative;
 }
 
 .img_btn_situacao{
     margin-right: 20px;
+    position: absolute;
+    left: 0;
 }
 
 .título_ultimos_pedidos{
@@ -59,10 +68,58 @@
 
 .local_ultimos_trabalhos{
     display: flex;
+    
+    width: 100vh;
+    overflow-x: scroll;
 }
 
 .local_ultimos_trabalhos ion-card{
     width: 180px;
-    height: 230px;
     border-radius: 15px;
+    padding: 10px;
+}
+
+.area_comentario_anonimo{
+    width: 100%;
+    --background: #E4E4E4;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.area_comentario_anonimo div{
+    margin: 10px;
+}
+
+.area_comentario_anonimo div ion-icon{
+    width: 60px;
+    height: 60px;
+}
+
+.ion_tabs{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.ion_tab_bar{
+    height: 100%;
+}
+
+.imgFooter{
+    height: 40px;
+    width: 40px;
+}
+
+.img_pedido{
+    width: 100%;
+}
+
+.nm_cliente_pedido{
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
