@@ -9,24 +9,24 @@
     height: 100vh;
     background: linear-gradient(180deg, #CB2316 0%, #F66701 100%);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
 }
 
 .martelo {
-    width: 100%;
-    display: flex;
-    justify-content: end;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .chave_inglesa {
-    width: 100%;
-    display: flex;
-
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .logo_botoes {
-    width: 100%;
+    margin-top: 68px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -40,6 +40,7 @@
 
 .btn_entrar {
     --background: #CB2316;
+
     color: white;
     margin-bottom: 20px;
 }
