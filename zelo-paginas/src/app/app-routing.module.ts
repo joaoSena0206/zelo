@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'cadastro-cliente',
-    loadChildren: () => import('./cliente/cadastro-cliente/cadastro-cliente.module').then( m => m.CadastroClientePageModule)
+    loadChildren: () => import('./cliente/cadastro/cadastro-cliente/cadastro-cliente.module').then( m => m.CadastroClientePageModule)
   },
   {
     path: 'login-cliente',
@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'endereco',
-    loadChildren: () => import('./cliente/endereco/endereco.module').then( m => m.EnderecoPageModule)
+    loadChildren: () => import('./cliente/cadastro/endereco/endereco.module').then( m => m.EnderecoPageModule)
   },
 
 
