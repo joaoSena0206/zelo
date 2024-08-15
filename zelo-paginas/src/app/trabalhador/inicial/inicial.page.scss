@@ -9,6 +9,10 @@
     color: #CB2316;
 }
 
+.content{
+    padding: 22px;
+}
+
 .Clicado{
     background-color: #CB2316;
     padding: 10px;
@@ -21,4 +25,44 @@
     padding: 20px;
     justify-content: space-around;
     align-items: center;
+}
+
+.btn_situacao_trabalhador{
+    width: 100%;
+    --background: #34C800;
+    border-radius: 15px;
+    display: flex;
+    justify-content: start;
+}
+
+.img_btn_situacao{
+    margin-right: 20px;
+}
+
+.título_ultimos_pedidos{
+    display: flex;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.título_ultimos_pedidos p{
+    font-size: 14px;
+    color: #727272;
+}
+
+.título_ultimos_pedidos h3{
+    font-size: 18px;
+}
+
+.local_ultimos_trabalhos{
+    display: flex;
+}
+
+.local_ultimos_trabalhos ion-card{
+    width: 180px;
+    height: 230px;
+    border-radius: 15px;
 }
