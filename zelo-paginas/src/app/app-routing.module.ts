@@ -31,8 +31,6 @@ const routes: Routes = [
     path: 'endereco',
     loadChildren: () => import('./cliente/cadastro/endereco/endereco.module').then( m => m.EnderecoPageModule)
   },
-
-
 ];
 
 @NgModule({
