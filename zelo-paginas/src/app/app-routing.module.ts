@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./geral/home/home.module').then( m => m.HomePageModule)
   },
   {
+    path: 'home/opcoes-de-cadastro',
+    loadChildren: () => import('./geral/opcoes-de-cadastro/opcoes-de-cadastro.module').then( m => m.OpcoesDeCadastroPageModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
@@ -15,11 +19,6 @@ const routes: Routes = [
     path: 'termos',
     loadChildren: () => import('./geral/termos/termos.module').then( m => m.TermosPageModule)
   },
-  {
-    path: 'opcoes-de-cadastro',
-    loadChildren: () => import('./geral/opcoes-de-cadastro/opcoes-de-cadastro.module').then( m => m.OpcoesDeCadastroPageModule)
-  },
-
 ];
 
 @NgModule({
