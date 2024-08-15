@@ -1,69 +1,72 @@
-.fundo{
-height: 100vh;
-background: linear-gradient(180deg, #CB2316 0%, #F66701 100%);
-display: flex;
-justify-content: space-between;
-flex-direction: column;
+.fundo {
+    height: 100vh;
+    padding: 0 36px;
+    background: linear-gradient(180deg, #CB2316 0%, #F66701 100%);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
-    
-.chave-de-fenda{
-width: 100%;
-display: flex;
-justify-content: end;
+
+.chave-de-fenda {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
-    
-.ferramenta-perfuracao{
-width: 100%;
-display: flex;      
+
+.ferramenta-perfuracao {
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
-  
-.titulo-e-botoes{
-    height: 100%;
-    width: 100%;
+
+.titulo-e-botoes {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.titulo-e-botoes h1{
+.titulo-e-botoes h1 {
     color: white;
     font-size: xx-large;
     font-weight: bold;
     text-align: center;
 }
 
-.btn-opcao-cliente{
-    margin-top: 10%;
-    height: 191px;
-    width: 362px;
-    background-color: #F66701;
-    border-radius: 25px;
+ion-button
+{
+    width: 100%;
+}
+
+.btn-opcao-cliente {
+    --background: #F66701;
+    --border-radius: 25px;
+
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease;
 }
 
-.btn-opcao-cliente:hover{
-background-color: #e66001;
-color: rgb(212, 212, 212);
-  }
-  
-.btn-opcao-cliente:active{
-transform: scale(0.90);
+.btn-opcao-cliente:hover {
+    background-color: #e66001;
+    color: rgb(212, 212, 212);
 }
 
-.mini-icone-cliente{
+.btn-opcao-cliente:active {
+    transform: scale(0.90);
+}
+
+.mini-icone-cliente {
     display: flex;
     flex-direction: row;
     margin-left: 5%;
 }
 
-.mini-icone-cliente h1{
+.mini-icone-cliente h1 {
     font-weight: none;
     margin-left: 5%;
 }
 
-.btn-opcao-trabalhador{
+.btn-opcao-trabalhador {
     margin-top: 5%;
     height: 191px;
     width: 362px;
@@ -74,34 +77,34 @@ transform: scale(0.90);
     transition: transform 0.2s ease;
 }
 
-.btn-opcao-trabalhador:hover{
-background-color: #b61e14;
-color: rgb(212, 212, 212);
-  }
-  
-.btn-opcao-trabalhador:active{
-transform: scale(0.90);
+.btn-opcao-trabalhador:hover {
+    background-color: #b61e14;
+    color: rgb(212, 212, 212);
 }
 
-.mini-icone-trabalhador{
+.btn-opcao-trabalhador:active {
+    transform: scale(0.90);
+}
+
+.mini-icone-trabalhador {
     display: flex;
     flex-direction: row;
     margin-left: 5%;
 }
 
-.mini-icone-trabalhador h1{
+.mini-icone-trabalhador h1 {
     font-weight: none;
     margin-left: 5%;
 }
 
-.area-texto-btn{
+.area-texto-btn {
     height: 109px;
     width: 313px;
     display: flex;
     margin-left: 5%;
 }
 
-p{
+p {
     font-size: larger;
     color: white;
     text-align: left;
