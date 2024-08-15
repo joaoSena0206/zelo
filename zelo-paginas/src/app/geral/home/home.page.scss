@@ -1,70 +1,74 @@
-
-.fundo{
-  height: 100vh;
-  background: linear-gradient(180deg, #CB2316 0%, #F66701 100%);
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
-.martelo{
-  width: 100%;
-  display: flex;
-  justify-content: end;
+.fundo {
+    height: 100vh;
+    background: linear-gradient(180deg, #CB2316 0%, #F66701 100%);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
-.chave_inglesa{
+.martelo {
     width: 100%;
     display: flex;
-    
+    justify-content: end;
 }
 
-.logo_botoes{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+.chave_inglesa {
+    width: 100%;
+    display: flex;
+
 }
 
-.logo_botoes img{
-  width: 276px;
+.logo_botoes {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-.btn_entrar{
-  height: 57px;
-  width: 228px;
-  background-color: #CB2316;
-  color: white;
-  border-radius: 25px;
-  margin-top: 80px;
-  transition: transform 0.2s ease;
+.logo_botoes ion-icon {
+    width: 276px;
+    height: 122px;
 }
 
-button{
-  height: 57px;
-  width: 228px;
-  background-color: white;
-  color: #CB2316;
-  border-radius: 25px;
-  margin-top: 15px;
-  transition: transform 0.2s ease;
+.btn_entrar {
+    --background: #CB2316;
+    color: white;
+    margin-bottom: 20px;
 }
 
-button:active{
-  transform: scale(0.90);
+.btn_cadastrar {
+    --background: white;
+    --color: #CB2316;
+    --padding-start: 40px;
+    --padding-end: 40px;
 }
 
-.btn_entrar:hover{
-  background-color: #b61e14;
-  color: rgb(212, 212, 212);
+ion-button {
+    --border-radius: 25px;
+    --padding-top: 19px;
+    --padding-bottom: 19px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: none;
+    transition: transform 0.2s ease;
 }
 
-.btn_entrar:active{
-  transform: scale(0.90);
+ion-button:active {
+    transform: scale(0.90);
 }
 
-button:hover{
-  color: #b61e14;
-  background-color: rgb(212, 212, 212);
+.divBtns
+{
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
 }
