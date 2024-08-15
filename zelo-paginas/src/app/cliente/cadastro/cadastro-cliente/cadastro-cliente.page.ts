@@ -4,6 +4,7 @@ import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -48,7 +49,7 @@ export class CadastroClientePage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private renderer: Renderer2, private router: Router) {
+    constructor(private router: Router, private navCl: NavController) {
 
     }
 
@@ -62,7 +63,7 @@ export class CadastroClientePage implements OnInit {
 
     pagAnterior()
     {
-        this.router.navigateByUrl("/home/opcoes-de-cadastro");
+        this.navCl.back();
     }
 
     estadoSenha(event: any) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -9,19 +10,19 @@ import { Router } from '@angular/router';
 })
 export class OpcoesDeCadastroPage implements OnInit {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private navCtrl: NavController) { }
 
     ngOnInit() {
-        if (localStorage.getItem("opcao") == null) {
-            this.router.navigateByUrl("/home");
-        }
     }
 
     proxPag(opcao: string) {
-        this.router.navigateByUrl(`/${localStorage.getItem("opcao")}-${opcao}`);
+        this.navCtrl.navigateForward(`/${localStorage.getItem("opcao")}-${opcao}`);
     }
 
     pagAnterior() {
-        this.router.navigateByUrl("/home");
+        this.navCtrl.navigateRoot("/home", {
+            animated: true,
+            animationDirection: "back"
+        });
     }
 }
