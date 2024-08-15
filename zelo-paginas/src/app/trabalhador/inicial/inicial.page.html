@@ -7,9 +7,9 @@
 <ion-content [fullscreen]="true">
   <div class="content">
 
-    <ion-button class="btn_situacao_trabalhador">
-      <img class="img_btn_situacao" src="../../../assets/icon/Trabalhador/IconeAtivo.svg" alt="">
-      <p style="margin: 15px;">Disponível</p>
+    <ion-button id="open-custom-dialog" class="btn_situacao_trabalhador">
+      <img class="img_btn_situacao" src="../../../assets/icon/Trabalhador/IconeOff.svg" alt="">
+      <p class="txtSituacao" style="margin: 15px;">Off-line</p>
     </ion-button>
 
     <div class="título_ultimos_pedidos">
@@ -112,17 +112,17 @@
     <ion-tabs class="ion_tabs">
       <ion-tab-bar class="ion_tab_bar" slot="bottom">
     
-        <ion-tab-button  tab="home">
+        <ion-tab-button  tab="">
           <ion-icon class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Home.svg" alt="">
           </ion-icon>
         </ion-tab-button>
     
-        <ion-tab-button tab="Historico">
+        <ion-tab-button>
           <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Relógio.svg">
           </ion-icon>
         </ion-tab-button>
     
-        <ion-tab-button tab="Perfil">
+        <ion-tab-button>
           <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/IconePerfil.svg">
           </ion-icon>
         </ion-tab-button>
@@ -133,26 +133,11 @@
 
 </ion-content>
 
-<!-- <ion-footer class="footer">
-  <div class="Clicado">
-    <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
-      <path d="M14.2365 34.8332V18.9998H23.5843V34.8332M4.88867 14.2498L18.9104 3.1665L32.9322 14.2498V31.6665C32.9322 32.5064 32.6039 33.3118 32.0195 33.9057C31.4352 34.4995 30.6426 34.8332 29.8162 34.8332H8.00461C7.17821 34.8332 6.38566 34.4995 5.80131 33.9057C5.21696 33.3118 4.88867 32.5064 4.88867 31.6665V14.2498Z" 
-      stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-
-  <div class="Nao_clicado">
-    <img src="../../../assets/icon/Trabalhador/Relógio.svg" alt="">
-  </div>
-
-  <div class="Nao_clicado">
-    <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
-      <rect x="1.52148" y="1" width="40.3112" height="41" rx="20.1556" stroke="black" stroke-width="2"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M28.0245 17.2C28.0245 20.7622 25.1829 23.65 21.6778 23.65C18.1726 23.65 15.3311 20.7622 15.3311 17.2C15.3311 13.6378 18.1726 10.75 21.6778 10.75C25.1829 10.75 28.0245 13.6378 28.0245 17.2ZM25.9089 17.2C25.9089 19.5748 24.0146 21.5 21.6778 21.5C19.341 21.5 17.4466 19.5748 17.4466 17.2C17.4466 14.8252 19.341 12.9 21.6778 12.9C24.0146 12.9 25.9089 14.8252 25.9089 17.2Z" fill="black"/>
-      <path d="M21.6778 26.875C14.8293 26.875 8.99421 30.9905 6.77148 36.7564C7.31296 37.3029 7.88336 37.8197 8.48015 38.3045C10.1353 33.0108 15.3276 29.025 21.6778 29.025C28.0279 29.025 33.2203 33.0108 34.8754 38.3045C35.4722 37.8198 36.0426 37.3029 36.5841 36.7565C34.3613 30.9905 28.5263 26.875 21.6778 26.875Z" fill="black"/>
-    </svg>
-  </div>
- 
-</ion-footer>  -->
-
- 
+<ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+  <ng-template>
+    <ion-card class="poupop">
+      <h1>Deseja Trabalhar agora?</h1>
+      <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
+    </ion-card>
+  </ng-template>
+</ion-modal>
