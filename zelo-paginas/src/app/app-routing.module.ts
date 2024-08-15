@@ -41,7 +41,12 @@ const routes: Routes = [
   {
     path: 'recuperar-senha',
     loadChildren: () => import('./trabalhador/Login/recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
+  },
+  {
+    path: 'inicial',
+    loadChildren: () => import('./trabalhador/inicial/inicial.module').then( m => m.InicialPageModule)
   }
+
 
 
 

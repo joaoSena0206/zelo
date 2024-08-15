@@ -1,0 +1,24 @@
+*{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+}
+
+.nm_titulo{
+    color: #CB2316;
+}
+
+.Clicado{
+    background-color: #CB2316;
+    padding: 10px;
+    border-radius: 10px;
+    stroke: white;
+}
+
+.footer{
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+}
