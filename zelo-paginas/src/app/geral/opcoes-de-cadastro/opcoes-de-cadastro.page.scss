@@ -3,11 +3,19 @@ ion-content
     --background: linear-gradient(180deg, #CB2316 0%, #F66701 100%); 
 }
 
+.wrapper
+{
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
 .fundo
 {
     display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 0 31px;
     margin-top: 50px;
 }
@@ -28,6 +36,9 @@ ion-content
     font-size: 30px;
     flex-shrink: 0;
     margin: 31px 0 0 31px;
+    align-self: flex-start;
+    position: absolute;
+    top: 0;
 }
 
 .chave-de-fenda {
