@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-    constructor() { }
+    constructor(private router: Router) { }
+
+    pagEntrar(opcao: string)
+    {
+        localStorage.setItem("opcao", opcao);
+        this.router.navigateByUrl("/home/opcoes-de-cadastro");
+    }
 
 }
