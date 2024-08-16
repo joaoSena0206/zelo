@@ -45,7 +45,12 @@ const routes: Routes = [
   {
     path: 'perfil',
     loadChildren: () => import('./trabalhador/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'privacidade',
+    loadChildren: () => import('./trabalhador/privacidade/privacidade.module').then( m => m.PrivacidadePageModule)
   }
+
 
 
 

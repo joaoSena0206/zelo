@@ -1,0 +1,92 @@
+*{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #CB2316 38%, #7D130A 100%);
+    padding-bottom: 10px;
+    border-radius: 0 0 25px 25px;
+    color: white;
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    padding-top: 31px;
+}
+
+.titulo img{
+    position: absolute;
+    top: 31px;
+    left: 31px;
+}
+
+h1{
+    margin: 0;
+}
+
+.area_foto_perfil{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    position: relative;
+}
+
+.foto_perfil{
+    height: 140px;
+    width: 140px;
+}
+
+.icone_editar{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    fill: black;
+    bottom: 10px;
+    right: 25px;
+}
+
+.geral{
+    padding: 15px;
+}
+
+.area_dado{
+    margin: 15px 0;
+}
+
+.input{
+    background-color: #D9D9D9;
+    border-radius: 23px;
+    
+    opacity: 1;
+    --placeholder-opacity: 1;
+    --padding-start: 25px;
+    --padding-end: 25px;
+    font-size: 13px;
+}
+
+.txt{
+    margin: 5px 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.iconeEditar{
+    position: absolute;
+    right: 25px;
+    bottom: 12px;
+    height: 20px;
+    width: 20px;
+}
