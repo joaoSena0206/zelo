@@ -1,7 +1,140 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Olá, <ion-text class="nm_titulo">Marcos!</ion-text></ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">inicial</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="content">
+
+    <ion-searchbar placeholder="Procurar serviços"></ion-searchbar>
+
+    <div class="título_ultimos_pedidos">
+      <h3>Reformas e reparos</h3>
+      <p class="título_ultimos_pedidos__p">Ver trabalhadores</p>
+    </div>
+
+    <div class="local_ultimos_trabalhos">
+      <ion-card>
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
+        <p class="nm_cliente_pedido">Ivanir da Silva</p>
+        <p>Minha geladeira está descongelando sozinha...</p>
+      </ion-card>
+  
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+
+      <ion-card style="margin: 0 0 0 20px;">
+        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        <p class="nm_cliente_pedido">Lucas Moratto</p>
+        <p>Minha geladeira está desligando a cada 2 horas...</p>
+      </ion-card>
+    </div>
+
+    <div class="título_ultimos_pedidos">
+      <h3>Ultimas avaliações</h3>
+    </div>
+
+    <ion-list>
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+
+      <ion-item class="area_comentario_anonimo">
+        <div>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <div>
+          <p style="font-size: 1.01rem; font-weight: bold;">Anônimo</p>
+          <p style="font-size: 12px; margin-top: 5px;">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+
+  <ion-footer class="footer" style="position: fixed;" >
+    <ion-tabs class="ion_tabs">
+      <ion-tab-bar class="ion_tab_bar" slot="bottom">
+    
+        <ion-tab-button  tab="">
+          <ion-icon class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Home.svg" alt="">
+          </ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button>
+          <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Relógio.svg">
+          </ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button>
+          <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/IconePerfil.svg">
+          </ion-icon>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-footer>
+
 </ion-content>
+
+<ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+  <ng-template>
+    <ion-card class="poupop">
+      <h1></h1>
+      <ion-button  class="form__btn">Confirmar</ion-button>
+    </ion-card>
+  </ng-template>
+</ion-modal>
