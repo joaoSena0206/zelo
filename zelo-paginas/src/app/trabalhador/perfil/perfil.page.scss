@@ -1,0 +1,69 @@
+.header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #CB2316 38%, #7D130A 100%);
+    padding-bottom: 10px;
+    border-radius: 0 0 25px 25px;
+    color: white;
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    padding-top: 31px;
+}
+
+.titulo img{
+    position: absolute;
+    top: 31px;
+    left: 31px;
+}
+
+h1{
+    margin: 0;
+}
+
+.area_foto_perfil{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.area_foto_perfil ion-icon{
+    height: 150px;
+    width: 150px;
+}
+
+.area_btn{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px 40px;
+    align-items: center;
+}
+
+.txt_icon{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.txt{
+    margin-left: 15px;
+    font-size: 23px;
+}
+
+.iconeIdentificacao{
+    height: 41px;
+    width: 41px;
+}
+
+.iconeAbrir{
+    height: 32px;
+    width: 32px;
+    transform: scaleX(-1);
+}

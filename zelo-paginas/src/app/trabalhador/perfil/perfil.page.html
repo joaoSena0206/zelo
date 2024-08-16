@@ -1,11 +1,41 @@
-<ion-header [translucent]="true">
-  <div>
+<ion-header class="header ion-no-border" [translucent]="true">
+  <div class="titulo">
     <img src="../../../../assets/icon/cliente/down-removebg-preview 8.svg" alt="">
-    <h1>Perfil</h1>
+    <h1 style="font-size: 32px;">Perfil</h1>
   </div>
+  <div class="area_foto_perfil">
+    
+    <ion-icon name="person-circle-outline"></ion-icon>
+  </div>
+  <p style="font-size: 24px;">Marcos Vinicius</p>
+
+  <p style="font-size: 15px;">269 avaliações | 100 Serviços realizados</p>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
+  <div class="content">
+    <ion-list>
+
+      <div class="area_btn">
+        <div class="txt_icon">
+          <ion-icon class="iconeIdentificacao" src="../../../assets/icon/Trabalhador/icone perfil/Cadeado.svg"></ion-icon>
+          <p class="txt">Privacidade</p>
+        </div>
+        
+        <ion-icon class="iconeAbrir" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+      </div>
+
+      <div class="area_btn">
+        <div class="txt_icon">
+          <ion-icon class="iconeIdentificacao" src="../../../assets/icon/Trabalhador/icone perfil/Cadeado.svg"></ion-icon>
+          <p class="txt">Privacidade</p>
+        </div>
+        
+        <ion-icon class="iconeAbrir" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+      </div>
+      
+
+    </ion-list>
+  </div>
 </ion-content>
 
