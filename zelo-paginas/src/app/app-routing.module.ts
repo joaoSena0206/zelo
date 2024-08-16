@@ -35,6 +35,11 @@ const routes: Routes = [
     path: 'confirmar-celular',
     loadChildren: () => import('./cliente/cadastro/confirmar-celular/confirmar-celular.module').then( m => m.ConfirmarCelularPageModule)
   },
+  {
+    path: 'recuperar-senha',
+    loadChildren: () => import('./cliente/login/recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
+  },
+
 ];
 
 @NgModule({
