@@ -35,17 +35,18 @@ const routes: Routes = [
     loadChildren: () => import('./trabalhador/Login/login-trabalhador/login-trabalhador.module').then( m => m.LoginTrabalhadorPageModule)
   },
   {
-    path: 'confirmar-celular-senha',
-    loadChildren: () => import('./trabalhador/Login/confirmar-celular-senha/confirmar-celular-senha.module').then( m => m.ConfirmarCelularSenhaPageModule)
-  },
-  {
     path: 'recuperar-senha',
     loadChildren: () => import('./trabalhador/Login/recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
   },
   {
     path: 'inicial',
     loadChildren: () => import('./trabalhador/inicial/inicial.module').then( m => m.InicialPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./trabalhador/perfil/perfil.module').then( m => m.PerfilPageModule)
   }
+
 
 
 
