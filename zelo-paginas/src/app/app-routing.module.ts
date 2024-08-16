@@ -19,6 +19,11 @@ const routes: Routes = [
     path: 'termos',
     loadChildren: () => import('./geral/termos/termos.module').then( m => m.TermosPageModule)
   },
+  {
+    path: 'centralajuda',
+    loadChildren: () => import('./geral/centralajuda/centralajuda.module').then( m => m.CentralajudaPageModule)
+  },
+
 ];
 
 @NgModule({
