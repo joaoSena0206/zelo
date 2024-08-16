@@ -1,0 +1,133 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+}
+
+ion-content
+{
+    --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
+}
+
+
+.wrapper
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+
+.content
+{
+    padding: 0 31px;
+    background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content__seta
+{
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 31px;
+    left: 31px;
+}
+
+.content__h1
+{
+    color: white;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 10vw, 2rem);
+    margin-bottom: 20px;
+}
+
+
+.ion_item
+{
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin: 10px;
+    margin-bottom: 11px;
+    position: relative;
+}
+
+
+.form
+{
+    padding: 33px 19px;
+    background-color: white;
+    border-radius: 26px;
+    display: flex;
+    flex-direction: column;
+}
+
+.area_codigo{
+    display: flex; 
+    border-radius: 11px;
+    align-items: center;
+    justify-content: center;
+}
+
+.form__input
+{
+    --placeholder-opacity: 1;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    height: 62px;
+    width: 100%;
+    max-width: 50px;
+    background: rgba(217,217,217, 0.56);
+    font-weight: 700;
+    border-radius: 11px;
+    
+}
+
+.form__btn
+{
+    --background: #F66701;
+    --border-radius: 26px;
+    --padding-start: 71px;
+    --padding-end: 71px;
+    --padding-top: 20px;
+    --padding-bottom: 20px;
+
+    text-transform: none;
+    font-size: 22px;
+    font-weight: 700;
+    align-self: center;
+    margin: 18px 0;
+    width: clamp(200px, 300px, 80%);
+}
+
+.form__p
+{
+    text-align: center;
+    margin: 0;
+}
+
+.footer{
+    width: 100vh;
+    position: absolute;
+    top: 600px;
+}
+
+.secundaria{
+    padding: 0 31px;
+}
+
+@media (max-width: 400px) {
+    .form__input
+    {
+        height: 50px;
+        width: 100%;
+    }
+}

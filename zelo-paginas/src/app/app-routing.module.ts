@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'endereco',
     loadChildren: () => import('./cliente/cadastro/endereco/endereco.module').then( m => m.EnderecoPageModule)
   },
+  {
+    path: 'confirmar-celular',
+    loadChildren: () => import('./cliente/cadastro/confirmar-celular/confirmar-celular.module').then( m => m.ConfirmarCelularPageModule)
+  },
+
 ];
 
 @NgModule({
