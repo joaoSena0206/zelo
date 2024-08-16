@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'centralajuda',
     loadChildren: () => import('./geral/centralajuda/centralajuda.module').then( m => m.CentralajudaPageModule)
   },
+  {
+    path: 'suporte',
+    loadChildren: () => import('./geral/suporte/suporte.module').then( m => m.SuportePageModule)
+  },
+
 
 ];
 
