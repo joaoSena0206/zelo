@@ -7,6 +7,7 @@
 .content{
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .header{
@@ -37,10 +38,10 @@ h1{
 }
 
 .area_foto_perfil{
-    width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    position: relative;
 }
 
 .foto_perfil{
@@ -79,13 +80,18 @@ h1{
     transform: scaleX(-1);
 }
 
-.btn_sair{
-    
-}
-
 .icone_editar{
     position: absolute;
     height: 20px;
     width: 20px;
     fill: black;
+    bottom: 10px;
+    right: 25px;
+}
+
+.ion_list{
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
