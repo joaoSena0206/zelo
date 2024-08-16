@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'login-cliente',
-    loadChildren: () => import('./cliente/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
+    loadChildren: () => import('./cliente/login/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
   },
   {
     path: 'endereco',
@@ -35,7 +35,6 @@ const routes: Routes = [
     path: 'confirmar-celular',
     loadChildren: () => import('./cliente/cadastro/confirmar-celular/confirmar-celular.module').then( m => m.ConfirmarCelularPageModule)
   },
-
 ];
 
 @NgModule({
