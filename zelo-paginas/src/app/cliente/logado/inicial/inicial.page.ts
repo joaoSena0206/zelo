@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-inicial',
-  templateUrl: './inicial.page.html',
-  styleUrls: ['./inicial.page.scss'],
+    selector: 'app-inicial',
+    templateUrl: './inicial.page.html',
+    styleUrls: ['./inicial.page.scss'],
 })
 export class InicialPage implements OnInit {
+    constructor() { }
 
-  constructor() { }
+    ngOnInit() {
+    }
 
-  ngOnInit() {
-  }
-
+    ngAfterViewInit() {
+    }
 }

@@ -8,6 +8,8 @@ import { InicialPageRoutingModule } from './inicial-routing.module';
 
 import { InicialPage } from './inicial.page';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { InicialPage } from './inicial.page';
     IonicModule,
     InicialPageRoutingModule
   ],
-  declarations: [InicialPage]
+  declarations: [InicialPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class InicialPageModule {}
