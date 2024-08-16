@@ -165,7 +165,7 @@
 {
     flex-shrink: 0;
     border-radius: 15px;
-    width: 100%;
+    width: clamp(100px, 100%, 412px);
 }
 
 
