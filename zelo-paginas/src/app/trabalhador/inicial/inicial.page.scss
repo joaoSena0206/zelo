@@ -137,7 +137,7 @@
     font-size: 22px;
     font-weight: 700;
     align-self: center;
-    margin: 18px 0;
+    margin-top: 36px;
     width: clamp(200px, 300px, 80%);
 }
 
@@ -152,6 +152,12 @@
     height: 210px;
     margin: auto;
 }
+
+.poupop h1
+{
+    text-align: center;
+}
+
 
 ion-modal#example-modal {
     --width: fit-content;

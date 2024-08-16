@@ -6,7 +6,7 @@ const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'cadastro-trabalhador',
+    redirectTo: 'inicial',
     pathMatch: 'full'
   },
 
