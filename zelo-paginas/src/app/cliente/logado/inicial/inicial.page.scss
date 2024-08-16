@@ -71,9 +71,26 @@
 .local_ultimos_trabalhos {
     display: flex;
     overflow-x: auto;
-    padding: 10px;
+    padding: 10px 0;
     scrollbar-width: none;
+    margin-bottom: 30px;
 }
+
+.div_trabalhadores
+{
+    display: flex;
+    overflow-x: scroll;
+    padding: 10px 0;
+    scrollbar-width: none;
+    gap: 20px;
+}
+
+.div_trabalhadores ion-card
+{
+    flex-shrink: 0;
+    width: 100%;
+}
+
 
 .local_ultimos_trabalhos ion-card {
     min-width: 180px;
