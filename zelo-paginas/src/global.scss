@@ -29,12 +29,21 @@
   font-size: 0px;
 }
 
-ion-searchbar ion-icon {
-	align-self: center;
-	right: 16px !important;
+ion-searchbar .searchbar-search-icon {
+	right: 17px !important;
 	left: auto !important;
 	top: 50% !important;
 	bottom: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+ion-searchbar .searchbar-clear-icon
+{
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%) !important;
+    right: 2px;
 }
 
 ion-searchbar input {
