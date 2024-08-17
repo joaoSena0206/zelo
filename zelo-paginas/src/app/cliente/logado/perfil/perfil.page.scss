@@ -30,7 +30,6 @@
     align-items: center;
     background: linear-gradient(180deg, #FFB300 0%, #F66701 62%);
     padding: 45px 0;
-    margin-bottom: 50px;
     border-radius: 0 0 25px 25px;
     color: black;
 }
@@ -75,6 +74,11 @@ h1{
     font-weight: bold;
 }
 
+.btn_sair
+{
+    margin-bottom: 0;
+}
+
 
 .txt_icon{
     display: flex; 
@@ -110,4 +114,5 @@ h1{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    padding: 20px 0;
 }
