@@ -74,7 +74,6 @@
     flex-wrap: wrap;
     padding-bottom: 10px;
     scrollbar-width: none;
-    margin-bottom: 30px;
     gap: 20px;
 }
 
@@ -404,12 +403,3 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-chil
     height: fit-content;
     align-self: flex-end;
 }
-
-
-/* @media screen and (min-width: 400px)
-{
-    .local_ultimos_trabalhos ion-card
-    {
-        flex-grow: 0;
-    }
-} */
