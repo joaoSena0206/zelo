@@ -77,8 +77,7 @@
     margin-bottom: 30px;
 }
 
-.info_trabalhador
-{
+.info_trabalhador {
     background-color: white;
     border-radius: 15px;
     display: flex;
@@ -89,8 +88,7 @@
     color: black;
 }
 
-.fundoLaranja
-{
+.fundoLaranja {
     background-color: #F66701;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -98,28 +96,24 @@
     width: 20px;
 }
 
-.divInfos
-{
+.divInfos {
     padding: 12px 35px;
     padding-left: 0;
     font-size: 15px;
 }
 
-.avaliacaoDiv
-{
+.avaliacaoDiv {
     margin-top: 8px;
     display: flex;
     align-items: center;
 }
 
-.avaliacaoDiv p 
-{
+.avaliacaoDiv p {
     font-weight: bold;
     font-size: 18px;
 }
 
-.estrelas
-{
+.estrelas {
     display: flex;
     font-size: 18px;
     padding: 0;
@@ -127,15 +121,13 @@
     height: fit-content;
 }
 
-.nome_trabalhador
-{
+.nome_trabalhador {
     font-weight: bold;
     font-size: 18px;
     margin-bottom: 2px;
 }
 
-.div_trabalhadores
-{
+.div_trabalhadores {
     display: flex;
     overflow-x: scroll;
     padding: 10px 0;
@@ -143,16 +135,14 @@
     gap: 20px;
 }
 
-.div_trabalhadores figure
-{
+.div_trabalhadores figure {
     position: relative;
     width: 100%;
     height: 336px;
     overflow: hidden;
 }
 
-.div_trabalhadores img
-{
+.div_trabalhadores img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -163,16 +153,14 @@
     border-radius: 15px;
 }
 
-.div_trabalhadores ion-card
-{
+.div_trabalhadores ion-card {
     flex-shrink: 0;
     border-radius: 15px;
     width: clamp(100px, 100%, 412px);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%), inset 0px 4px 4px 0px rgba(0, 0, 0, 25%);
 }
 
-.div_trabalhadores figure
-{
+.div_trabalhadores figure {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%), inset 0px 4px 4px 0px rgba(0, 0, 0, 25%);
     border-radius: 15px;
 }
@@ -291,19 +279,16 @@ ion-modal#example-modal .wrapper {
     position: relative;
 }
 
-ion-searchbar
-{
+ion-searchbar {
     filter: drop-shadow(2.5px 3px 1px #7C7C7C);
 }
 
-.ferramenta-chave
-{
+.ferramenta-chave {
     font-size: 31px;
     margin-bottom: 10px;
 }
 
-.divAnuncio
-{
+.divAnuncio {
     padding: 19px;
     color: black;
     gap: 10px;
@@ -312,8 +297,7 @@ ion-searchbar
     justify-content: space-between;
 }
 
-.divAnuncio h1
-{
+.divAnuncio h1 {
     font-weight: bold;
     font-size: 22px;
     margin-bottom: 5px;
@@ -325,8 +309,7 @@ ion-searchbar
 } */
 
 
-.divAnuncio ion-button
-{
+.divAnuncio ion-button {
     --background: #F66701;
     --border-radius: 15px;
     --padding-top: 20px;
@@ -340,14 +323,85 @@ ion-searchbar
     font-weight: bold;
 }
 
-.divAnuncioInfo
-{
+.divAnuncioInfo {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.titulo
-{
+.titulo {
     font-weight: bold;
+}
+
+.areaUltimoPedido {
+    display: flex;
+    background-color: #F66701;
+    border-radius: 15px;
+    padding: 18px 12px;
+    position: relative;
+    width: clamp(334px, 100%, 412px);
+    flex-shrink: 0;
+}
+
+.infoTrabalhorPedido {
+    display: flex;
+}
+
+.estrelaPreco {
+    display: flex;
+    margin: 5px 0;
+    height: 20px;
+}
+
+.fotoTrabalhadorPedido {
+    margin-right: 10px;
+}
+
+.infoTrabalhorPedido>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.estrelaPreco ion-icon {
+    margin-right: 3px;
+    font-size: 18px;
+}
+
+p.titulo:nth-child(2) {
+    margin-right: 14px;
+    font-size: 16px;
+}
+
+.precoPedido {
+    color: white;
+    font-size: 16px;
+}
+
+.verPerfil {
+    color: white;
+    text-decoration: underline;
+    font-style: italic;
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    font-size: 16px;
+}
+
+.tituloPedido {
+    font-size: 20px;
+}
+
+.UltimosPedidosDiv {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    gap: 20px;
+}
+
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>p:nth-child(2),
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>p:nth-child(3) {
+    height: fit-content;
+    align-self: flex-end;
 }
