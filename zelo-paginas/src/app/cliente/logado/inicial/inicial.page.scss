@@ -169,6 +169,8 @@
 .local_ultimos_trabalhos ion-card {
     min-width: 180px;
     border-radius: 15px;
+    position: relative;
+    overflow: hidden;
 }
 
 .area_comentario_anonimo {

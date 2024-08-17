@@ -170,6 +170,8 @@
     border-radius: 15px;
     width: clamp(168px, 47%, 200px);
     flex-grow: 1;
+    position: relative;
+    overflow: hidden;
 }
 
 .area_comentario_anonimo {
