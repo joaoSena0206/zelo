@@ -29,7 +29,8 @@
     flex-direction: column;
     align-items: center;
     background: linear-gradient(180deg, #FFB300 0%, #F66701 62%);
-    padding-bottom: 10px;
+    padding: 45px 0;
+    margin-bottom: 50px;
     border-radius: 0 0 25px 25px;
     color: black;
 }
@@ -37,7 +38,6 @@
 .titulo{
     display: flex;
     justify-content: center;
-    padding-top: 31px;
 }
 
 .titulo__voltar{
@@ -70,8 +70,11 @@ h1{
     flex-direction: row;
     width: 100%;
     padding: 5px 40px;
+    margin-bottom: 30px;
     align-items: center;
+    font-weight: bold;
 }
+
 
 .txt_icon{
     display: flex; 
@@ -85,8 +88,7 @@ h1{
 }
 
 .iconeIdentificacao{
-    height: 35px;
-    width: 35px;
+    font-size: 40px;
 }
 
 .iconeAbrir{
