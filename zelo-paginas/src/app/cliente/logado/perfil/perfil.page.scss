@@ -1,5 +1,4 @@
-*
-{
+*{
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -7,24 +6,106 @@
     padding: 0;
 }
 
-.content__seta {
-    font-size: 30px;
+.content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.estrelas
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    bottom: -10px;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #FFB300 0%, #F66701 62%);
+    padding-bottom: 10px;
+    border-radius: 0 0 25px 25px;
+    color: black;
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    padding-top: 31px;
+}
+
+.titulo__voltar{
     position: absolute;
     top: 31px;
     left: 31px;
+    font-size: 30px;
 }
 
-.menu
-{
-    font-size: 33px;
-    position: absolute;
-    top: 31px;
-    right: 31px;
+h1{
+    margin: 0;
 }
 
-.div_perfil
-{
+.area_foto_perfil{
+    display: flex;
+    justify-content: center;
+    margin-top: 31px;
+    margin-bottom: 48px;
     position: relative;
-    padding: 31px 31px;
-    background: linear-gradient(180deg, #FFB300 0%, #F66701 62%);
+}
+
+.foto_perfil{
+    height: 140px;
+    width: 140px;
+}
+
+.area_btn{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    padding: 5px 40px;
+    align-items: center;
+}
+
+.txt_icon{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.txt{
+    margin-left: 15px;
+    font-size: 20px;
+}
+
+.iconeIdentificacao{
+    height: 35px;
+    width: 35px;
+}
+
+.iconeAbrir{
+    height: 30px;
+    width: 30px;
+    transform: scaleX(-1);
+}
+
+.icone_editar{
+    position: absolute;
+    font-size: 30px;
+    color: black;  
+    top: 10px;
+    right: 0;
+}
+
+.ion_list{
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
