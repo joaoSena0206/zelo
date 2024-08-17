@@ -1,0 +1,415 @@
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+}
+
+.nm_titulo {
+    color: #f66701;
+}
+
+.content {
+    padding: 22px 22px 100px 22px;
+}
+
+.Clicado {
+    background-color: #F66701;
+    padding: 10px;
+    border-radius: 10px;
+    stroke: white;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.footer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}
+
+.btn_situacao_trabalhador {
+    width: 100%;
+    --background: #ff1200;
+    border-radius: 15px;
+    display: flex;
+    justify-content: start;
+    position: relative;
+}
+
+.img_btn_situacao {
+    margin-right: 20px;
+    position: absolute;
+    left: 0;
+}
+
+.título_ultimos_pedidos {
+    display: flex;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0;
+    margin-bottom: 12px;
+}
+
+.título_ultimos_pedidos p {
+    font-size: 14px;
+    font-style: italic;
+    text-decoration: underline;
+    color: #F66701;
+}
+
+.título_ultimos_pedidos h3 {
+    font-size: 18px;
+}
+
+.local_ultimos_trabalhos {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.info_trabalhador {
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    margin-left: 19px;
+    margin-bottom: 21px;
+    color: black;
+}
+
+.fundoLaranja {
+    background-color: #F66701;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    margin-right: 12px;
+    width: 20px;
+}
+
+.divInfos {
+    padding: 12px 35px;
+    padding-left: 0;
+    font-size: 15px;
+}
+
+.avaliacaoDiv {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.avaliacaoDiv p {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.estrelas {
+    display: flex;
+    font-size: 18px;
+    padding: 0;
+    margin-left: 8px;
+    height: fit-content;
+}
+
+.nome_trabalhador {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+.div_trabalhadores {
+    display: flex;
+    overflow-x: scroll;
+    padding: 10px 0;
+    scrollbar-width: none;
+    gap: 20px;
+}
+
+.div_trabalhadores figure {
+    position: relative;
+    width: 100%;
+    height: 336px;
+    overflow: hidden;
+}
+
+.div_trabalhadores img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+}
+
+.div_trabalhadores ion-card {
+    flex-shrink: 0;
+    border-radius: 15px;
+    width: clamp(100px, 100%, 412px);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%), inset 0px 4px 4px 0px rgba(0, 0, 0, 25%);
+}
+
+.div_trabalhadores figure {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%), inset 0px 4px 4px 0px rgba(0, 0, 0, 25%);
+    border-radius: 15px;
+}
+
+
+.local_ultimos_trabalhos ion-card {
+    border-radius: 15px;
+    width: clamp(168px, 47%, 200px);
+    flex-grow: 1;
+}
+
+.area_comentario_anonimo {
+    width: 100%;
+    --background: #e4e4e4;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.area_comentario_anonimo div {
+    margin: 10px;
+}
+
+.area_comentario_anonimo div ion-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.ion_tabs {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.ion_tab_bar {
+    height: 100%;
+}
+
+.imgFooter {
+    height: 40px;
+    width: 40px;
+}
+
+.img_pedido {
+    width: 100%;
+}
+
+.nm_cliente_pedido {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.form__btn {
+    --background: #cb2316;
+    --border-radius: 26px;
+    --padding-start: 71px;
+    --padding-end: 71px;
+    --padding-top: 20px;
+    --padding-bottom: 20px;
+
+    text-transform: none;
+    font-size: 22px;
+    font-weight: 700;
+    align-self: center;
+    margin-top: 36px;
+    width: clamp(200px, 300px, 80%);
+}
+
+.poupop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 25px;
+    width: 350px;
+    height: 210px;
+    margin: auto;
+}
+
+.poupop h1 {
+    text-align: center;
+}
+
+ion-modal#example-modal {
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal ion-icon {
+    margin-right: 6px;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 4px 0;
+
+    color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+}
+
+.btn_situacao_trabalhador_disponivel {
+    width: 100%;
+    --background: #34c800;
+    border-radius: 15px;
+    display: flex;
+    justify-content: start;
+    position: relative;
+}
+
+.ferramenta-chave {
+    font-size: 31px;
+    margin-bottom: 10px;
+}
+
+.divAnuncio {
+    padding: 19px;
+    color: black;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.divAnuncio h1 {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+/* .divAnuncio div
+{
+    max-width: 193px;
+} */
+
+
+.divAnuncio ion-button {
+    --background: #F66701;
+    --border-radius: 15px;
+    --padding-top: 20px;
+    --padding-bottom: 20px;
+    --padding-start: 9px;
+    --padding-end: 9px;
+    --box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%), inset 0px 4px 4px 0px rgba(0, 0, 0, 25%);
+
+    text-transform: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.divAnuncioInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.titulo {
+    font-weight: bold;
+}
+
+.areaUltimoPedido {
+    display: flex;
+    background-color: #F66701;
+    border-radius: 15px;
+    padding: 18px 12px;
+    position: relative;
+    width: clamp(334px, 100%, 412px);
+    flex-shrink: 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%);
+}
+
+.infoTrabalhorPedido {
+    display: flex;
+}
+
+.estrelaPreco {
+    display: flex;
+    margin: 5px 0;
+    height: 20px;
+}
+
+.fotoTrabalhadorPedido {
+    margin-right: 10px;
+}
+
+.infoTrabalhorPedido>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.estrelaPreco ion-icon {
+    margin-right: 3px;
+    font-size: 18px;
+}
+
+p.titulo:nth-child(2) {
+    margin-right: 14px;
+    font-size: 16px;
+}
+
+.precoPedido {
+    color: white;
+    font-size: 16px;
+}
+
+.verPerfil {
+    color: white;
+    text-decoration: underline;
+    font-style: italic;
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    font-size: 16px;
+}
+
+.tituloPedido {
+    font-size: 20px;
+}
+
+.UltimosPedidosDiv {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    gap: 20px;
+}
+
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>p:nth-child(2),
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>p:nth-child(3) {
+    height: fit-content;
+    align-self: flex-end;
+}
+
+
+/* @media screen and (min-width: 400px)
+{
+    .local_ultimos_trabalhos ion-card
+    {
+        flex-grow: 0;
+    }
+} */
