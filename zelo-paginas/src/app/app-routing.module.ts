@@ -54,7 +54,11 @@ const routes: Routes = [
   {
     path: 'privacidade',
     loadChildren: () => import('./cliente/logado/perfil-cliente/privacidade/privacidade.module').then( m => m.PrivacidadePageModule)
+  },  {
+    path: 'historico',
+    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoPageModule)
   },
+
 
 
 ];
