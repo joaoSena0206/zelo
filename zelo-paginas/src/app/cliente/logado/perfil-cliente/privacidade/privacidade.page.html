@@ -10,7 +10,7 @@
         </div>
     </ion-header>
 
-    <ion-accordion-group>
+    <ion-accordion-group class="ion_accordion_group">
         <ion-accordion value="first">
             <ion-item slot="header" class="div_titulo">
                 <h1>Meus dados</h1>
@@ -19,33 +19,108 @@
             <div slot="content" class="geral">
                 <div class="area_dado">
                     <p class="txt">Nome</p>
-                    <ion-input class="input" [disabled]="true" placeholder="Marcos Vinicius Oliveira Santiago">
+                    <ion-input class="input" [disabled]="true" placeholder="Nome" value="Maria Oliveira">
                         <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                     </ion-input>
                 </div>
 
                 <div class="area_dado">
                     <p class="txt">Email</p>
-                    <ion-input class="input" [disabled]="true" placeholder="marcos@gmail.com">
+                    <ion-input class="input" [disabled]="true" placeholder="Email" value="maria@gmail.com">
                         <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                     </ion-input>
                 </div>
 
                 <div class="area_dado">
                     <p class="txt">Telefone</p>
-                    <ion-input class="input" [disabled]="true" placeholder="(13) 9856-7453">
+                    <ion-input class="input" [disabled]="true" placeholder="Telefone" value="(13) 98566-7453">
                         <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                     </ion-input>
                 </div>
 
                 <div class="area_dado">
                     <p class="txt">Data de Nascimento</p>
-                    <ion-input class="input" [disabled]="true" placeholder="27/08/1999"></ion-input>
+                    <ion-input class="input" [disabled]="true" placeholder="Data de nascimento"
+                        value="27/08/1999"></ion-input>
+                </div>
+
+                <div class="area_dado">
+                    <p class="txt">CPF</p>
+                    <ion-input class="input" [disabled]="true" placeholder="CPF" value="324.193.529-83"></ion-input>
                 </div>
 
                 <div class="area_dado">
                     <p class="txt">Senha</p>
                     <ion-input type="password" class="input" [disabled]="true" value="oowdwedewd">
+                        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                    </ion-input>
+                </div>
+            </div>
+        </ion-accordion>
+    </ion-accordion-group>
+    <ion-accordion-group class="ion_accordion_group">
+        <ion-accordion value="second">
+            <ion-item slot="header" class="div_titulo">
+                <h1>Endereço</h1>
+            </ion-item>
+
+            <div slot="content" class="geral">
+                <div class="div_lado">
+                    <div class="area_dado identificacao_cep">
+                        <p class="txt">Identificação</p>
+                        <ion-input class="input" [disabled]="true" placeholder="Identificação" value="Casa">
+                            <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                        </ion-input>
+                    </div>
+
+                    <div class="area_dado identificacao_cep">
+                        <p class="txt">CEP</p>
+                        <ion-input class="input" [disabled]="true" placeholder="CEP" value="11360-400">
+                            <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                        </ion-input>
+                    </div>
+                </div>
+
+                <div class="div_lado">
+                    <div class="area_dado cep_bairro estado">
+                        <p class="txt">Estado</p>
+                        <ion-input class="input" [disabled]="true" placeholder="Estado" value="SP"></ion-input>
+                    </div>
+
+                    <div class="area_dado input_padrao">
+                        <p class="txt">Cidade</p>
+                        <ion-input class="input" [disabled]="true" placeholder="Cidade" value="Santos"></ion-input>
+                    </div>
+
+                    <div class="area_dado input_padrao">
+                        <p class="txt">Bairro</p>
+                        <ion-input class="input" [disabled]="true" placeholder="Bairro" value="Jockey Club"></ion-input>
+                    </div>
+                </div>
+
+                <div class="div_lado">
+                    <div class="area_dado input_padrao">
+                        <p class="txt">Rua</p>
+                        <ion-input class="input" [disabled]="true" placeholder="Rua"
+                            value="Rua Anadir Dias de Carvalho"></ion-input>
+                    </div>
+
+                    <div class="area_dado numero">
+                        <p class="txt">Número</p>
+                        <ion-input class="input" [disabled]="true" placeholder="Número" value="342"></ion-input>
+                    </div>
+                </div>
+
+                <div class="area_dado">
+                    <p class="txt">Complemento</p>
+                    <ion-input class="input" [disabled]="true" placeholder="Complemento" value="">
+                        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                    </ion-input>
+                </div>
+
+                <div class="area_dado">
+                    <p class="txt">Ponto de Referência</p>
+                    <ion-input class="input" [disabled]="true" placeholder="Referência" value="">
                         <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                     </ion-input>
                 </div>
