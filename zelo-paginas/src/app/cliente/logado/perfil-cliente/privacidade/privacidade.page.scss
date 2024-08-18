@@ -6,12 +6,6 @@
     padding: 0;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
 .header {
     display: flex;
     justify-content: center;
@@ -33,11 +27,6 @@
     top: 31px;
     left: 31px;
     font-size: 30px;
-}
-
-.seta_abaixar {
-    font-size: 30px;
-    transform: rotate(270deg);
 }
 
 .div_titulo {
@@ -110,10 +99,6 @@ ion-accordion {
     bottom: 12px;
     height: 20px;
     width: 20px;
-}
-
-div.area_dado:nth-child(6) {
-    margin-bottom: 0;
 }
 
 .area_dado:last-of-type {
