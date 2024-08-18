@@ -2,6 +2,8 @@
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+    margin: 0;
+    padding: 0;
 }
 
 .content{
@@ -10,27 +12,39 @@
     height: 100%;
 }
 
+.estrelas
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    bottom: -10px;
+}
+
 .header{
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(180deg, #CB2316 38%, #7D130A 100%);
-    padding-bottom: 10px;
+    background: linear-gradient(180deg, #FFB300 0%, #F66701 62%);
+    padding: 45px 0;
+    margin-bottom: 50px;
     border-radius: 0 0 25px 25px;
-    color: white;
+    color: black;
 }
 
 .titulo{
     display: flex;
     justify-content: center;
-    padding-top: 31px;
 }
 
-.titulo img{
+.titulo__voltar{
     position: absolute;
     top: 31px;
     left: 31px;
+    font-size: 30px;
 }
 
 h1{
@@ -40,7 +54,8 @@ h1{
 .area_foto_perfil{
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 31px;
+    margin-bottom: 48px;
     position: relative;
 }
 
@@ -55,8 +70,11 @@ h1{
     flex-direction: row;
     width: 100%;
     padding: 5px 40px;
+    margin-bottom: 30px;
     align-items: center;
+    font-weight: bold;
 }
+
 
 .txt_icon{
     display: flex; 
@@ -70,8 +88,7 @@ h1{
 }
 
 .iconeIdentificacao{
-    height: 35px;
-    width: 35px;
+    font-size: 40px;
 }
 
 .iconeAbrir{
@@ -82,11 +99,10 @@ h1{
 
 .icone_editar{
     position: absolute;
-    height: 20px;
-    width: 20px;
-    fill: black;
-    bottom: 10px;
-    right: 25px;
+    font-size: 30px;
+    color: black;  
+    top: 10px;
+    right: 0;
 }
 
 .ion_list{
