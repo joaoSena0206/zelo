@@ -142,3 +142,24 @@ ion-accordion {
 {
     width: 100%;
 }
+
+.btn
+{
+    --background: #F66701;
+    --border-radius: 25px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 50px;
+    --padding-end: 50px;
+
+    font-size: 20px;
+    text-transform: none;
+}
+
+.divBtn
+{
+    margin-bottom: 31px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
