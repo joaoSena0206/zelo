@@ -15,7 +15,6 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(180deg, #CB2316 38%, #7D130A 100%);
     padding-bottom: 10px;
     border-radius: 0 0 25px 25px;
     color: white;
@@ -60,6 +59,7 @@ h1{
 
 .geral{
     padding: 15px;
+    border-bottom: 2px solid #CB2316;
 }
 
 .area_dado{
