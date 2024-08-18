@@ -6,6 +6,10 @@
     padding: 0;
 }
 
+ion-content {
+    --background: black;
+}
+
 .header {
     display: flex;
     justify-content: center;
@@ -83,10 +87,6 @@ h1 {
     font-size: 13px;
 }
 
-ion-accordion {
-    max-width: 600px;
-}
-
 .txt {
     margin: 5px 10px;
     font-size: 15px;
@@ -109,42 +109,37 @@ ion-accordion {
     display: flex;
     justify-content: center;
     border-bottom: 2px solid #F66701;
+    max-width: 600px;
+    width: 100%;
 }
 
-.identificacao_cep
-{
+.identificacao_cep {
     width: calc(50% - 10px);
 }
 
-.div_lado
-{
+.div_lado {
     display: flex;
     gap: 20px;
     margin-bottom: 15px;
 }
 
-.div_lado .area_dado
-{
+.div_lado .area_dado {
     margin: 0;
 }
 
-.estado
-{
+.estado {
     width: clamp(70px, 100%, 100px);
 }
 
-.numero
-{
+.numero {
     width: clamp(80px, 100%, 100px);
 }
 
-.input_padrao
-{
+.input_padrao {
     width: 100%;
 }
 
-.btn
-{
+.btn {
     --background: #F66701;
     --border-radius: 25px;
     --padding-top: 10px;
@@ -156,10 +151,33 @@ ion-accordion {
     text-transform: none;
 }
 
-.divBtn
-{
-    margin-bottom: 31px;
+.divBtn {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 31px;
+}
+
+.grupo {
+    background-color: white;
+    border-radius: 25px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+ion-content {
+    --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
 }
