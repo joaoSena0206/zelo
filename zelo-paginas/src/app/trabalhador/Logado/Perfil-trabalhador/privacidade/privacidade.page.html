@@ -1,51 +1,100 @@
 <ion-content [fullscreen]="true">
-  <ion-header class="header ion-no-border" [translucent]="true">
-    <div class="titulo">
-      <img src="../../../../assets/icon/cliente/down-removebg-preview 8.svg" alt="">
-    </div>
-    <div class="area_foto_perfil">
-      <img class="icone_editar" src="../../../assets/icon/Trabalhador/icone perfil/editar.png">
-      <img class="foto_perfil" src="../../../assets/icon/Trabalhador/imagens/fotohomem.png" alt="">
-    </div>
-  </ion-header>
+  <div class="wrapper">
+      <div class="grupo">
+          <ion-header class="header ion-no-border" [translucent]="true">
+              <div class="titulo">
+                  <ion-icon class="titulo__voltar"
+                      src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+              </div>
+              <div class="area_foto_perfil">
+                  <ion-icon class="icone_editar" src="../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
+                  <img class="foto_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotohomem.png" alt="">
+              </div>
+          </ion-header>
 
-  <div class="geral">
+          <div class="content">
+              <ion-accordion-group class="ion_accordion_group">
+                  <ion-accordion value="first">
+                      <ion-item slot="header" class="div_titulo">
+                          <h1>Meus dados</h1>
+                      </ion-item>
 
-    <h1 style="margin: 0 0 20px 10px;">Meus dados</h1>
+                      <div slot="content" class="geral">
+                          <div class="area_dado">
+                              <p class="txt">Nome</p>
+                              <ion-input class="input" [disabled]="true" placeholder="Nome" value="Maria Oliveira">
+                                  <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                              </ion-input>
+                          </div>
 
-    <div class="area_dado">
-      <p class="txt">Nome</p>
-      <ion-input class="input" [disabled]="true" placeholder="Marcos Vinicius Oliveira Santiago">
-        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-      </ion-input>
-    </div>
+                          <div class="area_dado">
+                              <p class="txt">Email</p>
+                              <ion-input class="input" [disabled]="true" placeholder="Email" value="maria@gmail.com">
+                                  <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                              </ion-input>
+                          </div>
 
-    <div class="area_dado">
-      <p class="txt">Email</p>
-      <ion-input class="input" [disabled]="true" placeholder="marcos@gmail.com">
-        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-      </ion-input>
-    </div>
+                          <div class="area_dado">
+                              <p class="txt">Telefone</p>
+                              <ion-input class="input" [disabled]="true" placeholder="Telefone"
+                                  value="(13) 98566-7453">
+                                  <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                              </ion-input>
+                          </div>
 
-    <div class="area_dado">
-      <p class="txt">Telefone</p>
-      <ion-input class="input" [disabled]="true" placeholder="(13) 9856-7453">
-        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-      </ion-input>
-    </div>
+                          <div class="area_dado">
+                              <p class="txt">Data de Nascimento</p>
+                              <ion-input class="input" [disabled]="true" placeholder="Data de nascimento"
+                                  value="27/08/1999"></ion-input>
+                          </div>
 
-    <div class="area_dado">
-      <p class="txt">Data de Nascimento</p>
-      <ion-input class="input" [disabled]="true" placeholder="27/08/1999"></ion-input>
-    </div>
+                          <div class="area_dado">
+                              <p class="txt">CPF</p>
+                              <ion-input class="input" [disabled]="true" placeholder="CPF"
+                                  value="324.193.529-83"></ion-input>
+                          </div>
+                      </div>
+                  </ion-accordion>
+              </ion-accordion-group>
+              
+              <ion-accordion-group class="ion_accordion_group">
+                  <ion-accordion value="second">
+                      <ion-item slot="header" class="div_titulo">
+                          <h1>Alterar Senha</h1>
+                      </ion-item>
 
-    <div class="area_dado">
-      <p class="txt">Senha</p>
-      <ion-input type="password" class="input" [disabled]="true" value="oowdwedewd">
-        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-      </ion-input>
-    </div>
+                      <div slot="content" class="geral">
+                          <div class="area_dado">
+                              <p class="txt">Senha atual</p>
+                              <ion-input class="input" [disabled]="true" type="password" placeholder="Senha atual"
+                                  value="">
+                                  <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+                              </ion-input>
+                          </div>
 
+                          <div class="area_dado">
+                              <p class="txt">Nova senha</p>
+                              <ion-input class="input" [disabled]="true" type="password" placeholder="Nova senha"
+                                  value="">
+                                  <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+                              </ion-input>
+                          </div>
 
+                          <div class="area_dado">
+                              <p class="txt">Confirmar nova senha</p>
+                              <ion-input class="input" [disabled]="true" type="password"
+                                  placeholder="Confirmar nova senha" value="">
+                                  <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+                              </ion-input>
+                          </div>
+                      </div>
+                  </ion-accordion>
+              </ion-accordion-group>
+
+              <div class="divBtn">
+                  <ion-button disabled="true" class="btn">Salvar</ion-button>
+              </div>
+          </div>
+      </div>
   </div>
 </ion-content>

@@ -1,16 +1,16 @@
-*{
+* {
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+    margin: 0;
+    padding: 0;
 }
 
-.content{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+ion-content {
+    --background: black;
 }
 
-.header{
+.header {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -20,73 +20,164 @@
     color: white;
 }
 
-.titulo{
+.titulo {
     display: flex;
     justify-content: center;
     padding-top: 31px;
 }
 
-.titulo img{
+.titulo__voltar {
     position: absolute;
     top: 31px;
     left: 31px;
+    font-size: 30px;
 }
 
-h1{
+.div_titulo {
+    display: flex;
+    justify-content: space-between;
+}
+
+h1 {
     margin: 0;
 }
 
-.area_foto_perfil{
+.area_foto_perfil {
     display: flex;
     justify-content: center;
     margin-top: 10px;
     position: relative;
 }
 
-.foto_perfil{
+.foto_perfil {
     height: 140px;
     width: 140px;
 }
 
-.icone_editar{
+.icone_editar {
     position: absolute;
-    height: 20px;
-    width: 20px;
-    fill: black;
-    bottom: 10px;
-    right: 25px;
+    font-size: 30px;
+    color: black;
+    top: 10px;
+    right: 0;
 }
 
-.geral{
+.geral {
     padding: 15px;
-    border-bottom: 2px solid #CB2316;
+    padding-bottom: 20px;
+    padding-top: 0;
 }
 
-.area_dado{
+.geral h1 {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.area_dado {
     margin: 15px 0;
 }
 
-.input{
+.input {
     background-color: #D9D9D9;
     border-radius: 23px;
-    
+
     opacity: 1;
-    --placeholder-opacity: 1;
     --padding-start: 25px;
     --padding-end: 25px;
     font-size: 13px;
 }
 
-.txt{
+.txt {
     margin: 5px 10px;
     font-size: 15px;
     font-weight: bold;
 }
 
-.iconeEditar{
+.iconeEditar {
     position: absolute;
     right: 25px;
     bottom: 12px;
     height: 20px;
     width: 20px;
+}
+
+.area_dado:last-of-type {
+    margin: 0;
+}
+
+.ion_accordion_group {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #F66701;
+    max-width: 600px;
+    width: 100%;
+}
+
+.identificacao_cep {
+    width: calc(50% - 10px);
+}
+
+.div_lado {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.div_lado .area_dado {
+    margin: 0;
+}
+
+.estado {
+    width: clamp(70px, 100%, 100px);
+}
+
+.numero {
+    width: clamp(80px, 100%, 100px);
+}
+
+.input_padrao {
+    width: 100%;
+}
+
+.btn {
+    --background: #F66701;
+    --border-radius: 25px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 50px;
+    --padding-end: 50px;
+
+    font-size: 20px;
+    text-transform: none;
+}
+
+.divBtn {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 31px;
+}
+
+.grupo {
+    background-color: white;
+    border-radius: 25px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+ion-content {
+    --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
 }
