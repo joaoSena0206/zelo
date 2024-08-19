@@ -21,7 +21,7 @@ export class InicialPage implements OnInit {
       botaoSituacao?.classList.add('btn_situacao_trabalhador');
       botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
 
-      img?.setAttribute('src', '../../../assets/icon/Trabalhador/IconeOff.svg');
+      img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
 
       this.situacao = 'Offline';
       this.msgTrabalho = 'Deseja trabalhar agora?';
@@ -31,7 +31,7 @@ export class InicialPage implements OnInit {
 
       img?.setAttribute(
         'src',
-        '../../../assets/icon/Trabalhador/IconeAtivo.svg'
+        '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
       );
 
       this.situacao = 'Disponível';
