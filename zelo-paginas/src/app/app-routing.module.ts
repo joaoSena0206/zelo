@@ -44,15 +44,15 @@ const routes: Routes = [
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./trabalhador/Logado/perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
   {
     path: 'privacidade',
-    loadChildren: () => import('./trabalhador/Logado/privacidade/privacidade.module').then( m => m.PrivacidadePageModule)
+    loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/privacidade/privacidade.module').then( m => m.PrivacidadePageModule)
   },
   {
     path: 'ultimos-pedidos',
-    loadChildren: () => import('./trabalhador/Logado/ultimos-pedidos/ultimos-pedidos.module').then( m => m.UltimosPedidosPageModule)
+    loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/ultimos-pedidos/ultimos-pedidos.module').then( m => m.UltimosPedidosPageModule)
   }
 
 
