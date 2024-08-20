@@ -38,19 +38,20 @@ h1 {
     display: flex;
     background-color: #F66701;
     border-radius: 15px;
-    padding: 18px 12px;
+    padding: 30px 12px;
     position: relative;
     width: 100%;
     max-width: 600px;
     justify-content: space-between;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%);
-    padding-top: 40px;
+    flex-direction: column;
+    padding-bottom: 18px;
 }
 
 .infoTrabalhorPedido {
     display: flex;
     width: fit-content;
-    align-items: enter;
+    align-items: center;
 }
 
 .fotoTrabalhadorPedido {
@@ -63,6 +64,11 @@ h1 {
     font-weight: bold;
 }
 
+.areaUltimoPedido__trabalho
+{
+    font-size: clamp(8px, 4vw, 16px) !important;
+}
+
 .tituloPedido {
     font-size: clamp(10px, 5vw, 20px);
 }
@@ -70,23 +76,38 @@ h1 {
 .estrelaPreco {
     display: flex;
     margin: 5px 0;
+    margin-bottom: 0;
     height: 20px;
-    align-items: center;
 }
 
 .precoPedido {
     color: white;
-    font-size: clamp(8px, 4vw, 16px);
+    font-size: clamp(8px, 4vw, 16px) !important;
 }
 
 .verPerfil {
     color: white;
     text-decoration: underline;
     font-style: italic;
-    position: absolute;
-    top: 5px;
-    right: 12px;
+
     font-size: 16px;
+}
+
+.div_verPerfil
+{
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.div_verPerfil ion-icon
+{
+    font-size: 30px;
+    margin-top: 15px;
+    color: #ed1101;
 }
 
 .estrelaPreco ion-icon {
@@ -102,7 +123,6 @@ h1 {
 }
 
 p.titulo:nth-child(2) {
-    margin-right: 14px;
     font-size: clamp(8px, 4vw, 16px);
 }
 
@@ -145,7 +165,7 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
 
 .areaUltimoPedido__data {
     position: absolute;
-    top: 5px;
+    top: 15px;
     left: 12px;
     font-weight: bold;
     font-size: 16px;
@@ -183,4 +203,42 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
     height: 40px;
     width: 40px;
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.areaUltimoPedido__div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.infoTrabalhorPedido__servico {
+    margin-top: 2px;
+    font-size: clamp(8px, 4vw, 16px);
+}
+
+.divInfoTrabalhador
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.divInfoTrabalhador p
+{
+    font-size: clamp(8px, 4vw, 16px);
+}
+
+.areaUltimoPedido__div__distancia
+{
+    font-size: clamp(10px, 5vw, 20px);
+}
+
+.areaUltimoPedido__div__btn
+{
+    --background: white;
+    --border-radius: 20px;
+
+    text-transform: none;
+    color: black;
 }

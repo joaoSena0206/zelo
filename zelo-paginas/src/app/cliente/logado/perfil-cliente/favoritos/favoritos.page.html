@@ -3,13 +3,13 @@
         <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 
         <div class="areaPedidos">
-            <h1>Últimos pedidos</h1>
+            <h1>Favoritos</h1>
 
             <div class="wrapper">
                 <div class="btns_filtro">
-                    <ion-button class="btn_filtro btn_filtro--ativado">Mais próximos</ion-button>
-                    <ion-button class="btn_filtro">Melhor avaliados</ion-button>
-                    <ion-button class="btn_filtro">Mais baratos</ion-button>
+                    <ion-button class="btn_filtro btn_filtro--ativado">Recentes</ion-button>
+                    <ion-button class="btn_filtro">Antigos</ion-button>
+                    <ion-button class="btn_filtro">Agrupar por tipo</ion-button>
                 </div>
             </div>
 
@@ -22,20 +22,34 @@
 
                         <div>
                             <h3 class="titulo tituloPedido">Breno Santos</h3>
-
-                            <div class="estrelaPreco">
-                                <ion-icon name="star" style="color: white;"></ion-icon>
-                                <p class="titulo">3.5</p>
-
+                            <div style="display: flex; gap: 10px;">
+                                <h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Eletricista</h3>
                                 <p class="titulo precoPedido">R$ 45,00</p>
                             </div>
 
-                            <h3 class="titulo tituloPedido">Eletricista</h3>
+
+                            <div class="divInfoTrabalhador">
+                                <div class="estrelaPreco">
+                                    <ion-icon name="star" style="color: white;"></ion-icon>
+                                    <p class="titulo">3.5</p>
+                                </div>
+
+                                <p class="infoTrabalhorPedido__servico">Serviço(s): 3</p>
+                            </div>
+
                         </div>
                     </div>
 
-                    <p class="areaUltimoPedido__data">10/08/2024</p>
-                    <p class="verPerfil">Ver perfil</p>
+                    <div class="areaUltimoPedido__div">
+                        <p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+
+                        <ion-button class="areaUltimoPedido__div__btn">Contratar</ion-button>
+                    </div>
+
+                    <div class="div_verPerfil">
+                        <p class="verPerfil">Ver perfil</p>
+                        <ion-icon src="../../../../../assets/icon/cliente/coracao.svg"></ion-icon>
+                    </div>
                 </div>
 
                 <div class="areaUltimoPedido">
@@ -46,20 +60,34 @@
 
                         <div>
                             <h3 class="titulo tituloPedido">Sandro Rodrigues</h3>
-
-                            <div class="estrelaPreco">
-                                <ion-icon name="star" style="color: white;"></ion-icon>
-                                <p class="titulo">2.5</p>
-
+                            <div style="display: flex; gap: 10px;">
+                                <h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Encanador</h3>
                                 <p class="titulo precoPedido">R$ 50,00</p>
                             </div>
 
-                            <h3 class="titulo tituloPedido">Encanador</h3>
+
+                            <div class="divInfoTrabalhador">
+                                <div class="estrelaPreco">
+                                    <ion-icon name="star" style="color: white;"></ion-icon>
+                                    <p class="titulo">2.5</p>
+                                </div>
+
+                                <p class="infoTrabalhorPedido__servico">Serviço(s): 4</p>
+                            </div>
+
                         </div>
                     </div>
 
-                    <p class="areaUltimoPedido__data">05/08/2024</p>
-                    <p class="verPerfil">Ver perfil</p>
+                    <div class="areaUltimoPedido__div">
+                        <p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+
+                        <ion-button class="areaUltimoPedido__div__btn">Contratar</ion-button>
+                    </div>
+
+                    <div class="div_verPerfil">
+                        <p class="verPerfil">Ver perfil</p>
+                        <ion-icon src="../../../../../assets/icon/cliente/coracao.svg"></ion-icon>
+                    </div>
                 </div>
             </div>
         </div>
