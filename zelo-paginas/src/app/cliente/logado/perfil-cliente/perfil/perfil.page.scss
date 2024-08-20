@@ -1,4 +1,4 @@
-*{
+* {
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -6,14 +6,13 @@
     padding: 0;
 }
 
-.content{
+.content {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.estrelas
-{
+.estrelas {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +22,7 @@
     bottom: -10px;
 }
 
-.header{
+.header {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -34,36 +33,40 @@
     color: black;
 }
 
-.titulo{
+.titulo {
     display: flex;
     justify-content: center;
 }
 
-.titulo__voltar{
+.titulo__voltar {
     position: absolute;
     top: 31px;
     left: 31px;
     font-size: 30px;
 }
 
-h1{
+h1 {
     margin: 0;
 }
 
-.area_foto_perfil{
+.area_foto_perfil {
     display: flex;
     justify-content: center;
     margin-top: 31px;
     margin-bottom: 48px;
     position: relative;
+
 }
 
-.foto_perfil{
+.foto_perfil {
     height: 140px;
     width: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
 }
 
-.area_btn{
+.area_btn {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -74,42 +77,41 @@ h1{
     font-weight: bold;
 }
 
-.btn_sair
-{
+.btn_sair {
     margin-bottom: 0;
 }
 
 
-.txt_icon{
-    display: flex; 
-    justify-content: center; 
+.txt_icon {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.txt{
+.txt {
     margin-left: 15px;
     font-size: 20px;
 }
 
-.iconeIdentificacao{
+.iconeIdentificacao {
     font-size: 40px;
 }
 
-.iconeAbrir{
+.iconeAbrir {
     height: 30px;
     width: 30px;
     transform: scaleX(-1);
 }
 
-.icone_editar{
+.icone_editar {
     position: absolute;
     font-size: 30px;
-    color: black;  
+    color: black;
     top: 10px;
     right: 0;
 }
 
-.ion_list{
+.ion_list {
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
