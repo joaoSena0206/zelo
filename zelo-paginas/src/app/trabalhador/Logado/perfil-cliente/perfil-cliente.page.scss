@@ -67,39 +67,6 @@ h1{
     border: solid 1px black;
 }
 
-.area_btn{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    width: 100%;
-    padding: 5px 40px;
-    margin-bottom: 30px;
-    align-items: center;
-    font-weight: bold;
-}
-
-
-.txt_icon{
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-}
-
-.txt{
-    margin-left: 15px;
-    font-size: 20px;
-}
-
-.iconeIdentificacao{
-    font-size: 40px;
-}
-
-.iconeAbrir{
-    height: 30px;
-    width: 30px;
-    transform: scaleX(-1);
-}
-
 .icone_editar{
     position: absolute;
     font-size: 30px;
@@ -108,9 +75,20 @@ h1{
     right: 0;
 }
 
-.ion_list{
-    flex-grow: 1;
+.div_titulo{
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
+}
+
+.area_titulo h1{
+    font-size: 20px;
+}
+
+.estrelas_avaliações{
+    display: flex;
+    margin: 5px 0;
+}
+
+.estrelas_avaliações p{
+    margin-left: 10px;
 }

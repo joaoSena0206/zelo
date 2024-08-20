@@ -1,0 +1,35 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+}
+
+.content{
+    padding: 15px;
+}
+
+.content__seta
+{
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 31px;
+    left: 31px;
+}
+
+.content__h1
+{
+    font-weight: 700;
+    font-size: 24px;
+    margin: 100px 0 20px 0;
+    text-align: center;
+}
+
+ion-card{
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 15px;
+}

@@ -52,6 +52,9 @@ h1 {
 .foto_perfil {
     height: 140px;
     width: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
 }
 
 .icone_editar {
@@ -108,7 +111,7 @@ h1 {
 .ion_accordion_group {
     display: flex;
     justify-content: center;
-    border-bottom: 2px solid #F66701;
+    border-bottom: 2px solid #CB2316;
     max-width: 600px;
     width: 100%;
 }
@@ -140,7 +143,7 @@ h1 {
 }
 
 .btn {
-    --background: #F66701;
+    --background: #CB2316;
     --border-radius: 25px;
     --padding-top: 10px;
     --padding-bottom: 10px;
@@ -179,5 +182,5 @@ h1 {
 }
 
 ion-content {
-    --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
+    --background: linear-gradient(90deg, #CB2316 38%, #65110B 120%);
 }

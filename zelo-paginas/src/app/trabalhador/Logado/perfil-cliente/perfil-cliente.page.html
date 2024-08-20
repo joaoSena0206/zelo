@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true">
+  <div class="content">
+    <ion-header class="header ion-no-border" [translucent]="true">
+      <div class="titulo">
+        <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+        <h1 style="font-size: 32px; font-weight: bold; color: white;">Perfil</h1>
+      </div>
+      <div class="area_foto_perfil">
+        <img class="foto_perfil" src="../../../../assets/icon/Trabalhador/imagens/fotohomem2.avif" alt="">
+
+        <div class="estrelas">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </div>
+      </div>
+      <p style="font-size: 24px; margin-bottom: 10px; color: white; font-weight: bold;">Marcos Vinicius</p>
+
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <p style="font-size: 15px; color: white;">100 avaliações</p>
+        <p style="font-size: 17px; color: white;">|</p>
+        <p style="font-size: 15px; color: white;">150 serviços realizados</p>
+      </div>
+
+    </ion-header>
+
+
+    <ion-accordion-group class="ion_accordion_group">
+      <ion-accordion value="first">
+        <ion-item slot="header" class="div_titulo">
+          <div class="area_titulo">
+            <h1>Avaliações de Trabalhadores</h1>
+
+            <div class="estrelas_avaliações">
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star-half-outline"></ion-icon>
+              <ion-icon name="star-outline"></ion-icon>
+
+              <p>3,5 de 5,0</p>
+              <p style="font-size: 12px;">(10 avaliações)</p>
+            </div>
+          </div>
+        </ion-item>
+
+        <div slot="content" class="geral">
+          
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    
+  </div>
+
+</ion-content>

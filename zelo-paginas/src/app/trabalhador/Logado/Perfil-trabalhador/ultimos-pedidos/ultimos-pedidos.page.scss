@@ -7,6 +7,10 @@
     color: black;
 }
 
+.content{
+    padding: 15px;
+}
+
 .content__seta
 {
     font-size: 30px;
@@ -27,20 +31,23 @@
 .area_pedido{
     background-color: #D9D9D9;
     border-radius: 25px;
-    width: 380px;
     margin: auto;
     padding: 20px;
     margin-bottom: 20px;
+    max-width: 600px;
 }
 
 .area_sobre_cliente{
     display: flex;
-    justify-content: center;
+    position: relative;
 }
 
 .area_sobre_cliente div img{
     height: 90px;
     width: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
 }
 
 .txt-ver-perfil{
@@ -50,6 +57,9 @@
     align-items: end;
     padding-bottom: 5px;
     text-decoration: underline;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
 }
 
 .area_img img{
