@@ -59,6 +59,11 @@ const routes: Routes = [
     path: 'historico',
     loadChildren: () => import('./cliente/logado/perfil-cliente/historico/historico.module').then( m => m.HistoricoPageModule)
   },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./cliente/logado/perfil-cliente/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
+  },
+
 ];
 
 @NgModule({

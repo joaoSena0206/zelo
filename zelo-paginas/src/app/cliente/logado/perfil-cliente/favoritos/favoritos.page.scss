@@ -45,14 +45,12 @@ h1 {
     justify-content: space-between;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%);
     padding-top: 40px;
-    flex-direction: column;
 }
 
 .infoTrabalhorPedido {
     display: flex;
     width: fit-content;
-    align-items: center;
-    margin-top: 10px;
+    align-items: enter;
 }
 
 .fotoTrabalhadorPedido {
@@ -86,7 +84,7 @@ h1 {
     text-decoration: underline;
     font-style: italic;
     position: absolute;
-    top: 15px;
+    top: 5px;
     right: 12px;
     font-size: 16px;
 }
@@ -104,6 +102,7 @@ h1 {
 }
 
 p.titulo:nth-child(2) {
+    margin-right: 14px;
     font-size: clamp(8px, 4vw, 16px);
 }
 
@@ -146,7 +145,7 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
 
 .areaUltimoPedido__data {
     position: absolute;
-    top: 15px;
+    top: 5px;
     left: 12px;
     font-weight: bold;
     font-size: 16px;
@@ -184,15 +183,4 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
     height: 40px;
     width: 40px;
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-}
-
-.areaUltimoPedido__div {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-}
-
-.infoTrabalhorPedido__servico {
-    margin-top: 2px;
-    font-size: clamp(8px, 4vw, 16px);
 }
