@@ -61,7 +61,12 @@ const routes: Routes = [
   {
     path: 'perfil-cliente',
     loadChildren: () => import('./trabalhador/Logado/perfil-cliente/perfil-cliente.module').then( m => m.PerfilClientePageModule)
+  },
+  {
+    path: 'analisa-servico',
+    loadChildren: () => import('./trabalhador/Logado/Servico/analisa-servico/analisa-servico.module').then( m => m.AnalisaServicoPageModule)
   }
+
 
 
 
