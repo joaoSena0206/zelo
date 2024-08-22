@@ -1,0 +1,83 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+}
+
+.content{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.content__seta
+{
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 31px;
+    left: 31px;
+}
+
+.content__h1
+{
+    font-weight: 700;
+    font-size: 24px;
+    margin: 70px 0 20px 0;
+    text-align: center;
+}
+
+.img_perfil{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
+}
+
+ion-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+ion-icon{
+    font-size: 35px;
+    margin: 0 4px;
+}
+
+.area_texto{
+    height: 150px;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    text-align: start;
+}
+
+h1{
+    font-size: 24px;
+    margin: 8px 0px 12px 0px;
+}
+
+.txt_comentario{
+    margin: 20px 0 8px 0;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: start;
+    width: 90%;
+}
+
+.btn{
+    --background: #64BF7E;
+    color: white;
+    --border-radius: 20px;
+    height: 46px;
+    width: 260px;
+    margin: auto;
+    margin-top: 25px;
+}

@@ -10,12 +10,13 @@
     color: #CB2316;
 }
 
-
-
 .content{
     padding: 25px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    max-width: 600px;
+    margin: auto;
 }
 
 .area_perfil{
@@ -56,6 +57,7 @@ h3{
 .txt_endereco{
     display: flex;
     align-items: center;
+    font-weight: bold;
 }
 
 .img_servico{
@@ -68,7 +70,7 @@ h3{
 
 .descricao_pedido{
     font-size: 16px;
-    padding-bottom: 20px;
+    margin-top: 20px;
 }
 
 .area_btn{
@@ -82,6 +84,7 @@ h3{
     --border-radius: 20px;
     height: 58px;
     width: 160px;
+    margin: auto;
 }
 
 .btn_aceitar{
@@ -90,4 +93,5 @@ h3{
     --border-radius: 20px;
     height: 58px;
     width: 160px;
+    margin: auto;
 }
