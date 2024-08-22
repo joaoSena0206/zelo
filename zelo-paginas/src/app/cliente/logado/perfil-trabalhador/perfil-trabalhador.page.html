@@ -1,0 +1,250 @@
+<ion-content [fullscreen]="true">
+    <div class="content">
+        <ion-header class="header ion-no-border" [translucent]="true">
+            <div class="titulo">
+                <ion-icon class="titulo__voltar"
+                    src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                <h1 style="font-size: 32px; font-weight: bold; color: black;">Perfil</h1>
+            </div>
+            <div class="area_foto_perfil">
+                <img class="foto_perfil" src="../../../../assets/icon/cliente/foto_trabalhador.png" alt="">
+
+                <div class="estrelas">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                </div>
+            </div>
+            <p style="font-size: 24px; margin-bottom: 10px; color: white; font-weight: bold;">Breno Santos</p>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <p style="font-size: 15px; color: white;">10 avaliações</p>
+                <p style="font-size: 17px; color: white;">|</p>
+                <p style="font-size: 15px; color: white;">150 serviços realizados</p>
+            </div>
+
+        </ion-header>
+
+        <ion-accordion-group class="ion_accordion_group" style="margin-bottom: 20px;">
+            <ion-accordion value="first">
+                <ion-item slot="header" class="div_titulo">
+                    <div class="area_titulo">
+                        <h1>Certificados</h1>
+                    </div>
+                </ion-item>
+
+                <div slot="content" class="geral">
+                    <div class="wrapper">
+
+                    </div>
+                </div>
+            </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-accordion-group class="ion_accordion_group">
+            <ion-accordion value="first">
+                <ion-item slot="header" class="div_titulo">
+                    <div class="area_titulo">
+                        <h1>Avaliações de Clientes</h1>
+
+                        <div class="estrelas_avaliações">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star-half-outline"></ion-icon>
+                            <ion-icon name="star-outline"></ion-icon>
+
+                            <p>3,5 de 5,0</p>
+                            <p style="font-size: 12px;">(10 avaliações)</p>
+                        </div>
+                    </div>
+                </ion-item>
+
+                <div slot="content" class="geral">
+                    <div class="wrapper">
+                        <div class="btns_filtro">
+                            <ion-button class="btn_filtro btn_filtro--ativado">Todas</ion-button>
+                            <ion-button class="btn_filtro">
+                                5 <ion-icon name="star-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button class="btn_filtro">
+                                4 <ion-icon name="star-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button class="btn_filtro">
+                                3 <ion-icon name="star-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button class="btn_filtro">
+                                2 <ion-icon name="star-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button class="btn_filtro">
+                                1 <ion-icon name="star-outline"></ion-icon>
+                            </ion-button>
+                        </div>
+                        <ion-card class="card_grafico">
+                            <h1 class="txt_titulo_grafico">Avaliações de Clientes</h1>
+
+                            <div class="estrelas_avaliações_grafico">
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star-half-outline"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                                <p>3,5 de 5,0</p>
+                            </div>
+
+                            <div class="div_grafico">
+                                <ion-row class="linha_grafico">
+                                    <p>5 estrelas</p>
+                                    <div class="div_branca">
+                                        <div style="width: 70%;" class="div_vermelha">
+
+                                        </div>
+                                    </div>
+                                </ion-row>
+                            </div>
+
+                            <div class="div_grafico">
+                                <ion-row class="linha_grafico">
+                                    <p>4 estrelas</p>
+                                    <div class="div_branca">
+                                        <div style="width: 60%;" class="div_vermelha">
+
+                                        </div>
+                                    </div>
+                                </ion-row>
+                            </div>
+
+                            <div class="div_grafico">
+                                <ion-row class="linha_grafico">
+                                    <p>3 estrelas</p>
+                                    <div class="div_branca">
+                                        <div style="width: 40%;" class="div_vermelha">
+
+                                        </div>
+                                    </div>
+                                </ion-row>
+                            </div>
+
+                            <div class="div_grafico">
+                                <ion-row class="linha_grafico">
+                                    <p>2 estrelas</p>
+                                    <div class="div_branca">
+                                        <div style="width: 30%;" class="div_vermelha">
+
+                                        </div>
+                                    </div>
+                                </ion-row>
+                            </div>
+
+                            <div class="div_grafico">
+                                <ion-row class="linha_grafico">
+                                    <p>1 estrelas</p>
+                                    <div class="div_branca">
+                                        <div style="width: 10%;" class="div_vermelha">
+
+                                        </div>
+                                    </div>
+                                </ion-row>
+                            </div>
+
+                        </ion-card>
+                    </div>
+                </div>
+            </ion-accordion>
+        </ion-accordion-group>
+
+        <div class="area_comentario">
+            <ion-row>
+
+                <div style="display: flex; align-items: center;">
+                    <img class="foto_comentario" src="../../../../assets/icon/cliente/foto_perfil.png" alt="">
+                    <p style="margin-left: 10px;">Sandra Rodrigues</p>
+                </div>
+
+                <div style="display: flex;">
+                    <ion-icon name="star"></ion-icon>
+                    <p style="margin-left: 5px;">3.5</p>
+                </div>
+
+            </ion-row>
+
+            <p class="txt_avaliacao">Avaliado em 22/06/2024</p>
+
+            <p class="txt_avaliacao">O cliente expressou um alto nível de satisfação com o serviço prestado, destacando
+                a eficiência e o profissionalismo da equipe. Além disso, apreciou a rapidez na resolução de problemas e
+                a atenção aos detalhes durante o processo. Em geral, o cliente ficou impressionado com a qualidade do
+                atendimento e demonstrou interesse em continuar a parceria no futuro.</p>
+
+            <div class="div_util">
+                <p class="txt_avaliacao_util">Esse comentário foi útil?</p>
+                <ion-text>
+                    <p>Útil</p>
+                </ion-text>
+            </div>
+
+        </div>
+
+        <div class="area_comentario">
+            <ion-row>
+
+                <div style="display: flex; align-items: center;">
+                    <img class="foto_comentario" src="../../../../assets/icon/cliente/foto_perfil.png" alt="">
+                    <p style="margin-left: 10px;">Sandra Rodrigues</p>
+                </div>
+
+                <div style="display: flex;">
+                    <ion-icon name="star"></ion-icon>
+                    <p style="margin-left: 5px;">3.5</p>
+                </div>
+
+            </ion-row>
+
+            <p class="txt_avaliacao">Avaliado em 22/06/2024</p>
+
+            <p class="txt_avaliacao">O cliente expressou um alto nível de satisfação com o serviço prestado, destacando
+                a eficiência e o profissionalismo da equipe. Além disso, apreciou a rapidez na resolução de problemas e
+                a atenção aos detalhes durante o processo. Em geral, o cliente ficou impressionado com a qualidade do
+                atendimento e demonstrou interesse em continuar a parceria no futuro.</p>
+
+            <div class="div_util">
+                <p class="txt_avaliacao_util">Esse comentário foi útil?</p>
+                <ion-text>
+                    <p>Útil</p>
+                </ion-text>
+            </div>
+
+        </div>
+
+        <div class="area_comentario">
+            <ion-row>
+
+                <div style="display: flex; align-items: center;">
+                    <img class="foto_comentario" src="../../../../assets/icon/cliente/foto_perfil.png" alt="">
+                    <p style="margin-left: 10px;">Sandra Rodrigues</p>
+                </div>
+
+                <div style="display: flex;">
+                    <ion-icon name="star"></ion-icon>
+                    <p style="margin-left: 5px;">3.5</p>
+                </div>
+
+            </ion-row>
+
+            <p class="txt_avaliacao">Avaliado em 22/06/2024</p>
+
+            <p class="txt_avaliacao">O cliente expressou um alto nível de satisfação com o serviço prestado, destacando
+                a eficiência e o profissionalismo da equipe. Além disso, apreciou a rapidez na resolução de problemas e
+                a atenção aos detalhes durante o processo. Em geral, o cliente ficou impressionado com a qualidade do
+                atendimento e demonstrou interesse em continuar a parceria no futuro.</p>
+
+            <div class="div_util">
+                <p class="txt_avaliacao_util">Esse comentário foi útil?</p>
+                <ion-text>
+                    <p>Útil</p>
+                </ion-text>
+            </div>
+
+        </div>
+    </div>
+
+</ion-content>

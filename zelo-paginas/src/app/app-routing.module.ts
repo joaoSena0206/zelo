@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'privacidade',
+    redirectTo: 'perfil-trabalhador',
     pathMatch: 'full'
   },
   {
@@ -63,6 +63,11 @@ const routes: Routes = [
     path: 'favoritos',
     loadChildren: () => import('./cliente/logado/perfil-cliente/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
   },
+  {
+    path: 'perfil-trabalhador',
+    loadChildren: () => import('./cliente/logado/perfil-trabalhador/perfil-trabalhador.module').then( m => m.PerfilTrabalhadorPageModule)
+  },
+
 
 ];
 
