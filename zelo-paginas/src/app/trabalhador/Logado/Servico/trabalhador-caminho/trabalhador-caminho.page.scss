@@ -1,7 +1,164 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+}
+
 .content{
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .mapa{
     height: 60vh;
+    background-color: antiquewhite;
+}
+
+.area_informacao{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    background-color: #E4E4E4;
+    padding: 15px 25px;
+}
+
+.div_1{
+    display: flex;
+}
+
+.area_icone_bola{
+    height: 115px;
+    width: 30px;
+}
+
+.area_endereco{
+    height: 115px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.area_endereco p{
+    margin: 0;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.txt_endereco1, .txt_endereco2{
+    height: 50%;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.txt_endereco2{
+    display: flex;
+    justify-content: end;
+    border-top: 0.15px solid black;
+}
+
+.txt_endereco1{
+    border-bottom: 0.15px solid black;
+}
+
+.area_icone_mensagem{
+    height: 115px;
+    width: 30px;
+}
+
+.area_icone_mensagem ion-icon{
+    width: 26px;
+    height: 26px;
+}
+
+//------------------------------------------------------//
+
+.div_2{
+    display: flex;
+    margin: 15px 0;
+}
+
+.area_txt_inicio{
+    height: 62px;
+    width: 100%;
+}
+
+.icone_carro{
+    height: 62px;
+    width: 62px;
+}
+
+.icone_carro ion-icon{
+    height: 61px;
+    width: 61px;
+}
+
+.area_txt_termino{
+    width: 100%;
+    height: 62px;
+}
+
+.area_txt_inicio, .area_txt_termino{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hora{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+//------------------------------------------------------//
+
+.div_3{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 10px 0 20px 0;
+}
+
+.div_3 ion-icon{
+    height: 23px;
+    width: 23px;
+    margin-right: 4px;
+}
+
+.div_3 p{
+    display: flex;
+    align-items: center;
+}
+
+//------------------------------------------------------//
+
+.div_4{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.div_4 ion-button{
+    margin: 0 20px;
+    height: 40px;
+    width: 135px;
+    --border-radius: 20px;
+    color: white;
+}
+
+.btn_iniciar{
+    --background: #FA5050;
+}
+
+.btn_cancelar{
+    --background: #64BF7E;
 }
