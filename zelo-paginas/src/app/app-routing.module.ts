@@ -69,7 +69,12 @@ const routes: Routes = [
   {
     path: 'avaliacao',
     loadChildren: () => import('./trabalhador/Logado/Servico/avaliacao/avaliacao.module').then( m => m.AvaliacaoPageModule)
+  },
+  {
+    path: 'trabalhador-caminho',
+    loadChildren: () => import('./trabalhador/Logado/Servico/trabalhador-caminho/trabalhador-caminho.module').then( m => m.TrabalhadorCaminhoPageModule)
   }
+
 
 
 
