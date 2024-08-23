@@ -1,0 +1,108 @@
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+.content__seta {
+    font-size: 30px;
+    flex-shrink: 0;
+    margin: 0 0 30px 30px;
+}
+
+.content {
+    align-self: center;
+    padding: 0 31px;
+    height: fit-content;
+    max-width: 600px;
+    width: 100%;
+}
+
+.content__h1 {
+    color: black;
+    font-weight: 700;
+    font-size: clamp(1rem, 10vw, 2rem);
+    margin-bottom: 11px;
+    text-align: center;
+}
+
+.div_fundo {
+    background-color: #D9D9D9;
+    padding: 20px;
+    border-radius: 25px;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+ion-button {
+    --background: #F66701;
+    --border-radius: 20px;
+    --padding-top: 17px;
+    --padding-bottom: 17px;
+    --padding-start: 81px;
+    --padding-end: 81px;
+
+    font-weight: bold;
+    text-transform: none;
+    font-size: 25px;
+}
+
+ion-input {
+    --background: white;
+    --border-radius: 20px;
+    --padding-top: 13px;
+    --padding-bottom: 13px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --highlight-color: none;
+
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+ion-textarea {
+    --background: white;
+    --border-radius: 20px;
+    --highlight-color: none;
+    --padding-top: 13px;
+    --padding-bottom: 13px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --border-color: none;
+
+    min-height: 116px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+ion-icon {
+    font-size: 38px;
+}
+
+.icon {
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 65px;
+    padding: 5px;
+    border-radius: 56px;
+    width: fit-content;
+    height: 48px;
+}
+
+.divAlinhar
+{
+    display: flex;
+    justify-content: center;
+}
