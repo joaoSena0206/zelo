@@ -81,7 +81,7 @@ h1 {
 }
 
 .precoPedido {
-    color: white;
+    color: black;
     font-size: clamp(8px, 4vw, 16px) !important;
 }
 
@@ -241,4 +241,9 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
 
     text-transform: none;
     color: black;
+}
+
+ion-button
+{
+    font-weight: bold;
 }
