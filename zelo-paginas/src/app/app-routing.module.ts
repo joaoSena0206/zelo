@@ -75,6 +75,11 @@ const routes: Routes = [
 		path: 'escolher-trabalhador',
 		loadChildren: () => import('./cliente/logado/servico/escolher-trabalhador/escolher-trabalhador.module').then(m => m.EscolherTrabalhadorPageModule)
 	},
+	{
+		path: 'pagamento',
+		loadChildren: () => import('./cliente/logado/servico/pagamento/pagamento.module').then(m => m.PagamentoPageModule)
+	},
+
 
 
 
