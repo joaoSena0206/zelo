@@ -1,4 +1,4 @@
-*{
+* {
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -6,14 +6,13 @@
     padding: 0;
 }
 
-.content{
+.content {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.estrelas
-{
+.estrelas {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +22,7 @@
     bottom: -10px;
 }
 
-.header{
+.header {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -35,23 +34,23 @@
     color: black;
 }
 
-.titulo{
+.titulo {
     display: flex;
     justify-content: center;
 }
 
-.titulo__voltar{
+.titulo__voltar {
     position: absolute;
     top: 31px;
     left: 31px;
     font-size: 30px;
 }
 
-h1{
+h1 {
     margin: 0;
 }
 
-.area_foto_perfil{
+.area_foto_perfil {
     display: flex;
     justify-content: center;
     margin-top: 31px;
@@ -59,7 +58,7 @@ h1{
     position: relative;
 }
 
-.foto_perfil{
+.foto_perfil {
     height: 140px;
     width: 140px;
     object-fit: cover;
@@ -67,29 +66,29 @@ h1{
     border: solid 1px black;
 }
 
-.icone_editar{
+.icone_editar {
     position: absolute;
     font-size: 30px;
-    color: black;  
+    color: black;
     top: 10px;
     right: 0;
 }
 
-.div_titulo{
+.div_titulo {
     display: flex;
     flex-direction: column;
 }
 
-.area_titulo h1{
+.area_titulo h1 {
     font-size: 20px;
 }
 
-.estrelas_avaliações{
+.estrelas_avaliações {
     display: flex;
     margin: 5px 0;
 }
 
-.estrelas_avaliações p{
+.estrelas_avaliações p {
     margin-left: 10px;
 }
 
@@ -98,6 +97,31 @@ h1{
     justify-content: center;
     margin-bottom: 20px;
     flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+ion-modal {
+    --width: 85%;
+    --height: fit-content;
+}
+
+.popupImg {
+    width: 100%;
+}
+
+.popupImg img {
+    width: 100%;
+}
+
+.divImg {
+    width: 85%;
+}
+
+.divImg img {
+    width: 100%;
+    height: 100%;
 }
 
 .btns_filtro {
@@ -127,53 +151,53 @@ h1{
     color: white;
 }
 
-.txt_titulo_grafico{
+.txt_titulo_grafico {
     font-size: 20px;
     color: black;
 }
 
-.estrelas_avaliações_grafico{
+.estrelas_avaliações_grafico {
     display: flex;
     margin: 5px 0;
     color: black;
     font-size: 20px;
 }
 
-.estrelas_avaliações_grafico p{
+.estrelas_avaliações_grafico p {
     margin-left: 10px;
 }
 
-.card_grafico{
-    margin: 5px 20px; 
+.card_grafico {
+    margin: 5px 20px;
     padding: 10px;
     border-radius: 20px;
     background-color: #D9D9D9;
 }
 
-.div_grafico{
+.div_grafico {
     color: black;
     font-size: 18px;
     margin-top: 10px;
 }
 
-.div_branca{
+.div_branca {
     background-color: white;
     width: 75%;
     border-radius: 5px;
     height: 18px;
 }
 
-.div_vermelha{
+.div_vermelha {
     background-color: #F66701;
     border-radius: 5px;
     height: 18px;
 }
 
-.linha_grafico p{
+.linha_grafico p {
     width: 25%;
 }
 
-.area_comentario ion-row{
+.area_comentario ion-row {
     display: flex;
     flex-direction: row;
     margin: 20px;
@@ -182,13 +206,13 @@ h1{
     justify-content: space-between;
 }
 
-.area_comentario{
+.area_comentario {
     background-color: #D9D9D9;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.foto_comentario{
+.foto_comentario {
     height: 45px;
     width: 45px;
     object-fit: cover;
@@ -196,25 +220,25 @@ h1{
     border: solid 1px black;
 }
 
-.txt_avaliacao{
+.txt_avaliacao {
     margin: 0 20px 10px 20px;
     font-size: 14px;
 }
 
-.txt_avaliacao_util{
+.txt_avaliacao_util {
     font-weight: bold;
     font-size: 14px;
 }
 
-.div_util{
-    display: flex; 
+.div_util {
+    display: flex;
     justify-content: space-between;
-    margin: 5px 20px; 
+    margin: 5px 20px;
     align-items: center;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
 
-.div_util ion-text{
+.div_util ion-text {
     width: 40px;
     height: 26px;
     font-size: 14px;
@@ -227,7 +251,7 @@ h1{
     border-radius: 5px;
 }
 
-.div_util ion-text p{
+.div_util ion-text p {
     font-size: 14px;
     padding: 0;
     margin: auto;
