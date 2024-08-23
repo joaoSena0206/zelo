@@ -11,12 +11,12 @@
           <img src="../../../../../assets/icon/Trabalhador/Icone Serviço/bolinhas.svg" alt="">
         </div>
         <div class="area_endereco">
-          <div class="txt_endereco1"><p>De</p>Rua Godofredo Fraga 08 Marapé</div>
+          <div class="txt_endereco1"><p>De</p>Rua arquiteto romeu esteives martins filho, 07 castelo</div>
           <div class="txt_endereco2"><p>Para</p>Rua Floriano Peixoto 12 Macuco</div>
         </div>
         <div class="area_icone_mensagem">
           <ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/mensagem.svg"></ion-icon>
-          <ion-icon class="icone_denuncia" name="information-circle-outline"></ion-icon>
+          <ion-icon id="click-trigger" class="icone_denuncia" name="information-circle-outline"></ion-icon>
         </div>
       </div>
 
@@ -84,9 +84,35 @@
         </div>
 
         <div>
-          <ion-button class="btn_finalizar">Finalizar</ion-button>
+          <ion-button id="open-custom-dialog" class="btn_finalizar">Finalizar</ion-button>
         </div>
       </div>
+
+      <ion-popover trigger="click-trigger" triggerAction="click">
+        <ng-template>
+          <ion-button class="btn_denunciar">Denunciar</ion-button>
+        </ng-template>
+      </ion-popover>
+
+      <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+        <ng-template>
+
+          <ion-card class="poupop">
+
+            <div class="area_vermelha">
+              <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="area_branca">
+                <ion-icon class="iconeInterrogacao" src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+            </div>
+
+            <h1>Quer realmente finalizar o serviço?</h1>
+            <ion-button class="form__btn">Prosseguir</ion-button>
+
+          </ion-card>
+
+        </ng-template>
+      </ion-modal>
       
     </div>
   </div>

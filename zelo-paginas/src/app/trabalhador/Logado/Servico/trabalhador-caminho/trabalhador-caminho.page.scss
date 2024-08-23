@@ -166,10 +166,6 @@
 
 //------------------------------------------------------//
 
-.div_1, .div_2, .div_3, .div_4{
-    display: flex;
-}
-
 .div_codigo{
     height: 100%;
     position: relative;
@@ -217,9 +213,9 @@
 
 //------------------------------------------------------//
 
-.div_2, .div_3, .div_4{
-    display: flex;
-}
+/* .div_2, .div_3, .div_4{
+    display: none;
+} */
 
 .div_trabalho_iniciado {
     width: 100%;
@@ -231,7 +227,7 @@
 }
 
 .icone_denuncia{
-    display: none;
+    display: flex;
 }
 
 .btn_finalizar{
@@ -256,3 +252,92 @@
     height: 54px;
     width: 54px;
 }
+
+.btn_denunciar{
+    --background: #CB2316;
+    color: white;
+    --border-radius: 20px;
+}
+
+ion-popover, ng-template{
+    --background: transparent;
+}
+
+
+//------------------------------------------------------//
+
+.poupop{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    width: 350px;
+    height: 310px;
+    margin: auto;
+}
+
+.poupop h1
+{
+    text-align: center;
+}
+
+
+ion-modal#example-modal {
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+  ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+  }
+
+.form__btn
+{
+    height: 40px;
+    width: 135px;
+    --border-radius: 20px;
+    color: white;
+    --background: #64BF7E;
+    margin-bottom: 30px ;
+}
+
+.area_vermelha{
+    width: 100%;
+    background-color: #CB2316;
+    height: 110px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    position: relative;
+}
+
+.iconeFechar2{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+.iconeInterrogacao{
+    height: 67px;
+    width: 65px;
+}
+
+.area_branca{
+    height: 102px;
+    width: 102px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -20px;
+}
+
+//------------------------------------------------------//
