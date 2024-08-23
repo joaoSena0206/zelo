@@ -64,8 +64,7 @@ h1 {
     font-weight: bold;
 }
 
-.areaUltimoPedido__trabalho
-{
+.areaUltimoPedido__trabalho {
     font-size: clamp(8px, 4vw, 16px) !important;
 }
 
@@ -93,8 +92,7 @@ h1 {
     font-size: 16px;
 }
 
-.div_verPerfil
-{
+.div_verPerfil {
     position: absolute;
     top: 15px;
     right: 12px;
@@ -103,8 +101,7 @@ h1 {
     align-items: flex-end;
 }
 
-.div_verPerfil ion-icon
-{
+.div_verPerfil ion-icon {
     font-size: 30px;
     margin-top: 15px;
     color: #ed1101;
@@ -217,25 +214,21 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
     font-size: clamp(8px, 4vw, 16px);
 }
 
-.divInfoTrabalhador
-{
+.divInfoTrabalhador {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.divInfoTrabalhador p
-{
+.divInfoTrabalhador p {
     font-size: clamp(8px, 4vw, 16px);
 }
 
-.areaUltimoPedido__div__distancia
-{
+.areaUltimoPedido__div__distancia {
     font-size: clamp(10px, 5vw, 20px);
 }
 
-.areaUltimoPedido__div__btn
-{
+.areaUltimoPedido__div__btn {
     --background: white;
     --border-radius: 20px;
 
@@ -243,7 +236,57 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
     color: black;
 }
 
-ion-button
-{
+ion-button {
     font-weight: bold;
+}
+
+ion-modal {
+    --width: calc(100% - 62px);
+    --height: fit-content;
+    --background: transparent;
+    --box-shadow: none;
+}
+
+.wrapperPedido {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.areaUltimoPedido--modal {
+    background-color: white;
+    box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+.areaUltimoPedido--modal ion-icon {
+    color: black !important;
+}
+
+.verPerfil--modal {
+    color: #F66701;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.btn {
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-start: 26px;
+    --padding-end: 26px;
+
+    color: white;
+    font-size: 15px;
+}
+
+.btn--cancelar {
+    --background: #CB2316;
+}
+
+.btn--confirmar {
+    --background: #64BF7E;
 }

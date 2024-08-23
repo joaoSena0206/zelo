@@ -71,10 +71,10 @@ const routes: Routes = [
 		path: 'descricao-servico',
 		loadChildren: () => import('./cliente/logado/servico/descricao-servico/descricao-servico.module').then(m => m.DescricaoServicoPageModule)
 	},
-  {
-    path: 'escolher-trabalhador',
-    loadChildren: () => import('./cliente/logado/servico/escolher-trabalhador/escolher-trabalhador.module').then( m => m.EscolherTrabalhadorPageModule)
-  },
+	{
+		path: 'escolher-trabalhador',
+		loadChildren: () => import('./cliente/logado/servico/escolher-trabalhador/escolher-trabalhador.module').then(m => m.EscolherTrabalhadorPageModule)
+	},
 
 
 

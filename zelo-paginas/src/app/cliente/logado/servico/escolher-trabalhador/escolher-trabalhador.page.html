@@ -1,93 +1,189 @@
 <ion-content [fullscreen]="true">
-  <div class="content">
-    <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+	<div class="content">
+		<ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 
-    <div class="areaPedidos">
-      <h1>Favoritos</h1>
+		<div class="areaPedidos">
+			<h1>Favoritos</h1>
 
-      <div class="wrapper">
-        <div class="btns_filtro">
-          <ion-button class="btn_filtro btn_filtro--ativado">Mais próximos</ion-button>
-          <ion-button class="btn_filtro">Melhor avaliados</ion-button>
-          <ion-button class="btn_filtro">Melhor preço</ion-button>
-        </div>
-      </div>
+			<div class="wrapper">
+				<div class="btns_filtro">
+					<ion-button class="btn_filtro btn_filtro--ativado">Mais próximos</ion-button>
+					<ion-button class="btn_filtro">Melhor avaliados</ion-button>
+					<ion-button class="btn_filtro">Melhor preço</ion-button>
+				</div>
+			</div>
 
-      <div class="UltimosPedidosDiv">
-        <div class="areaUltimoPedido">
-          <div class="infoTrabalhorPedido">
-            <figure class="fotoTrabalhadorPedido">
-              <img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
-            </figure>
+			<div class="UltimosPedidosDiv">
+				<div class="areaUltimoPedido">
+					<div class="infoTrabalhorPedido">
+						<figure class="fotoTrabalhadorPedido">
+							<img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
+						</figure>
 
-            <div>
-              <h3 class="titulo tituloPedido">Breno Santos</h3>
-              <div style="display: flex; gap: 10px; align-items: flex-end;">
-                <h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Visita</h3>
-                <p class="titulo precoPedido">R$ 45,00</p>
-              </div>
-
-
-              <div class="divInfoTrabalhador">
-                <div class="estrelaPreco">
-                  <ion-icon name="star" style="color: white;"></ion-icon>
-                  <p class="titulo">3.5</p>
-                </div>
-
-                <p class="infoTrabalhorPedido__servico">Serviço(s): 3</p>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="areaUltimoPedido__div">
-            <p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
-
-            <ion-button class="areaUltimoPedido__div__btn">Contratar</ion-button>
-          </div>
-
-          <div class="div_verPerfil">
-            <p class="verPerfil">Ver perfil</p>
-          </div>
-        </div>
-
-        <div class="areaUltimoPedido">
-          <div class="infoTrabalhorPedido">
-            <figure class="fotoTrabalhadorPedido">
-              <img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
-            </figure>
-
-            <div>
-              <h3 class="titulo tituloPedido">Sandro Rodrigues</h3>
-              <div style="display: flex; gap: 10px; align-items: flex-end;">
-                <h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Visita</h3>
-                <p class="titulo precoPedido">R$ 50,00</p>
-              </div>
+						<div>
+							<h3 class="titulo tituloPedido">Breno Santos</h3>
+							<div style="display: flex; gap: 10px; align-items: flex-end;">
+								<h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Visita</h3>
+								<p class="titulo precoPedido">R$ 45,00</p>
+							</div>
 
 
-              <div class="divInfoTrabalhador">
-                <div class="estrelaPreco">
-                  <ion-icon name="star" style="color: white;"></ion-icon>
-                  <p class="titulo">2.5</p>
-                </div>
+							<div class="divInfoTrabalhador">
+								<div class="estrelaPreco">
+									<ion-icon name="star" style="color: white;"></ion-icon>
+									<p class="titulo">3.5</p>
+								</div>
 
-                <p class="infoTrabalhorPedido__servico">Serviço(s): 4</p>
-              </div>
+								<p class="infoTrabalhorPedido__servico">Serviço(s): 3</p>
+							</div>
 
-            </div>
-          </div>
+						</div>
+					</div>
 
-          <div class="areaUltimoPedido__div">
-            <p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+					<div class="areaUltimoPedido__div">
+						<p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
 
-            <ion-button class="areaUltimoPedido__div__btn">Contratar</ion-button>
-          </div>
+						<ion-button class="areaUltimoPedido__div__btn" id="contratar_trab1">Contratar</ion-button>
+					</div>
+					<ion-modal #modal trigger="contratar_trab1">
+						<ng-template>
+							<div class="wrapperPedido">
+								<div class="areaUltimoPedido areaUltimoPedido--modal">
+									<div class="infoTrabalhorPedido">
+										<figure class="fotoTrabalhadorPedido">
+											<img draggable="false"
+												src="../../../../assets/icon/cliente/foto_trabalhador.png">
+										</figure>
 
-          <div class="div_verPerfil">
-            <p class="verPerfil">Ver perfil</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+										<div>
+											<h3 class="titulo tituloPedido">Breno Santos</h3>
+											<div style="display: flex; gap: 10px; align-items: flex-end;">
+												<h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Visita</h3>
+												<p class="titulo precoPedido">R$ 45,00</p>
+											</div>
+
+
+											<div class="divInfoTrabalhador">
+												<div class="estrelaPreco">
+													<ion-icon name="star" style="color: white;"></ion-icon>
+													<p class="titulo">2.5</p>
+												</div>
+
+												<p class="infoTrabalhorPedido__servico">Serviço(s): 3</p>
+											</div>
+
+										</div>
+									</div>
+
+									<div class="areaUltimoPedido__div">
+										<p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+									</div>
+
+									<div class="div_verPerfil">
+										<p class="verPerfil verPerfil--modal">Ver perfil</p>
+									</div>
+
+									<div class="btns">
+										<ion-button class="areaUltimoPedido__div__btn btn btn--cancelar"
+											(click)="modal.dismiss()">Cancelar</ion-button>
+										<ion-button
+											class="areaUltimoPedido__div__btn btn btn--confirmar">Confirmar</ion-button>
+									</div>
+								</div>
+							</div>
+						</ng-template>
+					</ion-modal>
+
+					<div class="div_verPerfil">
+						<p class="verPerfil">Ver perfil</p>
+					</div>
+				</div>
+
+				<div class="areaUltimoPedido">
+					<div class="infoTrabalhorPedido">
+						<figure class="fotoTrabalhadorPedido">
+							<img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
+						</figure>
+
+						<div>
+							<h3 class="titulo tituloPedido">Sandro Rodrigues</h3>
+							<div style="display: flex; gap: 10px; align-items: flex-end;">
+								<h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Visita</h3>
+								<p class="titulo precoPedido">R$ 50,00</p>
+							</div>
+
+
+							<div class="divInfoTrabalhador">
+								<div class="estrelaPreco">
+									<ion-icon name="star" style="color: white;"></ion-icon>
+									<p class="titulo">2.5</p>
+								</div>
+
+								<p class="infoTrabalhorPedido__servico">Serviço(s): 4</p>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="areaUltimoPedido__div">
+						<p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+
+						<ion-button class="areaUltimoPedido__div__btn" id="contratar_trab2">Contratar</ion-button>
+					</div>
+
+					<div class="div_verPerfil">
+						<p class="verPerfil">Ver perfil</p>
+					</div>
+				</div>
+				<ion-modal #modal2 trigger="contratar_trab2">
+					<ng-template>
+						<div class="wrapperPedido">
+							<div class="areaUltimoPedido areaUltimoPedido--modal">
+								<div class="infoTrabalhorPedido">
+									<figure class="fotoTrabalhadorPedido">
+										<img draggable="false"
+											src="../../../../assets/icon/cliente/trabalhador_sandro.png">
+									</figure>
+
+									<div>
+										<h3 class="titulo tituloPedido">Sandro Rodrigues</h3>
+										<div style="display: flex; gap: 10px; align-items: flex-end;">
+											<h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Visita</h3>
+											<p class="titulo precoPedido">R$ 50,00</p>
+										</div>
+
+
+										<div class="divInfoTrabalhador">
+											<div class="estrelaPreco">
+												<ion-icon name="star" style="color: white;"></ion-icon>
+												<p class="titulo">2.5</p>
+											</div>
+
+											<p class="infoTrabalhorPedido__servico">Serviço(s): 4</p>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="areaUltimoPedido__div">
+									<p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+								</div>
+
+								<div class="div_verPerfil">
+									<p class="verPerfil verPerfil--modal">Ver perfil</p>
+								</div>
+
+								<div class="btns">
+									<ion-button class="areaUltimoPedido__div__btn btn btn--cancelar"
+										(click)="modal2.dismiss()">Cancelar</ion-button>
+									<ion-button
+										class="areaUltimoPedido__div__btn btn btn--confirmar">Confirmar</ion-button>
+								</div>
+							</div>
+						</div>
+					</ng-template>
+				</ion-modal>
+			</div>
+		</div>
+	</div>
 </ion-content>
