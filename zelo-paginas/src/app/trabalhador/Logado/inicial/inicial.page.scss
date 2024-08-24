@@ -124,32 +124,34 @@
     margin-bottom: 5px;
 }
 
-.form__btn
-{
-    --background: #CB2316;
-    --border-radius: 26px;
-    --padding-start: 71px;
-    --padding-end: 71px;
-    --padding-top: 20px;
-    --padding-bottom: 20px;
+  .btn_situacao_trabalhador_disponivel{
+    width: 100%;
+    --background: #34C800;
+    border-radius: 15px;
+    display: flex;
+    justify-content: start;
+    position: relative;
+  }
 
-    text-transform: none;
-    font-size: 22px;
-    font-weight: 700;
-    align-self: center;
-    margin-top: 36px;
-    width: clamp(200px, 300px, 80%);
-}
+  //------------------------------------------------//
 
-.poupop{
+  .form__btn
+  {
+      height: 40px;
+      width: 135px;
+      --border-radius: 20px;
+      color: white;
+      --background: #64BF7E;
+      margin-bottom: 30px ;
+  }
+
+.poupop2{
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
-    padding: 20px;
+    justify-content: space-between;
     border-radius: 25px;
     width: 350px;
-    height: 210px;
     margin: auto;
 }
 
@@ -166,27 +168,50 @@ ion-modal#example-modal {
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
   }
   
-  
-  ion-modal#example-modal ion-icon {
-    margin-right: 6px;
-  
-    width: 48px;
-    height: 48px;
-  
-    padding: 4px 0;
-  
-    color: #aaaaaa;
-  }
-  
   ion-modal#example-modal .wrapper {
     margin-bottom: 10px;
   }
 
-  .btn_situacao_trabalhador_disponivel{
+.area_vermelha{
     width: 100%;
-    --background: #34C800;
-    border-radius: 15px;
+    background-color: #CB2316;
+    height: 110px;
     display: flex;
-    justify-content: start;
+    align-items: end;
+    justify-content: center;
     position: relative;
-  }
+}
+
+.iconeFechar2{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+.iconeInterrogacao{
+    height: 67px;
+    width: 65px;
+}
+
+.area_branca{
+    height: 102px;
+    width: 102px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -20px;
+}
+
+.ion_accordion_group{
+    margin: 10px 0 20px 0;
+}
+
+.h1_denuncia{
+    margin: 45px 0 30px 0;
+}

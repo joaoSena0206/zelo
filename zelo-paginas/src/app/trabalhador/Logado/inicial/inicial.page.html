@@ -133,11 +133,32 @@
 
 </ion-content>
 
-<ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+<!-- <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
   <ng-template>
     <ion-card class="poupop">
       <h1>{{ msgTrabalho }}</h1>
       <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
     </ion-card>
+  </ng-template>
+</ion-modal> -->
+
+<ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+  <ng-template>
+
+    <ion-card class="poupop2">
+
+      <div class="area_vermelha">
+        <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
+        <div class="area_branca">
+          <ion-icon class="iconeInterrogacao"
+            src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+        </div>
+      </div>
+
+      <h1 class="h1_denuncia">{{ msgTrabalho }}</h1>
+      <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
+
+    </ion-card>
+
   </ng-template>
 </ion-modal>
