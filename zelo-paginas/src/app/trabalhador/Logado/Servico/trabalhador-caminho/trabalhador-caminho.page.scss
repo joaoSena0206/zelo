@@ -1,5 +1,4 @@
-*
-{
+* {
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -7,18 +6,18 @@
     color: black;
 }
 
-.content{
+.content {
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.mapa{
+.mapa {
     height: 60vh;
     background-color: antiquewhite;
 }
 
-.area_informacao{
+.area_informacao {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -27,11 +26,11 @@
     padding: 25px 25px;
 }
 
-.div_1{
+.div_1 {
     display: flex;
 }
 
-.area_icone_bola{
+.area_icone_bola {
     width: 30px;
     height: 100%;
     display: flex;
@@ -39,7 +38,7 @@
     justify-content: center;
 }
 
-.area_endereco{
+.area_endereco {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,13 +46,14 @@
     padding: 0px 10px;
 }
 
-.area_endereco p{
+.area_endereco p {
     margin: 0;
     font-size: 14px;
     font-weight: normal;
 }
 
-.txt_endereco1, .txt_endereco2{
+.txt_endereco1,
+.txt_endereco2 {
     height: 50%;
     font-size: 16px;
     display: flex;
@@ -61,11 +61,11 @@
     font-weight: bold;
 }
 
-.txt_endereco2{
+.txt_endereco2 {
     display: flex;
 }
 
-.area_icone_mensagem{
+.area_icone_mensagem {
     width: 30px;
     display: flex;
     align-items: center;
@@ -73,46 +73,47 @@
     height: 100%;
 }
 
-.area_icone_mensagem ion-icon{
+.area_icone_mensagem ion-icon {
     width: 26px;
     height: 26px;
 }
 
 //------------------------------------------------------//
 
-.div_2{
+.div_2 {
     display: flex;
     margin: 15px 0;
 }
 
-.area_txt_inicio{
+.area_txt_inicio {
     height: 62px;
     width: 100%;
 }
 
-.icone_carro{
+.icone_carro {
     height: 62px;
     width: 62px;
 }
 
-.icone_carro ion-icon{
+.icone_carro ion-icon {
     height: 61px;
     width: 61px;
 }
 
-.area_txt_termino{
+.area_txt_termino {
     width: 100%;
     height: 62px;
 }
 
-.area_txt_inicio, .area_txt_termino{
+.area_txt_inicio,
+.area_txt_termino {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.hora{
+.hora {
     font-size: 20px;
     font-weight: bold;
     margin-top: 5px;
@@ -120,33 +121,33 @@
 
 //------------------------------------------------------//
 
-.div_3{
+.div_3 {
     display: flex;
     width: 100%;
     justify-content: space-between;
     margin: 10px 0 20px 0;
 }
 
-.div_3 ion-icon{
+.div_3 ion-icon {
     height: 23px;
     width: 23px;
     margin-right: 4px;
 }
 
-.div_3 p{
+.div_3 p {
     display: flex;
     align-items: center;
 }
 
 //------------------------------------------------------//
 
-.div_4{
+.div_4 {
     display: flex;
     width: 100%;
     justify-content: center;
 }
 
-.div_4 ion-button{
+.div_4 ion-button {
     margin: 0 20px;
     height: 40px;
     width: 135px;
@@ -154,23 +155,22 @@
     color: white;
 }
 
-.btn_cancelar{
+.btn_cancelar {
     --background: #FA5050;
 }
 
-.btn_iniciar{
+.btn_iniciar {
     --background: #64BF7E;
 }
 
 //------------------------------------------------------//
 
-.div_codigo{
+.div_codigo {
     height: 100%;
     position: relative;
 }
 
-.ion_item
-{
+.ion_item {
     border-radius: 11px;
     --padding-start: 0;
     --inner-padding-end: 0;
@@ -179,16 +179,15 @@
     position: relative;
 }
 
-.div_codigo{
-    display: none; 
+.div_codigo {
+    display: none;
     border-radius: 11px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-.form__input
-{
+.form__input {
     --placeholder-opacity: 1;
     text-align: center;
     display: flex;
@@ -201,7 +200,7 @@
     border-radius: 11px;
 }
 
-.iconeFechar{
+.iconeFechar {
     position: absolute;
     right: 0;
     top: 10px;
@@ -224,11 +223,11 @@
     align-items: center;
 }
 
-.icone_denuncia{
+.icone_denuncia {
     display: none;
 }
 
-.btn_finalizar{
+.btn_finalizar {
     margin: auto;
     height: 40px;
     width: 135px;
@@ -237,34 +236,35 @@
     --background: #64BF7E;
 }
 
-.div_relogio{
+.div_relogio {
     display: flex;
     align-items: center;
 }
 
-.div_relogio h1{
+.div_relogio h1 {
     font-size: 40px;
 }
 
-.div_relogio ion-icon{
+.div_relogio ion-icon {
     height: 54px;
     width: 54px;
 }
 
-.btn_denunciar{
+.btn_denunciar {
     --background: #CB2316;
     color: white;
     --border-radius: 20px;
 }
 
-ion-popover, ng-template{
+ion-popover,
+ng-template {
     --background: transparent;
 }
 
 
 //------------------------------------------------------//
 
-.poupop{
+.poupop {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -275,8 +275,7 @@ ion-popover, ng-template{
     margin: auto;
 }
 
-.poupop h1
-{
+.poupop h1 {
     text-align: center;
 }
 
@@ -286,23 +285,22 @@ ion-modal#example-modal {
     --height: fit-content;
     --border-radius: 25px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
-  }
-  
-  ion-modal#example-modal .wrapper {
-    margin-bottom: 10px;
-  }
+}
 
-.form__btn
-{
+ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+}
+
+.form__btn {
     height: 40px;
     width: 135px;
     --border-radius: 20px;
     color: white;
     --background: #64BF7E;
-    margin-bottom: 30px ;
+    margin-bottom: 30px;
 }
 
-.area_vermelha{
+.area_vermelha {
     width: 100%;
     background-color: #CB2316;
     height: 110px;
@@ -312,7 +310,7 @@ ion-modal#example-modal {
     position: relative;
 }
 
-.iconeFechar2{
+.iconeFechar2 {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -321,12 +319,12 @@ ion-modal#example-modal {
     color: white;
 }
 
-.iconeInterrogacao{
+.iconeInterrogacao {
     height: 67px;
     width: 65px;
 }
 
-.area_branca{
+.area_branca {
     height: 102px;
     width: 102px;
     background-color: white;
@@ -340,7 +338,7 @@ ion-modal#example-modal {
 
 //------------------------------------------------------//
 
-.poupop2{
+.poupop2 {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -350,22 +348,21 @@ ion-modal#example-modal {
     margin: auto;
 }
 
-.poupop2 h1
-{
+.poupop2 h1 {
     text-align: center;
 }
 
-.ion_accordion_group{
+.ion_accordion_group {
     margin: 10px 0 20px 0;
 }
 
-.cor_fundo{
+.cor_fundo {
     --background: #D9D9D9;
     background-color: #D9D9D9;
     border-radius: 20px;
 }
 
-.h1_denuncia{
+.h1_denuncia {
     margin: 25px 0 10px 0;
 }
 
@@ -374,13 +371,22 @@ ion-modal#modal_denuncia {
     --height: fit-content;
     --border-radius: 25px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
-  }
-  
-  ion-modal#modal_denuncia .wrapper{
-    margin-bottom: 10px;
-  }
+}
 
-  .opçaoDenuncia{
+ion-modal#modal_denuncia .wrapper {
+    margin-bottom: 10px;
+}
+
+.opçaoDenuncia {
     font-size: 20px;
     margin: 15px;
-  }
+}
+
+.fundoPopup {
+    margin: 10px 0 20px 0;
+    border-radius: 20px;
+    width: 242px;
+    height: 177px;
+    background-color: #D9D9D9;
+    display: none;
+}
