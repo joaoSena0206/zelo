@@ -10,7 +10,7 @@
 }
 
 .content{
-    padding: 22px 22px 100px 22px;
+    padding: 30px 30px 100px 30px;
 }
 
 .Clicado{
@@ -46,6 +46,8 @@
     margin-right: 20px;
     position: absolute;
     left: 0;
+    width: 41px;
+    height: 41px;
 }
 
 .título_ultimos_pedidos{
@@ -58,18 +60,18 @@
 }
 
 .título_ultimos_pedidos p{
-    font-size: 14px;
+    font-size: 15px;
     color: #727272;
 }
 
 .título_ultimos_pedidos h3{
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .local_ultimos_trabalhos{
     display: flex;
     overflow-x: auto;
-    padding: 10px;
+    padding: 10px 0;
     scrollbar-width: none;
 }
 
@@ -80,16 +82,21 @@
 }
 
 .area_comentario_anonimo{
-    width: 100%;
     --background: #E4E4E4;
     border-radius: 15px;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    --padding-top: 20px;
+    --padding-left: 20px;
+    --padding-bottom: 20px;
+    --padding-right: 20px;
+    
 }
 
-.area_comentario_anonimo div{
-    margin: 10px;
+.div1{
+    margin-right: 10px;
+
 }
 
 .area_comentario_anonimo div ion-icon{
@@ -117,11 +124,15 @@
 }
 
 .nm_cliente_pedido{
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
     color: black;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.ds_pedido{
+    font-size: 15px;
 }
 
   .btn_situacao_trabalhador_disponivel{
@@ -133,85 +144,15 @@
     position: relative;
   }
 
+  .txt_anonimo{
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .txt_comentario_anonimo{
+    margin-top: 5px;
+    font-size: 15px;
+  }
+
   //------------------------------------------------//
 
-  .form__btn
-  {
-      height: 40px;
-      width: 135px;
-      --border-radius: 20px;
-      color: white;
-      --background: #64BF7E;
-      margin-bottom: 30px ;
-  }
-
-.poupop2{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 25px;
-    width: 350px;
-    margin: auto;
-}
-
-.poupop h1
-{
-    text-align: center;
-}
-
-
-ion-modal#example-modal {
-    --width: fit-content;
-    --height: fit-content;
-    --border-radius: 25px;
-    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
-  }
-  
-  ion-modal#example-modal .wrapper {
-    margin-bottom: 10px;
-  }
-
-.area_vermelha{
-    width: 100%;
-    background-color: #CB2316;
-    height: 110px;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    position: relative;
-}
-
-.iconeFechar2{
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    height: 30px;
-    width: 30px;
-    color: white;
-}
-
-.iconeInterrogacao{
-    height: 67px;
-    width: 65px;
-}
-
-.area_branca{
-    height: 102px;
-    width: 102px;
-    background-color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: -20px;
-}
-
-.ion_accordion_group{
-    margin: 10px 0 20px 0;
-}
-
-.h1_denuncia{
-    margin: 45px 0 30px 0;
-}

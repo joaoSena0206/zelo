@@ -6,7 +6,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./inicial.page.scss'],
 })
 export class InicialPage implements OnInit {
-  situacao: any = 'Offline';
+  situacao: any = 'Indisponível';
   msgTrabalho: any = 'Deseja trabalhar agora?';
 
   constructor() {}
@@ -23,7 +23,7 @@ export class InicialPage implements OnInit {
 
       img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
 
-      this.situacao = 'Offline';
+      this.situacao = 'Indisponível';
       this.msgTrabalho = 'Deseja trabalhar agora?';
     } else {
       botaoSituacao?.classList.remove('btn_situacao_trabalhador');
