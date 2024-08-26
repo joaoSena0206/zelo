@@ -13,7 +13,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     mudarOutro() {
-        const accordion = document.querySelector(".ion_accordion_group") as HTMLIonAccordionGroupElement;
+        const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
         const popup = document.querySelector(".fundoPopup") as HTMLIonTextareaElement;
 
         accordion.style.display = "none";

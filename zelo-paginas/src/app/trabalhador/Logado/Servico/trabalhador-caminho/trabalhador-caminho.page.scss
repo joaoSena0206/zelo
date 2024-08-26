@@ -298,7 +298,7 @@ ng-template {
     --padding-right: 66px;
     --border-radius: 20px;
     color: white;
-    --background: #64BF7E;
+    --background: #CB2316;
     font-size: 22px;
 }
 
@@ -345,15 +345,6 @@ ng-template {
     bottom: -20px;
 }
 
-.fundoPopup {
-    margin: 10px 0 20px 0;
-    border-radius: 20px;
-    width: 242px;
-    height: 177px;
-    background-color: #D9D9D9;
-    display: none;
-}
-
 //-----------------------Modal denuncia select-------------------------------//
 
 .cor_fundo {
@@ -369,4 +360,15 @@ ng-template {
 
 .grupo_selecao{
     margin-bottom: 30px;
+}
+
+.fundoPopup {
+    margin: 10px 0 20px 0;
+    border-radius: 20px;
+    width: 242px;
+    height: 177px;
+    background-color: #D9D9D9;
+    display: none;
+    --highlight-color: none;
+    padding: 0 10px;
 }
