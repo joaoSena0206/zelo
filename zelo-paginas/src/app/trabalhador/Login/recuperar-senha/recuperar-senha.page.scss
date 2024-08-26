@@ -23,7 +23,7 @@ ion-content
 
 .content
 {
-    padding: 0 31px;
+    padding: 0 30px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -37,15 +37,16 @@ ion-content
     font-size: 30px;
     flex-shrink: 0;
     position: absolute;
-    top: 31px;
-    left: 31px;
+    top: 30px;
+    left: 30px;
+    color: white;
 }
 
 .content__h1
 {
     color: white;
     font-weight: 700;
-    font-size: clamp(1.5rem, 10vw, 2rem);
+    font-size: 32px;
     margin-bottom: 20px;
 }
 
@@ -98,10 +99,10 @@ ion-content
 {
     --background: #CB2316;
     --border-radius: 26px;
-    --padding-start: 71px;
-    --padding-end: 71px;
-    --padding-top: 20px;
-    --padding-bottom: 20px;
+    --padding-start: 66px;
+    --padding-end: 66px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
 
     text-transform: none;
     font-size: 22px;
@@ -115,7 +116,7 @@ ion-content
 {
     text-align: center;
     margin: 0;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
 }
 
