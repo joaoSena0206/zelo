@@ -262,7 +262,7 @@ ng-template {
 }
 
 
-//------------------------------------------------------//
+//-------------------------Modal geral-----------------------------//
 
 .poupop {
     display: flex;
@@ -270,34 +270,36 @@ ng-template {
     flex-direction: column;
     justify-content: space-between;
     border-radius: 25px;
-    width: 350px;
-    height: 310px;
     margin: auto;
 }
 
 .poupop h1 {
     text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
 }
 
 
-ion-modal#example-modal {
+#modal_finalizar, #modal_denuncia {
     --width: fit-content;
     --height: fit-content;
     --border-radius: 25px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
 }
 
-ion-modal#example-modal .wrapper {
-    margin-bottom: 10px;
+#modal_finalizar, #modal_denuncia{
+    padding: 0 10px;
 }
 
 .form__btn {
-    height: 40px;
-    width: 135px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
     --border-radius: 20px;
     color: white;
     --background: #64BF7E;
-    margin-bottom: 30px;
+    font-size: 22px;
 }
 
 .area_vermelha {
@@ -308,6 +310,13 @@ ion-modal#example-modal .wrapper {
     align-items: end;
     justify-content: center;
     position: relative;
+}
+
+.area_branca{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
 }
 
 .iconeFechar2 {
@@ -324,7 +333,7 @@ ion-modal#example-modal .wrapper {
     width: 65px;
 }
 
-.area_branca {
+.circulo_branca {
     height: 102px;
     width: 102px;
     background-color: white;
@@ -336,52 +345,6 @@ ion-modal#example-modal .wrapper {
     bottom: -20px;
 }
 
-//------------------------------------------------------//
-
-.poupop2 {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 25px;
-    width: 350px;
-    margin: auto;
-}
-
-.poupop2 h1 {
-    text-align: center;
-}
-
-.ion_accordion_group {
-    margin: 10px 0 20px 0;
-}
-
-.cor_fundo {
-    --background: #D9D9D9;
-    background-color: #D9D9D9;
-    border-radius: 20px;
-}
-
-.h1_denuncia {
-    margin: 25px 0 10px 0;
-}
-
-ion-modal#modal_denuncia {
-    --width: fit-content;
-    --height: fit-content;
-    --border-radius: 25px;
-    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
-}
-
-ion-modal#modal_denuncia .wrapper {
-    margin-bottom: 10px;
-}
-
-.opçaoDenuncia {
-    font-size: 20px;
-    margin: 15px;
-}
-
 .fundoPopup {
     margin: 10px 0 20px 0;
     border-radius: 20px;
@@ -389,4 +352,21 @@ ion-modal#modal_denuncia .wrapper {
     height: 177px;
     background-color: #D9D9D9;
     display: none;
+}
+
+//-----------------------Modal denuncia select-------------------------------//
+
+.cor_fundo {
+    --background: #D9D9D9;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+}
+
+.opçaoDenuncia {
+    font-size: 20px;
+    margin: 15px;
+}
+
+.grupo_selecao{
+    margin-bottom: 30px;
 }

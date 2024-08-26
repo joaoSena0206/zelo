@@ -49,7 +49,7 @@
             </div>
 
             <div class="div_4">
-                <ion-button class="btn_cancelar">Cancelar</ion-button>
+                <ion-button id="abrir_modal_finalizar" class="btn_cancelar">Cancelar</ion-button>
                 <ion-button class="btn_iniciar">Iniciar</ion-button>
             </div>
 
@@ -100,21 +100,23 @@
                 </ng-template>
             </ion-popover>
 
-            <ion-modal id="example-modal" #modal trigger="abrir_modal_finalizar">
+            <ion-modal id="modal_finalizar" #modal trigger="abrir_modal_finalizar">
                 <ng-template>
 
                     <ion-card class="poupop">
 
                         <div class="area_vermelha">
                             <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
-                            <div class="area_branca">
+                            <div class="circulo_branca">
                                 <ion-icon class="iconeInterrogacao"
                                     src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
                             </div>
                         </div>
 
-                        <h1>Quer realmente finalizar o serviço?</h1>
-                        <ion-button class="form__btn">Prosseguir</ion-button>
+                        <div class="area_branca">
+                            <h1>Quer realmente finalizar o serviço?</h1>
+                            <ion-button class="form__btn">Prosseguir</ion-button>
+                        </div>
 
                     </ion-card>
 
@@ -124,74 +126,42 @@
             <ion-modal id="modal_denuncia" #modal trigger="abrir_modal_denuncia">
                 <ng-template>
 
-                    <ion-card class="poupop2">
+                    <ion-card class="poupop">
 
                         <div class="area_vermelha">
                             <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
-                            <div class="area_branca">
+                            <div class="circulo_branca">
                                 <ion-icon class="iconeInterrogacao"
                                     src="../../../../../assets/icon/Trabalhador/Icone Serviço/iconeDenuncia.svg"></ion-icon>
                             </div>
                         </div>
 
-                        <h1 class="h1_denuncia">Informe o motivo da denuncia</h1>
+                        <div class="area_branca">
+                            <h1>Informe o motivo da denuncia</h1>
 
-                        <ion-textarea class="fundoPopup"></ion-textarea>
+                            <ion-textarea class="fundoPopup"></ion-textarea>
 
-                        <ion-accordion-group class="ion_accordion_group">
-                            <ion-accordion class="cor_fundo" value="first">
-                                <ion-item slot="header" class="div_titulo cor_fundo">
-                                    <p style="font-size: 20px; font-weight: bold;">Motivo da denuncia</p>
-                                </ion-item>
-                                <div slot="content" class="geral">
-                                    <div class="opçaoDenuncia">Cliente não atende</div>
-                                    <div class="opçaoDenuncia">Não consegui chegar</div>
-                                    <div class="opçaoDenuncia" (click)="mudarOutro()">Outro:</div>
-                                </div>
-                            </ion-accordion>
-                        </ion-accordion-group>
+                            <ion-accordion-group class="grupo_selecao">
+                                <ion-accordion class="cor_fundo" value="first">
+                                    <ion-item slot="header" class="div_titulo cor_fundo">
+                                        <p style="font-size: 20px; font-weight: bold;">Motivo da denuncia</p>
+                                    </ion-item>
+                                    <div slot="content" class="geral">
+                                        <div class="opçaoDenuncia">Cliente não atende</div>
+                                        <div class="opçaoDenuncia">Não consegui chegar</div>
+                                        <div class="opçaoDenuncia" (click)="mudarOutro()">Outro:</div>
+                                    </div>
+                                </ion-accordion>
+                            </ion-accordion-group>
 
-                        <ion-button class="form__btn">Enviar</ion-button>
+                            <ion-button class="form__btn">Enviar</ion-button>
+                        </div>
 
                     </ion-card>
 
                 </ng-template>
             </ion-modal>
 
-            <ion-modal id="modal_denuncia" #modal trigger="abrir_modal_cancelamento">
-                <ng-template>
-
-                    <ion-card class="poupop2">
-
-                        <div class="area_vermelha">
-                            <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
-                            <div class="area_branca">
-                                <ion-icon class="iconeInterrogacao"
-                                    src="../../../../../assets/icon/Trabalhador/Icone Serviço/iconeDenuncia.svg"></ion-icon>
-                            </div>
-                        </div>
-
-                        <h1 class="h1_denuncia">Informe o motivo da denuncia</h1>
-
-                        <ion-accordion-group class="ion_accordion_group">
-                            <ion-accordion class="cor_fundo" value="first">
-                                <ion-item slot="header" class="div_titulo cor_fundo">
-                                    <p style="font-size: 20px; font-weight: bold;">Motivo da denuncia</p>
-                                </ion-item>
-                                <div slot="content" class="geral">
-                                    <div class="opçaoDenuncia">Cliente não atende</div>
-                                    <div class="opçaoDenuncia">Não consegui chegar</div>
-                                    <div class="opçaoDenuncia">Outro:</div>
-                                </div>
-                            </ion-accordion>
-                        </ion-accordion-group>
-
-                        <ion-button class="form__btn">Enviar</ion-button>
-
-                    </ion-card>
-
-                </ng-template>
-            </ion-modal>
 
         </div>
     </div>
