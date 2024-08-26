@@ -5,10 +5,11 @@
     font-style: normal;
     margin: 0;
     color: black;
+    font-size: 15px;
 }
 
 .content{
-    padding: 15px;
+    padding: 30px;
 }
 
 .content__seta
@@ -16,15 +17,15 @@
     font-size: 30px;
     flex-shrink: 0;
     position: absolute;
-    top: 31px;
-    left: 31px;
+    top: 30px;
+    left: 30px;
 }
 
 .content__h1
 {
     font-weight: 700;
-    font-size: 24px;
-    margin: 100px 0 20px 0;
+    font-size: 32px;
+    margin: 50px 0 20px 0;
     text-align: center;
 }
 
@@ -78,3 +79,6 @@
     align-items: center;
 }
 
+.txt_descricao{
+    font-size: 15px;
+}

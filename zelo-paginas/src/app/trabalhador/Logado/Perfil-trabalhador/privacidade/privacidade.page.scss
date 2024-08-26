@@ -23,14 +23,15 @@ ion-content {
 .titulo {
     display: flex;
     justify-content: center;
-    padding-top: 31px;
+    padding-top: 30px;
 }
 
 .titulo__voltar {
     position: absolute;
-    top: 31px;
-    left: 31px;
+    top: 30px;
+    left: 30px;
     font-size: 30px;
+    color: black;
 }
 
 .div_titulo {
@@ -40,6 +41,7 @@ ion-content {
 
 h1 {
     margin: 0;
+    font-size: 17px;
 }
 
 .area_foto_perfil {
@@ -87,7 +89,7 @@ h1 {
     opacity: 1;
     --padding-start: 25px;
     --padding-end: 25px;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .txt {
@@ -145,12 +147,12 @@ h1 {
 .btn {
     --background: #CB2316;
     --border-radius: 25px;
-    --padding-top: 10px;
-    --padding-bottom: 10px;
-    --padding-start: 50px;
-    --padding-end: 50px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
 
-    font-size: 20px;
+    font-size: 22px;
     text-transform: none;
 }
 
@@ -178,7 +180,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    padding: 30px;
 }
 
 ion-content {

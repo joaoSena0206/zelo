@@ -42,9 +42,10 @@
 
 .titulo__voltar{
     position: absolute;
-    top: 31px;
-    left: 31px;
+    top: 30px;
+    left: 30px;
     font-size: 30px;
+    color: white;
 }
 
 h1{
@@ -54,7 +55,7 @@ h1{
 .area_foto_perfil{
     display: flex;
     justify-content: center;
-    margin-top: 31px;
+    margin-top: 30px;
     margin-bottom: 48px;
     position: relative;
 }
@@ -72,8 +73,8 @@ h1{
     justify-content: space-between;
     flex-direction: row;
     width: 100%;
-    padding: 5px 40px;
-    margin-bottom: 30px;
+    padding: 5px 30px;
+    margin-bottom: 15px;
     align-items: center;
     font-weight: bold;
 }
@@ -87,11 +88,11 @@ h1{
 
 .txt{
     margin-left: 15px;
-    font-size: 20px;
+    font-size: 17px;
 }
 
 .iconeIdentificacao{
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .iconeAbrir{
