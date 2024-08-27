@@ -78,7 +78,7 @@
               </div>
           </div>
 
-          <div class="area_btn btn_sair">
+          <div id="abrir_modal_sair" class="area_btn btn_sair">
               <div class="txt_icon">
                   <ion-icon class="iconeIdentificacao"
                       src="../../../assets/icon/Trabalhador/icone perfil/sair.svg"></ion-icon>
@@ -91,3 +91,26 @@
 
   </div>
 </ion-content>
+
+<ion-modal id="modal_sair" #modal trigger="abrir_modal_sair">
+    <ng-template>
+  
+        <ion-card class="poupop">
+  
+            <div class="area_vermelha">
+                <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <ion-icon class="iconeInterrogacao"
+                        src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+                </div>
+            </div>
+  
+            <div class="area_branca">
+                <h1 class="h1_denuncia">Tem certeza que deseja sair?</h1>
+                <ion-button class="form__btn">Confirmar</ion-button>
+            </div>
+  
+        </ion-card>
+  
+    </ng-template>
+  </ion-modal>

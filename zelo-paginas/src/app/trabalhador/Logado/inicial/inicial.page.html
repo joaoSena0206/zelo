@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true">
   <div class="content">
 
-    <ion-button id="open-custom-dialog" class="btn_situacao_trabalhador">
+    <ion-button id="abrir_modal_servico" class="btn_situacao_trabalhador">
       <img class="img_btn_situacao" src="../../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg" alt="">
       <p class="txtSituacao" style="margin: 15px;">{{ situacao }}</p>
     </ion-button>
@@ -123,7 +123,7 @@
         </ion-tab-button>
     
         <ion-tab-button>
-          <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+          <ion-icon id="abrir_modal_servico_solicitado" class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
           </ion-icon>
         </ion-tab-button>
 
@@ -133,32 +133,51 @@
 
 </ion-content>
 
-<!-- <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+<ion-modal id="modal_servico" #modal trigger="abrir_modal_servico">
   <ng-template>
-    <ion-card class="poupop">
-      <h1>{{ msgTrabalho }}</h1>
-      <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
-    </ion-card>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../assets/icon/Trabalhador/Icone inicial/Icone_poupop.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">{{ msgTrabalho }}</h1>
+              <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
   </ng-template>
-</ion-modal> -->
+</ion-modal>
 
-<ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+<ion-modal id="modal_servico_solicitado" #modal trigger="abrir_modal_servico_solicitado">
   <ng-template>
 
-    <ion-card class="poupop2">
+      <ion-card class="poupop">
 
-      <div class="area_vermelha">
-        <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
-        <div class="area_branca">
-          <ion-icon class="iconeInterrogacao"
-            src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
-        </div>
-      </div>
+          <div class="area_vermelha">
+              <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <img class="iconeFoto" src="../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
+              </div>
+          </div>
 
-      <h1 class="h1_denuncia">{{ msgTrabalho }}</h1>
-      <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
+          <div class="area_branca">
+              <h1>Marina Oliveira</h1>
+              <h1 style="font-size: 22px;">Novo serviço solicitado!</h1>
+              <div>
+                <ion-button class="form__btn2">Analisar</ion-button>
+                <ion-button class="form__btn1">Ignorar</ion-button>
+              </div>
+          </div>
 
-    </ion-card>
+      </ion-card>
 
   </ng-template>
 </ion-modal>

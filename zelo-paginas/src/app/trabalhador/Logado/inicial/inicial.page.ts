@@ -14,7 +14,7 @@ export class InicialPage implements OnInit {
   ngOnInit() {}
 
   disponivel() {
-    const botaoSituacao = document.querySelector('#open-custom-dialog');
+    const botaoSituacao = document.querySelector('#abrir_modal_servico');
     const img = document.querySelector('.img_btn_situacao');
 
     if (this.situacao == 'Disponível') {

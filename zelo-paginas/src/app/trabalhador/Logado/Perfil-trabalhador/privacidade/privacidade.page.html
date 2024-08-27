@@ -91,9 +91,32 @@
               </ion-accordion-group>
 
               <div class="divBtn">
-                  <ion-button disabled="true" class="btn">Salvar</ion-button>
+                  <ion-button id="abrir_modal_confirmar_dados" disabled="true" class="btn">Salvar</ion-button>
               </div>
           </div>
       </div>
   </div>
 </ion-content>
+
+<ion-modal id="modal_dados" #modal trigger="abrir_modal_confirmar_dados">
+    <ng-template>
+  
+        <ion-card class="poupop">
+  
+            <div class="area_vermelha">
+                <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <ion-icon class="iconeInterrogacao"
+                        src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+                </div>
+            </div>
+  
+            <div class="area_branca">
+                <h1 class="h1_denuncia">Confirmar mudança de dados?</h1>
+                <ion-button class="form__btn">Confirmar</ion-button>
+            </div>
+  
+        </ion-card>
+  
+    </ng-template>
+  </ion-modal>

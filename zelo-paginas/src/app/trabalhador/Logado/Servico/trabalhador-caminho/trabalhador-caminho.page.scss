@@ -4,6 +4,7 @@
     font-style: normal;
     margin: 0;
     color: black;
+    font-size: 15px;
 }
 
 .content {
@@ -13,7 +14,7 @@
 }
 
 .mapa {
-    height: 60vh;
+    height: 65vh;
     background-color: antiquewhite;
 }
 
@@ -48,14 +49,14 @@
 
 .area_endereco p {
     margin: 0;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: normal;
 }
 
 .txt_endereco1,
 .txt_endereco2 {
     height: 50%;
-    font-size: 16px;
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     font-weight: bold;
@@ -114,7 +115,7 @@
 }
 
 .hora {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     margin-top: 5px;
 }
@@ -149,10 +150,14 @@
 
 .div_4 ion-button {
     margin: 0 20px;
-    height: 40px;
-    width: 135px;
+    --padding-left: 28px;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-right: 28px;
     --border-radius: 20px;
     color: white;
+    font-size: 15px;
+    width: 120px;
 }
 
 .btn_cancelar {
@@ -242,7 +247,7 @@
 }
 
 .div_relogio h1 {
-    font-size: 40px;
+    font-size: 32px;
 }
 
 .div_relogio ion-icon {
@@ -354,7 +359,7 @@ ng-template {
 }
 
 .opçaoDenuncia {
-    font-size: 20px;
+    font-size: 22px;
     margin: 15px;
 }
 
