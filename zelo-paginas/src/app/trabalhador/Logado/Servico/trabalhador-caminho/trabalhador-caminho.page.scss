@@ -285,14 +285,14 @@ ng-template {
 }
 
 
-#modal_finalizar, #modal_denuncia {
+#modal_finalizar, #modal_denuncia, #modal_cancelar {
     --width: fit-content;
     --height: fit-content;
     --border-radius: 25px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
 }
 
-#modal_finalizar, #modal_denuncia{
+#modal_finalizar, #modal_denuncia, #modal_cancelar{
     padding: 0 10px;
 }
 
@@ -376,4 +376,17 @@ ng-template {
     display: none;
     --highlight-color: none;
     padding: 0 10px;
+}
+
+
+//-----------------------Modal cancelar-------------------------------//
+
+.txt_cancelar_poupop{
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+.text_cancelar_poupop{
+    color: #FA5050;
+    font-size: 17px;
 }

@@ -110,7 +110,7 @@
                     [ngClass]="form.controls['termos'].invalid && (form.controls['termos'].touched || form.controls['termos'].dirty) ? 'erro termos' : 'escondido'">Aceite
                     os termos!</span>
 
-                <ion-button (click)="enviar()" class="form__btn">Confirmar</ion-button>
+                <ion-button (click)="enviar()" class="form__btn" [routerLink]="['/confirmar-celular']">Confirmar</ion-button>
 
                 <p class="form__p">Já possui conta? <ion-text class="form__text"
                         [routerLink]="['/login-trabalhador']">Entrar</ion-text></p>

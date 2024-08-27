@@ -55,6 +55,32 @@
                       </div>
                   </ion-accordion>
               </ion-accordion-group>
+
+              <ion-accordion-group class="ion_accordion_group">
+                <ion-accordion value="first">
+                    <ion-item slot="header" class="div_titulo">
+                        <h1>Certificados</h1>
+                    </ion-item>
+
+                    <div slot="content" class="geral">
+                        <div class="imgCertificado">
+                            <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
+                            <img src="../../../../../assets/icon/Trabalhador/imagens/certificado1.webp" alt="">
+                        </div>
+
+                        <div class="imgCertificado">
+                            <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
+                            <img src="../../../../../assets/icon/Trabalhador/imagens/certificado2.webp" alt="">
+                        </div>
+
+                        <div class="add_certificado">
+                            <ion-button>
+                                <ion-icon fill="clear" name="add-circle-outline"></ion-icon>
+                            </ion-button>
+                        </div>
+                    </div>
+                </ion-accordion>
+            </ion-accordion-group>
               
               <ion-accordion-group class="ion_accordion_group">
                   <ion-accordion value="second">
@@ -98,13 +124,13 @@
   </div>
 </ion-content>
 
-<ion-modal id="modal_dados" #modal trigger="abrir_modal_confirmar_dados">
+<ion-modal id="modal_dados" #modal_dados trigger="abrir_modal_confirmar_dados">
     <ng-template>
   
         <ion-card class="poupop">
   
             <div class="area_vermelha">
-                <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <ion-icon (click)="modal_dados.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
                 <div class="circulo_branca">
                     <ion-icon class="iconeInterrogacao"
                         src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
@@ -113,6 +139,29 @@
   
             <div class="area_branca">
                 <h1 class="h1_denuncia">Confirmar mudança de dados?</h1>
+                <ion-button class="form__btn">Confirmar</ion-button>
+            </div>
+  
+        </ion-card>
+  
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal id="modal_certificado" #modal_certificado trigger="abrir_modal_remover_certificado">
+    <ng-template>
+  
+        <ion-card class="poupop">
+  
+            <div class="area_vermelha">
+                <ion-icon (click)="modal_certificado.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <ion-icon class="iconeInterrogacao"
+                        src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+                </div>
+            </div>
+  
+            <div class="area_branca">
+                <h1 class="h1_denuncia">Tem certeza que deseja remover este certificado?</h1>
                 <ion-button class="form__btn">Confirmar</ion-button>
             </div>
   

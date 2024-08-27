@@ -28,8 +28,8 @@
         <img class="img_servico" src="../../../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
   
         <div class="area_btn">
-          <ion-button class="btn_ignorar">Ignorar</ion-button>
-          <ion-button class="btn_aceitar">Aceitar</ion-button>
+          <ion-button class="btn_ignorar" id="abrir_modal_ignorar">Ignorar</ion-button>
+          <ion-button class="btn_aceitar" id="abrir_modal_aceitar">Aceitar</ion-button>
         </div>
       </ion-card>
     
@@ -37,3 +37,50 @@
     </div>
   
 </ion-content>
+
+
+<ion-modal id="modal_ignorar" #modal_ignorar trigger="abrir_modal_ignorar">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_ignorar.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Tem certeza que deseja ignorar a visita?</h1>
+              <ion-button class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>
+
+<ion-modal id="modal_aceitar" #modal_aceitar trigger="abrir_modal_aceitar">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_aceitar.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Tem certeza que deseja aceitar a visita?</h1>
+              <ion-button class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>

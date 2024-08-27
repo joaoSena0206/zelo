@@ -29,7 +29,7 @@
       <ion-list class="ion_list">
 
           <div>
-              <div class="area_btn">
+              <div class="area_btn" [routerLink]="['/privacidade']">
                   <div class="txt_icon">
                       <ion-icon class="iconeIdentificacao" name="lock-closed-outline"></ion-icon>
                       <p class="txt">Privacidade</p>
@@ -38,20 +38,10 @@
                   <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>
               </div>
 
-              <div class="area_btn">
+              <div class="area_btn" [routerLink]="['/ultimos-pedidos']">
                   <div class="txt_icon">
                       <ion-icon class="iconeIdentificacao" src="../../../assets/icon/Trabalhador/icone perfil/Relogio.svg"></ion-icon>
                       <p class="txt">Histórico</p>
-                  </div>
-
-                  <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>
-              </div>
-
-              <div class="area_btn">
-                  <div class="txt_icon">
-                      <ion-icon class="iconeIdentificacao"
-                          src="../../../assets/icon/Trabalhador/icone perfil/certificado.svg"></ion-icon>
-                      <p class="txt">Certificados</p>
                   </div>
 
                   <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>

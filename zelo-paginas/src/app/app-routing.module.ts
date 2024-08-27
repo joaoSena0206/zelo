@@ -55,10 +55,6 @@ const routes: Routes = [
     loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/ultimos-pedidos/ultimos-pedidos.module').then( m => m.UltimosPedidosPageModule)
   },
   {
-    path: 'certificado',
-    loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/certificado/certificado.module').then( m => m.CertificadoPageModule)
-  },
-  {
     path: 'perfil-cliente',
     loadChildren: () => import('./trabalhador/Logado/perfil-cliente/perfil-cliente.module').then( m => m.PerfilClientePageModule)
   },

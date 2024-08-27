@@ -112,18 +112,18 @@
     <ion-tabs class="ion_tabs">
       <ion-tab-bar class="ion_tab_bar" slot="bottom">
     
-        <ion-tab-button  tab="">
-          <ion-icon class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Icone inicial/Home.svg" alt="">
+        <ion-tab-button  tab="inicial">
+          <ion-icon [routerLink]="['/inicial']" class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Icone inicial/Home.svg" alt="">
           </ion-icon>
         </ion-tab-button>
     
-        <ion-tab-button>
-          <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/Relógio.svg">
+        <ion-tab-button tab="ultimos-pedidos">
+          <ion-icon [routerLink]="['/ultimos-pedidos']" class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/Relógio.svg">
           </ion-icon>
         </ion-tab-button>
     
-        <ion-tab-button>
-          <ion-icon id="abrir_modal_servico_solicitado" class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+        <ion-tab-button tab="perfil">
+          <ion-icon [routerLink]="['/perfil']" class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
           </ion-icon>
         </ion-tab-button>
 

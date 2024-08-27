@@ -187,6 +187,37 @@ ion-content {
     --background: linear-gradient(90deg, #CB2316 38%, #65110B 120%);
 }
 
+.imgCertificado{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add_certificado ion-button{
+    width: 100%;
+    margin-top: 15px;
+    --background: #BABABA;
+    color: black;
+}
+
+.imgCertificado{
+    position: relative;
+}
+
+.icone_lixo{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+    background-color: #BABABA;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding: 3px;
+    border: 1px solid black;
+}
+
 //---------------------------------------------------//
 
 .poupop {
@@ -205,14 +236,14 @@ ion-content {
 }
 
 
-#modal_dados{
+#modal_dados, #modal_certificado{
     --width: fit-content;
     --height: fit-content;
     --border-radius: 25px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
 }
 
-#modal_dados{
+#modal_dados, #modal_certificado{
     padding: 0 10px;
 }
 

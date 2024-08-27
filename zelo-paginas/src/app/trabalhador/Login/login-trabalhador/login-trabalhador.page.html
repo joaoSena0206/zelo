@@ -19,11 +19,11 @@
                   </ion-input>
               </ion-item>
 
-              <p style="text-align: start;" class="form__p">Esqueceu a <ion-text class="form__text">senha?</ion-text></p>
+              <p style="text-align: start;" class="form__p">Esqueceu a <ion-text class="form__text" [routerLink]="['/recuperar-senha']">senha?</ion-text></p>
   
-              <ion-button class="form__btn">Entrar</ion-button>
+              <ion-button class="form__btn" [routerLink]="['/inicial']">Entrar</ion-button>
   
-              <p class="form__p">Não tem conta? <ion-text class="form__text">Crie uma</ion-text></p>
+              <p class="form__p">Não tem conta? <ion-text class="form__text" [routerLink]="['/cadastro-trabalhador']">Crie uma</ion-text></p>
 
           </ion-list>
       </div>
