@@ -133,13 +133,13 @@
 
 </ion-content>
 
-<ion-modal id="modal_servico" #modal trigger="abrir_modal_servico">
+<ion-modal id="modal_servico" #modal_disponivel trigger="abrir_modal_servico">
   <ng-template>
 
       <ion-card class="poupop">
 
           <div class="area_vermelha">
-              <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <ion-icon (click)="modal_disponivel.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
               <div class="circulo_branca">
                   <ion-icon class="iconeInterrogacao"
                       src="../../../../assets/icon/Trabalhador/Icone inicial/Icone_poupop.svg"></ion-icon>
@@ -148,7 +148,7 @@
 
           <div class="area_branca">
               <h1 class="h1_denuncia">{{ msgTrabalho }}</h1>
-              <ion-button (click)="modal.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
+              <ion-button (click)="modal_disponivel.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
           </div>
 
       </ion-card>
@@ -156,13 +156,13 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal id="modal_servico_solicitado" #modal trigger="abrir_modal_servico_solicitado">
+<ion-modal id="modal_servico_solicitado" #modal_servico trigger="abrir_modal_servico_solicitado">
   <ng-template>
 
       <ion-card class="poupop">
 
           <div class="area_vermelha">
-              <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <ion-icon (click)="modal_servico.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
               <div class="circulo_branca">
                   <img class="iconeFoto" src="../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
               </div>
