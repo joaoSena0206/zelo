@@ -87,13 +87,6 @@ const routes: Routes = [
         path: 'trabalhador-caminho',
         loadChildren: () => import('./cliente/logado/servico/trabalhador-caminho/trabalhador-caminho.module').then(m => m.TrabalhadorCaminhoPageModule)
     },
-
-
-
-
-
-
-
 ];
 
 @NgModule({
