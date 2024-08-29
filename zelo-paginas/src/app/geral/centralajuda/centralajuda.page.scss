@@ -1,9 +1,13 @@
-.content{
-    padding: 30px;
+*{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
 }
 
-header h1{
-    font-weight: bold;
+.content{
+    padding: 30px;
 }
 
 /* body{
