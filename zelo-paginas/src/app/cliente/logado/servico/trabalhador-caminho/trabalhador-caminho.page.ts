@@ -22,6 +22,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         this.msgPoupopCancelar = 'Pedido cancelado!';
 
+        btnProsseguir.textContent = "Ok";
         btnProsseguir.addEventListener("click", function () {
             modalCancelar.dismiss();
         });
