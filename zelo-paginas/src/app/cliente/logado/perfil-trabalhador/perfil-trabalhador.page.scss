@@ -80,7 +80,7 @@ h1 {
 }
 
 .area_titulo h1 {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .estrelas_avaliações {
@@ -93,13 +93,17 @@ h1 {
 }
 
 .wrapper {
-    display: flex;
     justify-content: center;
     margin-bottom: 20px;
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
     gap: 20px;
+}
+
+.wrapperCertificados
+{
+    display: flex;
 }
 
 ion-modal {
