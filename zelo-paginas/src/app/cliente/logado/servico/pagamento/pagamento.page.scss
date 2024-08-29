@@ -33,12 +33,17 @@
 }
 
 .divMin p {
-    font-size: 22px;
+    font-size: 32px;
     font-weight: bold;
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
 }
+
+.divQr>p:nth-child(1) {
+    font-weight: bold;
+}
+
 
 .divFundo {
     background-color: #D9D9D9;
