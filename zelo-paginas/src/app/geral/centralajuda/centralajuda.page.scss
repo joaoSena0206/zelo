@@ -63,7 +63,7 @@
 }
 
 .footer p{
-    width: 60%;
+    max-width: 211px;
     align-items: center;
     display: flex;
     justify-content: center;
@@ -71,16 +71,16 @@
 
 ion-button {
     --border-radius: 25px;
-    --padding-top: 19px;
-    --padding-bottom: 19px;
-    --background: #F66701;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
+    --background: #CB2316;
 
     font-size: 22px;
     font-weight: bold;
     text-transform: none;
     transition: transform 0.2s ease;
-    height: 46px;
-    width: 147px;
     font-size: 15px;
     color: white;
 }

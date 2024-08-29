@@ -1,22 +1,46 @@
-<header>
-  <div class="botao-titulo">
-    <div class="btn_voltar"> 
-      <img src="../../../assets/icon/cliente/down-removebg-preview 8.svg"> 
-    </div>
-      <h1>Suporte</h1>
-  </div>
-</header>
+<ion-header>
+  <ion-icon class="content_seta" name="chevron-back-outline"></ion-icon>
+</ion-header>
 
 <ion-content>
-    <div class="area_escrever">
-      <form action="">
-        <label for="1"><p>Digite sua dúvida:</p></label>
-          <input type="text" id="1">
-      </form>
+<section class="content">
+
+  <div class="content_h1">
+    <h1>Suporte</h1>
+  </div>
+
+  <div class="wrapper">
+
+    <div class="geral">
+      <img class="icone" src="../../../assets/icon/geral/suporte.png" alt="">
     </div>
-  </ion-content>
 
-    <ion-button>
-        enviar
-    </ion-button>
+    <ion-card class="card">
+      <div class="div_input">
+        <ion-label>Nome</ion-label>
+        <ion-input placeholder="Digite seu nome"></ion-input>
+      </div>
+      
 
+      <div class="div_input">
+        <ion-label>Email</ion-label>
+        <ion-input placeholder="Digite seu Email"></ion-input>
+      </div>
+      
+      <div class="div_input">
+        <ion-label>Dúvida</ion-label>
+        <ion-textarea placeholder="Digite sua dúvida"></ion-textarea>
+      </div>
+      
+      <div class="div_btn">
+        <ion-button>Enviar</ion-button>
+      </div>
+      
+    </ion-card>
+
+    <p class="p_info">Envie sua dúvida e iremos entrar em contato para mais esclarecimentos.</p>
+
+  </div>
+  
+</section>
+</ion-content>

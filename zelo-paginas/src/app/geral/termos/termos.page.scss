@@ -1,69 +1,39 @@
-/* 
-body{
-    align-items: center;
+*{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
 }
 
-header{
-    height: 20%;
-    width: 100%;
+.content{
+    padding: 30px;
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-header h1{
-    font-weight: bold;
-}
-
-.botao-titulo{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row ; 
-}
-
-.btn_voltar{
+.content_seta{
+    font-size: 30px;
+    flex-shrink: 0;
     position: absolute;
-    top: 31px;
+    top: 30px;
     left: 30px;
 }
 
-hr{
-    height: 1px;
-    width: 100%; 
-    background-color: black;   
+.content_h1{
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    margin: 70px 0 30px 0;
 }
 
-.titulo_perg_freq{
-    width: 100%;
-    margin-left: 5%;
+h1{
+    font-size: 22px;
+    margin-bottom: 20px;
 }
 
-.perg_freq{
-    width: 374px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 100px;
-
+.div1{
+    margin-top: 20px;
 }
-
-.pergunta h1 {
-    margin-bottom: 10px; 
-    font-size: 18px;
-}
-
-.pergunta{
-    height: 93.5px;
-    width: 100%;
-}
-
-.pergunta p{
-    margin-bottom: 5px;
-    margin: 0;
-} */
-
-
