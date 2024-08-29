@@ -17,11 +17,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
     ionViewDidEnter() {
     }
 
-    abrirPopup(elem: any) {
-        elem.isOpen = true;
-        console.log(elem.isOpen);
-    }
-
     mudartxtCancelar() {
         let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
         let btnProsseguir = document.querySelector(".form__btn") as HTMLIonButtonElement;
@@ -45,13 +40,35 @@ export class TrabalhadorCaminhoPage implements OnInit {
     mostrarBtnDenuncia() {
         const btn = document.querySelector(".btn_denunciar") as HTMLIonButtonElement;
 
-        if (btn.style.display == "none")
-        {
+        if (btn.style.display == "none") {
             btn.style.display = "block";
         }
-        else
-        {
+        else {
             btn.style.display = "none";
         }
+    }
+
+    mudarOutro() {
+        const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
+        const popup = document.querySelector(".fundoPopup") as HTMLIonTextareaElement;
+
+        accordion.style.display = "none";
+        popup.style.display = "block";
+    }
+
+    mudarOutro2() {
+        const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
+        const btn = document.querySelector("#btnDenuncia") as HTMLIonButtonElement;
+        const modal = document.querySelector("#modal_denuncia") as HTMLIonModalElement;
+
+        accordion.style.display = "none";
+        const popup = document.querySelector(".fundoPopup") as HTMLIonTextareaElement;
+        popup.style.display = "none";
+
+        this.msg = 'Denúncia enviada com sucesso. Iremos avaliar a sua denúncia.';
+        btn.textContent = "Ok";
+        btn.addEventListener("click", function() {
+            modal.dismiss();
+        });
     }
 }
