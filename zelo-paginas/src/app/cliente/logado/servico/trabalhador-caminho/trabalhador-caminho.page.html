@@ -26,7 +26,11 @@
 
                 <div>
                     <ion-icon src="../../../../../assets/icon/cliente/chat.svg"></ion-icon>
-                    <ion-icon src="../../../../../assets/icon/cliente/denuncia.svg"></ion-icon>
+                    <div class="divDenuncia">
+                        <ion-icon (click)="mostrarBtnDenuncia()" src="../../../../../assets/icon/cliente/denuncia.svg"
+                            id="denuncia"></ion-icon>
+                        <ion-button id="abrir_modal_denuncia" class="btn_denunciar">Denunciar</ion-button>
+                    </div>
                 </div>
             </div>
 

@@ -7,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrabalhadorCaminhoPage implements OnInit {
     msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?';
+    msg: any = "Informe o motivo da denúncia";
 
     constructor() { }
 
     ngOnInit() {
+    }
+
+    ionViewDidEnter() {
+    }
+
+    abrirPopup(elem: any) {
+        elem.isOpen = true;
+        console.log(elem.isOpen);
     }
 
     mudartxtCancelar() {
@@ -26,5 +35,23 @@ export class TrabalhadorCaminhoPage implements OnInit {
         btnProsseguir.addEventListener("click", function () {
             modalCancelar.dismiss();
         });
+    }
+
+    limpar() {
+        this.msg = 'Informe o motivo da denuncia'
+        this.msgPoupopCancelar = 'Quer realmente cancelar o pedido?';
+    }
+
+    mostrarBtnDenuncia() {
+        const btn = document.querySelector(".btn_denunciar") as HTMLIonButtonElement;
+
+        if (btn.style.display == "none")
+        {
+            btn.style.display = "block";
+        }
+        else
+        {
+            btn.style.display = "none";
+        }
     }
 }
