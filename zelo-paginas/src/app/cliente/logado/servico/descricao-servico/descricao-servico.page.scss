@@ -30,7 +30,7 @@
 .content__h1 {
     color: black;
     font-weight: 700;
-    font-size: clamp(1rem, 10vw, 2rem);
+    font-size: 32px;
     margin-bottom: 11px;
     text-align: center;
 }
@@ -43,48 +43,50 @@
 
 h2 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
 }
 
 ion-button {
     --background: #F66701;
     --border-radius: 20px;
-    --padding-top: 17px;
-    --padding-bottom: 17px;
-    --padding-start: 81px;
-    --padding-end: 81px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
 
     font-weight: bold;
     text-transform: none;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 ion-input {
     --background: white;
     --border-radius: 20px;
-    --padding-top: 13px;
-    --padding-bottom: 13px;
-    --padding-start: 20px;
-    --padding-end: 20px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 15px;
+    --padding-end: 15px;
     --highlight-color: none;
 
     margin-top: 10px;
     margin-bottom: 20px;
+    font-size: 15px;
 }
 
 ion-textarea {
     --background: white;
     --border-radius: 20px;
     --highlight-color: none;
-    --padding-top: 13px;
-    --padding-bottom: 13px;
-    --padding-start: 20px;
-    --padding-end: 20px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 15px;
+    --padding-end: 15px;
     --border-color: none;
 
     min-height: 116px;
     margin-top: 10px;
     margin-bottom: 20px;
+    font-size: 15px;
 }
 
 ion-icon {
@@ -101,8 +103,7 @@ ion-icon {
     height: 48px;
 }
 
-.divAlinhar
-{
+.divAlinhar {
     display: flex;
     justify-content: center;
 }
