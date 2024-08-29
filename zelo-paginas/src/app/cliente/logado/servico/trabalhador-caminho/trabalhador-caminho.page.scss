@@ -426,6 +426,13 @@ h2 {
     gap: 15px;
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
+}
+
+ion-modal
+{
+    --background: transparent;
+    --box-shadow: none;
 }
 
 .area_informacao>div:nth-child(2) ion-icon {
@@ -475,6 +482,7 @@ ion-text {
     font-weight: bold;
     text-transform: none;
     color: white;
+    margin-top: 20px;
 }
 
 .area_informacao>div:nth-child(4) {

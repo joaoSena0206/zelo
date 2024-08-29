@@ -53,7 +53,31 @@
             </div>
 
             <div>
-                <ion-button class="btnCancelar">Cancelar</ion-button>
+                <ion-button class="btnCancelar" id="abrir_modal_cancelar">Cancelar</ion-button>
+                <ion-modal id="modal_cancelar" #modal_cancelar trigger="abrir_modal_cancelar">
+                    <ng-template>
+
+                        <ion-card class="poupop">
+
+                            <div class="area_vermelha">
+                                <ion-icon (click)="modal_cancelar.dismiss();" class="iconeFechar2"
+                                    name="close-circle-outline"></ion-icon>
+                                <div class="circulo_branca">
+                                    <ion-icon class="iconeInterrogacao"
+                                        src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+                                </div>
+                            </div>
+
+                            <div class="area_branca">
+                                <h1></h1>
+                                <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text
+                                        class="text_cancelar_poupop">10%</ion-text> </p>
+                                <ion-button class="form__btn">Prosseguir</ion-button>
+                            </div>
+
+                        </ion-card>
+                    </ng-template>
+                </ion-modal>
             </div>
         </div>
     </div>
