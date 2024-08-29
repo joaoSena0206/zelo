@@ -40,6 +40,7 @@ ion-content {
 
 h1 {
     margin: 0;
+    font-size: 22px;
 }
 
 .area_foto_perfil {
@@ -82,9 +83,11 @@ h1 {
     border-radius: 23px;
 
     opacity: 1;
-    --padding-start: 25px;
-    --padding-end: 25px;
-    font-size: 13px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    font-size: 15px;
 }
 
 .txt {
@@ -142,12 +145,12 @@ h1 {
 .btn {
     --background: #F66701;
     --border-radius: 25px;
-    --padding-top: 10px;
-    --padding-bottom: 10px;
-    --padding-start: 50px;
-    --padding-end: 50px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
 
-    font-size: 20px;
+    font-size: 22px;
     text-transform: none;
 }
 
