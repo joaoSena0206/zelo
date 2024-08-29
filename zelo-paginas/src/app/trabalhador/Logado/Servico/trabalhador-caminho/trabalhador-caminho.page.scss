@@ -158,14 +158,17 @@
     color: white;
     font-size: 15px;
     width: 120px;
+    text-transform: none;
 }
 
 .btn_cancelar {
     --background: #FA5050;
+    text-transform: none;
 }
 
 .btn_iniciar {
     --background: #64BF7E;
+    text-transform: none;
 }
 
 //------------------------------------------------------//
@@ -259,6 +262,7 @@
     --background: #CB2316;
     color: white;
     --border-radius: 20px;
+    text-transform: none;
 }
 
 ion-popover,
@@ -305,6 +309,7 @@ ng-template {
     color: white;
     --background: #CB2316;
     font-size: 22px;
+    text-transform: none;
 }
 
 .area_vermelha {
