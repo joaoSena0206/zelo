@@ -6,13 +6,24 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./trabalhador-caminho.page.scss'],
 })
 export class TrabalhadorCaminhoPage implements OnInit {
-    msgPoupopCancelar: any;
+    msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?';
 
     constructor() { }
 
     ngOnInit() {
     }
 
-    
+    mudartxtCancelar() {
+        let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
+        let btnProsseguir = document.querySelector(".form__btn") as HTMLIonButtonElement;
+        let modalCancelar = document.querySelector("#modal_cancelar") as HTMLIonModalElement;
 
+        txtAdvertenciaCancelar.style.display = "none";
+
+        this.msgPoupopCancelar = 'Pedido cancelado!';
+
+        btnProsseguir.addEventListener("click", function () {
+            modalCancelar.dismiss();
+        });
+    }
 }

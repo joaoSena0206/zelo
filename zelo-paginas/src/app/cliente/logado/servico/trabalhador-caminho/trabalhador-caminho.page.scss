@@ -14,7 +14,8 @@
 }
 
 .mapa {
-    height: clamp(300px, 70vh, 1000px);;
+    height: clamp(300px, 70vh, 1000px);
+    ;
     background-color: antiquewhite;
 }
 
@@ -429,8 +430,7 @@ h2 {
     margin-bottom: 20px;
 }
 
-ion-modal
-{
+ion-modal {
     --background: transparent;
     --box-shadow: none;
 }
@@ -502,7 +502,101 @@ ion-text {
     width: 100%;
 }
 
-.divFoto > div:nth-child(1) > figure:nth-child(1)
-{
+.divFoto>div:nth-child(1)>figure:nth-child(1) {
     width: clamp(90px, 10vw, 150px);
+}
+
+.poupop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin: auto;
+}
+
+.poupop h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+
+#modal_finalizar,
+#modal_denuncia,
+#modal_cancelar {
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+#modal_finalizar,
+#modal_denuncia,
+#modal_cancelar {
+    padding: 0 10px;
+}
+
+.area_vermelha {
+    width: 100%;
+    background-color: #CB2316;
+    height: 110px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    position: relative;
+}
+
+.iconeFechar2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+.circulo_branca {
+    height: 102px;
+    width: 102px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -20px;
+}
+
+.iconeInterrogacao {
+    height: 67px;
+    width: 65px;
+}
+
+.area_branca {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.txt_cancelar_poupop {
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+.text_cancelar_poupop {
+    color: #FA5050;
+    font-size: 17px;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 22px;
 }
