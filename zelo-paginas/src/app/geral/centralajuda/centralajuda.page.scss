@@ -7,17 +7,17 @@
 }
 
 .content{
-    padding: 30px;
+    padding: 14px;
     height: 100vh;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .ion_accordion_group{
     color: black;
     font-weight: bold;
-}
-
-.ion_accordion{
 }
 
 .content_seta{
@@ -30,6 +30,7 @@
 
 .div_titulo{
     padding: 10px 0;
+    font-weight: bold;
 }
 
 .content_h1{
@@ -53,14 +54,19 @@
     font-size: 17px;
 }
 
-footer{
+.footer{
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 5px;
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
+    padding: 14px;
+    flex-direction: row;
+}
+
+.footer p{
+    width: 60%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 ion-button {
@@ -69,20 +75,16 @@ ion-button {
     --padding-bottom: 19px;
     --background: #F66701;
 
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     text-transform: none;
     transition: transform 0.2s ease;
     height: 46px;
     width: 147px;
-    font-size: 16px;
-    
+    font-size: 15px;
+    color: white;
 }
-  
-ion-button:active{
-    --background: #F66701 !important;
-    transform: scale(0.90);
-}
+
 
 
 /* body{
