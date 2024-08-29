@@ -1,4 +1,12 @@
-body{
+.content{
+    padding: 30px;
+}
+
+header h1{
+    font-weight: bold;
+}
+
+/* body{
     align-items: center;
 }
 
@@ -39,14 +47,40 @@ hr{
 .titulo_perg_freq{
     width: 100%;
     margin-left: 5%;
+    padding: 0 30px
 }
 
-.perg_freq{
-    margin-left: 5%;
-    width: 374px;
-    height: 643px;
-}
 
+ion-accordion {
+    --background: transparent;
+  }
+
+  :host(.ion-color) .item-native, :host(.ion-color) .item-inner{
+    background: var(--ion-color-base);
+  }
+  
+  
+  ion-item[slot="header"] {
+    --background: transparent;
+    --border-color: transparent;
+  }
+  
+  
+  ion-item[slot="header"] {
+    --padding-start: 30px;
+    --padding-end: 0;
+  }
+  
+ 
+  ion-accordion {
+    --box-shadow: none;
+  }
+  
+  ion-accordion div[slot="content"] {
+    padding: 30px;
+  } */
+
+/* 
 .pergunta{
     height: 93.5px;
     width: 100%;
@@ -83,5 +117,4 @@ ion-button {
 ion-button:active{
     --background: #F66701 !important;
     transform: scale(0.90);
-}
-
+} */
