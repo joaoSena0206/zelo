@@ -45,7 +45,7 @@ ion-content
 {
     color: white;
     font-weight: 700;
-    font-size: clamp(1.5rem, 10vw, 2rem);
+    font-size: 32px;
     margin-bottom: 20px;
 }
 
@@ -92,6 +92,7 @@ ion-content
     font-weight: 700;
     border-radius: 26px;
     font-size: 15px;
+    height: 57px;
 }
 
 .form__btn
@@ -115,8 +116,7 @@ ion-content
 {
     text-align: center;
     margin: 0;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 15px;
 }
 
 

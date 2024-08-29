@@ -1,19 +1,39 @@
-*
-{
+* {
     font-family: "Arimo", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     margin: 0;
 }
 
-ion-content
-{
+ion-content {
     --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
 }
 
+ion-modal {
+    --background: transparent;
+    --box-shadow: none;
+}
 
-.wrapper
-{
+.divModal {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divModal ion-button {
+    --background: #F66701;
+    --border-radius: 20px;
+    text-transform: none;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
+    font-size: 15px;
+}
+
+
+.wrapper {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,8 +41,7 @@ ion-content
 }
 
 
-.content
-{
+.content {
     padding: 0 31px;
     height: 100vh;
     display: flex;
@@ -32,8 +51,7 @@ ion-content
     width: 100%;
 }
 
-.content__seta
-{
+.content__seta {
     font-size: 30px;
     flex-shrink: 0;
     position: absolute;
@@ -41,17 +59,15 @@ ion-content
     left: 31px;
 }
 
-.content__h1
-{
+.content__h1 {
     color: white;
     font-weight: 700;
-    font-size: clamp(1.5rem, 10vw, 2rem);
+    font-size: 32px;
     margin-bottom: 20px;
 }
 
 
-.ion_item
-{
+.ion_item {
     --padding-start: 0;
     --inner-padding-end: 0;
 
@@ -59,8 +75,7 @@ ion-content
     position: relative;
 }
 
-.ion_item__icon
-{
+.ion_item__icon {
     position: absolute;
     top: 50%;
     bottom: 50%;
@@ -70,8 +85,7 @@ ion-content
 }
 
 
-.form
-{
+.form {
     padding: 33px 19px;
     background-color: white;
     border-radius: 26px;
@@ -79,8 +93,7 @@ ion-content
     flex-direction: column;
 }
 
-.form__input
-{
+.form__input {
     --placeholder-opacity: 1;
     --padding-start: 27px;
     --padding-end: 27px;
@@ -88,14 +101,14 @@ ion-content
     display: flex;
     align-items: center;
     width: 100%;
-    background: rgba(217,217,217, 0.56);
+    background: rgba(217, 217, 217, 0.56);
     font-weight: 700;
     border-radius: 26px;
     font-size: 15px;
+    height: 57px;
 }
 
-.form__btn
-{
+.form__btn {
     --background: #F66701;
     --border-radius: 26px;
     --padding-start: 71px;
@@ -111,8 +124,7 @@ ion-content
     width: clamp(200px, 300px, 80%);
 }
 
-.form__p
-{
+.form__p {
     text-align: center;
     margin: 0;
     font-size: 13px;
@@ -120,8 +132,7 @@ ion-content
 }
 
 
-.form__text
-{
+.form__text {
     color: #F66701;
     font-weight: 700;
 }
