@@ -1,64 +1,73 @@
 <ion-header>
-  <div class="botao-titulo">
-    <img src="../../../assets/icon/cliente/down-removebg-preview 8.svg"> 
-  </div>
+    <ion-icon class="content_seta" name="chevron-back-outline"></ion-icon>
 </ion-header>
 
 <ion-content>
   <section class="content">
 
-    <div class="titulo_perg_freq">
+    <div class="content_h1">
       <h1>Perguntas frequentes</h1>
     </div>
-    
-    <ion-accordion-group>
+
+    <ion-accordion-group class="ion_accordion_group">
       <ion-accordion value="first">
+          <ion-item slot="header" class="div_titulo">
+            <p class="p1">1. Existe um sistema de classificação ou ranking para os trabalhadores baseado no desempenho e nas avaliações dos clientes?</p>
+          </ion-item>
 
-        <div slot="header" class="pergunta">
-          <p>1. Existe um sistema de classificação ou ranking para os trabalhadores baseado no desempenho e nas avaliações dos clientes?</p>
-        </div>
-    
-        <div slot="content">
-          <p>Sim, prezamos muito pelos atendimentos e a avaliação é um dos meio de localizar os melhores trabalhadores disponíveis.</p>
-        </div>
-
+          <div slot="content" class="geral">
+              <div class="area_dado">
+                <p class="p2">Sim, prezamos muito pelos atendimentos e a avaliação é um dos meio de localizar os melhores trabalhadores disponíveis.</p>
+              </div>
+          </div>
       </ion-accordion>
     </ion-accordion-group>
 
-    <ion-accordion-group>
+    <ion-accordion-group class="ion_accordion_group">
       <ion-accordion value="first">
+          <ion-item slot="header" class="div_titulo">
+            <p class="p1">2. Como o aplicativo garante a segurança e a privacidade das informações dos trabalhadores e dos clientes?</p>
+          </ion-item>
 
-        <div slot="header" class="pergunta">
-          <p>2. Como o aplicativo garante a segurança e a privacidade das informações dos trabalhadores e dos clientes?</p>
-        </div>
-
+          <div slot="content" class="geral">
+              <div class="area_dado">
+                <p class="p2">As informações são armazenadas e guardadas de forma segura e de acordo com as políticas de privacidade. E elas não são postas ao público somente para uso da plataforma. </p>
+              </div>
+          </div>
       </ion-accordion>
     </ion-accordion-group>
 
-    <ion-accordion-group>
+    <ion-accordion-group class="ion_accordion_group">
       <ion-accordion value="first">
+          <ion-item slot="header" class="div_titulo">
+            <p class="p1">3.Quais são as políticas de cancelamento e reembolso para os serviços solicitados pelo aplicativo?</p>
+          </ion-item>
 
-        <div slot="header" class="pergunta">
-          <p>3.Quais são as políticas de cancelamento e reembolso para os serviços solicitados pelo aplicativo?</p>
-        </div>
-
+          <div slot="content" class="geral">
+              <div class="area_dado">
+                <p class="p2">Caso o trabalhador cancele um pedido após ele ter caído pago o dinheiro retornará para a conta do cliente e o trabalhador receberá um taxa de 10% do valor da visita. E se o cliente cancelar após o pagamento ele também terá seu valor devolvido porém uma taxa de 15% será cobrado.</p>
+              </div>
+          </div>
       </ion-accordion>
     </ion-accordion-group>
 
-    <ion-accordion-group>
+    <ion-accordion-group class="ion_accordion_group">
       <ion-accordion value="first">
+          <ion-item slot="header" class="div_titulo">
+            <p class="p1">4. O aplicativo oferece algum tipo de treinamento ou recursos para ajudar os trabalhadores a melhorarem suas habilidades e aumentarem suas chances de serem contratados?</p>
+          </ion-item>
 
-        <div slot="header" class="pergunta">
-          <p>4. O aplicativo oferece algum tipo de treinamento ou recursos para ajudar os trabalhadores a melhorarem suas habilidades e aumentarem suas chances de serem contratados?</p>
-        </div>
-
+          <div slot="content" class="geral">
+              <div class="area_dado">
+                <p class="p2">Não, o nosso foco é para ligar os trabalhadores e os clientes de forma mais eficaz e rápida.</p>
+              </div>
+          </div>
       </ion-accordion>
     </ion-accordion-group>
 
-
+    <footer>
+      <p>Caso seu problema não <br> tenha sido resolvido:</p> <ion-button>Fale conosco!</ion-button>
+    </footer>
   </section>
 </ion-content>
 
-<footer>
-  <p>Caso seu problema não <br> tenha sido resolvido:</p> <ion-button>Fale conosco!</ion-button>
-</footer>
