@@ -87,6 +87,11 @@ const routes: Routes = [
         path: 'trabalhador-caminho',
         loadChildren: () => import('./cliente/logado/servico/trabalhador-caminho/trabalhador-caminho.module').then(m => m.TrabalhadorCaminhoPageModule)
     },
+  {
+    path: 'avaliacao',
+    loadChildren: () => import('./cliente/logado/servico/avaliacao/avaliacao.module').then( m => m.AvaliacaoPageModule)
+  },
+
 ];
 
 @NgModule({
