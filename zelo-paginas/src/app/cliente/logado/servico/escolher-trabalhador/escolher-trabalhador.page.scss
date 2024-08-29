@@ -133,6 +133,51 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
     font-weight: bold;
 }
 
+.divBtns {
+    ion-button:first-of-type {
+        --background: #CB0F00;
+
+    }
+
+    ion-button:last-of-type {
+        --background: #64BF7E;
+    }
+
+    ion-button {
+        --padding-top: 5px;
+        --padding-bottom: 5px;
+        --padding-start: 28px;
+        --padding-end: 28px;
+        --border-radius: 15px;
+
+        text-transform: none;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+ion-modal {
+    .areaUltimoPedido {
+        box-shadow: none;
+    }
+
+    --background: transparent;
+    --box-shadow: none;
+}
+
+.divModalWrapper {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 div.areaUltimoPedido:nth-child(2)>div:nth-child(1) {
     width: 100%;
 }
