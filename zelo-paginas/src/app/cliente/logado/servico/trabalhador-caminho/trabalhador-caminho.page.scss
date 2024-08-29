@@ -14,7 +14,7 @@
 }
 
 .mapa {
-    height: clamp(300px, 60vh, 600px);
+    height: clamp(300px, 70vh, 1000px);;
     background-color: antiquewhite;
 }
 
@@ -383,7 +383,7 @@ ng-template {
 .divFoto {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .divFoto>div:first-child {
@@ -403,7 +403,7 @@ ng-template {
 
 .divEstrela ion-icon,
 .divEstrela p {
-    font-size: 17px;
+    font-size: clamp(17px, 4vw, 22px);
 }
 
 .divFoto>div:nth-child(2) {
@@ -413,11 +413,11 @@ ng-template {
 }
 
 .divFoto>div:nth-child(2) ion-icon {
-    font-size: 25px;
+    font-size: clamp(25px, 5vw, 40px);
 }
 
 h2 {
-    font-size: 22px;
+    font-size: clamp(22px, 5vw, 32px);
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -429,21 +429,23 @@ h2 {
 }
 
 .area_informacao>div:nth-child(2) ion-icon {
-    font-size: 40px;
+    font-size: clamp(40px, 6vw, 60px);
 }
 
 .area_informacao>div:nth-child(2) p {
-    font-size: 17px;
+    font-size: clamp(17px, 5vw, 22px);
     font-weight: bold;
 }
 
 ion-text {
     color: #F66701;
+    font-size: clamp(17px, 5vw, 22px);
 }
 
 .area_informacao>div:nth-child(3) {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 
     div {
         display: flex;
@@ -452,12 +454,12 @@ ion-text {
     }
 
     p {
-        font-size: 15px;
+        font-size: clamp(15px, 4vw, 20px);
         font-weight: bold;
     }
 
     ion-icon {
-        font-size: 25px;
+        font-size: clamp(25px, 5vw, 40px);
     }
 }
 
@@ -481,9 +483,18 @@ ion-text {
 }
 
 .area_informacao[_ngcontent-ng-c4165334628]>div[_ngcontent-ng-c4165334628]:nth-child(2) {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .area_informacao[_ngcontent-ng-c4165334628]>div[_ngcontent-ng-c4165334628]:nth-child(3) {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.divFoto>div:nth-child(1)>figure:nth-child(1)>img:nth-child(1) {
+    width: 100%;
+}
+
+.divFoto > div:nth-child(1) > figure:nth-child(1)
+{
+    width: clamp(90px, 10vw, 150px);
 }
