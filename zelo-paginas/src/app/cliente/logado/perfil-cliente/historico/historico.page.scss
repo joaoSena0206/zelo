@@ -15,8 +15,8 @@
 
 h1 {
     text-align: center;
-    font-size: 26px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    margin-bottom: 40px;
 }
 
 .titulo__voltar {
@@ -36,30 +36,23 @@ h1 {
 
 .areaUltimoPedido {
     display: flex;
-    background-color: #F66701;
+    background-color: #FFFFFF;
     border-radius: 15px;
     padding: 18px 12px;
     position: relative;
-    width: 100%;
-    max-width: 600px;
+    width: clamp(305px, 100%, 500px);
+    flex-shrink: 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     justify-content: space-between;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%);
-    padding-top: 40px;
-    flex-direction: column;
-    padding-bottom: 18px;
+    align-items: flex-end;
 }
 
 .infoTrabalhorPedido {
     display: flex;
-    width: fit-content;
-    align-items: center;
-    margin-top: 10px;
 }
 
 .fotoTrabalhadorPedido {
     margin-right: 10px;
-    flex-shrink: 0;
-    width: clamp(50px, 40%, 90px);
 }
 
 .titulo {
@@ -67,45 +60,42 @@ h1 {
 }
 
 .tituloPedido {
-    font-size: clamp(10px, 5vw, 20px);
+    font-size: 17px;
 }
 
 .estrelaPreco {
     display: flex;
     margin: 5px 0;
     height: 20px;
-    align-items: center;
 }
 
 .precoPedido {
-    color: white;
-    font-size: clamp(8px, 4vw, 16px);
+    font-size: 15px;
 }
 
 .verPerfil {
-    color: white;
+    color: #F66701;
     text-decoration: underline;
     font-style: italic;
     position: absolute;
-    top: 15px;
+    top: 18px;
     right: 12px;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .estrelaPreco ion-icon {
     margin-right: 3px;
-    font-size: clamp(8px, 55vw, 16px);
-    align-self: start;
+    font-size: 15px;
 }
 
 .infoTrabalhorPedido>div:nth-child(2) {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 p.titulo:nth-child(2) {
-    font-size: clamp(10px, 5vw, 20px);
+    font-size: 15px;
 }
 
 div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
@@ -129,6 +119,8 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
     --border-radius: 10px;
     --padding-top: 14px;
     --padding-bottom: 14px;
+    --padding-start: 28px;
+    --padding-end: 28px;
 
     text-transform: none;
     font-size: 15px;
@@ -196,4 +188,24 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
 .infoTrabalhorPedido__servico {
     margin-top: 2px;
     font-size: clamp(8px, 4vw, 16px);
+}
+
+.divCalendario {
+    display: flex;
+    align-items: center;
+
+    ion-icon
+    {
+        font-size: 15px;
+        margin-right: 3px;
+    }
+
+    p
+    {
+        font-size: 15px;
+    }
+}
+
+h3.titulo:nth-child(2) {
+    font-size: 15px;
 }
