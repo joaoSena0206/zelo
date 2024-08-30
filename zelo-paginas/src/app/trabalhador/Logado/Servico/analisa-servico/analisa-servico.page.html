@@ -54,7 +54,7 @@
 
           <div class="area_branca">
               <h1 class="h1_denuncia">Tem certeza que deseja ignorar a visita?</h1>
-              <ion-button class="form__btn">Confirmar</ion-button>
+              <ion-button (click)="modal_aceitar.dismiss();" [routerLink]="['/inicial']" class="form__btn">Ignorar</ion-button>
           </div>
 
       </ion-card>
@@ -77,7 +77,7 @@
 
           <div class="area_branca">
               <h1 class="h1_denuncia">Tem certeza que deseja aceitar a visita?</h1>
-              <ion-button class="form__btn">Confirmar</ion-button>
+              <ion-button [routerLink]="['/trabalhador-caminho']" (click)="modal_aceitar.dismiss();" class="form__btn">Confirmar</ion-button>
           </div>
 
       </ion-card>

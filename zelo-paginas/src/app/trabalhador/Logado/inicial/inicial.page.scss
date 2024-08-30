@@ -274,3 +274,55 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+//---------------------------------------------------------//
+
+.local_publicidade ion-card{
+    height: 200px;
+    display: flex;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.publicidade_texto{
+    height: 100%;
+    padding: 20px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    font-size: 17px;
+    color: black;
+    width: 45%;
+}
+
+.btn{
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-left: 28px;
+    --padding-right: 28px;
+    --border-radius: 15px;
+    color: white;
+    --background: #CB2316;
+    font-size: 15px;
+    text-transform: none;
+}
+
+.publicidade_img{
+    display: flex;
+    align-items: end;
+    width: 55%;
+}
+
+.icone_publicidade{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 43px;
+    height: 41px;
+}
+
+.img_publicidade{
+    height: 171px;
+    width: 171px;
+}

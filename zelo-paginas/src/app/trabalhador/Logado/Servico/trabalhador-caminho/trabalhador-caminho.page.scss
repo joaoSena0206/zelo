@@ -173,6 +173,10 @@
 
 //------------------------------------------------------//
 
+/* .div_1, .div_2, .div_3, .div_4{
+    display: none;
+} */
+
 .div_codigo {
     height: 100%;
     position: relative;
@@ -245,7 +249,7 @@
 }
 
 .div_relogio {
-    display: flex;
+    display: none;
     align-items: center;
 }
 

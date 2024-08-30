@@ -1,0 +1,30 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+    font-size: 15px;
+}
+
+.content{
+    padding: 30px;
+}
+
+.content__seta
+{
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.content__h1
+{
+    font-weight: 700;
+    font-size: 32px;
+    margin: 50px 0 20px 0;
+    text-align: center;
+}

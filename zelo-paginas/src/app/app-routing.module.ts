@@ -69,7 +69,13 @@ const routes: Routes = [
   {
     path: 'trabalhador-caminho',
     loadChildren: () => import('./trabalhador/Logado/Servico/trabalhador-caminho/trabalhador-caminho.module').then( m => m.TrabalhadorCaminhoPageModule)
+  },
+  {
+    path: 'comercial',
+    loadChildren: () => import('./trabalhador/Logado/comercial/comercial.module').then( m => m.ComercialPageModule)
   }
+
+
 
 
 

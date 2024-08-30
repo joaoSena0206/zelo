@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true">
+  <div class="wrapper">
+    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+    <div class="content">
+      <ion-text>
+        <h1 class="content__h1">Gerenciador de anúncio</h1>
+      </ion-text>
+
+      <ion-card>
+        <h3>Ative seu anúncio aqui</h3>
+
+        <p>Situação do anúncio: <ion-text>Desativado</ion-text></p>
+
+        <div>
+          <p>Valor</p>
+          
+          <ion-accordion-group class="ion_accordion_group">
+            <ion-accordion value="first">
+                <ion-item slot="header" class="div_titulo">
+                    <h1>Escolha o período de duração do anúncio:</h1>
+                </ion-item>
+
+                <div slot="content" class="geral">
+                    <p>1 semana</p>
+                </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+
+        <div>
+          <p>Período</p>
+          
+
+          <ion-accordion-group class="ion_accordion_group">
+            <ion-accordion value="first">
+                <ion-item slot="header" class="div_titulo">
+                    <h1>Escolha o período de duração do anúncio:</h1>
+                </ion-item>
+
+                <div slot="content" class="geral">
+                    <p>1 semana</p>
+                </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+
+        <div>
+          <ion-button>Ativar</ion-button>
+        </div>
+        
+      </ion-card>
+
+    </div>
+  </div>
+
+</ion-content>
