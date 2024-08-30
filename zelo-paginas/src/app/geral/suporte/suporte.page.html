@@ -18,24 +18,37 @@
     <ion-card class="card">
       <div class="div_input">
         <ion-label>Nome</ion-label>
-        <ion-input placeholder="Digite seu nome"></ion-input>
-      </div>
+        <ion-input id="nomeInput" placeholder="Digite seu nome"></ion-input>
+        <p class="escondido" style="color: red;"> Há nada preenchido.</p> <!-- escondido -->
+      </div>  
       
 
       <div class="div_input">
         <ion-label>Email</ion-label>
-        <ion-input placeholder="Digite seu Email"></ion-input>
+        <ion-input id="emailInput" placeholder="Digite seu Email"></ion-input>
+        <p class="escondido" style="color: red;"> Há nada preenchido.</p> <!-- escondido -->
       </div>
       
       <div class="div_input">
         <ion-label>Dúvida</ion-label>
-        <ion-textarea placeholder="Digite sua dúvida"></ion-textarea>
+        <ion-textarea id="duvidaInput" placeholder="Digite sua dúvida"></ion-textarea>
+        <p class="escondido" style="color: red;"> Há nada preenchido.</p> <!-- escondido -->
       </div>
       
       <div class="div_btn">
-        <ion-button>Enviar</ion-button>
+        <ion-button id="btn_entrar" (click)="abrirModal()" (click)="validarcampos()">Enviar</ion-button>
       </div>
       
+      <ion-modal id="modal_servico_solicitado" #modal_enviado_com_sucesso>
+        <ng-template>
+      
+            <ion-card class="poupop">
+                <div class="area_branca" style="display: flex; align-items: center; justify-content: center;">
+                    <h1 style="font-size: 22px; align-items: center;">Enviado com sucesso!</h1>
+                </div>
+            </ion-card>
+        </ng-template>
+      </ion-modal>
     </ion-card>
 
     <p class="p_info">Envie sua dúvida e iremos entrar em contato para mais esclarecimentos.</p>
