@@ -1,54 +1,62 @@
 <ion-content [fullscreen]="true">
   <div class="wrapper">
-    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+    
+    <ion-back-button>
+      <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+    </ion-back-button>
+    
     <div class="content">
       <ion-text>
         <h1 class="content__h1">Gerenciador de anúncio</h1>
       </ion-text>
 
-      <ion-card>
-        <h3>Ative seu anúncio aqui</h3>
+      <ion-card class="card_anuncio">
+        <h3 class="titulo_card">Ative seu anúncio aqui</h3>
 
-        <p>Situação do anúncio: <ion-text>Desativado</ion-text></p>
+        <p class="txtSituacao">Situação do anúncio: <ion-text>Desativado</ion-text></p>
 
-        <div>
+        <div class="div1">
           <p>Valor</p>
-          
-          <ion-accordion-group class="ion_accordion_group">
-            <ion-accordion value="first">
-                <ion-item slot="header" class="div_titulo">
-                    <h1>Escolha o período de duração do anúncio:</h1>
-                </ion-item>
-
-                <div slot="content" class="geral">
-                    <p>1 semana</p>
-                </div>
-            </ion-accordion>
-          </ion-accordion-group>
+          <ion-input placeholder="R$100,00" [disabled]="true"></ion-input>
         </div>
 
-        <div>
+        <div class="div1">
           <p>Período</p>
-          
-
-          <ion-accordion-group class="ion_accordion_group">
-            <ion-accordion value="first">
-                <ion-item slot="header" class="div_titulo">
-                    <h1>Escolha o período de duração do anúncio:</h1>
-                </ion-item>
-
-                <div slot="content" class="geral">
-                    <p>1 semana</p>
-                </div>
-            </ion-accordion>
-          </ion-accordion-group>
+          <ion-input placeholder="1 semana" [disabled]="true"></ion-input>
         </div>
 
-        <div>
-          <ion-button>Ativar</ion-button>
+        <div class="div_btn">
+          <ion-button class="form__btn">Ativar</ion-button>
         </div>
         
       </ion-card>
+
+      <ion-card class="card_estatistica">
+        <h3 class="titulo_card">Estatística</h3>
+
+        <div class="div_estatistica">
+          <div class="div2">
+            <p>Pessoas Alcançadas</p>
+            <h1>12</h1>
+          </div>
+  
+          <div class="div2">
+            <p>Período de duração</p>
+            <h1>2 mês</h1>
+          </div>
+        </div>
+        
+        
+      </ion-card>
+
+      <div class="div_texto">
+        <h4>Como funciona</h4><br>
+
+        <p>Nosso gerenciador de arquivo é uma ferramenta voltada para engajar e alcançar mais pessoas. Fazendo seu perfil ter mais destaque.</p><br>
+        <p>Nela você irá pagar um valor de sua escolha e estipular um período de duração. </p><br>
+        <p>Os valores mais altos são mostrados com mais frequência dentro do prazo estipulado.</p><br>
+        <p>Essa ferramenta pode ser uma grande solução para aumentar seus pedidos então não perca tempo e ative agora!</p>
+      </div>
 
     </div>
   </div>

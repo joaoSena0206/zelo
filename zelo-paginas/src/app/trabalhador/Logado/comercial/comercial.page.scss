@@ -28,3 +28,116 @@
     margin: 50px 0 20px 0;
     text-align: center;
 }
+
+ion-input{
+    color: black;
+}
+
+ion-card{
+    padding: 20px;
+    background-color: #E4E4E4;
+    border-radius: 20px;
+}
+
+.titulo_card{
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.txtSituacao{
+    margin-bottom: 20px;
+}
+
+.txtSituacao ion-text{
+ color: red;
+}
+
+.div1{
+    margin: 20px 0;
+}
+
+ion-card div p{
+    margin-bottom: 10px;
+}
+
+ion-input{
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    opacity: 1;
+    font-weight: bold;
+    color: black;
+
+    --padding-start: 15px
+}
+.card_anuncio{
+    max-width: 600px;
+    margin: auto;
+}
+
+.div_btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 22px;
+    text-transform: none;
+}
+
+.div2{
+    height: 100px;
+    width: 150px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+}
+
+.div2 p{
+    margin-bottom: 15px;
+}
+
+.div2 h1{
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.div_estatistica{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+.card_estatistica{
+    max-width: 600px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.div_texto{
+    color: black;
+    padding: 5px;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.div_texto h4{
+    font-size: 17px;
+    font-weight: bold;
+}
