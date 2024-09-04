@@ -38,7 +38,18 @@ export class SuportePage implements OnInit {
     else
     {
       nomeInput.style.border = '';
-      textoerroform?.classList.add('escondido');
+      textoerroform.style.display = 'none';
+    }
+
+    if(emailInput.value == "")
+    {
+      emailInput.style.border = '2px solid red';
+      textoerroform.style.display = 'flex';
+    }
+    else
+    {
+      emailInput.style.border = '';
+      textoerroform.style.display = 'none';
     }
 
     /* let camposValidos = true;
