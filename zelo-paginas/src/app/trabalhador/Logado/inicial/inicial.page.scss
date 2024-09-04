@@ -97,9 +97,12 @@
 
 .div1{
     margin-right: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
 }
 
-.area_comentario_anonimo div ion-icon{
+.iconeAnonimo{
     width: 60px;
     height: 60px;
 }
@@ -325,4 +328,18 @@
 .img_publicidade{
     height: 171px;
     width: 171px;
+}
+
+//---------------------------------------------------------//
+
+.estrelas
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    bottom: 5px;
+    color: yellow;
 }

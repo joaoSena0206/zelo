@@ -38,4 +38,24 @@ export class InicialPage implements OnInit {
             this.msgTrabalho = 'Deseja parar de trabalhar?';
         }
     }
+
+    ionViewDidEnter() {
+        const estrelas = document.querySelectorAll(".estrelas ion-icon");
+
+        if (estrelas.length == 3)
+        {
+            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-20px";
+        }
+        else if (estrelas.length == 4)
+        {
+            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-20px";
+            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-20px";
+        }
+        else if (estrelas.length == 5)
+        {
+            (estrelas[0] as HTMLIonIconElement).style.marginTop = "-20px";
+            (estrelas[4] as HTMLIonIconElement).style.marginTop = "-20px";
+            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-20px";
+        }
+    }
 }
