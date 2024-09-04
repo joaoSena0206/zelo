@@ -7,6 +7,8 @@ import { IonModal } from '@ionic/angular';
   templateUrl: './suporte.page.html',
   styleUrls: ['./suporte.page.scss'],
 })
+
+
 export class SuportePage implements OnInit {
 
   @ViewChild('modal_enviado_com_sucesso', { static: true }) modal: IonModal;
@@ -26,49 +28,59 @@ export class SuportePage implements OnInit {
     const nomeInput = document.getElementById("nomeInput") as HTMLIonInputElement;
     const emailInput = document.getElementById("emailInput") as HTMLIonInputElement;
     const duvidaInput = document.getElementById("duvidaInput") as HTMLIonInputElement;
-    const textoerroform = document.querySelector('p.escondido') as HTMLParagraphElement;
-   
+    const textoerroform = document.querySelector('.escondido') as HTMLParagraphElement;
 
-    let camposValidos = true;
+    if(nomeInput.value == "")
+    {
+      nomeInput.style.border = '2px solid red';
+      textoerroform.style.display = 'flex';
+    }
+    else
+    {
+      nomeInput.style.border = '';
+      textoerroform?.classList.add('escondido');
+    }
+
+    /* let camposValidos = true;
 
     if (nomeInput.value === "") 
     {
       nomeInput.style.border = '2px solid red';
-      textoerroform.classList.remove('escondido');
+      textoerroform?.classList.add('escondido');
       camposValidos = false;
     } 
     else 
     {
       nomeInput.style.border = '';
-      textoerroform.classList.add('escondido');
+      textoerroform?.classList.remove('escondido');
       camposValidos = true;
     }
 
     if (emailInput.value === "") 
       {
         emailInput.style.border = '2px solid red';
-        textoerroform.classList.remove('escondido');
+        textoerroform?.classList.add('escondido');
         camposValidos = false;
       } 
       else 
       {
         emailInput.style.border = '';
         camposValidos = true;
-        textoerroform.classList.add('escondido');
+        textoerroform?.classList.remove('escondido');
         
       }
 
         if (duvidaInput.value === "") 
     {
       duvidaInput.style.border = '2px solid red';
-      textoerroform.classList.remove('escondido');
+      textoerroform?.classList.add('escondido');
       camposValidos = false;
     } 
     else 
     {
       duvidaInput.style.border = '';
       camposValidos = true;
-    }
+    } */
  }
 
   ngOnInit() {
