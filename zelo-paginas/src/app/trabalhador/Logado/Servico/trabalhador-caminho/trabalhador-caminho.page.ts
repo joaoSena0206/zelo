@@ -12,6 +12,40 @@ export class TrabalhadorCaminhoPage implements OnInit {
     ngOnInit() {
     }
 
+    ionViewDidEnter() {
+    }
+
+    mudartxtCancelar() {
+        let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
+        let btnProsseguir = document.querySelector(".form__btn") as HTMLIonButtonElement;
+        let modalCancelar = document.querySelector("#modal_cancelar") as HTMLIonModalElement;
+    
+        txtAdvertenciaCancelar.style.display = "none";
+    
+        this.msgPoupopCancelar = 'Pedido cancelado!';
+    
+        btnProsseguir.textContent = "Ok";
+        btnProsseguir.addEventListener("click", function () {
+            modalCancelar.dismiss();
+        });
+    }
+
+    limpar(){
+        this.msg = 'Informe o motivo da denuncia'
+        this.msgPoupopCancelar = 'Quer realmente cancelar o pedido?';
+    }
+
+    mostrarBtnDenuncia() {
+        const btn = document.querySelector(".btn_denunciar") as HTMLIonButtonElement;
+    
+        if (btn.style.display == "none") {
+            btn.style.display = "block";
+        }
+        else {
+            btn.style.display = "none";
+        }
+    }
+
     mudarOutro() {
         const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
         const popup = document.querySelector(".fundoPopup") as HTMLIonTextareaElement;
@@ -26,28 +60,21 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     mudarOutro2() {
         const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
+        const btn = document.querySelector("#btnDenuncia") as HTMLIonButtonElement;
+        const modal = document.querySelector("#modal_denuncia") as HTMLIonModalElement;
+    
         accordion.style.display = "none";
         const popup = document.querySelector(".fundoPopup") as HTMLIonTextareaElement;
         popup.style.display = "none";
-        
+    
         this.msg = 'Denúncia enviada com sucesso. Iremos avaliar a sua denúncia.';
-    }
-
-    limpar(){
-        this.msg = 'Informe o motivo da denuncia'
-        this.msgPoupopCancelar = 'Quer realmente cancelar o pedido?';
+        btn.textContent = "Ok";
+        btn.addEventListener("click", function() {
+            modal.dismiss();
+        });
     }
 
     //-----------------------------------------------------------------------------------------------------------//
-
-    msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?'
-
-    mudartxtCancelar(){
-        let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
-        txtAdvertenciaCancelar.style.display = "none";
-
-        this.msgPoupopCancelar = 'Pedido cancelado!';
-    }
 
     iniciar(){
 
