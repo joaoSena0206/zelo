@@ -18,7 +18,7 @@ export class SuportePage implements OnInit {
 
   abrirModal() {
     this.modal.present();
-    let tempo_em_ms = 2500 //teste Breno
+    let tempo_em_ms = 2300 //teste Breno
     
     setTimeout(() => {
       this.modal.dismiss();
@@ -30,7 +30,9 @@ export class SuportePage implements OnInit {
     const emailInput = document.getElementById("emailInput") as HTMLIonInputElement;
     const duvidaInput = document.getElementById("duvidaInput") as HTMLIonInputElement;
     const textoerroform = document.querySelector('.escondido') as HTMLParagraphElement;
-    const card = document.querySelector('.card') as HTMLIonCardElement;
+    const textoerroform2 = document.querySelector('.escondido2') as HTMLParagraphElement;
+    const textoerroform3 = document.querySelector('.escondido3') as HTMLParagraphElement;
+    const ionmodal = document.getElementById('modal_servico_solicitado') as HTMLIonModalElement;
 
 
     console.log()
@@ -44,28 +46,59 @@ export class SuportePage implements OnInit {
     emailInput.style.border = '';
     nomeInput.style.border = '';
     textoerroform.style.display = 'none';
+    textoerroform2.style.display = 'none';
+    textoerroform3.style.display = 'none';
+    let verificar = false;
 
     if(nomeInput.value == "")
     {
       nomeInput.style.border = '2px solid red';
       textoerroform.style.display = 'flex';
+      verificar = false
     }
     else
     {
-      if(emailInput.value == "")
-      {
-        emailInput.style.border = '2px solid red';
-        textoerroform.style.display = 'flex';
-      }
-      else
-      {
-        if(duvidaInput.value == "")
-        {
-          duvidaInput.style.border = '2px solid red';
-          textoerroform.style.display = 'flex';
-        }
-      }
+      verificar = true;
     }
+
+    if(emailInput.value == "")
+    {
+      emailInput.style.border = '2px solid red';
+      textoerroform2.style.display = 'flex';
+      verificar = false
+    }
+    else
+    {
+      verificar = true;
+    }
+
+    if(duvidaInput.value == "")
+    {
+      duvidaInput.style.border = '2px solid red';
+      textoerroform3.style.display = 'flex';
+      verificar = false
+    }
+    else
+    {
+      verificar = true;
+    }
+
+
+    if(verificar == true)
+    {
+      this.abrirModal();
+    }
+
+
+
+    
+    /* if(nomeInput.value == "")
+    {
+      ionmodal.style.display = 'none';
+    }
+    {
+      ionmodal.style.display = 'flex';
+    } */
 
  }
 
