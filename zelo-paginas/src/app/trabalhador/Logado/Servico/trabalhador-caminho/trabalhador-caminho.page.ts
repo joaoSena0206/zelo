@@ -76,15 +76,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     //-----------------------------------------------------------------------------------------------------------//
 
-    iniciar(){
+    abrirDivCodigo(){
 
-        let div1 = document.querySelector('.div1') as HTMLDivElement;
-        let div2 = document.querySelector('.div2') as HTMLDivElement;
-        let div3 = document.querySelector('.div3') as HTMLDivElement;
-        let div4 = document.querySelector('.div4') as HTMLDivElement;
+        let div1 = document.querySelector('.div_1') as HTMLDivElement;
+        let div2 = document.querySelector('.div_2') as HTMLDivElement;
+        let div3 = document.querySelector('.div_3') as HTMLDivElement;
+        let div4 = document.querySelector('.div_4') as HTMLDivElement;
         let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
-
-        console.log('oi')
 
         divCodigo.style.display = 'flex';
 
@@ -93,6 +91,37 @@ export class TrabalhadorCaminhoPage implements OnInit {
         div3.style.display = 'none';
         div4.style.display = 'none';
         
+    }
+
+    fecharDivCodigo(){
+
+        let div1 = document.querySelector('.div_1') as HTMLDivElement;
+        let div2 = document.querySelector('.div_2') as HTMLDivElement;
+        let div3 = document.querySelector('.div_3') as HTMLDivElement;
+        let div4 = document.querySelector('.div_4') as HTMLDivElement;
+        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+
+        divCodigo.style.display = 'none';
+
+        div1.style.display = "flex";
+        div2.style.display = 'flex';
+        div3.style.display = 'flex';
+        div4.style.display = 'flex';
+    }
+
+    //-----------------------------------------------------------------------------------------------------------//
+
+    verificarCodigo(){
+
+        let div1 = document.querySelector('.div_1') as HTMLDivElement;
+        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+        let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
+        let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
+
+        divRelogio.style.display = 'flex';
+        divTrabalhoIniciado.style.display = 'flex';
+        divCodigo.style.display = 'none';
+        div1.style.display = "flex";
     }
 
 }

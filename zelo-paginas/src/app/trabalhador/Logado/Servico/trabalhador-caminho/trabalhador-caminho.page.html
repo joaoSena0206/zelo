@@ -36,7 +36,7 @@
                                             name="close-circle-outline"></ion-icon>
                                         <div class="circulo_branca">
                                             <ion-icon class="iconeInterrogacao"
-                                                src="../../../../../assets/icon/cliente/interrogação.svg"></ion-icon>
+                                                src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
                                         </div>
                                     </div>
 
@@ -95,16 +95,16 @@
 
             <div class="div_4">
                 <ion-button id="abrir_modal_cancelar" class="btn_cancelar">Cancelar</ion-button>
-                <ion-button (click)="iniciar();" class="btn_iniciar">Iniciar</ion-button>
+                <ion-button (click)="abrirDivCodigo();" class="btn_iniciar">Iniciar</ion-button>
             </div>
 
             <div class="div_codigo">
 
-                <ion-icon class="iconeFechar" name="close-circle-outline"></ion-icon>
+                <ion-icon class="iconeFechar" (click)="fecharDivCodigo();" name="close-circle-outline"></ion-icon>
 
                 <h4 style="margin-bottom: 10px;">Digite o código que o usuário informar</h4>
 
-                <div style="display: flex;">
+                <div style="display: flex; margin-bottom: 20px">
                     <ion-item class="ion_item">
                         <ion-input maxlength="1" class="form__input"></ion-input>
                     </ion-item>
@@ -125,6 +125,8 @@
                         <ion-input maxlength="1" class="form__input"></ion-input>
                     </ion-item>
                 </div>
+
+                <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="verificarCodigo();">Enviar</ion-button>
 
             </div>
 
