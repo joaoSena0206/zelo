@@ -3,6 +3,7 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
+/* import { HttpClient } from '@angular/common/http'; */
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -22,6 +23,7 @@ export class CadastroTrabalhadorPage implements OnInit {
         }, validadorSenhaConfere()),
         termos: new FormControl("", validadorTermos())
     });
+    
 
     inputData: any;
     erro: any = {
@@ -47,7 +49,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2 /*, private http: HttpClient */) {
 
     }
 
@@ -151,12 +153,26 @@ export class CadastroTrabalhadorPage implements OnInit {
         }
     }
 
+    /* link: any = "http://localhost/aplicativo/insert.php?"; */
+
     enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
         else {
             console.log("foi");
+
+            let nome = this.form.controls['nome'].value;
+            let cpf = this.form.controls['cpf'].value;
+            let data = this.form.controls['data'].value;
+            let email = this.form.controls['email'].value;
+            let celular = this.form.controls['celular'].value;
+            let senha = this.form.controls['senhas'].value;
+
+            /* this.http.get(this.link+"nome="+nome+"&cpf="+cpf+"&data="+data+"&email="+email+"&celular="+celular+"&senha="+senha['senha']).subscribe(res=>{
+                console.log(res)
+            })  */
+
         }
     }
 }
@@ -260,3 +276,4 @@ export function validadorTermos(): ValidatorFn {
         return null;
     };
 };
+
