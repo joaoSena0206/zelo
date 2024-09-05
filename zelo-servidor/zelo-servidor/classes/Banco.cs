@@ -12,9 +12,9 @@ public class Banco
 
     public void Conectar()
     {
-        if (conexao.State == System.Data.ConnectionState.Closed)
+        if (conexao == null)
         {
-            string linhaConexao = "SERVER=localhost; UID=root; PASSWORD=root; DATABASE=Zelo";
+            string linhaConexao = "SERVER=localhost; UID=root; PASSWORD=root; DATABASE=zelo";
             conexao = new MySqlConnection(linhaConexao);
 
             conexao.Open();
@@ -27,7 +27,7 @@ public class Banco
 
     public void Desconectar()
     {
-        if (conexao.State == System.Data.ConnectionState.Open)
+        if (conexao != null)
         {
             conexao.Close();
         }

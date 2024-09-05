@@ -5,6 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 import { cpf } from 'cpf-cnpj-validator';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -49,7 +50,7 @@ export class CadastroClientePage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private router: Router, private navCl: NavController) {
+    constructor(private router: Router, private navCl: NavController, private http: HttpClient) {
 
     }
 
@@ -61,8 +62,7 @@ export class CadastroClientePage implements OnInit {
 
     }
 
-    pagAnterior()
-    {
+    pagAnterior() {
         this.navCl.back();
     }
 
@@ -142,8 +142,7 @@ export class CadastroClientePage implements OnInit {
                     this.erro[nome] = erros[erro].msg;
                 });
             }
-            else
-            {
+            else {
                 this.erro[nome] = "";
             }
         }
@@ -158,16 +157,25 @@ export class CadastroClientePage implements OnInit {
         }
     }
 
-    enviar() {
+    async enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
         else {
-            console.log("foi");
+            let link = "http://localhost:57879/Clientes/Adicionar";
+            let cliente = {
+                cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
+                nome: this.form.controls['nome'].value,
+                email: this.form.controls['email'].value,
+                senha: this.form.controls['senhas'].controls['senha'].value
+            };
+
+            this.http.post(link, JSON.stringify(cliente)).subscribe(res => {
+                console.log("foi");
+            });
         }
     }
 }
-
 
 export function validadorCpf(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

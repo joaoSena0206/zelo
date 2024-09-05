@@ -45,7 +45,7 @@ Create Table cliente
 cd_cpf_cliente CHAR(11),
 nm_cliente VARCHAR(100),
 nm_email_cliente VARCHAR(30),
-nm_senha_cliente VARCHAR(20),
+nm_senha_cliente VARCHAR(255),
 
 CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
