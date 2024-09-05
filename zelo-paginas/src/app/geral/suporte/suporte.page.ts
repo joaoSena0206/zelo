@@ -86,7 +86,11 @@ export class SuportePage implements OnInit {
 
     if(verificar == true)
     {
+      nomeInput.value = "";
+      emailInput.value = "";
+      duvidaInput.value = "";
       this.abrirModal();
+
     }
 
 
