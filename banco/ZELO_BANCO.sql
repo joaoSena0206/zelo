@@ -19,7 +19,7 @@ Create Table trabalhador
 cd_cpf_trabalhador CHAR(11),
 nm_trabalhador VARCHAR(100),
 nm_email_trabalhador VARCHAR(30),
-nm_senha_trabalhador VARCHAR(20),
+nm_senha_trabalhador VARCHAR(255),
 nm_pix_trabalhador VARCHAR(255),
 ic_disponivel_trabalhador BOOL,
 
@@ -51,6 +51,8 @@ CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
 Insert into cliente values('525305698', 'Marco Teste', 'marcoteste@gmail.com', '123');
+
+select * from cliente;
 
 
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
