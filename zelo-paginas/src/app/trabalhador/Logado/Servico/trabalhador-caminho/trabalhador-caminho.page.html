@@ -21,6 +21,52 @@
                 <div class="area_icone_mensagem">
                     <ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/mensagem.svg"></ion-icon>
                     <ion-icon id="click-trigger" class="icone_denuncia" name="information-circle-outline"></ion-icon>
+
+                    <!-- <div class="divDenuncia">
+                        <ion-icon (click)="mostrarBtnDenuncia()" src="../../../../../assets/icon/cliente/denuncia.svg" id="denuncia"></ion-icon>
+                        <ion-button id="abrir_modal_denuncia" class="btn_denunciar">Denunciar</ion-button>
+
+                        <ion-modal id="modal_denuncia" #modal_denuncia trigger="abrir_modal_denuncia">
+                            <ng-template>
+
+                                <ion-card class="poupop">
+
+                                    <div class="area_vermelha">
+                                        <ion-icon (click)="modal_denuncia.dismiss();" class="iconeFechar2"
+                                            name="close-circle-outline"></ion-icon>
+                                        <div class="circulo_branca">
+                                            <ion-icon class="iconeInterrogacao"
+                                                src="../../../../../assets/icon/cliente/interrogação.svg"></ion-icon>
+                                        </div>
+                                    </div>
+
+                                    <div class="area_branca">
+                                        <h1>{{msg}}</h1>
+
+                                        <ion-textarea class="fundoPopup"></ion-textarea>
+
+                                        <ion-accordion-group class="grupo_selecao">
+                                            <ion-accordion class="cor_fundo" value="first">
+                                                <ion-item slot="header" class="div_titulo cor_fundo">
+                                                    <p style="font-size: 20px; font-weight: bold;">Motivo da denuncia
+                                                    </p>
+                                                </ion-item>
+                                                <div slot="content" class="geral">
+                                                    <div class="opçaoDenuncia">Cliente não atende</div>
+                                                    <div class="opçaoDenuncia">Não consegui chegar</div>
+                                                    <div class="opçaoDenuncia" (click)="mudarOutro()">Outro:</div>
+                                                </div>
+                                            </ion-accordion>
+                                        </ion-accordion-group>
+
+                                        <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="mudarOutro2()">Enviar</ion-button>
+                                    </div>
+
+                                </ion-card>
+
+                            </ng-template>
+                        </ion-modal>
+                    </div> -->
                 </div>
             </div>
 
@@ -126,7 +172,7 @@
     </ng-template>
 </ion-modal>
 
-<ion-modal id="modal_denuncia" #modal_denuncia trigger="abrir_modal_denuncia">
+<!-- <ion-modal id="modal_denuncia" #modal_denuncia trigger="abrir_modal_denuncia">
     <ng-template>
 
         <ion-card class="poupop">
@@ -163,7 +209,7 @@
         </ion-card>
 
     </ng-template>
-</ion-modal>
+</ion-modal> -->
 
 <ion-modal id="modal_cancelar" #modal_cancelar trigger="abrir_modal_cancelar">
     <ng-template>
