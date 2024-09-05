@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./trabalhador-caminho.page.scss'],
 })
 export class TrabalhadorCaminhoPage implements OnInit {
+    msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?';
+    msg: any = "Informe o motivo da denúncia";
 
     constructor() { }
 
@@ -55,8 +57,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     //-----------------------------------------------------------------------------------------------------------//
-
-    msg: any = 'Informe o motivo da denuncia';
 
     mudarOutro2() {
         const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
