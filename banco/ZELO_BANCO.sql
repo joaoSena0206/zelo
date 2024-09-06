@@ -44,13 +44,12 @@ Create Table cliente
 (
 	cd_cpf_cliente CHAR(11),
 	nm_cliente VARCHAR(100),
+	dt_nascimento_cliente DATE,
 	nm_email_cliente VARCHAR(30),
 	nm_senha_cliente VARCHAR(255),
 
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
-
-Insert into cliente values('525305698', 'Marco Teste', 'marcoteste@gmail.com', '123');
 
 select * from cliente;
 
