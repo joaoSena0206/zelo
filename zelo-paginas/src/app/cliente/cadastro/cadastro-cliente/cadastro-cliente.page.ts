@@ -6,6 +6,8 @@ import { cpf } from 'cpf-cnpj-validator';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -18,7 +20,6 @@ export class CadastroClientePage implements OnInit {
         cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(), validadorCpf()]),
         data: new FormControl("", [Validators.required, validadorIdade()]),
         email: new FormControl("", [Validators.required, Validators.email]),
-        celular: new FormControl("", [Validators.required, validadorCel()]),
         senhas: new FormGroup({
             senha: new FormControl("", [Validators.required, validadorSenha()]),
             confirmarSenha: new FormControl("")
@@ -32,7 +33,6 @@ export class CadastroClientePage implements OnInit {
         cpf: "Cpf obrigatório!",
         data: "Data obrigatório!",
         email: "Email obrigatório!",
-        celular: "Celular obrigatório!",
         senha: "Senha obrigatório!"
     };
     nomeClass: any = "form__input";
@@ -44,10 +44,6 @@ export class CadastroClientePage implements OnInit {
         mask: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
     };
 
-    readonly celMask: MaskitoOptions = {
-        mask: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]
-    };
-
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
     constructor(private router: Router, private navCl: NavController, private http: HttpClient) {
@@ -55,11 +51,26 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
-
+        
     }
 
-    ngAfterViewInit() {
+    ionViewWillEnter() {
+        if (localStorage.getItem("cliente"))
+        {
+            if (this.form.controls['cpf'].value == "")
+            {
+                let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
+                this.form.controls['nome'].setValue(cliente.nome);
+                this.form.controls['cpf'].setValue(cliente.cpf);
+                this.form.controls['data'].setValue(cliente.dataNascimento);
+                this.form.controls['email'].setValue(cliente.email);
+                this.form.controls['senhas'].controls['senha'].setValue(cliente.senha);
+                this.form.controls['senhas'].controls['confirmarSenha'].setValue(cliente.senha);
+
+                this.mostrarData();
+            }
+        }
     }
 
     pagAnterior() {
@@ -150,14 +161,10 @@ export class CadastroClientePage implements OnInit {
 
     mostrarData() {
         let data = this.form.controls['data'].value;
-
-        if (data != null && data != "") {
-            let date = new Date(data);
-            this.inputData = date.toLocaleDateString();
-        }
+        this.inputData = moment(data).format("DD/MM/YYYY");
     }
 
-    async enviar() {
+    enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
@@ -166,12 +173,28 @@ export class CadastroClientePage implements OnInit {
             let cliente = {
                 cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
                 nome: this.form.controls['nome'].value,
+                dataNascimento: this.form.controls['data'].value?.substring(0, 10),
                 email: this.form.controls['email'].value,
-                senha: this.form.controls['senhas'].controls['senha'].value
+                senha: this.form.controls['senhas'].controls['senha'].value,
             };
 
-            this.http.post(link, JSON.stringify(cliente)).subscribe(res => {
-                console.log("foi");
+            this.http.post(link, JSON.stringify(cliente), {responseType: 'text'}).subscribe(res => {
+                if (res == "ok")
+                {
+                    localStorage.setItem("cliente", JSON.stringify(cliente));
+
+                    this.navCl.navigateForward("/endereco");
+                }
+                else if (res.includes("Cpf"))
+                {
+                    this.erro.cpf = res;
+                    this.form.controls['cpf'].setErrors({cadastrado: true});
+                }
+                else
+                {
+                    this.erro.email = res;
+                    this.form.controls['email'].setErrors({cadastrado: true});
+                }
             });
         }
     }
@@ -199,18 +222,6 @@ export function validadorTamanhoMinimo(): ValidatorFn {
 
         if (vl.length < 11) {
             return { tamanhoMinimo: { msg: "Cpf deve ter 11 dígitos!" } };
-        }
-
-        return null;
-    };
-};
-
-export function validadorCel(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-        let cel = control.value.replace(/[^/\d/]+/g, "");
-
-        if (cel.length < 11) {
-            return { celTamanho: { msg: 'O celular deve ter 9 dígitos, fora o DD!' } };
         }
 
         return null;

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-endereco',
@@ -33,7 +34,7 @@ export class EnderecoPage implements OnInit {
         numero: "Numero obrigatório"
     };
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private navCl: NavController) {
         this.endereco.controls['estado'].disable();
         this.endereco.controls['cidade'].disable();
         this.endereco.controls['bairro'].disable();
@@ -41,6 +42,11 @@ export class EnderecoPage implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    voltarPag()
+    {
+        this.navCl.back();
     }
 
     acharNomeControl(control: FormControl) {
