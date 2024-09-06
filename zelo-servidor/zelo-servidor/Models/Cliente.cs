@@ -22,6 +22,15 @@ public class Cliente
 		set { _nome = value; }
 	}
 
+	private string _dataNascimento;
+
+	public string DataNascimento
+	{
+		get { return _dataNascimento; }
+		set { _dataNascimento = value; }
+	}
+
+
 	private string _email;
 
 	public string Email

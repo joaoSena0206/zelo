@@ -81,11 +81,34 @@ public class ClienteController : Controller
 
         #region Adiciona o cliente no banco
 
-        comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.Email}', md5('{cliente.Senha}'))";
+        comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'))";
         banco.Executar(comando);
 
         return "ok";
 
         #endregion
     }
+
+    //[HttpGet]
+    //[Route("CarregarDados")]
+    //public string CarregarDados()
+    //{
+    //    Banco banco = new Banco();
+    //    banco.Conectar();
+
+    //    string cpf = Request["cpf"];
+
+    //    string comando = $"SELECT * FROM cliente WHERE nm_cpf_cliente = '{cpf}'";
+    //    MySqlDataReader dados = banco.Consultar(comando);
+
+    //    Cliente cliente = new Cliente();
+
+    //    if (dados != null)
+    //    {
+    //        cliente.Cpf = dados.GetString(0);
+    //        cliente.Nome = dados.GetString(1);
+    //        cliente.Email = dados.GetString(2);
+
+    //    }
+    //}
 }
