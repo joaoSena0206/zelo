@@ -82,3 +82,26 @@
   </div>
 
 </ion-content>
+
+<ion-footer class="footer" style="position: fixed;" >
+  <ion-tabs class="ion_tabs">
+    <ion-tab-bar class="ion_tab_bar" slot="bottom">
+  
+      <ion-tab-button [routerLink]="['/inicial']">
+        <ion-icon   src="../../../assets/icon/Trabalhador/Icone inicial/Home.svg" alt="">
+        </ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [routerLink]="['/ultimos-pedidos']" >
+        <ion-icon  class="imgFooter" class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Icone inicial/Relógio.svg">
+        </ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [routerLink]="['/perfil']">
+        <ion-icon  class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+        </ion-icon>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>
