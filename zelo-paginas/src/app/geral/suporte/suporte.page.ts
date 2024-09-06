@@ -34,9 +34,6 @@ export class SuportePage implements OnInit {
     const textoerroform3 = document.querySelector('.escondido3') as HTMLParagraphElement;
     const ionmodal = document.getElementById('modal_servico_solicitado') as HTMLIonModalElement;
 
-
-    console.log()
-
     /* for (let i = 0; i < card.length; i++) {
       const element = card[i];
       
@@ -92,19 +89,46 @@ export class SuportePage implements OnInit {
       this.abrirModal();
 
     }
-
-
-
     
-    /* if(nomeInput.value == "")
-    {
-      ionmodal.style.display = 'none';
+  
+ /*    const nomeValor = nomeInput.value;
+    const emailValor = emailInput.value;
+    const duvidaValor = duvidaInput.value;
+  
+    console.log(nomeValor, emailValor, duvidaValor) */
+  /* 
+    async function buscarDadosForms(nomeValor:any, emailValor:any, duvidaValor:any){
+    try
+      {
+        const formData = new FormData;
+        formData.append( 'nome', nomeValor);
+        formData.append('email', emailValor);
+        formData.append( 'duvida', duvidaValor);
+  
+        const response = await fetch('https://www.nsa.sp.gov.br', {
+        method: 'post',
+        body: formData
+        });
+  
+        const data = await response.json();
+        console.log(data)
+  
+      }
+      catch (error)
+      {
+        console.log('erro ao buscas estes dados!', error)
+      }
     }
-    {
-      ionmodal.style.display = 'flex';
-    } */
+      
+    buscarDadosForms(nomeValor, emailValor, duvidaValor); */
 
  }
+
+EnviarDadosForms()
+{
+  
+
+}
 
   ngOnInit() {
   }
