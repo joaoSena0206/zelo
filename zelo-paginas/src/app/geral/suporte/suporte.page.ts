@@ -32,12 +32,6 @@ export class SuportePage implements OnInit {
     const textoerroform = document.querySelector('.escondido') as HTMLParagraphElement;
     const textoerroform2 = document.querySelector('.escondido2') as HTMLParagraphElement;
     const textoerroform3 = document.querySelector('.escondido3') as HTMLParagraphElement;
-    const ionmodal = document.getElementById('modal_servico_solicitado') as HTMLIonModalElement;
-
-    /* for (let i = 0; i < card.length; i++) {
-      const element = card[i];
-      
-    } */
 
     duvidaInput.style.border = '';
     emailInput.style.border = '';
@@ -45,6 +39,7 @@ export class SuportePage implements OnInit {
     textoerroform.style.display = 'none';
     textoerroform2.style.display = 'none';
     textoerroform3.style.display = 'none';
+
     let verificar = false;
 
     if(nomeInput.value == "")
@@ -69,6 +64,7 @@ export class SuportePage implements OnInit {
       verificar = true;
     }
 
+    
     if(duvidaInput.value == "")
     {
       duvidaInput.style.border = '2px solid red';
@@ -80,6 +76,9 @@ export class SuportePage implements OnInit {
       verificar = true;
     }
 
+    const nomeValor = nomeInput.value;
+    const emailValor = emailInput.value;
+    const duvidaValor = duvidaInput.value;
 
     if(verificar == true)
     {
@@ -87,15 +86,10 @@ export class SuportePage implements OnInit {
       emailInput.value = "";
       duvidaInput.value = "";
       this.abrirModal();
-
+      console.log(nomeValor, emailValor, duvidaValor) 
     }
     
-  
- /*    const nomeValor = nomeInput.value;
-    const emailValor = emailInput.value;
-    const duvidaValor = duvidaInput.value;
-  
-    console.log(nomeValor, emailValor, duvidaValor) */
+    
   /* 
     async function buscarDadosForms(nomeValor:any, emailValor:any, duvidaValor:any){
     try
@@ -124,11 +118,8 @@ export class SuportePage implements OnInit {
 
  }
 
-EnviarDadosForms()
-{
-  
-
-}
+  EnviarDadosForms(){
+  }
 
   ngOnInit() {
   }
