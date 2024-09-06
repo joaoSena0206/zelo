@@ -3,7 +3,6 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
-/* import { HttpClient } from '@angular/common/http'; */
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -49,7 +48,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private renderer: Renderer2 /*, private http: HttpClient */) {
+    constructor(private renderer: Renderer2) {
 
     }
 
@@ -169,10 +168,27 @@ export class CadastroTrabalhadorPage implements OnInit {
             let celular = this.form.controls['celular'].value;
             let senha = this.form.controls['senhas'].value;
 
-            /* this.http.get(this.link+"nome="+nome+"&cpf="+cpf+"&data="+data+"&email="+email+"&celular="+celular+"&senha="+senha['senha']).subscribe(res=>{
-                console.log(res)
-            })  */
+            async function buscarDadosUsuario(nome: any, cpf: any, data: any, email: any, celular: any, senha: any) {
+                try
+                {
+                    const formData = new FormData;
+                    formData.append('nome', nome);
 
+                    const response = await fetch('http://www.nsa.sp.gov.br', {
+                        method: 'post',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    console.log(data);
+                }
+                catch (error)
+                {
+                    console.log('erro ao buscar os dados!', error);
+                }
+            }
+
+            buscarDadosUsuario(nome, cpf, data, email, celular, senha['senha'])
         }
     }
 }
