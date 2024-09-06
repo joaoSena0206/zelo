@@ -56,8 +56,30 @@ export class CategoriaPage implements OnInit {
       console.log('erro')
     }
 
+    let categoria = lista;
     
-    console.log(lista)
+    async function enviarDadosUsuario(categoria: any) {
+        try
+        {
+            const formData = new FormData;
+            formData.append('categoria', categoria);
+
+            const response = await fetch('http://www.nsa.sp.gov.br', {
+                method: 'post',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log(data);
+        }
+        catch (error)
+        {
+            console.log('erro ao buscar os dados!', error);
+        }
+    }
+
+    enviarDadosUsuario(categoria);
+
   }
 
 }

@@ -21,10 +21,11 @@
           <p style="font-weight: bold; font-size: 17px;">Digite o valor padrão de sua visita</p>
         </ion-text>
         <ion-item class="ion_item">
-          <ion-input class="form__input" placeholder="Digite o valor da visita:"></ion-input>
+          <ion-input type="number" placeholder="R$: " class="form__input"></ion-input>
         </ion-item>
 
-        <ion-button [routerLink]="['/documento']" class="form__btn">Confirmar</ion-button>
+        <!-- [maskito]="cardMask" [maskitoElement]="maskPredicate" -->
+        <ion-button class="form__btn">Confirmar</ion-button>
 
       </ion-list>
     </div>

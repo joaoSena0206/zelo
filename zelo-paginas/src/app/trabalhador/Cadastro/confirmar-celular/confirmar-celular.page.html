@@ -14,29 +14,29 @@
         <div class="area_codigo">
 
           <ion-item class="ion_item">
-            <ion-input class="form__input"></ion-input>
+            <ion-input class="form__input" maxlength="1" (ionInput)="moveFocus($event, 'input2')" #input1 [(ngModel)]="cd1"></ion-input>
           </ion-item>
 
           <ion-item class="ion_item">
-            <ion-input class="form__input"></ion-input>
+            <ion-input class="form__input"  maxlength="1" (ionInput)="moveFocus($event, 'input3')" #input2 [(ngModel)]="cd2"></ion-input>
           </ion-item>
 
           <ion-item class="ion_item">
-            <ion-input class="form__input"></ion-input>
+            <ion-input class="form__input"  maxlength="1" (ionInput)="moveFocus($event, 'input4')" #input3 [(ngModel)]="cd3"></ion-input>
           </ion-item>
 
           <ion-item class="ion_item">
-            <ion-input class="form__input"></ion-input>
+            <ion-input class="form__input"  maxlength="1" (ionInput)="moveFocus($event, 'input5')" #input4 [(ngModel)]="cd4"></ion-input>
           </ion-item>
 
           <ion-item class="ion_item">
-            <ion-input class="form__input"></ion-input>
+            <ion-input class="form__input"  maxlength="1" (ionInput)="moveFocus($event, '')" #input5 [(ngModel)]="cd5"></ion-input>
           </ion-item>
 
         </div>
 
 
-        <ion-button [routerLink]="['/tipo-saque']" class="form__btn">Confirmar</ion-button>
+        <ion-button (click)="Confirmar();" class="form__btn">Confirmar</ion-button>
 
       </ion-list>
     </div>

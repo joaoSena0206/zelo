@@ -168,11 +168,16 @@ export class CadastroTrabalhadorPage implements OnInit {
             let celular = this.form.controls['celular'].value;
             let senha = this.form.controls['senhas'].value;
 
-            async function buscarDadosUsuario(nome: any, cpf: any, data: any, email: any, celular: any, senha: any) {
+            async function buscarDadosUsuario(nome: any, cpf: any, dataUsuario: any, email: any, celular: any, senha: any) {
                 try
                 {
                     const formData = new FormData;
                     formData.append('nome', nome);
+                    formData.append('cpf', cpf);
+                    formData.append('data', dataUsuario);
+                    formData.append('email', email);
+                    formData.append('celular', celular);
+                    formData.append('senha', senha);
 
                     const response = await fetch('http://www.nsa.sp.gov.br', {
                         method: 'post',
