@@ -23,48 +23,40 @@ export class ConfirmarCelularPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.inputs = {
-      input1: this.input1,
-      input2: this.input2,
-      input3: this.input3,
-      input4: this.input4,
-      input5: this.input5,
-    };
-  }
+  ngOnInit() { }
 
-  Confirmar(){
-    let lista = [];
+  Confirmar() {
 
-    lista.push(this.cd1);
-    lista.push(this.cd2);
-    lista.push(this.cd3);
-    lista.push(this.cd4);
-    lista.push(this.cd5);
+    if ((this.cd1 == undefined) && (this.cd2 == undefined) && (this.cd3 == undefined) && (this.cd4 == undefined) && (this.cd5 == undefined)) {
+      console.log('erro')
+    }
+    else {
+      let codigo = this.cd1 + this.cd2 + this.cd3 + this.cd4 + this.cd5;
 
-    console.log(lista);
+      console.log(codigo)
 
-    async function enviarDadosCodigo(lista: any) {
-      try
-      {
+      async function enviarDadosCodigo(codigo: any) {
+        try 
+        {
           const formData = new FormData;
-          formData.append('categoria', lista);
+          formData.append('categoria', codigo);
 
           const response = await fetch('http://www.nsa.sp.gov.br', {
-              method: 'post',
-              body: formData
+            method: 'post',
+            body: formData
           });
 
           const data = await response.json();
           console.log(data);
-      }
-      catch (error)
-      {
+        }
+        catch (error) 
+        {
           console.log('erro ao buscar os dados!', error);
+        }
       }
-  }
 
-  enviarDadosCodigo(lista);
+      enviarDadosCodigo(codigo);
+    }
   }
 
   moveFocus(event: Event, nextInputId: string) {
@@ -75,11 +67,9 @@ export class ConfirmarCelularPage implements OnInit {
       if (nextInputId && this.inputs[nextInputId]) {
 
         this.inputs[nextInputId].nativeElement.focus();
-        
+
       }
     }
   }
 
-  
-  
 }
