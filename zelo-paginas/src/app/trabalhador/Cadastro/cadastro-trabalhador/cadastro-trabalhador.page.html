@@ -61,16 +61,6 @@
                     [ngClass]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty) ? 'erro' : 'escondido'">{{
                     erro.email }}</span>
 
-                <ion-item class="ion_item">
-                    <ion-input formControlName="celular" (ionInput)="validacaoInput(form.controls['celular'])"
-                        [class.inputErro]="form.controls['celular'].invalid && (form.controls['celular'].touched || form.controls['celular'].dirty)"
-                        [maskito]="celMask" [maskitoElement]="maskPredicate" type="tel" class="form__input"
-                        placeholder="Celular"></ion-input>
-                </ion-item>
-                <span
-                    [ngClass]="form.controls['celular'].invalid && (form.controls['celular'].touched || form.controls['celular'].dirty) ? 'erro' : 'escondido'">{{
-                    erro.celular }}</span>
-
                 <div formGroupName="senhas" style="display: flex; flex-direction: column;">
                     <ion-item class="ion_item">
                         <ion-input formControlName="senha"

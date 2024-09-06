@@ -9,10 +9,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { MaskitoDirective } from '@maskito/angular';
 
+import { provideHttpClient } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MaskitoDirective],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
   bootstrap: [AppComponent],
 })
 

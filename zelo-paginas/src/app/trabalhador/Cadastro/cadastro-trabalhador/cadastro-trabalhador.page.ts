@@ -3,6 +3,7 @@ import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -48,7 +49,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, private http: HttpClient) {
 
     }
 
@@ -163,37 +164,38 @@ export class CadastroTrabalhadorPage implements OnInit {
 
             let nome = this.form.controls['nome'].value;
             let cpf = this.form.controls['cpf'].value;
-            let data = this.form.controls['data'].value;
+            let dataUsuario = this.form.controls['data'].value;
             let email = this.form.controls['email'].value;
-            let celular = this.form.controls['celular'].value;
-            let senha = this.form.controls['senhas'].value;
+            let senha = this.form.controls['senhas'].controls['senha'].value;
 
-            async function buscarDadosUsuario(nome: any, cpf: any, dataUsuario: any, email: any, celular: any, senha: any) {
-                try
-                {
-                    const formData = new FormData;
-                    formData.append('nome', nome);
-                    formData.append('cpf', cpf);
-                    formData.append('data', dataUsuario);
-                    formData.append('email', email);
-                    formData.append('celular', celular);
-                    formData.append('senha', senha);
+            
+            try
+            {
 
-                    const response = await fetch('http://www.nsa.sp.gov.br', {
-                        method: 'post',
-                        body: formData
-                    });
+                let Trabalhador = {
+                    cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
+                    nome: this.form.controls['nome'].value,
+                    dataNascimento: this.form.controls['data'].value?.substring(0, 10),
+                    email: this.form.controls['email'].value,
+                    senha: this.form.controls['senhas'].controls['senha'].value,
+                    pix: null,
+                    disponivel: false,
+                };
 
-                    const data = await response.json();
-                    console.log(data);
-                }
-                catch (error)
-                {
-                    console.log('erro ao buscar os dados!', error);
-                }
+                this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
+                    console.log(res);
+                })
+
+                /* const response = await fetch('http://localhost:57879/Trabalhador/Adicionar', {
+                    method: 'post',
+                    body: formData
+                }); */
             }
-
-            buscarDadosUsuario(nome, cpf, data, email, celular, senha['senha'])
+            catch (error)
+            {
+                console.log('erro ao buscar os dados!', error);
+            }
+            
         }
     }
 }
