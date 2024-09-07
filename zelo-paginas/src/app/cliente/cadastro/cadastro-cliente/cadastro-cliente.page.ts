@@ -169,7 +169,7 @@ export class CadastroClientePage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            let link = "http://localhost:57879/Clientes/Adicionar";
+            let link = "https://chow-master-properly.ngrok-free.app/Clientes/Adicionar";
             let cliente = {
                 cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
                 nome: this.form.controls['nome'].value,

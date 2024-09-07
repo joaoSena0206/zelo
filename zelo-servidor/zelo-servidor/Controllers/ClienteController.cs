@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,23 @@ public class ClienteController : Controller
 
         #endregion
 
+        #region Adiciona o cliente no banco
+
+        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'))";
+        banco.Executar(comando);
+
+        return "ok";
+
+        #endregion
+    }
+
+    [HttpPost]
+    [Route("ChecarExistencia")]
+    public string ChecarExistencia()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         #region Checa a existência do email e do cpf
 
         string comando = $"SELECT COUNT(cd_cpf_cliente) FROM cliente WHERE cd_cpf_cliente = '{cliente.Cpf}'";
@@ -37,6 +55,7 @@ public class ClienteController : Controller
 
         bool cpfExiste = false;
         bool emailExiste = false;
+        string json = "'cadastrado': []";
 
         if (dados != null)
         {
@@ -48,7 +67,6 @@ public class ClienteController : Controller
                 }
             }
         }
-
         dados.Close();
 
         comando = $"SELECT COUNT(nm_email_cliente) FROM cliente WHERE nm_email_cliente = '{cliente.Email}'";
@@ -79,36 +97,13 @@ public class ClienteController : Controller
 
         #endregion
 
-        #region Adiciona o cliente no banco
-
-        comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'))";
-        banco.Executar(comando);
-
-        return "ok";
-
-        #endregion
+        banco.Desconectar();
     }
 
-    //[HttpGet]
-    //[Route("CarregarDados")]
-    //public string CarregarDados()
-    //{
-    //    Banco banco = new Banco();
-    //    banco.Conectar();
-
-    //    string cpf = Request["cpf"];
-
-    //    string comando = $"SELECT * FROM cliente WHERE nm_cpf_cliente = '{cpf}'";
-    //    MySqlDataReader dados = banco.Consultar(comando);
-
-    //    Cliente cliente = new Cliente();
-
-    //    if (dados != null)
-    //    {
-    //        cliente.Cpf = dados.GetString(0);
-    //        cliente.Nome = dados.GetString(1);
-    //        cliente.Email = dados.GetString(2);
-
-    //    }
-    //}
+    [HttpGet]
+    [Route("Teste")]
+    public string Teste()
+    {
+        return "Marco gosta de chupar o João";
+    }
 }
