@@ -50,12 +50,12 @@ public class ClienteController : Controller
 
         #region Checa a existência do email e do cpf
 
-        string comando = $"SELECT COUNT(cd_cpf_cliente) FROM cliente WHERE cd_cpf_cliente = '{cliente.Cpf}'";
-        MySqlDataReader dados = banco.Consultar(comando);
+        string cpf = Request["cpf"];
+        string email = Request["email"];
+        string json = "{'cadastrado': [ ";
 
-        bool cpfExiste = false;
-        bool emailExiste = false;
-        string json = "'cadastrado': []";
+        string comando = $"SELECT COUNT(cd_cpf_cliente) FROM cliente WHERE cd_cpf_cliente = '{cpf}'";
+        MySqlDataReader dados = banco.Consultar(comando);
 
         if (dados != null)
         {
@@ -63,13 +63,14 @@ public class ClienteController : Controller
             {
                 if (dados.GetInt32(0) >= 1)
                 {
-                    cpfExiste = true;
+                    json += "'cpf',";
                 }
             }
         }
+
         dados.Close();
 
-        comando = $"SELECT COUNT(nm_email_cliente) FROM cliente WHERE nm_email_cliente = '{cliente.Email}'";
+        comando = $"SELECT COUNT(nm_email_cliente) FROM cliente WHERE nm_email_cliente = '{email}'";
         dados = banco.Consultar(comando);
 
         if (dados != null)
@@ -78,26 +79,20 @@ public class ClienteController : Controller
             {
                 if (dados.GetInt32(0) >= 1)
                 {
-                    emailExiste = true;
+                    json += "'email',";
                 }
             }
         }
 
         dados.Close();
+        banco.Desconectar();
 
-        if (cpfExiste == true)
-        {
-            return "Cpf já cadastrado!";
-        }
+        json = json.Substring(0, json.Length - 1) + "]}";
+        json = json.Replace("'", "\"");
 
-        if (emailExiste == true)
-        {
-            return "Email já cadastrado!";
-        }
+        return json;
 
         #endregion
-
-        banco.Desconectar();
     }
 
     [HttpGet]

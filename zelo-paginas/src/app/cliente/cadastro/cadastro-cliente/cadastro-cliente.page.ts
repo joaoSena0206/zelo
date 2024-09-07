@@ -49,14 +49,12 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
-        
+
     }
 
     ionViewWillEnter() {
-        if (localStorage.getItem("cliente"))
-        {
-            if (this.form.controls['cpf'].value == "")
-            {
+        if (localStorage.getItem("cliente")) {
+            if (this.form.controls['cpf'].value == "") {
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
                 this.form.controls['nome'].setValue(cliente.nome);
@@ -162,12 +160,39 @@ export class CadastroClientePage implements OnInit {
         this.inputData = moment(data).format("DD/MM/YYYY");
     }
 
+    checarCadastro(cliente: any, dado: string = "padrão") {
+        let link = "https://chow-master-properly.ngrok-free.app/Clientes/ChecarExistencia";
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cliente.cpf!);
+        dadosForm.append("email", cliente.email!);
+
+        if (dado != "padrão")
+        {
+            dadosForm.set(dado, "null");
+        }
+
+        this.http.post(link, dadosForm).subscribe(res => {
+            let objRes = res as any;
+
+            if (objRes.cadastrado.length == 0) {
+                localStorage.setItem("cliente", JSON.stringify(cliente));
+            }
+            else {
+                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+
+                    this.form.controls[cadastrado].setErrors({ existe: true });
+                    this.form.controls[cadastrado].markAsDirty();
+                });
+            }
+        });
+    }
+
     enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
         else {
-            let link = "https://chow-master-properly.ngrok-free.app/Clientes/Adicionar";
             let cliente = {
                 cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
                 nome: this.form.controls['nome'].value,
@@ -176,24 +201,28 @@ export class CadastroClientePage implements OnInit {
                 senha: this.form.controls['senhas'].controls['senha'].value,
             };
 
-            this.http.post(link, JSON.stringify(cliente), {responseType: 'text'}).subscribe(res => {
-                if (res == "ok")
+            if (localStorage.getItem("cliente")) {
+                let clienteStorage = JSON.parse(localStorage.getItem("cliente")!);
+
+                if (cliente.cpf != clienteStorage.cpf && cliente.email != clienteStorage.email) {
+                    this.checarCadastro(cliente);
+                }
+                else if (cliente.cpf != clienteStorage.cpf)
+                {
+                    this.checarCadastro(cliente, "email");
+                }
+                else if (cliente.email != clienteStorage.email)
+                {
+                    this.checarCadastro(cliente, "cpf");
+                }
+                else if (this.form.dirty)
                 {
                     localStorage.setItem("cliente", JSON.stringify(cliente));
-
-                    this.navCl.navigateForward("/endereco");
                 }
-                else if (res.includes("Cpf"))
-                {
-                    this.erro.cpf = res;
-                    this.form.controls['cpf'].setErrors({cadastrado: true});
-                }
-                else
-                {
-                    this.erro.email = res;
-                    this.form.controls['email'].setErrors({cadastrado: true});
-                }
-            });
+            }
+            else {
+                this.checarCadastro(cliente);
+            }
         }
     }
 }

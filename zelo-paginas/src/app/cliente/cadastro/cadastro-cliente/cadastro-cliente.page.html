@@ -77,14 +77,14 @@
 
                     <ion-item class="ion_item">
                         <ion-input formControlName="confirmarSenha"
-                            [class.inputErro]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].controls['confirmarSenha'].touched || form.controls['senhas'].controls['confirmarSenha'].dirty)"
+                            [class.inputErro]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty)"
                             type="password" class="form__input" placeholder="Confirme sua senha">
                             <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
                                 name="eye-off-outline" aria-hidden="true"></ion-icon>
                         </ion-input>
                     </ion-item>
                     <span
-                        [ngClass]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].controls['confirmarSenha'].touched || form.controls['senhas'].controls['confirmarSenha'].dirty) ? 'erro' : 'escondido'">{{
+                        [ngClass]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty) ? 'erro' : 'escondido'">{{
                         form.controls['senhas'].errors?.['confere'].msg }}</span>
                 </div>
 
