@@ -1,12 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { Moment } from 'moment';
 import * as moment from 'moment';
 
 @Component({
