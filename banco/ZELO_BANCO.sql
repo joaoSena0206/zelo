@@ -69,6 +69,20 @@ CREATE TABLE confirmacao
 	CONSTRAINT fk_confirmacao_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
+INSERT INTO confirmacao VALUES
+(
+	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
+	'50082480818',
+	NULL,
+	'12345'
+);
+
+SELECT * FROM confirmacao;
+
+DELETE FROM confirmacao WHERE cd_cpf_cliente = '50082480818';
+
+
+
 
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
 Create Table solicitacao_servico

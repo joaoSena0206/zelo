@@ -13,7 +13,7 @@ export class ConfirmarCelularPage implements OnInit {
     constructor(private navCl: NavController) { }
 
     ngOnInit() {
-        
+
     }
 
     ngAfterViewInit() {
@@ -58,8 +58,7 @@ export class ConfirmarCelularPage implements OnInit {
         const intervalo = setInterval(() => {
             this.tempo -= 1;
 
-            if (this.tempo == 0)
-            {
+            if (this.tempo == 0) {
                 clearInterval(intervalo);
             }
         }, 1000);
