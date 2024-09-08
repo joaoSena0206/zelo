@@ -22,7 +22,16 @@ public class Endereco
         set { _cpfCliente = value; }
     }
 
-    private string _cep;
+	private string _identificacao;
+
+	public string Identificacao
+	{
+		get { return _identificacao; }
+		set { _identificacao = value; }
+	}
+
+
+	private string _cep;
 
 	public string Cep
 	{
@@ -51,10 +60,11 @@ public class Endereco
 
 	}
 
-	public Endereco(int codigo, string cpfCliente, string cep, int numero, string complemento)
+	public Endereco(int codigo, string cpfCliente, string identificacao,string cep, int numero, string complemento)
     {
 		this.Codigo = codigo;
         this.CpfCliente = cpfCliente;
+		this.Identificacao = identificacao;
 		this.Cep = cep;
         this.Numero = numero;
         this.Complemento = complemento;
