@@ -58,6 +58,16 @@ ion-content
     position: relative;
 }
 
+.ion_item:first-of-type
+{
+    margin-left: 0;
+}
+
+.ion_item:last-of-type
+{
+    margin-right: 0;
+}
+
 
 .form
 {
@@ -73,6 +83,12 @@ ion-content
     border-radius: 11px;
     align-items: center;
     justify-content: center;
+}
+
+p
+{
+    font-weight: bold;
+    margin-bottom: 30px;
 }
 
 .form__input
@@ -104,7 +120,8 @@ ion-content
     font-size: 22px;
     font-weight: 700;
     align-self: center;
-    margin: 18px 0;
+    margin: 30px 0;
+    margin-bottom: 0;
     width: clamp(200px, 300px, 80%);
 }
 
