@@ -11,6 +11,7 @@ export class ConfirmarCelularPage implements OnInit {
     constructor(private navCl: NavController) { }
 
     ngOnInit() {
+
     }
 
     ngAfterViewInit() {
@@ -34,6 +35,22 @@ export class ConfirmarCelularPage implements OnInit {
                 }
             });
         }
+    }
+
+    ionViewDidEnter() {
+        const btns = document.querySelectorAll(".form__btn");
+
+        if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+            (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        }
+
+        window.addEventListener("resize", function () {
+            const btns = document.querySelectorAll(".form__btn");
+
+            if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+                (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+            }
+        });
     }
 
     voltarPag() {
