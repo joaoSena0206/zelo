@@ -94,11 +94,4 @@ public class ClienteController : Controller
 
         #endregion
     }
-
-    [HttpGet]
-    [Route("Teste")]
-    public string Teste()
-    {
-        return "Marco gosta de chupar o João";
-    }
 }
