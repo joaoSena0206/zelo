@@ -37,7 +37,7 @@
 
         <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
             <ion-button class="form__btn">Confirmar</ion-button>
-            <ion-button disabled class="form__btn form__btn--reenviar">Reenviar (60)</ion-button>
+            <ion-button [disabled]="tempo == 0 ? 'false' : 'true'" class="form__btn form__btn--reenviar">Reenviar {{ tempo == 0 ? '' : '(' + tempo + ')' }}</ion-button>
         </div>
       </ion-list>
     </div>

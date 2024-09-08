@@ -1,5 +1,6 @@
 import { Component, input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { TermosPageModule } from 'src/app/geral/termos/termos.module';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -7,11 +8,12 @@ import { NavController } from '@ionic/angular';
     styleUrls: ['./confirmar-celular.page.scss'],
 })
 export class ConfirmarCelularPage implements OnInit {
+    tempo: number = 60;
 
     constructor(private navCl: NavController) { }
 
     ngOnInit() {
-
+        
     }
 
     ngAfterViewInit() {
@@ -39,6 +41,7 @@ export class ConfirmarCelularPage implements OnInit {
 
     ionViewDidEnter() {
         const btns = document.querySelectorAll(".form__btn");
+        const btnReenviar = document.querySelector(".form__btn--reenviar");
 
         if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
             (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
@@ -51,6 +54,15 @@ export class ConfirmarCelularPage implements OnInit {
                 (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
             }
         });
+
+        const intervalo = setInterval(() => {
+            this.tempo -= 1;
+
+            if (this.tempo == 0)
+            {
+                clearInterval(intervalo);
+            }
+        }, 1000);
     }
 
     voltarPag() {
