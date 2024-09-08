@@ -56,7 +56,18 @@ Create Table cliente
 insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'));
 insert into cliente values ('50082480818', 'Marco', '2006-05-24', 'joaosena0206@gmail.com', md5('1234'));
 
-select * from cliente;
+
+CREATE TABLE confirmacao
+(
+	cd_confirmacao INT,
+	cd_cpf_cliente CHAR(11),
+	cd_cpf_trabalhador CHAR(11),
+	nm_codigo_confirmacao CHAR(5),
+
+	CONSTRAINT pk_confirmacao PRIMARY KEY (cd_confirmacao),
+	CONSTRAINT fk_confirmacao_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
+	CONSTRAINT fk_confirmacao_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
+);
 
 
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
