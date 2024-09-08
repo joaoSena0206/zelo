@@ -55,12 +55,21 @@ public class Endereco
 		set { _complemento = value; }
 	}
 
+	private string _referencia;
+
+	public string Referencia
+	{
+		get { return _referencia; }
+		set { _referencia = value; }
+	}
+
+
 	public Endereco()
 	{
 
 	}
 
-	public Endereco(int codigo, string cpfCliente, string identificacao,string cep, int numero, string complemento)
+	public Endereco(int codigo, string cpfCliente, string identificacao,string cep, int numero, string complemento, string referencia)
     {
 		this.Codigo = codigo;
         this.CpfCliente = cpfCliente;
@@ -68,5 +77,6 @@ public class Endereco
 		this.Cep = cep;
         this.Numero = numero;
         this.Complemento = complemento;
+		this.Referencia = referencia;
     }
 }

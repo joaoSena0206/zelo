@@ -87,6 +87,7 @@ Create Table endereco
 	cd_cpf_cliente CHAR(11),
 	cd_numero_endereco INT,
 	ds_complemento_endereco TEXT,
+	nm_referencia_endereco VARCHAR(255),
 
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
 	CONSTRAINT pk_servico_trabalhador_servico PRIMARY KEY (cd_endereco)
