@@ -17,6 +17,7 @@ ion-content
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: 100%;
 }
 
@@ -24,11 +25,11 @@ ion-content
 .content
 {
     padding: 0 31px;
-    background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    width: fit-content;
+    max-width: 600px;
 }
 
 .content__seta
@@ -53,9 +54,9 @@ ion-content
 {
     --padding-start: 0;
     --inner-padding-end: 0;
-    margin: 10px;
     margin-bottom: 11px;
     position: relative;
+    width: 100%;
 }
 
 .ion_item:first-of-type
@@ -82,7 +83,8 @@ ion-content
     display: flex; 
     border-radius: 11px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
 p
@@ -98,9 +100,9 @@ p
 
     display: flex;
     align-items: center;
-    height: 62px;
     width: 100%;
-    max-width: 50px;
+    max-width: 70px;
+    aspect-ratio: 1/1;
     background: rgba(217,217,217, 0.56);
     font-weight: 700;
     border-radius: 11px;
@@ -110,19 +112,24 @@ p
 .form__btn
 {
     --background: #F66701;
-    --border-radius: 26px;
-    --padding-start: 66px;
-    --padding-end: 66px;
-    --padding-top: 18px;
-    --padding-bottom: 18px;
+    --border-radius: 15px;
+    --padding-start: 28px;
+    --padding-end: 28px;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
 
     text-transform: none;
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 700;
     align-self: center;
     margin: 30px 0;
     margin-bottom: 0;
-    width: clamp(200px, 300px, 80%);
+    width: clamp(200px, 300px, 50%);
+}
+
+.form__btn--reenviar
+{
+
 }
 
 .form__p
