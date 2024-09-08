@@ -110,7 +110,20 @@ export class EnderecoPage implements OnInit {
             this.endereco.markAllAsTouched();
         }
         else {
-            console.log("foi");
+            let cliente = JSON.parse(localStorage.getItem("cliente")!);
+
+            let endereco = {
+                cpfCliente: cliente.cpf,
+                identificacao: this.endereco.controls['identificacao'].value,
+                cep: this.endereco.controls['cep'].value?.replace("-", ""),
+                numero: this.endereco.controls['numero'].value,
+                complemento: this.endereco.controls['complemento'].value,
+                referencia: this.endereco.controls['pontoReferencia'].value
+            };
+
+            localStorage.setItem("endereco", JSON.stringify(endereco));
+
+            this.navCl.navigateForward("/confirmar-celular");
         }
     }
 }
