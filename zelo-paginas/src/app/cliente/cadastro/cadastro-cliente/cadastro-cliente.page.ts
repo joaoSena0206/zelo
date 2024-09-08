@@ -176,6 +176,8 @@ export class CadastroClientePage implements OnInit {
 
             if (objRes.cadastrado.length == 0) {
                 localStorage.setItem("cliente", JSON.stringify(cliente));
+
+                this.navCl.navigateForward("/endereco");
             }
             else {
                 objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
@@ -218,6 +220,8 @@ export class CadastroClientePage implements OnInit {
                 else if (this.form.dirty)
                 {
                     localStorage.setItem("cliente", JSON.stringify(cliente));
+
+                    this.navCl.navigateForward("/endereco");
                 }
             }
             else {
