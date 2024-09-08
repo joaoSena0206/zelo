@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmarCelularPage implements OnInit {
 
-    constructor() { }
+    constructor(private navCl: NavController) { }
 
     ngOnInit() {
     }
@@ -38,5 +39,10 @@ export class ConfirmarCelularPage implements OnInit {
                 }
             });
         }
+    }
+
+    voltarPag()
+    {
+        this.navCl.back();
     }
 }
