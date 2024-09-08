@@ -82,11 +82,11 @@ Insert into solicitacao_servico values(10, '535305697', '525305698', 20/04/2024,
 Create Table endereco
 (
 	cd_endereco INT,
+	nm_identificacao_endereco VARCHAR(80),
 	cd_endereco_cep CHAR(8),
 	cd_cpf_cliente CHAR(11),
 	cd_numero_endereco INT,
-	ds_complemento_endereco VARCHAR(80),
-	ic_numero_endereco BOOL,
+	ds_complemento_endereco TEXT,
 
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
 	CONSTRAINT pk_servico_trabalhador_servico PRIMARY KEY (cd_endereco)
