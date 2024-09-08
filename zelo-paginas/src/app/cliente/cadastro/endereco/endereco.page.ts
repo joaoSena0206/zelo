@@ -44,6 +44,22 @@ export class EnderecoPage implements OnInit {
     ngOnInit() {
     }
 
+    ionViewWillEnter()
+    {
+        if (localStorage.getItem("endereco"))
+        {
+            let objEndereco = JSON.parse(localStorage.getItem("endereco")!);
+
+            this.endereco.controls['identificacao'].setValue(objEndereco.identificacao);
+            this.endereco.controls['cep'].setValue(objEndereco.cep);
+            this.endereco.controls['numero'].setValue(objEndereco.numero);
+            this.endereco.controls['complemento'].setValue(objEndereco.complemento);
+            this.endereco.controls['pontoReferencia'].setValue(objEndereco.referencia);
+
+            this.buscarCep(this.endereco.controls['cep']);
+        }
+    }
+
     voltarPag()
     {
         this.navCl.back();
@@ -115,7 +131,7 @@ export class EnderecoPage implements OnInit {
             let endereco = {
                 cpfCliente: cliente.cpf,
                 identificacao: this.endereco.controls['identificacao'].value,
-                cep: this.endereco.controls['cep'].value?.replace("-", ""),
+                cep: this.endereco.controls['cep'].value,
                 numero: this.endereco.controls['numero'].value,
                 complemento: this.endereco.controls['complemento'].value,
                 referencia: this.endereco.controls['pontoReferencia'].value
