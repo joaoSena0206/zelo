@@ -62,6 +62,23 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     }
 
+    ionViewWillEnter() {
+        if (localStorage.getItem("trabalhador")) {
+            if (this.form.controls['cpf'].value == "") {
+                let Trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+
+                this.form.controls['nome'].setValue(Trabalhador.nome);
+                this.form.controls['cpf'].setValue(Trabalhador.cpf);
+                this.form.controls['data'].setValue(Trabalhador.dataNascimento);
+                this.form.controls['email'].setValue(Trabalhador.email);
+                this.form.controls['senhas'].controls['senha'].setValue(Trabalhador.senha);
+                this.form.controls['senhas'].controls['confirmarSenha'].setValue(Trabalhador.senha);
+
+                this.mostrarData();
+            }
+        }
+    }
+
     estadoSenha(event: any) {
         const olho = event.target as HTMLIonIconElement;
         const input = event.target.parentElement as HTMLIonInputElement;
@@ -154,10 +171,8 @@ export class CadastroTrabalhadorPage implements OnInit {
         }
     }
 
-    /* link: any = "http://localhost/aplicativo/insert.php?"; */
-
     checarCadastro(trabalhador: any, dado: string = "padrão") {
-        let link = "https://chow-master-properly.ngrok-free.app/Clientes/ChecarExistencia";
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/Adicionar";
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.cpf!);
         dadosForm.append("email", trabalhador.email!);

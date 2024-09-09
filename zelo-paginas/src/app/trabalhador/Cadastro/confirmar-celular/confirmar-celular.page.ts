@@ -80,68 +80,108 @@ import { NavController } from '@ionic/angular';
 /* import { TermosPageModule } from 'src/app/geral/termos/termos.module'; */
 
 @Component({
-    selector: 'app-confirmar-celular',
-    templateUrl: './confirmar-celular.page.html',
-    styleUrls: ['./confirmar-celular.page.scss'],
+  selector: 'app-confirmar-celular',
+  templateUrl: './confirmar-celular.page.html',
+  styleUrls: ['./confirmar-celular.page.scss'],
 })
 export class ConfirmarCelularPage implements OnInit {
-    tempo: number = 60;
+  tempo: number = 60;
 
-    constructor(private navCl: NavController) { }
+  constructor(private navCl: NavController) { }
 
-    ngOnInit() {
+  ngOnInit() {
 
-    }
+  }
 
-    ngAfterViewInit() {
-        const inputs = document.querySelectorAll("ion-input");
+  ngAfterViewInit() {
+    const inputs = document.querySelectorAll("ion-input");
 
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].addEventListener("ionInput", function () {
-                let apagado = false;
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].addEventListener("ionInput", function () {
+        let apagado = false;
 
-                if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
-                    apagado = true;
-                }
-
-                inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
-
-                if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
-                    inputs[i + 1].setFocus();
-                }
-                else if (inputs[i].value == "" && i != 0 && apagado == false) {
-                    inputs[i - 1].setFocus();
-                }
-            });
-        }
-    }
-
-    ionViewDidEnter() {
-        const btns = document.querySelectorAll(".form__btn");
-        const btnReenviar = document.querySelector(".form__btn--reenviar");
-
-        if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
-            (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
+          apagado = true;
         }
 
-        window.addEventListener("resize", function () {
-            const btns = document.querySelectorAll(".form__btn");
+        inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
 
-            if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
-                (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
-            }
-        });
+        if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
+          inputs[i + 1].setFocus();
+        }
+        else if (inputs[i].value == "" && i != 0 && apagado == false) {
+          inputs[i - 1].setFocus();
+        }
+      });
+    }
+  }
 
-        const intervalo = setInterval(() => {
-            this.tempo -= 1;
+  ionViewDidEnter() {
+    const btns = document.querySelectorAll(".form__btn");
+    const btnReenviar = document.querySelector(".form__btn--reenviar");
 
-            if (this.tempo == 0) {
-                clearInterval(intervalo);
-            }
-        }, 1000);
+    if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+      (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
     }
 
-    voltarPag() {
-        this.navCl.back();
+    window.addEventListener("resize", function () {
+      const btns = document.querySelectorAll(".form__btn");
+
+      if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+        (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+      }
+    });
+
+    const intervalo = setInterval(() => {
+      this.tempo -= 1;
+
+      if (this.tempo == 0) {
+        clearInterval(intervalo);
+      }
+    }, 1000);
+  }
+
+  voltarPag() {
+    this.navCl.back();
+  }
+
+  ionViewWillEnter() {
+    if (localStorage.getItem("trabalhador")) {
+      /* if (this.form.controls['cpf'].value == "") {
+        let Trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+
+        this.form.controls['nome'].setValue(Trabalhador.nome);
+        this.form.controls['cpf'].setValue(Trabalhador.cpf);
+        this.form.controls['data'].setValue(Trabalhador.dataNascimento);
+        this.form.controls['email'].setValue(Trabalhador.email);
+        this.form.controls['senhas'].controls['senha'].setValue(Trabalhador.senha);
+        this.form.controls['senhas'].controls['confirmarSenha'].setValue(Trabalhador.senha);
+
+        this.mostrarData();
+      } */
     }
+  }
+
+  cd1: any;
+  cd2: any;
+  cd3: any;
+  cd4: any;
+  cd5: any;
+
+  enviar() {
+
+    if ((this.cd1 == undefined) && (this.cd2 == undefined) && (this.cd3 == undefined) && (this.cd4 == undefined) && (this.cd5 == undefined)) {
+      console.log('erro')
+    }
+    else {
+      let codigo = this.cd1 + this.cd2 + this.cd3 + this.cd4 + this.cd5;
+
+      let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+
+      localStorage.setItem("endereco", codigo);
+
+      this.navCl.navigateForward("/documento");
+      
+    }
+  }
 }
