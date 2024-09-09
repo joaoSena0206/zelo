@@ -1,4 +1,4 @@
-<ion-content>
+<!-- <ion-content>
   <div class="wrapper">
     <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
 
@@ -38,6 +38,52 @@
 
         <ion-button (click)="Confirmar();" class="form__btn">Confirmar</ion-button>
 
+      </ion-list>
+    </div>
+  </div>
+</ion-content> -->
+
+<ion-content>
+  <div class="wrapper">
+    <ion-icon (click)="voltarPag()"
+      class="content__seta"
+      src="../../../assets/icon/cliente/down-removebg-preview 8.svg"
+    ></ion-icon>
+
+    <div class="content">
+      <ion-text>
+        <h1 class="content__h1">Enviamos um código para você</h1>
+      </ion-text>
+
+      <ion-list class="form" lines="none">
+        <p style="font-size: 15px;">Digite o código</p>
+
+        <div class="area_codigo">
+          <ion-item class="ion_item">
+            <ion-input class="form__input" maxlength="1"></ion-input>
+          </ion-item>
+
+          <ion-item class="ion_item">
+            <ion-input class="form__input" maxlength="1"></ion-input>
+          </ion-item>
+
+          <ion-item class="ion_item">
+            <ion-input class="form__input" maxlength="1"></ion-input>
+          </ion-item>
+
+          <ion-item class="ion_item">
+            <ion-input class="form__input" maxlength="1"></ion-input>
+          </ion-item>
+
+          <ion-item class="ion_item">
+            <ion-input class="form__input" maxlength="1"></ion-input>
+          </ion-item>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+            <ion-button class="form__btn">Confirmar</ion-button>
+            <ion-button [disabled]="tempo == 0 ? 'false' : 'true'" class="form_btn form_btn--reenviar">Reenviar {{ tempo == 0 ? '' : '(' + tempo + ')' }}</ion-button>
+        </div>
       </ion-list>
     </div>
   </div>
