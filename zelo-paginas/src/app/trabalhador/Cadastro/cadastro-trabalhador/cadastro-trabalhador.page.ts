@@ -4,6 +4,7 @@ import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
 import { HttpClient } from '@angular/common/http';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -49,7 +50,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private renderer: Renderer2, private http: HttpClient) {
+    constructor(private renderer: Renderer2, private navCl: NavController, private http: HttpClient) {
 
     }
 
@@ -155,6 +156,34 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     /* link: any = "http://localhost/aplicativo/insert.php?"; */
 
+    checarCadastro(cliente: any, dado: string = "padrão") {
+        let link = "https://chow-master-properly.ngrok-free.app/Clientes/ChecarExistencia";
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cliente.cpf!);
+        dadosForm.append("email", cliente.email!);
+
+        if (dado != "padrão")
+        {
+            dadosForm.set(dado, "null");
+        }
+
+        this.http.post(link, dadosForm).subscribe(res => {
+            let objRes = res as any;
+
+            if (objRes.cadastrado.length == 0) {
+                localStorage.setItem("cliente", JSON.stringify(cliente));
+            }
+            else {
+                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+
+                    this.form.controls[cadastrado].setErrors({ existe: true });
+                    this.form.controls[cadastrado].markAsDirty();
+                });
+            }
+        });
+    }
+
     enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
@@ -172,7 +201,7 @@ export class CadastroTrabalhadorPage implements OnInit {
                 disponivel: false,
             };
 
-           /*  if (localStorage.getItem("trabalhador")) {
+            if (localStorage.getItem("trabalhador")) {
                 let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
 
                 if (Trabalhador.cpf != trabalhadorStorage.cpf && Trabalhador.email != trabalhadorStorage.email) {
@@ -189,13 +218,11 @@ export class CadastroTrabalhadorPage implements OnInit {
                 else if (this.form.dirty)
                 {
                     localStorage.setItem("trabalhador", JSON.stringify(Trabalhador));
-
-                    this.navCl.navigateForward("/endereco");
                 }
             }
             else {
                 this.checarCadastro(Trabalhador);
-            } */
+            }
 
 
             this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
