@@ -156,11 +156,11 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     /* link: any = "http://localhost/aplicativo/insert.php?"; */
 
-    checarCadastro(cliente: any, dado: string = "padrão") {
+    checarCadastro(trabalhador: any, dado: string = "padrão") {
         let link = "https://chow-master-properly.ngrok-free.app/Clientes/ChecarExistencia";
         let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.cpf!);
-        dadosForm.append("email", cliente.email!);
+        dadosForm.append("cpf", trabalhador.cpf!);
+        dadosForm.append("email", trabalhador.email!);
 
         if (dado != "padrão")
         {
@@ -171,7 +171,7 @@ export class CadastroTrabalhadorPage implements OnInit {
             let objRes = res as any;
 
             if (objRes.cadastrado.length == 0) {
-                localStorage.setItem("cliente", JSON.stringify(cliente));
+                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
             }
             else {
                 objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
@@ -225,9 +225,9 @@ export class CadastroTrabalhadorPage implements OnInit {
             }
 
 
-            this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
+            /* this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
                 console.log(res);
-            })
+            }) */
         }
     }
 }
