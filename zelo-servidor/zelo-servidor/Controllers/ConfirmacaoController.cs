@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 [RoutePrefix("Confirmacao")]
 public class ConfirmacaoController : Controller
 {
-    [HttpGet]
+    [HttpPost]
     [Route("GerarCodigo")]
     public string GerarCodigo()
     {
@@ -26,7 +26,7 @@ public class ConfirmacaoController : Controller
 
         #region Checa a existência de um código aleatório já criado na tabela
 
-        string comando = $"SELECT COUNT(cd_cpf_{tipo}) FROM confirmacao WHERE cd_cpf_{tipo} WHERE = '{cpf}'";
+        string comando = $"SELECT COUNT(cd_cpf_{tipo}) FROM confirmacao WHERE cd_cpf_{tipo} = '{cpf}'";
         MySqlDataReader dados = banco.Consultar(comando);
 
         bool existe = false;
@@ -45,6 +45,8 @@ public class ConfirmacaoController : Controller
         }
 
         #endregion
+
+        return cpf;
 
         if (tipo == "cliente")
         {
@@ -68,6 +70,8 @@ public class ConfirmacaoController : Controller
         }
 
         banco.Executar(comando);
+
+        return "ok";
 
         #endregion
     }

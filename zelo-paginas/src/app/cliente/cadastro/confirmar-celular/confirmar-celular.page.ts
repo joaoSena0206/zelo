@@ -1,6 +1,6 @@
 import { Component, input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { TermosPageModule } from 'src/app/geral/termos/termos.module';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -10,7 +10,7 @@ import { TermosPageModule } from 'src/app/geral/termos/termos.module';
 export class ConfirmarCelularPage implements OnInit {
     tempo: number = 60;
 
-    constructor(private navCl: NavController) { }
+    constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
 
@@ -62,6 +62,22 @@ export class ConfirmarCelularPage implements OnInit {
                 clearInterval(intervalo);
             }
         }, 1000);
+
+        this.gerarCodigo();
+    }
+
+    gerarCodigo()
+    {
+        let link = "http://localhost:57879/Confirmacao/GerarCodigo";
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cliente.cpf);
+        dadosForm.append("tipo", "cliente");
+
+        this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
+            console.log(res);
+        });
     }
 
     voltarPag() {

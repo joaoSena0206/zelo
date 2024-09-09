@@ -72,6 +72,14 @@ CREATE TABLE confirmacao
 INSERT INTO confirmacao VALUES
 (
 	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
+	'32441943898',
+	NULL,
+	'12345'
+);
+
+INSERT INTO confirmacao VALUES
+(
+	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
 	'50082480818',
 	NULL,
 	'12345'
@@ -118,7 +126,7 @@ Create Table endereco
 	CONSTRAINT pk_servico_trabalhador_servico PRIMARY KEY (cd_endereco)
 );
 
-Insert into endereco values(1, '1111-000',525305698, 7, 'Perto do Petz', true); 
+Insert into endereco values(1, 'Casa','11085260', 525305698, 7, 'Perto do Petz', null); 
 
 -- TABELA CERTIFICADO TRABALHADOR -- 
 Create table certificado
