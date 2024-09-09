@@ -162,40 +162,45 @@ export class CadastroTrabalhadorPage implements OnInit {
         else {
             console.log("foi");
 
-            let nome = this.form.controls['nome'].value;
-            let cpf = this.form.controls['cpf'].value;
-            let dataUsuario = this.form.controls['data'].value;
-            let email = this.form.controls['email'].value;
-            let senha = this.form.controls['senhas'].controls['senha'].value;
+            let Trabalhador = {
+                cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
+                nome: this.form.controls['nome'].value,
+                dataNascimento: this.form.controls['data'].value?.substring(0, 10),
+                email: this.form.controls['email'].value,
+                senha: this.form.controls['senhas'].controls['senha'].value,
+                pix: null,
+                disponivel: false,
+            };
 
-            
-            try
-            {
+           /*  if (localStorage.getItem("trabalhador")) {
+                let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
 
-                let Trabalhador = {
-                    cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
-                    nome: this.form.controls['nome'].value,
-                    dataNascimento: this.form.controls['data'].value?.substring(0, 10),
-                    email: this.form.controls['email'].value,
-                    senha: this.form.controls['senhas'].controls['senha'].value,
-                    pix: null,
-                    disponivel: false,
-                };
+                if (Trabalhador.cpf != trabalhadorStorage.cpf && Trabalhador.email != trabalhadorStorage.email) {
+                    this.checarCadastro(Trabalhador);
+                }
+                else if (Trabalhador.cpf != trabalhadorStorage.cpf)
+                {
+                    this.checarCadastro(Trabalhador, "email");
+                }
+                else if (Trabalhador.email != trabalhadorStorage.email)
+                {
+                    this.checarCadastro(Trabalhador, "cpf");
+                }
+                else if (this.form.dirty)
+                {
+                    localStorage.setItem("trabalhador", JSON.stringify(Trabalhador));
 
-                this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
-                    console.log(res);
-                })
-
-                /* const response = await fetch('http://localhost:57879/Trabalhador/Adicionar', {
-                    method: 'post',
-                    body: formData
-                }); */
+                    this.navCl.navigateForward("/endereco");
+                }
             }
-            catch (error)
-            {
-                console.log('erro ao buscar os dados!', error);
-            }
-            
+            else {
+                this.checarCadastro(Trabalhador);
+            } */
+
+
+            this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
+                console.log(res);
+            })
         }
     }
 }
