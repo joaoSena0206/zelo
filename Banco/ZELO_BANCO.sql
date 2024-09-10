@@ -2,7 +2,6 @@ DROP SCHEMA IF EXISTS Zelo;
 CREATE SCHEMA Zelo;
 USE Zelo;
 
-
 -- TABELA DO SERVIÇO --
 CREATE TABLE servico
 (
@@ -11,7 +10,6 @@ CREATE TABLE servico
 
 	CONSTRAINT pk_servico PRIMARY KEY (cd_servico)
 );
-Insert into servico values (1, 'encanador');
 
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
@@ -27,9 +25,6 @@ Create Table trabalhador
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
 
-select * from trabalhador;
-Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24','brenofelixdeolivera@gmail.com', '1234', 'brenofelixdeolivera@gmail.com', true);
-
 -- LIGAÇÃO TABELA SERVICO TRABALHADOR --
 Create Table servico_trabalhador
 (
@@ -40,7 +35,6 @@ Create Table servico_trabalhador
 	CONSTRAINT fk_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
 	CONSTRAINT fk_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
-Insert into servico_trabalhador values('535305697', 1, 25);
 
 -- TABELA CLIENTE --
 Create Table cliente
@@ -53,11 +47,6 @@ Create Table cliente
 
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
-
-insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'));
-
-select * from cliente;
-
 
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
 Create Table solicitacao_servico
@@ -76,7 +65,6 @@ Create Table solicitacao_servico
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
     CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
-Insert into solicitacao_servico values(10, '535305697', '525305698', 20/04/2024, 'Cano da pia está quebrado!', 'Excelente,bem feito.', 4, 'Muito simpático.', 5); 
 
 -- TABELA ENDERECO CLIENTE --
 Create Table endereco
@@ -92,8 +80,6 @@ Create Table endereco
 	CONSTRAINT pk_servico_trabalhador_servico PRIMARY KEY (cd_endereco)
 );
 
-Insert into endereco values(1, '1111-000',525305698, 7, 'Perto do Petz', true); 
-
 -- TABELA CERTIFICADO TRABALHADOR -- 
 Create table certificado
 (
@@ -105,4 +91,13 @@ Create table certificado
 	CONSTRAINT fk_certificado_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
+Insert into servico values (1, 'encanador');
+Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24','brenofelixdeolivera@gmail.com', '1234', 'brenofelixdeolivera@gmail.com', true);
+Insert into servico_trabalhador values('535305697', 1, 25);
+insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'));
+Insert into solicitacao_servico values(10, '535305697', '525305698', 20/04/2024, 'Cano da pia está quebrado!', 'Excelente,bem feito.', 4, 'Muito simpático.', 5); 
+Insert into endereco values(1, '1111-000',525305698, 7, 'Perto do Petz', true); 
 Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
+
+select * from trabalhador;
+select * from cliente;
