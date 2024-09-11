@@ -1,0 +1,150 @@
+ion-content
+{
+    --background: linear-gradient(180deg, #CB2316 0%, #F66701 100%); 
+}
+
+.wrapper
+{
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
+.fundo
+{
+    display: flex;
+    padding: 0 31px;
+    margin-top: 50px;
+}
+
+.h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 40px;
+}
+
+.iconeCliente {
+    width: 48px;
+    height: 48px;
+}
+
+.content__seta {
+    font-size: 30px;
+    flex-shrink: 0;
+    margin: 31px 0 0 31px;
+    align-self: flex-start;
+    position: absolute;
+    top: 0;
+}
+
+.chave-de-fenda {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.ferramenta-perfuracao {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.titulo-e-botoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-e-botoes h1 {
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-opcao-cliente {
+    background-color: #F66701;
+    border-radius: 25px;
+    padding: 22px 25px;
+    width: 100%;
+    transition: transform 0.2s ease;
+    max-width: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-opcao-cliente:first-of-type
+{
+    margin-bottom: 40px;
+}
+
+.btn-opcao-cliente:active {
+    transform: scale(0.90);
+}
+
+.mini-icone-cliente {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}
+
+.mini-icone-cliente h1 {
+    margin: 0;
+    margin-left: 18px;
+    font-weight: bold;
+}
+
+.area-texto-btn {
+    margin-top: 21px;
+}
+
+.btn-opcao-trabalhador {
+    margin-top: 5%;
+    height: 191px;
+    width: 362px;
+    background-color: #CB2316;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.btn-opcao-trabalhador:hover {
+    background-color: #b61e14;
+    color: rgb(212, 212, 212);
+}
+
+.btn-opcao-trabalhador:active {
+    transform: scale(0.90);
+}
+
+.mini-icone-trabalhador {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5%;
+}
+
+.mini-icone-trabalhador h1 {
+    font-weight: none;
+    margin-left: 5%;
+}
+
+
+p {
+    margin: 0;
+    font-size: larger;
+    color: white;
+    text-align: left;
+    line-height: 20px;
+}
+
+.trabalhador
+{
+    background-color: #CB2316;
+}

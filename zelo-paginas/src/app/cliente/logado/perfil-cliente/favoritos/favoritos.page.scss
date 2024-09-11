@@ -1,0 +1,275 @@
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    padding-top: 100px;
+    padding: 100px 35px 31px 35px;
+    margin-bottom: 100px;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.titulo__voltar {
+    position: absolute;
+    top: 31px;
+    left: 31px;
+    font-size: 30px;
+}
+
+
+.UltimosPedidosDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.areaUltimoPedido {
+    display: flex;
+    background-color: #F66701;
+    border-radius: 15px;
+    padding: 30px 12px;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-between;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 25%);
+    flex-direction: column;
+    padding-bottom: 18px;
+}
+
+.infoTrabalhorPedido {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+}
+
+.fotoTrabalhadorPedido {
+    margin-right: 10px;
+    flex-shrink: 0;
+    width: clamp(50px, 40%, 90px);
+}
+
+.titulo {
+    font-weight: bold;
+}
+
+.areaUltimoPedido__trabalho
+{
+    font-size: clamp(8px, 4vw, 16px) !important;
+}
+
+.tituloPedido {
+    font-size: clamp(10px, 5vw, 20px);
+}
+
+.estrelaPreco {
+    display: flex;
+    margin: 5px 0;
+    margin-bottom: 0;
+    height: 20px;
+}
+
+.precoPedido {
+    color: black;
+    font-size: clamp(8px, 4vw, 16px) !important;
+}
+
+.verPerfil {
+    color: white;
+    text-decoration: underline;
+    font-style: italic;
+
+    font-size: 16px;
+}
+
+.div_verPerfil
+{
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.div_verPerfil ion-icon
+{
+    font-size: 30px;
+    margin-top: 15px;
+    color: #ed1101;
+}
+
+.estrelaPreco ion-icon {
+    margin-right: 3px;
+    font-size: clamp(8px, 55vw, 16px);
+    align-self: start;
+}
+
+.infoTrabalhorPedido>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+p.titulo:nth-child(2) {
+    font-size: clamp(8px, 4vw, 16px);
+}
+
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
+    flex-shrink: 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btns_filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn_filtro {
+    --background: white;
+    --border-radius: 10px;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+
+    text-transform: none;
+    font-size: 15px;
+    color: #F66701;
+    border: solid 1px #F66701;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn_filtro--ativado {
+    --background: #F66701;
+    border: none;
+
+    color: white;
+}
+
+.areaUltimoPedido__data {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.footer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}
+
+.ion_tabs {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.ion_tab_bar {
+    height: 100%;
+}
+
+.imgFooter {
+    height: 40px;
+    width: 40px;
+}
+
+.Clicado {
+    background-color: #F66701;
+    padding: 10px;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.areaUltimoPedido__div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.infoTrabalhorPedido__servico {
+    margin-top: 2px;
+    font-size: clamp(8px, 4vw, 16px);
+}
+
+.divInfoTrabalhador
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.divInfoTrabalhador p
+{
+    font-size: clamp(8px, 4vw, 16px);
+}
+
+.areaUltimoPedido__div__distancia
+{
+    font-size: clamp(10px, 5vw, 20px);
+}
+
+.areaUltimoPedido__div__btn
+{
+    --background: white;
+    --border-radius: 20px;
+
+    text-transform: none;
+    color: black;
+}
+
+ion-button
+{
+    font-weight: bold;
+}
+
+
+.ion_tabs {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.Clicado {
+    background-color: #F66701;
+    padding: 10px;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.footer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}

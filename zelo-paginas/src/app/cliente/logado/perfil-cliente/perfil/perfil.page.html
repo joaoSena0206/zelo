@@ -1,0 +1,121 @@
+<ion-content [fullscreen]="true">
+    <div class="content">
+
+
+        <ion-header class="header ion-no-border" [translucent]="true">
+            <div class="titulo">
+                <ion-icon class="titulo__voltar"
+                    src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                <h1 style="font-size: 32px; font-weight: bold;">Perfil</h1>
+            </div>
+            <div class="area_foto_perfil">
+                <ion-icon class="icone_editar" src="../../../../assets/icon/cliente/editar.svg"></ion-icon>
+                <img class="foto_perfil" src="../../../assets/icon/cliente/foto_perfil.png" alt="">
+
+                <div class="estrelas">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                </div>
+            </div>
+            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">Maria Oliveira</p>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <p style="font-size: 15px; color: white;">2 avaliações</p>
+                <p style="font-size: 17px; color: white;">|</p>
+                <p style="font-size: 15px; color: white;">4 chamados</p>
+            </div>
+
+        </ion-header>
+
+        <ion-list class="ion_list">
+
+            <div>
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao" name="lock-closed-outline"></ion-icon>
+                        <p class="txt">Privacidade</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir"
+                        src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                </div>
+
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/Relogio.svg"></ion-icon>
+                        <p class="txt">Histórico</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir"
+                        src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                </div>
+
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/Heart.svg"></ion-icon>
+                        <p class="txt">Favoritos</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir"
+                        src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                </div>
+
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/ajuda.svg"></ion-icon>
+                        <p class="txt">Ajuda e suporte</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir"
+                        src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                </div>
+
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/guia.svg"></ion-icon>
+                        <p class="txt">Termos</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir"
+                        src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+                </div>
+            </div>
+
+            <div class="area_btn btn_sair">
+                <div class="txt_icon">
+                    <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/sair.svg"></ion-icon>
+                    <p style="color: red;" class="txt">Sair</p>
+                </div>
+            </div>
+        </ion-list>
+    </div>
+</ion-content>
+
+<ion-footer class="footer" style="position: fixed;">
+    <ion-tabs class="ion_tabs">
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
+
+            <ion-tab-button [routerLink]="['/inicial']">
+                <ion-icon src="../../../assets/icon/cliente/Home.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/favoritos']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Heart.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/historico']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Relogio.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button>
+                <ion-icon class="imgFooter" class="imgFooter Clicado" src="../../../assets/icon/cliente/Perfil.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
+</ion-footer>

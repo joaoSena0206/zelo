@@ -1,0 +1,105 @@
+<ion-content [fullscreen]="true">
+    <div class="content">
+        <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+
+        <div class="areaPedidos">
+            <h1>Últimos pedidos</h1>
+
+            <div class="wrapper">
+                <div class="btns_filtro">
+                    <ion-button class="btn_filtro btn_filtro--ativado">Recentes</ion-button>
+                    <ion-button class="btn_filtro">Antigos</ion-button>
+                    <ion-button class="btn_filtro">Melhor avaliados</ion-button>
+                </div>
+            </div>
+
+            <div class="UltimosPedidosDiv">
+                <div class="areaUltimoPedido">
+                    <div class="infoTrabalhorPedido">
+                        <figure class="fotoTrabalhadorPedido">
+                            <img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
+                        </figure>
+
+                        <div>
+                            <div>
+                                <h3 class="titulo tituloPedido">Breno Santos</h3>
+                                <h3 class="titulo tituloPedido">Eletricista</h3>
+
+                                <div class="estrelaPreco">
+                                    <ion-icon name="star"></ion-icon>
+                                    <p class="titulo">3.5</p>
+                                </div>
+                            </div>
+
+                            <div class="divCalendario">
+                                <ion-icon src="../../../../assets/icon/cliente/calendario.svg"></ion-icon>
+                                <p>12/01/2024</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="titulo precoPedido">R$ 45,00</p>
+
+                    <p class="verPerfil">Ver perfil</p>
+                </div>
+
+                <div class="areaUltimoPedido">
+                    <div class="infoTrabalhorPedido">
+                        <figure class="fotoTrabalhadorPedido">
+                            <img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
+                        </figure>
+
+                        <div>
+                            <div>
+                                <h3 class="titulo tituloPedido">Sandro Oliveira</h3>
+                                <h3 class="titulo tituloPedido">Encanador</h3>
+
+                                <div class="estrelaPreco">
+                                    <ion-icon name="star"></ion-icon>
+                                    <p class="titulo">2.5</p>
+                                </div>
+                            </div>
+
+                            <div class="divCalendario">
+                                <ion-icon src="../../../../assets/icon/cliente/calendario.svg"></ion-icon>
+                                <p>11/01/2024</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="titulo precoPedido">R$ 35,00</p>
+
+                    <p class="verPerfil">Ver perfil</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+
+<ion-footer class="footer" style="position: fixed;">
+    <ion-tabs class="ion_tabs">
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
+            
+            <ion-tab-button [routerLink]="['/inicial']">
+                <ion-icon  src="../../../assets/icon/cliente/Home.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/favoritos']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Heart.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button>
+                <ion-icon class="imgFooter Clicado" src="../../../assets/icon/cliente/Relogio.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/perfil']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Perfil.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
+</ion-footer>

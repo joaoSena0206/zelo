@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 42 46">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.6.0, SVG Export Plug-In . SVG Version: 1.2.0 Build 709)  -->
+  <g>
+    <g id="Camada_1">
+      <path class="cls-1" d="M14.8,43.8v-20.8h12.5v20.8M2.2,16.7L21,2.2l18.8,14.6v22.9c0,1.1-.4,2.2-1.2,2.9-.8.8-1.8,1.2-2.9,1.2H6.4c-1.1,0-2.2-.4-2.9-1.2s-1.2-1.8-1.2-2.9v-22.9Z"/>
+    </g>
+  </g>
+</svg>

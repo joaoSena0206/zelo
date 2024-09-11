@@ -1,0 +1,28 @@
+<ion-content [fullscreen]="true">
+	<div class="wrapper">
+		<ion-icon class="content__seta" src="../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+
+		<div class="content">
+			<ion-text>
+				<h1 class="content__h1">Eletricista</h1>
+			</ion-text>
+
+			<div class="div_fundo">
+				<h2>Endereço</h2>
+				<ion-input placeholder="Casa"></ion-input>
+
+				<h2>Descreva o que você precisa</h2>
+				<ion-textarea [counter]="true" maxlength="500"></ion-textarea>
+
+				<h2>Para melhorar o atendimento, envie uma foto do seu problema.</h2>
+				<div class="icon">
+					<ion-icon name="camera-outline"></ion-icon>
+				</div>
+
+				<div class="divAlinhar">
+					<ion-button>Enviar</ion-button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ion-content>

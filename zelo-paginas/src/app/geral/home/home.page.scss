@@ -1,27 +1,73 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.fundo {
+    height: 100vh;
+    background: linear-gradient(180deg, #CB2316 0%, #F66701 100%);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.martelo {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-#container a {
-  text-decoration: none;
+.chave_inglesa {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.logo_botoes {
+    margin-top: 68px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo_botoes ion-icon {
+    width: 276px;
+    height: 122px;
+}
+
+.btn_entrar {
+    --background: #CB2316;
+
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btn_cadastrar {
+    --background: white;
+    --color: #CB2316;
+    --padding-start: 40px;
+    --padding-end: 40px;
+}
+
+ion-button {
+    --border-radius: 25px;
+    --padding-top: 19px;
+    --padding-bottom: 19px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: none;
+    transition: transform 0.2s ease;
+}
+
+ion-button:active {
+    transform: scale(0.90);
+}
+
+.divBtns {
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
 }
