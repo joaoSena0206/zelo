@@ -38,15 +38,13 @@ public class ConfirmacaoController : Controller
 
         dados.Close();
 
-        if (existe == true && dados.Read())
+        if (existe == true)
         {
             comando = $"DELETE FROM confirmacao WHERE cd_cpf_{tipo} = '{cpf}'";
             banco.Executar(comando);
         }
 
         #endregion
-
-        return cpf;
 
         if (tipo == "cliente")
         {
