@@ -54,7 +54,8 @@ Create Table cliente
 );
 
 insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'));
-insert into cliente values ('50082480818', 'Marco', '2006-05-24', 'joaosena0206@gmail.com', md5('1234'));
+
+SELECT * FROM cliente;
 
 
 CREATE TABLE confirmacao
@@ -69,6 +70,7 @@ CREATE TABLE confirmacao
 	CONSTRAINT fk_confirmacao_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
+/*
 INSERT INTO confirmacao VALUES
 (
 	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
@@ -76,6 +78,7 @@ INSERT INTO confirmacao VALUES
 	NULL,
 	'12345'
 );
+*/
 
 SELECT * FROM confirmacao;
 
@@ -107,8 +110,8 @@ Insert into solicitacao_servico values(10, '535305697', '525305698', 20/04/2024,
 Create Table endereco
 (
 	cd_endereco INT,
-	nm_identificacao_endereco VARCHAR(80),
 	cd_cep_endereco CHAR(8),
+	nm_identificacao_endereco VARCHAR(80),
 	cd_cpf_cliente CHAR(11),
 	cd_numero_endereco INT,
 	ds_complemento_endereco TEXT,
@@ -118,7 +121,21 @@ Create Table endereco
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
 
-Insert into endereco values(1, 'Casa','11085260', 525305698, 7, 'Perto do Petz', null); 
+SELECT * FROM endereco;
+SELECT * FROM confirmacao;
+
+/*
+INSERT INTO endereco VALUES 
+(
+	(SELECT IFNULL(MAX(cd_endereco) + 1, 1) FROM (SELECT cd_endereco FROM endereco) AS temp),
+	'11081260',
+	'Casa',
+	'50082480818',
+	4,
+	'Complemento',
+	'Vila Criativa'
+);
+*/
 
 -- TABELA CERTIFICADO TRABALHADOR -- 
 Create table certificado

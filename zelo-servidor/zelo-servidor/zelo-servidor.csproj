@@ -149,6 +149,7 @@
     <Compile Include="Classes\Banco.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ConfirmacaoController.cs" />
+    <Compile Include="Controllers\EnderecoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
