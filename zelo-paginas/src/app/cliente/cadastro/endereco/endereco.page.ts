@@ -44,22 +44,6 @@ export class EnderecoPage implements OnInit {
     ngOnInit() {
     }
 
-    ionViewWillEnter()
-    {
-        if (localStorage.getItem("endereco"))
-        {
-            let objEndereco = JSON.parse(localStorage.getItem("endereco")!);
-
-            this.endereco.controls['identificacao'].setValue(objEndereco.identificacao);
-            this.endereco.controls['cep'].setValue(objEndereco.cep);
-            this.endereco.controls['numero'].setValue(objEndereco.numero);
-            this.endereco.controls['complemento'].setValue(objEndereco.complemento);
-            this.endereco.controls['pontoReferencia'].setValue(objEndereco.referencia);
-
-            this.buscarCep(this.endereco.controls['cep']);
-        }
-    }
-
     voltarPag()
     {
         this.navCl.back();
@@ -126,20 +110,27 @@ export class EnderecoPage implements OnInit {
             this.endereco.markAllAsTouched();
         }
         else {
+            let link = "http://localhost:57879/Cliente/Adicionar";
             let cliente = JSON.parse(localStorage.getItem("cliente")!);
-
             let endereco = {
                 cpfCliente: cliente.cpf,
                 identificacao: this.endereco.controls['identificacao'].value,
-                cep: this.endereco.controls['cep'].value,
+                cep: this.endereco.controls['cep'].value?.replace("-", ""),
                 numero: this.endereco.controls['numero'].value,
                 complemento: this.endereco.controls['complemento'].value,
                 referencia: this.endereco.controls['pontoReferencia'].value
             };
 
-            localStorage.setItem("endereco", JSON.stringify(endereco));
+            let dadosForm = new FormData();
+            dadosForm.append("cliente", JSON.stringify(cliente));
+            dadosForm.append("endereco", JSON.stringify(endereco));
 
-            this.navCl.navigateForward("/confirmar-celular");
+            this.http.post(link, dadosForm).subscribe(res => {
+                if (res == "ok")
+                {
+                    this.navCl.navigateForward("/confirmar-celular");
+                }
+            });
         }
     }
 }
