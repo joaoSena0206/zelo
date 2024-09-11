@@ -161,7 +161,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     checarCadastro(cliente: any, dado: string = "padrão") {
-        let link = "http://localhost:57879/Clientes/ChecarExistencia";
+        let link = "http://localhost:57879/Cliente/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", cliente.cpf!);
         dadosForm.append("email", cliente.email!);
@@ -221,6 +221,10 @@ export class CadastroClientePage implements OnInit {
                 {
                     localStorage.setItem("cliente", JSON.stringify(cliente));
 
+                    this.navCl.navigateForward("/endereco");
+                }
+                else
+                {
                     this.navCl.navigateForward("/endereco");
                 }
             }
