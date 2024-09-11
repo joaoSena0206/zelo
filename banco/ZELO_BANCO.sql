@@ -72,14 +72,6 @@ CREATE TABLE confirmacao
 INSERT INTO confirmacao VALUES
 (
 	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
-	'32441943898',
-	NULL,
-	'12345'
-);
-
-INSERT INTO confirmacao VALUES
-(
-	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
 	'50082480818',
 	NULL,
 	'12345'
@@ -116,14 +108,14 @@ Create Table endereco
 (
 	cd_endereco INT,
 	nm_identificacao_endereco VARCHAR(80),
-	cd_endereco_cep CHAR(8),
+	cd_cep_endereco CHAR(8),
 	cd_cpf_cliente CHAR(11),
 	cd_numero_endereco INT,
 	ds_complemento_endereco TEXT,
 	nm_referencia_endereco VARCHAR(255),
 
-	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
-	CONSTRAINT pk_servico_trabalhador_servico PRIMARY KEY (cd_endereco)
+	CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco, cd_cep_endereco),
+	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
 
 Insert into endereco values(1, 'Casa','11085260', 525305698, 7, 'Perto do Petz', null); 
