@@ -58,8 +58,6 @@ public class Banco
             MySqlCommand csql = new MySqlCommand(comando, conexao);
 
             csql.ExecuteNonQuery();
-
-            Desconectar();
         }
         catch
         {
