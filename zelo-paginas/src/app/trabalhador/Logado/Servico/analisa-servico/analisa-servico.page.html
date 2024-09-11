@@ -1,0 +1,86 @@
+<ion-header class="header" [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Olá, <ion-text class="nm_titulo">Marcos!</ion-text></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="content">
+    
+   
+      <div class="area_perfil">
+        <img src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
+        <ion-text class="area_titulo_perfil">
+          <h1>Marina Oliveira</h1>
+          <p>Ver perfil</p>
+        </ion-text>
+      </div>
+  
+      <ion-card class="area_pedido">
+        <h3>Endereço</h3>
+        <p class="txt_endereco"><ion-icon name="location-outline"></ion-icon>Rua Godofredo Fraga, 8, Marapé</p>
+  
+        <p class="descricao_pedido">
+          Estou com problemas com meu chuveiro. Ele está queimado provavelmente e não consigo tomar banho nesse frio.
+        </p>
+  
+        <img class="img_servico" src="../../../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
+  
+        <div class="area_btn">
+          <ion-button class="btn_ignorar" id="abrir_modal_ignorar">Ignorar</ion-button>
+          <ion-button class="btn_aceitar" id="abrir_modal_aceitar">Aceitar</ion-button>
+        </div>
+      </ion-card>
+    
+    
+    </div>
+  
+</ion-content>
+
+
+<ion-modal id="modal_ignorar" #modal_ignorar trigger="abrir_modal_ignorar">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_ignorar.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Tem certeza que deseja ignorar a visita?</h1>
+              <ion-button (click)="modal_aceitar.dismiss();" [routerLink]="['/inicial']" class="form__btn">Ignorar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>
+
+<ion-modal id="modal_aceitar" #modal_aceitar trigger="abrir_modal_aceitar">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_aceitar.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Tem certeza que deseja aceitar a visita?</h1>
+              <ion-button [routerLink]="['/trabalhador-caminho']" (click)="modal_aceitar.dismiss();" class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>

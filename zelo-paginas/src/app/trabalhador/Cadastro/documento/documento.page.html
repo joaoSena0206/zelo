@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="wrapper">
+    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+
+    <div class="content">
+      
+      <ion-text style="text-align: start;">
+        <h1 class="content__h1">Documentação</h1>
+      </ion-text>
+
+      <ion-list class="form" lines="none">
+
+
+        <ion-text style="margin: auto;">
+          <p style="font-size: 17px;">Envie a foto do documento</p><br>
+          <p style="font-size: 15px;">Recomendações:</p>
+          <ul style="margin: 0 0 10px 0;">
+            <li>Tire em um ambiente iluminado</li>
+            <li>Verifique a qualidade da foto</li>
+          </ul>
+        </ion-text>
+
+        <ion-card class="ion_item">
+          <ion-text>
+            <p style="font-size: 17px; color: black; margin: 10px 0;">Certificado ou especialização</p>
+          </ion-text>
+
+          <ion-button class="Foto__btn" fill="clear">
+            <img src="../../../assets/icon/Trabalhador/Icone Add certificado/Add_Arquivo.svg" alt="">
+          </ion-button>
+        </ion-card>
+
+        <ion-button [routerLink]="['/categoria']" class="form__btn">Confirmar</ion-button>
+
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

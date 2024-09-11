@@ -1,0 +1,122 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+    font-size: 15px;
+}
+
+.content{
+    padding: 30px 30px 100px 30px;
+}
+
+.content__seta
+{
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.content__h1
+{
+    font-weight: 700;
+    font-size: 32px;
+    margin: 50px 0 20px 0;
+    text-align: center;
+}
+
+.area_pedido{
+    background-color: white;
+    border-radius: 25px;
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.5);
+}
+
+.area_sobre_cliente{
+    display: flex;
+    position: relative;
+}
+
+.area_sobre_cliente div img{
+    height: 90px;
+    width: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
+}
+
+.txt-ver-perfil{
+    text-align: end; 
+    color: black;
+    display: flex;
+    align-items: end;
+    padding-bottom: 5px;
+    text-decoration: underline;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+
+.area_img img{
+    width: 100%;
+    height: 127px;
+    border-radius: 25px;
+    margin: 15px 0;
+    object-fit: cover;
+}
+
+.area_descricao_pedido p{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.txt_descricao{
+    font-size: 15px;
+}
+
+.Clicado{
+    background-color: #CB2316;
+    padding: 10px;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    color: white;
+}
+
+.footer{
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}
+
+.ion_tabs{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.ion_tab_bar{
+    height: 100%;
+}
+
+.imgFooter{
+    height: 40px;
+    width: 40px;
+}

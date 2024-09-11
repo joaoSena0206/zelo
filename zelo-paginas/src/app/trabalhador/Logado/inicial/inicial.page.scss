@@ -1,0 +1,345 @@
+*{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+}
+
+.nm_titulo{
+    color: #CB2316;
+}
+
+.content{
+    padding: 30px 30px 100px 30px;
+}
+
+.Clicado{
+    background-color: #CB2316;
+    padding: 10px;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+    color: white;
+}
+
+.footer{
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}
+
+.btn_situacao_trabalhador{
+    width: 100%;
+    --background: #FF1200;
+    border-radius: 15px;
+    display: flex;
+    justify-content: start;
+    position: relative;
+    text-transform: none;
+}
+
+.img_btn_situacao{
+    margin-right: 20px;
+    position: absolute;
+    left: 0;
+    width: 41px;
+    height: 41px;
+}
+
+.título_ultimos_pedidos{
+    display: flex;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.título_ultimos_pedidos p{
+    font-size: 15px;
+    color: #727272;
+}
+
+.título_ultimos_pedidos h3{
+    font-size: 22px;
+}
+
+.local_ultimos_trabalhos{
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: none;
+}
+
+.local_ultimos_trabalhos ion-card{
+    min-width: 180px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.area_comentario_anonimo{
+    --background: #E4E4E4;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    --padding-top: 20px;
+    --padding-left: 20px;
+    --padding-bottom: 20px;
+    --padding-right: 20px;
+    text-transform: none;
+}
+
+.div1{
+    margin-right: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.iconeAnonimo{
+    width: 60px;
+    height: 60px;
+}
+
+.ion_tabs{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.ion_tab_bar{
+    height: 100%;
+}
+
+.imgFooter{
+    height: 40px;
+    width: 40px;
+}
+
+.img_pedido{
+    width: 100%;
+}
+
+.nm_cliente_pedido{
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.ds_pedido{
+    font-size: 15px;
+}
+
+  .btn_situacao_trabalhador_disponivel{
+    width: 100%;
+    --background: #34C800;
+    border-radius: 15px;
+    display: flex;
+    justify-content: start;
+    position: relative;
+    text-transform: none;
+  }
+
+  .txt_anonimo{
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .txt_comentario_anonimo{
+    margin-top: 5px;
+    font-size: 15px;
+  }
+
+  //------------------------------------------------//
+
+.poupop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin: auto;
+    color: black;
+}
+
+.poupop h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+
+#modal_servico, #modal_servico_solicitado{
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+#modal_servico, #modal_servico_solicitado{
+    padding: 0 10px;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 22px;
+    text-transform: none;
+}
+
+
+.area_vermelha {
+    width: 100%;
+    background-color: #CB2316;
+    height: 110px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    position: relative;
+}
+
+.area_branca{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.iconeFechar2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+.iconeInterrogacao {
+    height: 67px;
+    width: 65px;
+}
+
+.circulo_branca {
+    height: 102px;
+    width: 102px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -20px;
+}
+
+//------------------------------------------------------//
+
+.form__btn1 {
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-left: 28px;
+    --padding-right: 28px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 15px;
+    text-transform: none;
+}
+
+.form__btn2 {
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-left: 28px;
+    --padding-right: 28px;
+    --border-radius: 20px;
+    color: white;
+    --background: #64BF7E;
+    font-size: 15px;
+    margin-right: 10px;
+    text-transform: none;
+}
+
+.iconeFoto {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+//---------------------------------------------------------//
+
+.local_publicidade ion-card{
+    height: 200px;
+    display: flex;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.publicidade_texto{
+    height: 100%;
+    padding: 20px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    font-size: 17px;
+    color: black;
+    width: 45%;
+}
+
+.btn{
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-left: 28px;
+    --padding-right: 28px;
+    --border-radius: 15px;
+    color: white;
+    --background: #CB2316;
+    font-size: 15px;
+    text-transform: none;
+}
+
+.publicidade_img{
+    display: flex;
+    align-items: end;
+    width: 55%;
+}
+
+.icone_publicidade{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 43px;
+    height: 41px;
+}
+
+.img_publicidade{
+    height: 171px;
+    width: 171px;
+}
+
+//---------------------------------------------------------//
+
+.estrelas
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    bottom: 5px;
+    color: yellow;
+}

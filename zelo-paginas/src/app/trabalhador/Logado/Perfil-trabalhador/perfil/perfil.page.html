@@ -1,0 +1,130 @@
+<ion-content [fullscreen]="true">
+    <div class="content">
+
+        <ion-header class="header ion-no-border">
+            <div class="titulo">
+                <ion-icon class="titulo__voltar" name="chevron-back-outline"></ion-icon>
+                <h1 style="font-size: 32px; font-weight: bold; color: white;">Perfil</h1>
+            </div>
+            <div class="area_foto_perfil">
+                <ion-icon class="icone_editar"
+                    src="../../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
+                <img class="foto_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotohomem2.avif" alt="">
+
+                <div class="estrelas">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                </div>
+            </div>
+            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">Marcos Vinicius</p>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <p style="font-size: 15px; color: white;">100 avaliações</p>
+                <p style="font-size: 17px; color: white;">|</p>
+                <p style="font-size: 15px; color: white;">150 serviços realizados</p>
+            </div>
+
+        </ion-header>
+
+        <ion-list class="ion_list">
+
+            <div>
+                <div class="area_btn" [routerLink]="['/privacidade']">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao" name="lock-closed-outline"></ion-icon>
+                        <p class="txt">Privacidade</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>
+                </div>
+
+                <div class="area_btn" [routerLink]="['/ultimos-pedidos']">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao"
+                            src="../../../assets/icon/Trabalhador/icone perfil/Relogio.svg"></ion-icon>
+                        <p class="txt">Histórico</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>
+                </div>
+
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao"
+                            src="../../../assets/icon/Trabalhador/icone perfil/ajuda.svg"></ion-icon>
+                        <p class="txt">Ajuda e suporte</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>
+                </div>
+
+                <div class="area_btn">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao"
+                            src="../../../assets/icon/Trabalhador/icone perfil/termos.svg"></ion-icon>
+                        <p class="txt">Termos</p>
+                    </div>
+
+                    <ion-icon class="iconeAbrir" name="chevron-back-outline"></ion-icon>
+                </div>
+
+                <div id="abrir_modal_sair" class="area_btn btn_sair">
+                    <div class="txt_icon">
+                        <ion-icon class="iconeIdentificacao"
+                            src="../../../assets/icon/Trabalhador/icone perfil/sair.svg"></ion-icon>
+                        <p style="color: red;" class="txt">Sair</p>
+                    </div>
+                </div>
+            </div>
+
+        </ion-list>
+
+
+    </div>
+</ion-content>
+
+<ion-modal id="modal_sair" #modal trigger="abrir_modal_sair">
+    <ng-template>
+
+        <ion-card class="poupop">
+
+            <div class="area_vermelha">
+                <ion-icon (click)="modal.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <ion-icon class="iconeInterrogacao"
+                        src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+                </div>
+            </div>
+
+            <div class="area_branca">
+                <h1 class="h1_denuncia">Tem certeza que deseja sair?</h1>
+                <ion-button class="form__btn">Confirmar</ion-button>
+            </div>
+
+        </ion-card>
+
+    </ng-template>
+</ion-modal>
+
+<ion-footer class="footer" style="position: fixed;">
+    <ion-tabs class="ion_tabs">
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
+
+            <ion-tab-button [routerLink]="['/inicial']">
+                <ion-icon class="imgFooter" name="home-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/ultimos-pedidos']">
+                <!-- <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/Relógio.svg"></ion-icon> -->
+                <ion-icon class="imgFooter" name="time-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button>
+                <ion-icon class="imgFooter Clicado"
+                    src="../../../../../assets/icon/Trabalhador/Icone inicial/clicado/IconePerfil.svg"></ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
+</ion-footer>
