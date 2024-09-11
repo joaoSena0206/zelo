@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 
-[RoutePrefix("Clientes")]
+[RoutePrefix("Cliente")]
 public class ClienteController : Controller
 {
     [HttpPost]
@@ -19,22 +19,18 @@ public class ClienteController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Lê o conteúdo do body e converte o JSON em um objeto Cliente
+        #region Adiciona o cliente e o endereço no banco
 
-        string json;
-        using (var reader = new StreamReader(Request.InputStream))
-        {
-            json = reader.ReadToEnd();
-        }
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
 
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(json);
-
-        #endregion
-
-        #region Adiciona o cliente no banco
+        string enderecoJson = Request["endereco"].Replace("-", "");
+        Endereco endereco = JsonConvert.DeserializeObject<Endereco>(enderecoJson);
 
         string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'))";
         banco.Executar(comando);
+
+        EnderecoController enderecoController = new EnderecoController();
+        enderecoController.AdicionarEndereco(endereco);
 
         return "ok";
 
