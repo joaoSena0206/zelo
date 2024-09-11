@@ -5,7 +5,7 @@ import { LoginTrabalhadorPageModule } from './trabalhador/Login/login-trabalhado
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'pagamento',
+        redirectTo: 'home',
         pathMatch: 'full'
     },
     {
