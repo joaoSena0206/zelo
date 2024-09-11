@@ -125,7 +125,7 @@ export class EnderecoPage implements OnInit {
             dadosForm.append("cliente", JSON.stringify(cliente));
             dadosForm.append("endereco", JSON.stringify(endereco));
 
-            this.http.post(link, dadosForm).subscribe(res => {
+            this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
                 if (res == "ok")
                 {
                     this.navCl.navigateForward("/confirmar-celular");
