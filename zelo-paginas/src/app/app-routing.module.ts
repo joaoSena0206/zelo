@@ -87,11 +87,22 @@ const routes: Routes = [
         path: 'trabalhador-caminho',
         loadChildren: () => import('./cliente/logado/servico/trabalhador-caminho/trabalhador-caminho.module').then(m => m.TrabalhadorCaminhoPageModule)
     },
-  {
-    path: 'avaliacao',
-    loadChildren: () => import('./cliente/logado/servico/avaliacao/avaliacao.module').then( m => m.AvaliacaoPageModule)
-  },
-
+    {
+        path: 'avaliacao',
+        loadChildren: () => import('./cliente/logado/servico/avaliacao/avaliacao.module').then(m => m.AvaliacaoPageModule)
+    },
+    {
+        path: 'centralajuda',
+        loadChildren: () => import('./geral/centralajuda/centralajuda.module').then(m => m.CentralajudaPageModule)
+    },
+    {
+        path: 'suporte',
+        loadChildren: () => import('./geral/suporte/suporte.module').then(m => m.SuportePageModule)
+    },
+    {
+        path: 'chat',
+        loadChildren: () => import('./geral//chat/chat.module').then(m => m.ChatPageModule)
+    },
 ];
 
 @NgModule({
