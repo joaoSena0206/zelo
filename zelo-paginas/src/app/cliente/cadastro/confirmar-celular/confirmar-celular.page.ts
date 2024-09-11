@@ -79,8 +79,4 @@ export class ConfirmarCelularPage implements OnInit {
             console.log(res);
         });
     }
-
-    voltarPag() {
-        this.navCl.back();
-    }
 }
