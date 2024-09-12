@@ -63,11 +63,24 @@ export class ConfirmarCelularPage implements OnInit {
             }
         }, 1000);
 
-        this.gerarCodigo();
+        this.gerarCodigo(null);
     }
 
-    gerarCodigo()
+    gerarCodigo(event: any)
     {
+        if (event != null)
+        {
+            this.tempo = 60;
+
+            const intervalo = setInterval(() => {
+                this.tempo -= 1;
+    
+                if (this.tempo == 0) {
+                    clearInterval(intervalo);
+                }
+            }, 1000);
+        }
+
         let link = "http://localhost:57879/Confirmacao/GerarCodigo";
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
