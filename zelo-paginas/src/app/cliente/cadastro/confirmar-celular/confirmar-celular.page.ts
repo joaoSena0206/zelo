@@ -1,6 +1,7 @@
 import { Component, input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -9,6 +10,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ConfirmarCelularPage implements OnInit {
     tempo: number = 60;
+    erro: string = "Código obrigatório!";
+    form = new FormGroup({
+        input1: new FormControl("", Validators.required),
+        input2: new FormControl("", Validators.required),
+        input3: new FormControl("", Validators.required),
+        input4: new FormControl("", Validators.required),
+        input5: new FormControl("", Validators.required)
+    });
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -20,6 +29,8 @@ export class ConfirmarCelularPage implements OnInit {
         const inputs = document.querySelectorAll("ion-input");
 
         for (let i = 0; i < inputs.length; i++) {
+            let todosPreenchidos = false;
+
             inputs[i].addEventListener("ionInput", function () {
                 let apagado = false;
 
@@ -28,6 +39,11 @@ export class ConfirmarCelularPage implements OnInit {
                 }
 
                 inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
+
+                if (inputs[i].value != "")
+                {
+                    
+                }
 
                 if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
                     inputs[i + 1].setFocus();

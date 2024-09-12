@@ -144,6 +144,20 @@ p
     padding: 0 31px;
 }
 
+.erro {
+    color: red;
+    font-size: 15px;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
+.escondido
+{
+    display: none;
+}
+
 @media (max-width: 400px) {
     .form__input
     {

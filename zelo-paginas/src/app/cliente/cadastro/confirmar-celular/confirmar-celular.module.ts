@@ -8,12 +8,15 @@ import { ConfirmarCelularPageRoutingModule } from './confirmar-celular-routing.m
 
 import { ConfirmarCelularPage } from './confirmar-celular.page';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConfirmarCelularPageRoutingModule
+    ConfirmarCelularPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [ConfirmarCelularPage]
 })
