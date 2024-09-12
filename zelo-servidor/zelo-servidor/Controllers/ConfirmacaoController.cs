@@ -93,7 +93,10 @@ public class ConfirmacaoController : Controller
         banco.Executar(comando);
         EnviarEmail(confirmacao);
 
-        return "ok";
+        string json = "{'res': 'ok', 'codigo': '" + confirmacao.CodigoConfirmacao + "'}";
+        json = json.Replace("'", "\"");
+
+        return json;
 
         #endregion
     }
