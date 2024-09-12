@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginTrabalhadorPageModule } from './trabalhador/Login/login-trabalhador/login-trabalhador.module';
 
 const routes: Routes = [
     {
@@ -167,7 +166,7 @@ const routes: Routes = [
     {
         path: 'comercial',
         loadChildren: () => import('./trabalhador/Logado/comercial/comercial.module').then(m => m.ComercialPageModule)
-    }
+    },
 ];
 
 @NgModule({
