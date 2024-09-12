@@ -40,7 +40,7 @@ export class SuportePage implements OnInit {
     textoerroform2.style.display = 'none';
     textoerroform3.style.display = 'none';
 
-    let verificar = false;
+    let verificar = true;
 
     if(nomeInput.value == "")
     {
@@ -50,10 +50,25 @@ export class SuportePage implements OnInit {
     }
     else
     {
-      verificar = true;
+        if(emailInput.value == "")
+      {
+        emailInput.style.border = '2px solid red';
+        textoerroform2.style.display = 'flex';
+        verificar = false
+      }
+      else
+      {
+        if(duvidaInput.value == "")
+        {
+          duvidaInput.style.border = '2px solid red';
+          textoerroform3.style.display = 'flex';
+          verificar = false
+        }
+      }
     }
+    
 
-    if(emailInput.value == "")
+   /*  if(emailInput.value == "")
     {
       emailInput.style.border = '2px solid red';
       textoerroform2.style.display = 'flex';
@@ -74,7 +89,7 @@ export class SuportePage implements OnInit {
     else
     {
       verificar = true;
-    }
+    } */
 
     const nomeValor = nomeInput.value;
     const emailValor = emailInput.value;
