@@ -91,6 +91,7 @@ public class ConfirmacaoController : Controller
         }
 
         banco.Executar(comando);
+        EnviarEmail(confirmacao);
 
         return "ok";
 
@@ -102,10 +103,53 @@ public class ConfirmacaoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
+        #region Pega o email do cliente no banco
+
+        string comando = $"SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '{confirmacao.CpfCliente}';";
+
+        if (confirmacao.CpfCliente == "")
+        {
+            comando = $"SELECT nm_email_trabalhador FROM trabalhador WHERE cd_cpf_trabalhador = '{confirmacao.CpfTrabalhador}';";
+        }
+
+        MySqlDataReader dados = banco.Consultar(comando);
+        string emailUsuario = "";
+
+        if (dados != null && dados.Read())
+        {
+            emailUsuario = dados.GetString(0);
+        }
+
+        dados.Close();
+
+        #endregion
+
+        #region Cria e envia o email
+
         SmtpClient cliente = new SmtpClient();
         cliente.Host = "smtp-mail.outlook.com";
         cliente.Port = 587;
         cliente.EnableSsl = true;
         cliente.Credentials = new NetworkCredential("zelocontato@hotmail.com", "zelo1234");
+
+        MailMessage email = new MailMessage();
+        email.To.Add(emailUsuario);
+        email.From = new MailAddress("zelocontato@hotmail.com", "Zelo", System.Text.Encoding.UTF8);
+
+        email.Subject = "Confirmação de email";
+        email.SubjectEncoding = System.Text.Encoding.UTF8;
+
+        email.Body = $@"
+        <img style='margin-bottom: 20px; width: 200px;'' src='https://joaosena0206.github.io/zelo_imagens/imgs/Logo_preta.png'>
+        <p style='color: black'>Olá, digite o código abaixo no app para confirmar seu email</p>
+        <p style='font-weight: bold; font-size: 30px'>{confirmacao.CodigoConfirmacao}</p>";
+        email.BodyEncoding = System.Text.Encoding.UTF8;
+        email.IsBodyHtml = true;
+
+        email.Priority = MailPriority.High;
+
+        cliente.Send(email);
+
+        #endregion
     }
 }
