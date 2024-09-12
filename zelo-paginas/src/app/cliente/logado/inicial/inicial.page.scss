@@ -19,22 +19,7 @@ ion-title {
 
 .Clicado {
     background-color: #F66701;
-    padding: 10px;
-    border-radius: 10px;
-    stroke: white;
-    height: 40px;
-    width: 40px;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-}
-
-.footer {
-    display: flex;
-    padding: 20px;
-    justify-content: space-around;
-    align-items: center;
-    bottom: 0;
-    height: 85px;
-    background-color: white;
+    color: white;
 }
 
 .btn_situacao_trabalhador {
@@ -193,21 +178,6 @@ ion-title {
 .area_comentario_anonimo div ion-icon {
     width: 60px;
     height: 60px;
-}
-
-.ion_tabs {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-}
-
-.ion_tab_bar {
-    height: 100%;
-}
-
-.imgFooter {
-    height: 40px;
-    width: 40px;
 }
 
 .img_pedido {
