@@ -47,7 +47,7 @@
                         }}</span>
 
                     <div style=" display: flex; justify-content: center; gap: 20px;">
-                        <ion-button class="form__btn">Confirmar</ion-button>
+                        <ion-button (click)="enviar()" class="form__btn">Confirmar</ion-button>
                         <ion-button [disabled]="tempo == 0 ? 'false' : 'true'" (click)="gerarCodigo($event)"
                             class="form__btn form__btn--reenviar">Reenviar {{ tempo == 0 ? '' : '(' + tempo + ')'
                             }}</ion-button>

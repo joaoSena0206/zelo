@@ -40,11 +40,6 @@ export class ConfirmarCelularPage implements OnInit {
 
                 inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
 
-                if (inputs[i].value != "")
-                {
-                    
-                }
-
                 if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
                     inputs[i + 1].setFocus();
                 }
