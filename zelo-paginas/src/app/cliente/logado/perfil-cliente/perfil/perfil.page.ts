@@ -12,24 +12,22 @@ export class PerfilPage implements OnInit {
     ngOnInit() {
     }
 
-    ionViewDidEnter() {
-        const estrelas = document.querySelectorAll(".estrelas ion-icon");
+    ngAfterViewInit() {
+        const estrelas = document.querySelectorAll(".estrela");
+        
+        if (estrelas.length == 3) {
+            console.log("a");
 
-        if (estrelas.length == 3)
-        {
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
         }
-        else if (estrelas.length == 4)
-        {
+        else if (estrelas.length == 4) {
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
             (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-40px";
         }
-        else if (estrelas.length == 5)
-        {
+        else if (estrelas.length == 5) {
             (estrelas[0] as HTMLIonIconElement).style.marginTop = "-40px";
             (estrelas[4] as HTMLIonIconElement).style.marginTop = "-40px";
             (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-40px";
         }
     }
-
 }

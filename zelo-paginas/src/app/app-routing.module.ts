@@ -135,10 +135,10 @@ const routes: Routes = [
         path: 'inicial',
         loadChildren: () => import('./trabalhador/Logado/inicial/inicial.module').then(m => m.InicialPageModule)
     },
-    {
+   /*  {
         path: 'perfil',
         loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/perfil/perfil.module').then(m => m.PerfilPageModule)
-    },
+    }, */
     {
         path: 'privacidade',
         loadChildren: () => import('./trabalhador/Logado/Perfil-trabalhador/privacidade/privacidade.module').then(m => m.PrivacidadePageModule)
