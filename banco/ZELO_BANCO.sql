@@ -149,3 +149,4 @@ Create table certificado
 );
 
 Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
+SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '';
