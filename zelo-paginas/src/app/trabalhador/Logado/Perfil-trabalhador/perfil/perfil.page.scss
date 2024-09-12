@@ -200,39 +200,3 @@ h1{
     position: absolute;
     bottom: -20px;
 }
-
-.Clicado{
-    background-color: #CB2316;
-    padding: 10px;
-    border-radius: 10px;
-    height: 40px;
-    width: 40px;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
-    
-}
-
-.footer{
-    display: flex;
-    padding: 20px;
-    justify-content: space-around;
-    align-items: center;
-    bottom: 0;
-    height: 85px;
-    background-color: white;
-}
-
-.ion_tabs{
-    display: flex;
-    justify-content: center;
-    height: 100%;
-}
-
-.ion_tab_bar{
-    height: 100%;
-}
-
-.imgFooter{
-    height: 40px;
-    width: 40px;
-    color: black;
-}

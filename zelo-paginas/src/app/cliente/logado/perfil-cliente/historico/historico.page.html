@@ -76,30 +76,28 @@
     </div>
 </ion-content>
 
-<ion-footer class="footer" style="position: fixed;">
+<ion-footer class="footer" style="position: fixed;" >
     <ion-tabs class="ion_tabs">
-        <ion-tab-bar class="ion_tab_bar" slot="bottom">
-            
-            <ion-tab-button [routerLink]="['/inicial']">
-                <ion-icon  src="../../../assets/icon/cliente/Home.svg" alt="">
-                </ion-icon>
-            </ion-tab-button>
+      <ion-tab-bar class="ion_tab_bar" slot="bottom">
+    
+        <ion-tab-button [routerLink]="['/inicial']">
+          <ion-icon class="imgFooter" name="home-outline"></ion-icon>
+        </ion-tab-button>
 
-            <ion-tab-button [routerLink]="['/favoritos']">
-                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Heart.svg" alt="">
-                </ion-icon>
-            </ion-tab-button>
-
-            <ion-tab-button>
-                <ion-icon class="imgFooter Clicado" src="../../../assets/icon/cliente/Relogio.svg">
-                </ion-icon>
-            </ion-tab-button>
-
-            <ion-tab-button [routerLink]="['/perfil']">
-                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Perfil.svg">
-                </ion-icon>
-            </ion-tab-button>
-
-        </ion-tab-bar>
+        <ion-tab-button [routerLink]="['/favoritos']">
+            <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Heart.svg" alt="">
+            </ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button [routerLink]="['/historico']">
+          <ion-icon class="imgFooter Clicado" name="time-outline"></ion-icon>
+        </ion-tab-button>
+    
+        <ion-tab-button [routerLink]="['/perfil']">
+          <ion-icon  class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+          </ion-icon>
+        </ion-tab-button>
+  
+      </ion-tab-bar>
     </ion-tabs>
-</ion-footer>
+  </ion-footer>
