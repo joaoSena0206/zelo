@@ -1,0 +1,191 @@
+*{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+}
+
+.content{
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content_seta{
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.content_h1{
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    margin: 70px 0 30px 0;
+}
+
+h1{
+    font-size: 32px;
+}
+
+.icone{
+    height: 100px;
+}
+
+.geral{
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper{
+    flex-grow: 1;
+}
+
+.card{
+    background-color: #BABABA;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    margin: auto;
+}
+
+.card div{
+    width: 100%;
+}
+
+ion-input, ion-textarea{
+    border-radius: 20px;
+    background-color: white;
+    --padding-start: 10px ;
+    --padding-end: 10px ;
+    color: black;
+    margin: 10px 0;
+    --highlight-color: none;
+}
+
+.div_input{
+    margin-top: 15px;
+}
+
+ion-textarea{
+    height: 100px;
+}
+
+ion-label{
+    font-size: 17px;
+    --margin-top: 10px;
+}
+
+ion-button {
+    --border-radius: 25px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
+    --background: #CB2316;
+
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: none;
+    transition: transform 0.2s ease;
+    font-size: 15px;
+    color: white;
+    margin-top: 20px;
+}
+
+.div_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p_info{
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.poupop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin: auto;
+    color: black;
+}
+
+.poupop h1 {
+    text-align: center;
+    font-size: 32px;
+}
+
+
+#modal_servico, #modal_servico_solicitado{
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+#modal_servico, #modal_servico_solicitado{
+    padding: 0 10px;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 22px;
+    text-transform: none;
+}
+
+
+.area_branca{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+    height: 100%;
+}
+
+.escondido{
+    display: none;
+}
+
+.escondido2{
+    display: none;
+}
+
+.escondido3{
+    display: none;
+}
+
+@media only screen and (min-width:850px) and (min-height: 1000px)
+{
+.content{
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: none;
+    align-items: center;
+    height: 100vh;
+}
+
+}

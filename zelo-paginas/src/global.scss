@@ -25,7 +25,45 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-.native-input[type=date]::-webkit-calendar-picker-indicator 
-{
+.native-input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 0px;
 }
+
+ion-searchbar .searchbar-search-icon {
+    right: 17px !important;
+    left: auto !important;
+    top: 50% !important;
+    bottom: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+ion-searchbar .searchbar-clear-icon {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%) !important;
+    right: 2px;
+}
+
+ion-searchbar input {
+    border: solid black 1.5px !important;
+    padding: 17px 27px !important;
+    font-size: 15px !important;
+    height: 51px !important;
+    border-radius: 8px !important;
+    box-shadow: 0px 2.5px 3px 1px #7c7c7c !important;
+}
+
+.searchbar-has-value .searchbar-search-icon {
+    display: none !important;
+}
+
+.sc-ion-searchbar-md-h {
+    padding: 0;
+}
+
+.ion-accordion-toggle-icon {
+    font-size: 30px !important;
+    color: black !important;
+}
+

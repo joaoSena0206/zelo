@@ -1,0 +1,127 @@
+<ion-content [fullscreen]="true">
+    <div class="content">
+        <div class="mapa">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14581.823249239871!2d-46.303420896389625!3d-23.979676155413543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2sbr!4v1724359747538!5m2!1spt-PT!2sbr"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="area_informacao">
+            <div class="divFoto">
+                <div>
+                    <figure>
+                        <img src="../../../../../assets/icon/cliente/foto_trabalhador.png">
+                    </figure>
+
+                    <div>
+                        <h2>Breno Santos</h2>
+
+                        <div class="divEstrela">
+                            <ion-icon name="star"></ion-icon>
+                            <p>3.5</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <ion-icon src="../../../../../assets/icon/cliente/chat.svg"></ion-icon>
+                    <div class="divDenuncia">
+                        <ion-icon (click)="mostrarBtnDenuncia()" src="../../../../../assets/icon/cliente/denuncia.svg"
+                            id="denuncia"></ion-icon>
+                        <ion-button id="abrir_modal_denuncia" class="btn_denunciar">Denunciar</ion-button>
+                        <ion-modal id="modal_denuncia" #modal_denuncia trigger="abrir_modal_denuncia">
+                            <ng-template>
+
+                                <ion-card class="poupop">
+
+                                    <div class="area_vermelha">
+                                        <ion-icon (click)="modal_denuncia.dismiss();" class="iconeFechar2"
+                                            name="close-circle-outline"></ion-icon>
+                                        <div class="circulo_branca">
+                                            <ion-icon class="iconeInterrogacao"
+                                                src="../../../../../assets/icon/cliente/interrogação.svg"></ion-icon>
+                                        </div>
+                                    </div>
+
+                                    <div class="area_branca">
+                                        <h1>{{msg}}</h1>
+
+                                        <ion-textarea class="fundoPopup"></ion-textarea>
+
+                                        <ion-accordion-group class="grupo_selecao">
+                                            <ion-accordion class="cor_fundo" value="first">
+                                                <ion-item slot="header" class="div_titulo cor_fundo">
+                                                    <p style="font-size: 20px; font-weight: bold;">Motivo da denuncia
+                                                    </p>
+                                                </ion-item>
+                                                <div slot="content" class="geral">
+                                                    <div class="opçaoDenuncia">Cliente não atende</div>
+                                                    <div class="opçaoDenuncia">Não consegui chegar</div>
+                                                    <div class="opçaoDenuncia" (click)="mudarOutro()">Outro:</div>
+                                                </div>
+                                            </ion-accordion>
+                                        </ion-accordion-group>
+
+                                        <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="mudarOutro2()">Enviar</ion-button>
+                                    </div>
+
+                                </ion-card>
+
+                            </ng-template>
+                        </ion-modal>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <ion-icon src="../../../../../assets/icon/cliente/bloqueio.svg"></ion-icon>
+                <p>Código de verificação: <ion-text>98352</ion-text></p>
+            </div>
+
+            <div>
+                <div>
+                    <ion-icon src="../../../../../assets/icon/cliente/localizador.svg"></ion-icon>
+                    <p>18,5 km</p>
+                </div>
+
+                <div>
+                    <ion-icon src="../../../../../assets/icon/cliente/relogio_mapa.svg"></ion-icon>
+                    <p>10 minutos</p>
+                </div>
+
+                <div>
+                    <ion-icon src="../../../../../assets/icon/cliente/cifrao.svg"></ion-icon>
+                    <p>R$ 50,00</p>
+                </div>
+            </div>
+
+            <div>
+                <ion-button class="btnCancelar" id="abrir_modal_cancelar">Cancelar</ion-button>
+                <ion-modal id="modal_cancelar" #modal_cancelar trigger="abrir_modal_cancelar">
+                    <ng-template>
+
+                        <ion-card class="poupop">
+
+                            <div class="area_vermelha">
+                                <ion-icon (click)="modal_cancelar.dismiss();" class="iconeFechar2"
+                                    name="close-circle-outline"></ion-icon>
+                                <div class="circulo_branca">
+                                    <ion-icon class="iconeInterrogacao"
+                                        src="../../../../../assets/icon/cliente/interrogação.svg"></ion-icon>
+                                </div>
+                            </div>
+
+                            <div class="area_branca">
+                                <h1>{{msgPoupopCancelar}}</h1>
+                                <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text
+                                        class="text_cancelar_poupop">10%</ion-text> </p>
+                                <ion-button class="form__btn" (click)="mudartxtCancelar()">Prosseguir</ion-button>
+                            </div>
+                        </ion-card>
+                    </ng-template>
+                </ion-modal>
+            </div>
+        </div>
+    </div>
+</ion-content>

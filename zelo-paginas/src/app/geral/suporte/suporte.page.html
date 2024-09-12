@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-icon class="content_seta" name="chevron-back-outline"></ion-icon>
+</ion-header>
+
+<ion-content>
+<section class="content">
+
+  <div>
+    <div class="content_h1">
+      <h1>Suporte</h1>
+    </div>
+  
+    <div class="wrapper">
+  
+      <div class="geral">
+        <img class="icone" src="../../../assets/icon/geral/suporte.png" alt="">
+      </div>
+  
+      <ion-card class="card">
+        <div class="div_input">
+          <ion-label>Nome</ion-label>
+          <ion-input id="nomeInput" placeholder="Digite seu nome"></ion-input>
+          <p class="escondido" style="color: red;"> Há nada preenchido.</p> <!-- escondido -->
+        </div>  
+        
+  
+        <div class="div_input">
+          <ion-label>Email</ion-label>
+          <ion-input id="emailInput" placeholder="Digite seu Email"></ion-input>
+          <p class="escondido2" style="color: red;"> Há nada preenchido.</p> <!-- escondido -->
+        </div>
+        
+        <div class="div_input">
+          <ion-label>Dúvida</ion-label>
+          <ion-textarea id="duvidaInput" placeholder="Digite sua dúvida"></ion-textarea>
+          <p class="escondido3" style="color: red;"> Há nada preenchido.</p> <!-- escondido -->
+        </div>
+        
+        <div class="div_btn">
+          <ion-button id="btn_entrar" (click)="validarcampos()" (click)="EnviarDadosForms()" >Enviar</ion-button><!-- (click)="abrirModal()" -->
+        </div>
+      </ion-card>
+  
+      <p class="p_info">Envie sua dúvida e iremos entrar em contato para mais esclarecimentos.</p>
+  
+    </div>
+  </div>
+  
+</section>
+</ion-content>
+
+<ion-modal id="modal_servico_solicitado" #modal_enviado_com_sucesso>
+  <ng-template>
+      <ion-card class="poupop">
+          <div class="area_branca" style="display: flex; align-items: center; justify-content: center;">
+              <h1 style="font-size: 22px; align-items: center;">Enviado com sucesso!</h1>
+          </div>
+      </ion-card>
+  </ng-template>
+</ion-modal>

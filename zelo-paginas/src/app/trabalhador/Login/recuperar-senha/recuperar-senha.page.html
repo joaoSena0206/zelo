@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="wrapper">
+    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+
+      <div class="content">
+          <ion-text>
+              <h1 class="content__h1">Bem vindo!</h1>
+          </ion-text>
+  
+          <ion-list class="form" lines="none">
+
+            <p style="margin-bottom: 10px; font-weight: bold;">Altere a senha</p>
+
+            <ion-item class="ion_item">
+              <ion-input type="password" class="form__input" placeholder="Digite sua nova senha">
+                  <ion-icon class="ion_item__icon" slot="icon-only" name="eye-outline" aria-hidden="true"></ion-icon>
+              </ion-input>
+          </ion-item>
+
+            <ion-item class="ion_item">
+                <ion-input type="password" class="form__input" placeholder="Confirme sua nova senha">
+                    <ion-icon class="ion_item__icon" slot="icon-only" name="eye-outline" aria-hidden="true"></ion-icon>
+                </ion-input>
+            </ion-item>
+
+            <ion-button class="form__btn" [routerLink]="['/login-trabalhador']">Confirmar</ion-button>
+  
+
+          </ion-list>
+      </div>
+  </div>
+</ion-content>

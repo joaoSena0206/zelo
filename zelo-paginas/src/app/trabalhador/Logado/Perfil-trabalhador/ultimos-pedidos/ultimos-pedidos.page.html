@@ -1,0 +1,107 @@
+<ion-content [fullscreen]="true">
+  <div class="wrapper">
+    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+    <div class="content">
+      <ion-text>
+        <h1 class="content__h1">Ultimos pedidos</h1>
+      </ion-text>
+
+      <ion-card class="area_pedido">
+        <div class="area_sobre_cliente">
+          <div>
+            <img src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
+          </div>
+          <div style="padding: 10px;">
+            <h3 style="font-weight: bold; font-size: 22px;">Sandra Rodrigues</h3>
+            <p style="margin: 3px 0;">25/03/2024</p>
+            <p><ion-icon name="star-outline"></ion-icon>3.5</p>
+          </div>
+          <div class="txt-ver-perfil">
+            <ion-text>Ver perfil</ion-text>
+          </div>
+        </div>
+
+        <div class="area_img">
+          <img src="../../../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+        </div>
+
+        <div class="area_descricao_pedido">
+          <p>
+            <ion-text>
+              Descrição
+            </ion-text>
+
+            <ion-text>
+               <p style="font-size: 22px;">R$ 50,00</p>
+            </ion-text>
+          </p>
+
+          <p class="txt_descricao">
+            Estou com problemas no meu chuveiro. Ele so está gelando e não a esquentando. Por favor me aajuda!
+          </p>
+        </div>
+      </ion-card>
+
+      <ion-card class="area_pedido">
+        <div class="area_sobre_cliente">
+          <div>
+            <img src="../../../../../assets/icon/Trabalhador/imagens/fotohomem3.jpg" alt="">
+          </div>
+          <div style="padding: 10px;">
+            <h3 style="font-weight: bold; font-size: 22px;">Julio Alberto</h3>
+            <p style="margin: 3px 0;">20/07/2024</p>
+            <p><ion-icon name="star-outline"></ion-icon>4.5</p>
+          </div>
+          <div class="txt-ver-perfil">
+            <ion-text>Ver perfil</ion-text>
+          </div>
+        </div>
+
+        <div class="area_img">
+          <img src="../../../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
+        </div>
+
+        <div class="area_descricao_pedido">
+          <p>
+            <ion-text>
+              Descrição
+            </ion-text>
+
+            <ion-text>
+               <p style="font-size: 22px;">R$ 100,00</p>
+            </ion-text>
+          </p>
+
+          <p class="txt_descricao">
+            Hoje, ao chegar em casa após um longo dia de trabalho, encontrei problemas com a fechadura da porta: a chave não girava. Tentei diversas formas de abri-la, mas sem sucesso. Então se puder me ajudar, tenho um compromisso de noite e não posso me atrasar.
+          </p>
+        </div>
+      </ion-card>
+
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer class="footer" style="position: fixed;" >
+  <ion-tabs class="ion_tabs">
+    <ion-tab-bar class="ion_tab_bar" slot="bottom">
+  
+      <ion-tab-button [routerLink]="['/inicial']">
+        <ion-icon class="imgFooter" name="home-outline"></ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [routerLink]="['/ultimos-pedidos']" >
+        <!-- <ion-icon  class="imgFooter" class="imgFooter Clicado" src="../../../assets/icon/Trabalhador/Icone inicial/Relógio.svg">
+        </ion-icon> -->
+        <ion-icon class="imgFooter Clicado" name="time-outline"></ion-icon>
+      </ion-tab-button>
+  
+      <ion-tab-button [routerLink]="['/perfil']">
+        <ion-icon  class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+        </ion-icon>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-footer>

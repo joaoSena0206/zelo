@@ -1,0 +1,281 @@
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    padding-top: 100px;
+    padding: 100px 35px 31px 35px;
+    margin-bottom: 100px;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.titulo__voltar {
+    position: absolute;
+    top: 31px;
+    left: 31px;
+    font-size: 30px;
+}
+
+
+.UltimosPedidosDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.areaUltimoPedido {
+    display: flex;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    padding: 18px 12px;
+    position: relative;
+    width: clamp(305px, 100%, 500px);
+    flex-shrink: 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.infoTrabalhorPedido {
+    display: flex;
+}
+
+.distancia {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.fotoTrabalhadorPedido {
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.titulo {
+    font-weight: bold;
+}
+
+.tituloPedido {
+    font-size: 17px;
+}
+
+.estrelaPreco {
+    display: flex;
+    margin: 5px 0;
+    height: 20px;
+}
+
+.precoPedido {
+    font-size: 17px !important;
+}
+
+.verPerfil {
+    color: #F66701;
+    text-decoration: underline;
+    font-style: italic;
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    font-size: 15px;
+}
+
+.estrelaPreco ion-icon {
+    margin-right: 3px;
+    font-size: 15px;
+}
+
+.infoTrabalhorPedido>div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+p.titulo:nth-child(2) {
+    font-size: 15px;
+}
+
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
+    flex-shrink: 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btns_filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btnContratar {
+    --background: #F66701;
+    --padding-top: 5px;
+    --padding-bottom: 5px;
+    --padding-start: 28px;
+    --padding-end: 28px;
+    --border-radius: 15px;
+
+    text-transform: none;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.divBtns {
+    ion-button:first-of-type {
+        --background: #CB0F00;
+
+    }
+
+    ion-button:last-of-type {
+        --background: #64BF7E;
+    }
+
+    ion-button {
+        --padding-top: 5px;
+        --padding-bottom: 5px;
+        --padding-start: 28px;
+        --padding-end: 28px;
+        --border-radius: 15px;
+
+        text-transform: none;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+ion-modal {
+    .areaUltimoPedido {
+        box-shadow: none;
+    }
+
+    --background: transparent;
+    --box-shadow: none;
+}
+
+.divModalWrapper {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+div.areaUltimoPedido:nth-child(2)>div:nth-child(1) {
+    width: 100%;
+}
+
+.btn_filtro {
+    --background: white;
+    --border-radius: 15px;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-start: 28px;
+    --padding-end: 28px;
+
+    text-transform: none;
+    font-size: 15px;
+    color: #F66701;
+    border: solid 1px #F66701;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn_filtro--ativado {
+    --background: #F66701;
+    border: none;
+
+    color: white;
+}
+
+.areaUltimoPedido__data {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.footer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}
+
+.ion_tabs {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.ion_tab_bar {
+    height: 100%;
+}
+
+.imgFooter {
+    height: 40px;
+    width: 40px;
+}
+
+.Clicado {
+    background-color: #F66701;
+    padding: 10px;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.areaUltimoPedido__div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.infoTrabalhorPedido__servico {
+    margin-top: 2px;
+    font-size: clamp(8px, 4vw, 16px);
+}
+
+.divCalendario {
+    display: flex;
+    align-items: center;
+
+    ion-icon {
+        font-size: 15px;
+        margin-right: 3px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+}
+
+h3.titulo:nth-child(2) {
+    font-size: 15px;
+}
+
+.divWrapper {
+    width: 100%;
+}

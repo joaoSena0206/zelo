@@ -1,0 +1,139 @@
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.estrelas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    bottom: -10px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #FFB300 0%, #F66701 62%);
+    padding: 45px 0;
+    border-radius: 0 0 25px 25px;
+    color: black;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+}
+
+.titulo__voltar {
+    position: absolute;
+    top: 31px;
+    left: 31px;
+    font-size: 30px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.area_foto_perfil {
+    display: flex;
+    justify-content: center;
+    margin-top: 31px;
+    margin-bottom: 48px;
+    position: relative;
+
+}
+
+.foto_perfil {
+    height: 140px;
+    width: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
+}
+
+.area_btn {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    padding: 5px 40px;
+    margin-bottom: 30px;
+    align-items: center;
+    font-weight: bold;
+}
+
+.btn_sair {
+    margin-bottom: 0;
+}
+
+
+.txt_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.txt {
+    margin-left: 15px;
+    font-size: 17px;
+}
+
+.iconeIdentificacao {
+    font-size: 30px;
+}
+
+.iconeAbrir {
+    height: 30px;
+    width: 30px;
+    transform: scaleX(-1);
+}
+
+.icone_editar {
+    position: absolute;
+    font-size: 30px;
+    color: black;
+    top: 10px;
+    right: 0;
+}
+
+.ion_list {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.Clicado {
+    background-color: #F66701;
+    padding: 10px;
+    border-radius: 10px;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
+}
+
+.footer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 85px;
+    background-color: white;
+}

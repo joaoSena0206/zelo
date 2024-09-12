@@ -1,0 +1,123 @@
+<ion-content [fullscreen]="true">
+    <div class="content">
+        <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+
+        <div class="areaPedidos">
+            <h1>Favoritos</h1>
+
+            <div class="wrapper">
+                <div class="btns_filtro">
+                    <ion-button class="btn_filtro btn_filtro--ativado">Recentes</ion-button>
+                    <ion-button class="btn_filtro">Antigos</ion-button>
+                    <ion-button class="btn_filtro">Agrupar por tipo</ion-button>
+                </div>
+            </div>
+
+            <div class="UltimosPedidosDiv">
+                <div class="areaUltimoPedido">
+                    <div class="infoTrabalhorPedido">
+                        <figure class="fotoTrabalhadorPedido">
+                            <img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
+                        </figure>
+
+                        <div>
+                            <h3 class="titulo tituloPedido">Breno Santos</h3>
+                            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                                <h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Eletricista</h3>
+                                <p class="titulo precoPedido">R$ 45,00</p>
+                            </div>
+
+
+                            <div class="divInfoTrabalhador">
+                                <div class="estrelaPreco">
+                                    <ion-icon name="star" style="color: white;"></ion-icon>
+                                    <p class="titulo">3.5</p>
+                                </div>
+
+                                <p class="infoTrabalhorPedido__servico">Serviço(s): 3</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="areaUltimoPedido__div">
+                        <p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+
+                        <ion-button class="areaUltimoPedido__div__btn">Contratar</ion-button>
+                    </div>
+
+                    <div class="div_verPerfil">
+                        <p class="verPerfil">Ver perfil</p>
+                        <ion-icon src="../../../../../assets/icon/cliente/coracao.svg"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="areaUltimoPedido">
+                    <div class="infoTrabalhorPedido">
+                        <figure class="fotoTrabalhadorPedido">
+                            <img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
+                        </figure>
+
+                        <div>
+                            <h3 class="titulo tituloPedido">Sandro Rodrigues</h3>
+                            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                                <h3 class="titulo tituloPedido areaUltimoPedido__trabalho">Encanador</h3>
+                                <p class="titulo precoPedido">R$ 50,00</p>
+                            </div>
+
+
+                            <div class="divInfoTrabalhador">
+                                <div class="estrelaPreco">
+                                    <ion-icon name="star" style="color: white;"></ion-icon>
+                                    <p class="titulo">2.5</p>
+                                </div>
+
+                                <p class="infoTrabalhorPedido__servico">Serviço(s): 4</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="areaUltimoPedido__div">
+                        <p class="areaUltimoPedido__div__distancia">Distância: 2,5 km</p>
+
+                        <ion-button class="areaUltimoPedido__div__btn">Contratar</ion-button>
+                    </div>
+
+                    <div class="div_verPerfil">
+                        <p class="verPerfil">Ver perfil</p>
+                        <ion-icon src="../../../../../assets/icon/cliente/coracao.svg"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+
+<ion-footer class="footer" style="position: fixed;">
+    <ion-tabs class="ion_tabs">
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
+
+            <ion-tab-button [routerLink]="['/inicial']">
+                <ion-icon  src="../../../assets/icon/cliente/Home.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/favoritos']">
+                <ion-icon class="imgFooter" class="imgFooter Clicado" src="../../../assets/icon/cliente/Heart.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/historico']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Relogio.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/perfil']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Perfil.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
+</ion-footer>
