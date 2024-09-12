@@ -103,4 +103,22 @@ export class ConfirmarCelularPage implements OnInit {
             console.log(res);
         });
     }
+
+    enviar()
+    {
+        if (this.form.invalid)
+        {
+            this.form.markAllAsTouched();
+        }
+        else
+        {
+            let codigo = "";
+            codigo += this.form.controls["input1"].value;
+            codigo += this.form.controls["input2"].value;
+            codigo += this.form.controls["input3"].value;
+            codigo += this.form.controls["input4"].value;
+            codigo += this.form.controls["input5"].value;
+
+        }
+    }
 }
