@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using MySql.Data;
@@ -46,25 +48,46 @@ public class ConfirmacaoController : Controller
 
         #endregion
 
+        #region Pega o maior código disponível da confirmação
+
+        comando = "SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM confirmacao";
+        dados = banco.Consultar(comando);
+
+        Confirmacao confirmacao = new Confirmacao();
+        confirmacao.CodigoConfirmacao = codigo;
+
+        if (dados != null && dados.Read())
+        {
+            confirmacao.Codigo = dados.GetInt32(0);
+        }
+
+        dados.Close();
+
+        #endregion
+
         if (tipo == "cliente")
         {
             comando = $@"INSERT INTO confirmacao VALUES
             (
-	            (SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
+	            {confirmacao.Codigo},
 	            '{cpf}',
 	            NULL,
 	            '{codigo}'
             )";
+
+            confirmacao.CpfCliente = cpf;
         }
         else
         {
             comando = $@"INSERT INTO confirmacao VALUES
             (
-	            (SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
+	            {confirmacao.Codigo},
 	            NULL,
 	            '{cpf}',
 	            '{codigo}'
             )";
+
+            confirmacao.CpfTrabalhador = cpf;
         }
 
         banco.Executar(comando);
@@ -72,5 +95,17 @@ public class ConfirmacaoController : Controller
         return "ok";
 
         #endregion
+    }
+
+    public void EnviarEmail(Confirmacao confirmacao)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        SmtpClient cliente = new SmtpClient();
+        cliente.Host = "smtp-mail.outlook.com";
+        cliente.Port = 587;
+        cliente.EnableSsl = true;
+        cliente.Credentials = new NetworkCredential("zelocontato@hotmail.com", "zelo1234");
     }
 }
