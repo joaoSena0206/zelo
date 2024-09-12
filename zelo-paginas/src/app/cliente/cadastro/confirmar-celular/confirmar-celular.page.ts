@@ -18,6 +18,7 @@ export class ConfirmarCelularPage implements OnInit {
         input4: new FormControl("", Validators.required),
         input5: new FormControl("", Validators.required)
     });
+    codigoAleatorio: string;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -99,8 +100,13 @@ export class ConfirmarCelularPage implements OnInit {
         dadosForm.append("cpf", cliente.cpf);
         dadosForm.append("tipo", "cliente");
 
-        this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
-            console.log(res);
+        this.http.post(link, dadosForm).subscribe(res => {
+            let resposta: any = res;
+
+            if (resposta.res == "ok")
+            {
+                this.codigoAleatorio = resposta.codigo; 
+            }
         });
     }
 
@@ -119,6 +125,11 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input4"].value;
             codigo += this.form.controls["input5"].value;
 
+            if (codigo == this.codigoAleatorio)
+            {
+                localStorage.removeItem("cliente");
+                localStorage.removeItem("opcao");
+            }
         }
     }
 }
