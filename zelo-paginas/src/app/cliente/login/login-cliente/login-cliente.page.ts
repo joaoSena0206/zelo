@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular'; 
+import { HttpClient } from '@angular/common/http'; 
 
 @Component({
 	selector: 'app-login-cliente',
@@ -14,11 +15,12 @@ export class LoginClientePage implements OnInit {
 	});
 
 	erro: any = {
+		form: "",
 		email: "Email obrigatório",
 		senha: "Senha obrigatório"
 	};
 
-	constructor(private navCl: NavController) { }
+	constructor(private navCl: NavController, private http: HttpClient) { }
 
 	ngOnInit() {
 		localStorage.setItem("opcao", "login");
@@ -39,6 +41,8 @@ export class LoginClientePage implements OnInit {
 	validacaoInput(control: FormControl) {
 		let nome = this.acharNomeControl(control);
 		let vlControl = control.value as String;
+
+		this.erro.form = "";
 
 		if (control.hasError("required")) {
 			this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
@@ -94,7 +98,36 @@ export class LoginClientePage implements OnInit {
 		}
 		else
 		{
-			
+			let link = "http://localhost:57879/Cliente/Logar";
+			let email = this.form.controls['email'].value;
+			let senha = this.form.controls['senha'].value;
+
+			let dadosForm = new FormData();
+			dadosForm.append("email", email!);
+			dadosForm.append("senha", senha!);
+
+			this.http.post(link, dadosForm).subscribe(res => {
+				let obj: any = res;
+
+				if (obj.erro != true)
+				{
+					let cliente = obj;
+
+					if (!cliente.Confirmado)
+					{
+						this.navCl.navigateRoot("/confirmar-celular")
+					}
+
+					localStorage.setItem("cliente", JSON.stringify(cliente));
+				}
+				else
+				{
+					this.erro.form = "Email ou senha incorreto(s)";
+
+					this.form.controls["email"].setErrors({invalid: true});
+					this.form.controls["senha"].setErrors({invalid: true});
+				}
+			});
 		}
 	}
 

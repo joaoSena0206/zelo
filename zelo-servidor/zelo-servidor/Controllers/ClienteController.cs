@@ -100,6 +100,8 @@ public class ClienteController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
+        #region Confirma o email no banco
+
         string cpf = Request["cpf"];
 
         string comando = $"UPDATE cliente SET ic_email_confirmado_cliente = true WHERE cd_cpf_cliente = '{cpf}'";
@@ -108,5 +110,44 @@ public class ClienteController : Controller
         banco.Desconectar();
 
         return "ok";
+
+        #endregion
+    }
+
+    [HttpPost]
+    [Route("Logar")]
+    public string Logar()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string email = Request["email"];
+        string senha = Request["senha"];
+
+        string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
+        WHERE nm_email_cliente = '{email}' AND nm_senha_cliente = md5('{senha}');";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        Cliente cliente = new Cliente();
+
+        if (dados != null && dados.Read())
+        {
+            cliente.Cpf = dados.GetString(0);
+            cliente.Nome = dados.GetString(1);
+            cliente.DataNascimento = dados.GetString(2);
+            cliente.Email = email;
+            cliente.Senha = senha;
+            cliente.Confirmado = dados.GetBoolean(3);
+        }
+
+        if (String.IsNullOrEmpty(cliente.Cpf))
+        {
+            string json = "{'erro': true}";
+            json = json.Replace("'", "\"");
+
+            return json;
+        }
+
+        return JsonConvert.SerializeObject(cliente);
     }
 }

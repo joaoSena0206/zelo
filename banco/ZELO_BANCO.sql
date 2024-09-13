@@ -18,7 +18,7 @@ Create Table trabalhador
 (
 	cd_cpf_trabalhador CHAR(11),
 	nm_trabalhador VARCHAR(100),
-	dt_nascimento_trabalhador DATE,
+	dt_nascimento_trabalhador VARCHAR(10),
 	nm_email_trabalhador VARCHAR(30),
 	nm_senha_trabalhador VARCHAR(255),
 	nm_pix_trabalhador VARCHAR(255),
@@ -47,7 +47,7 @@ Create Table cliente
 (
 	cd_cpf_cliente CHAR(11),
 	nm_cliente VARCHAR(100),
-	dt_nascimento_cliente DATE,
+	dt_nascimento_cliente VARCHAR(10),
 	nm_email_cliente VARCHAR(30),
 	nm_senha_cliente VARCHAR(255),
 	ic_email_confirmado_cliente BOOL,
@@ -57,10 +57,9 @@ Create Table cliente
 
 insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'), false);  
 SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
-WHERE nm_email_cliente = 'joaosena0206@gmail.com' AND nm_senha_cliente = md5('1234');
+WHERE nm_email_cliente = 'marcojuino@gmail.com' AND nm_senha_cliente = md5('1234');
 
 SELECT * FROM cliente;
-
 
 
 CREATE TABLE confirmacao
