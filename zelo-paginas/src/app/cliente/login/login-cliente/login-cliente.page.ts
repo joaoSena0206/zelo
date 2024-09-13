@@ -41,6 +41,15 @@ export class LoginClientePage implements OnInit {
 	validacaoInput(control: FormControl) {
 		let nome = this.acharNomeControl(control);
 		let vlControl = control.value as String;
+		let invalido = false;
+
+		Object.keys(this.form.controls).forEach(item => {
+			if (this.form.get(item)?.hasError("invalido"))
+			{
+				this.form.get(item)?.setErrors({invalido: null});
+				this.form.get(item)?.updateValueAndValidity();
+			}
+		});
 
 		this.erro.form = "";
 
@@ -113,19 +122,22 @@ export class LoginClientePage implements OnInit {
 				{
 					let cliente = obj;
 
+					localStorage.setItem("cliente", JSON.stringify(cliente));
+
 					if (!cliente.Confirmado)
 					{
-						this.navCl.navigateRoot("/confirmar-celular")
+						this.navCl.navigateRoot("/confirmar-celular");
 					}
 
-					localStorage.setItem("cliente", JSON.stringify(cliente));
+					localStorage.removeItem("opcao");
+					this.navCl.navigateRoot("/inicial");
 				}
 				else
 				{
 					this.erro.form = "Email ou senha incorreto(s)";
 
-					this.form.controls["email"].setErrors({invalid: true});
-					this.form.controls["senha"].setErrors({invalid: true});
+					this.form.controls["email"].setErrors({invalido: true});
+					this.form.controls["senha"].setErrors({invalido: true});
 				}
 			});
 		}
