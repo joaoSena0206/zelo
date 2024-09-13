@@ -88,5 +88,34 @@ public class TrabalhadorController : Controller
         return "ok";
 
         #endregion
+
+        return "foi";
+    }
+
+    [HttpPost]
+    [Route("Verificar")]
+    public bool VerificarSituacao()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        #region Verifica Situação do trabalhador
+
+        bool situacao = false;
+
+        string comando = $"select ic_disponivel_trabalhador from trabalhador where cd_cpf_trabalhador = 535305697";
+        MySqlDataReader dados =  banco.Consultar(comando);
+
+        if (dados != null)
+        {
+            if (dados.Read())
+            {
+                situacao = dados.GetBoolean(0);
+            }
+        }
+
+        return situacao;
+
+        #endregion
     }
 }

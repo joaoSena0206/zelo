@@ -7,46 +7,50 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./inicial.page.scss'],
 })
 export class InicialPage implements OnInit {
-    situacao: any = 'Indisponível';
+
     msgTrabalho: any = 'Deseja trabalhar agora?';
 
     constructor(private http: HttpClient) { }
 
     ngOnInit() { }
 
-    disponivel() {
+    Ic_situacao: any;
+    cpf: any = 535305697
+    situacao: any = '';
+    resultado: any = '';
+    
+
+    ionViewDidEnter() {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        if (this.situacao == 'Disponível') {
+        this.http.post('http://localhost:57879/Trabalhador/Verificar', JSON.stringify(this.cpf), {responseType: 'text'}).subscribe(res => {
+            console.log(res);
 
-            botaoSituacao?.classList.add('btn_situacao_trabalhador');
-            botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
+            if(res == "True")
+            {
+                this.situacao = 'Disponível';
 
-            img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
+                botaoSituacao?.classList.remove('btn_situacao_trabalhador');
+                botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
 
-            this.situacao = 'Indisponível';
-            this.msgTrabalho = 'Deseja trabalhar agora?';
+                img?.setAttribute(
+                    'src',
+                    '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
+                );
+            }
+            else
+            {
+                botaoSituacao?.classList.add('btn_situacao_trabalhador');
+                botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
 
-            this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(false)).subscribe(res => {
-                console.log(res);
-            })
+                img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
 
-        } else {
-            botaoSituacao?.classList.remove('btn_situacao_trabalhador');
-            botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
+                this.situacao = 'Indisponível';
+            }
+        })
 
-            img?.setAttribute(
-                'src',
-                '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
-            );
-
-            this.situacao = 'Disponível';
-            this.msgTrabalho = 'Deseja parar de trabalhar?';
-        }
-    }
-
-    ionViewDidEnter() {
+        
         const estrelas = document.querySelectorAll(".estrelas ion-icon");
 
         if (estrelas.length == 3)
@@ -63,6 +67,40 @@ export class InicialPage implements OnInit {
             (estrelas[0] as HTMLIonIconElement).style.marginTop = "-20px";
             (estrelas[4] as HTMLIonIconElement).style.marginTop = "-20px";
             (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-20px";
+        }
+    }
+
+    disponivel() {
+        const botaoSituacao = document.querySelector('#abrir_modal_servico');
+        const img = document.querySelector('.img_btn_situacao');
+
+        if (this.situacao == 'Disponível') {
+
+            botaoSituacao?.classList.add('btn_situacao_trabalhador');
+            botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
+
+            img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
+
+            this.situacao = 'Indisponível';
+            this.msgTrabalho = 'Deseja trabalhar agora?';
+
+        } else {
+            botaoSituacao?.classList.remove('btn_situacao_trabalhador');
+            botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
+
+            img?.setAttribute(
+                'src',
+                '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
+            );
+
+            this.situacao = 'Disponível';
+            this.msgTrabalho = 'Deseja parar de trabalhar?';
+
+            this.resultado = true
+
+            this.http.post('http://localhost:57879/Trabalhador/Verificar', JSON.stringify(this.resultado)).subscribe(res => {
+                console.log(res);
+            })
         }
     }
 }
