@@ -67,6 +67,7 @@ ion-content
     transform: translate(-50%, -50%);
     right: 19px;
     font-size: 18px;
+    z-index: 100;
 }
 
 
@@ -124,4 +125,18 @@ ion-content
 {
     color: #F66701;
     font-weight: 700;
+}
+
+.erro {
+    color: red;
+    font-size: 14px;
+    margin: 0 25px 14px 25px;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
+.escondido {
+    display: none;
 }

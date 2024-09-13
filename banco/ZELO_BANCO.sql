@@ -56,8 +56,11 @@ Create Table cliente
 );
 
 insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'), false);  
+SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
+WHERE nm_email_cliente = 'joaosena0206@gmail.com' AND nm_senha_cliente = md5('1234');
 
 SELECT * FROM cliente;
+
 
 
 CREATE TABLE confirmacao
