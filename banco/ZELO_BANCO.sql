@@ -2,24 +2,38 @@ DROP SCHEMA IF EXISTS Zelo;
 CREATE SCHEMA Zelo;
 USE Zelo;
 
+
+CREATE TABLE categoria_servico
+(
+	cd_categoria_servico INT,
+	nm_categoria_servico VARCHAR(255),
+
+	CONSTRAINT pk_categoria_servico PRIMARY KEY (cd_categoria_servico)
+);
+
+INSERT INTO categoria_servico VALUES (1, 'Reformas e reparos');
+
 -- TABELA DO SERVIÇO --
 CREATE TABLE servico
 (
 	cd_servico INT,
+	cd_categoria_servico INT,
 	nm_servico VARCHAR(50),
 
-	CONSTRAINT pk_servico PRIMARY KEY (cd_servico)
+	CONSTRAINT pk_servico PRIMARY KEY (cd_servico),
+	CONSTRAINT fk_servico_categoria_servico FOREIGN KEY (cd_categoria_servico) REFERENCES categoria_servico(cd_categoria_servico)
 );
 
-Insert into servico values (1, 'Limpeza');
-Insert into servico values (2, 'Eletricista');
-Insert into servico values (3, 'Encanador');
-Insert into servico values (4, 'Chaveiro');
-Insert into servico values (5, 'Jardineiro');
-Insert into servico values (6, 'Marceneiro');
-Insert into servico values (7, 'Pintor');
-Insert into servico values (8, 'TEC em r-condicionado');
-Insert into servico values (9, 'Manutenção de eletrodomésticos');
+Insert into servico values (1, 1, 'Limpeza');
+Insert into servico values (2, 1, 'Eletricista');
+Insert into servico values (3, 1, 'Encanador');
+Insert into servico values (4, 1, 'Chaveiro');
+Insert into servico values (5, 1, 'Jardineiro');
+Insert into servico values (6, 1, 'Marceneiro');
+Insert into servico values (7, 1, 'Pintor');
+Insert into servico values (8, 1, 'TEC em r-condicionado');
+Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
+
 
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
