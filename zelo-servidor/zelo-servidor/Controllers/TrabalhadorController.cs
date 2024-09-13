@@ -117,5 +117,12 @@ public class TrabalhadorController : Controller
         return situacao;
 
         #endregion
+
+        //#region Atualizar banco
+
+        //comando = $@"UPDATE trabalhador SET ic_disponivel_trabalhador = true WHERE cd_cpf_trabalhador = '535305697'";
+        //banco.Executar(comando);
+
+        //#endregion
     }
 }
