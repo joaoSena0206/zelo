@@ -30,7 +30,6 @@ public class Cliente
 		set { _dataNascimento = value; }
 	}
 
-
 	private string _email;
 
 	public string Email
