@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular'; 
 
 @Component({
 	selector: 'app-login-cliente',
@@ -17,9 +18,10 @@ export class LoginClientePage implements OnInit {
 		senha: "Senha obrigatório"
 	};
 
-	constructor() { }
+	constructor(private navCl: NavController) { }
 
 	ngOnInit() {
+		localStorage.setItem("opcao", "login");
 	}
 
 	acharNomeControl(control: FormControl) {
@@ -73,6 +75,16 @@ export class LoginClientePage implements OnInit {
             input.type = "password";
         }
     }
+
+	voltarPag()
+	{
+		this.navCl.navigateBack("home/opcoes-de-cadastro");
+	}
+
+	irCadastro()
+	{
+		this.navCl.navigateRoot("/cadastro-cliente");
+	}
 
 	enviar()
 	{

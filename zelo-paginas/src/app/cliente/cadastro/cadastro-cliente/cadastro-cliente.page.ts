@@ -49,7 +49,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     ngOnInit() {
-
+        localStorage.setItem("opcao", "cadastro");
     }
 
     ionViewWillEnter() {
@@ -70,7 +70,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     pagAnterior() {
-        this.navCl.back();
+        this.navCl.navigateBack("/home/opcoes-de-cadastro");
     }
 
     estadoSenha(event: any) {
