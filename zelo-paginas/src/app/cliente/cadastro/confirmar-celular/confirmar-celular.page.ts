@@ -78,15 +78,13 @@ export class ConfirmarCelularPage implements OnInit {
         this.gerarCodigo(null);
     }
 
-    gerarCodigo(event: any)
-    {
-        if (event != null)
-        {
+    gerarCodigo(event: any) {
+        if (event != null) {
             this.tempo = 60;
 
             const intervalo = setInterval(() => {
                 this.tempo -= 1;
-    
+
                 if (this.tempo == 0) {
                     clearInterval(intervalo);
                 }
@@ -103,21 +101,17 @@ export class ConfirmarCelularPage implements OnInit {
         this.http.post(link, dadosForm).subscribe(res => {
             let resposta: any = res;
 
-            if (resposta.res == "ok")
-            {
-                this.codigoAleatorio = resposta.codigo; 
+            if (resposta.res == "ok") {
+                this.codigoAleatorio = resposta.codigo;
             }
         });
     }
 
-    enviar()
-    {
-        if (this.form.invalid)
-        {
+    enviar() {
+        if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
-        else
-        {
+        else {
             let codigo = "";
             codigo += this.form.controls["input1"].value;
             codigo += this.form.controls["input2"].value;
@@ -125,19 +119,18 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input4"].value;
             codigo += this.form.controls["input5"].value;
 
-            if (codigo == this.codigoAleatorio)
-            {
+            if (codigo == this.codigoAleatorio) {
                 let link = "http://localhost:57879/Cliente/ConfirmarEmail";
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.cpf);
 
-                this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
-                    console.log(res);
+                this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
+                    if (res == "ok") {
+                        localStorage.removeItem("cliente");
+                        localStorage.removeItem("opcao");
+                    }
                 });
-
-                localStorage.removeItem("cliente");
-                localStorage.removeItem("opcao");
             }
         }
     }
