@@ -98,9 +98,9 @@ export class InicialPage implements OnInit {
 
             this.resultado = true
 
-            this.http.post('http://localhost:57879/Trabalhador/Verificar', JSON.stringify(this.resultado)).subscribe(res => {
+            /* this.http.post('http://localhost:57879/Trabalhador/Verificar', JSON.stringify(this.resultado)).subscribe(res => {
                 console.log(res);
-            })
+            }) */
         }
     }
 }
