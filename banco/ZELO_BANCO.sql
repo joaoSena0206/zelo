@@ -2,7 +2,6 @@ DROP SCHEMA IF EXISTS Zelo;
 CREATE SCHEMA Zelo;
 USE Zelo;
 
-
 -- TABELA DO SERVIÇO --
 CREATE TABLE servico
 (
@@ -55,7 +54,7 @@ Create Table cliente
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
-insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'), false);  
+insert into cliente values ('50082480818', 'João Sena', '2006-05-24', 'joaosena0206@gmail.com', md5('Joao1234@'), true);  
 
 
 
@@ -90,7 +89,7 @@ Create Table solicitacao_servico
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
     CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
-Insert into solicitacao_servico values(10, '535305697', '525305698', 20/04/2024, 'Cano da pia está quebrado!', 'Excelente,bem feito.', 4, 'Muito simpático.', 5); 
+Insert into solicitacao_servico values(10, '535305697', '50082480818', 20/04/2024, 'Cano da pia está quebrado!', 'Excelente,bem feito.', 4, 'Muito simpático.', 5); 
 
 -- TABELA ENDERECO CLIENTE --
 Create Table endereco
