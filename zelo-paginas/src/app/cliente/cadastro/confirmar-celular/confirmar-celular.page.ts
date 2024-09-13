@@ -127,6 +127,15 @@ export class ConfirmarCelularPage implements OnInit {
 
             if (codigo == this.codigoAleatorio)
             {
+                let link = "http://localhost:57879/Cliente/ConfirmarEmail";
+                let cliente = JSON.parse(localStorage.getItem("cliente")!);
+                let dadosForm = new FormData();
+                dadosForm.append("cpf", cliente.cpf);
+
+                this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
+                    console.log(res);
+                });
+
                 localStorage.removeItem("cliente");
                 localStorage.removeItem("opcao");
             }
