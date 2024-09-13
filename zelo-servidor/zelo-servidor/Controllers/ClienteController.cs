@@ -26,7 +26,7 @@ public class ClienteController : Controller
         string enderecoJson = Request["endereco"].Replace("-", "");
         Endereco endereco = JsonConvert.DeserializeObject<Endereco>(enderecoJson);
 
-        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'))";
+        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'), false)";
         banco.Executar(comando);
 
         EnderecoController enderecoController = new EnderecoController();

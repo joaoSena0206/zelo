@@ -47,7 +47,16 @@ public class Cliente
 		set { _senha = value; }
 	}
 
-	public Cliente()
+    private bool _confirmado;
+
+    public bool Confirmado
+    {
+        get { return _confirmado; }
+        set { _confirmado = value; }
+    }
+
+
+    public Cliente()
 	{
 
 	}

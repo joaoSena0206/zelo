@@ -23,6 +23,7 @@ Create Table trabalhador
 	nm_senha_trabalhador VARCHAR(255),
 	nm_pix_trabalhador VARCHAR(255),
 	ic_disponivel_trabalhador BOOL,
+	ic_email_confirmado_trabalhador BOOL,
 
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
@@ -49,6 +50,7 @@ Create Table cliente
 	dt_nascimento_cliente DATE,
 	nm_email_cliente VARCHAR(30),
 	nm_senha_cliente VARCHAR(255),
+	ic_email_confirmado_cliente BOOL,
 
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
