@@ -10,7 +10,16 @@ CREATE TABLE servico
 
 	CONSTRAINT pk_servico PRIMARY KEY (cd_servico)
 );
-Insert into servico values (1, 'encanador');
+
+Insert into servico values (1, 'Limpeza');
+Insert into servico values (2, 'Eletricista');
+Insert into servico values (3, 'Encanador');
+Insert into servico values (4, 'Chaveiro');
+Insert into servico values (5, 'Jardineiro');
+Insert into servico values (6, 'Marceneiro');
+Insert into servico values (7, 'Pintor');
+Insert into servico values (8, 'TEC em r-condicionado');
+Insert into servico values (9, 'Manutenção de eletrodomésticos');
 
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
