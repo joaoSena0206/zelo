@@ -1,31 +1,44 @@
 <ion-content>
-  <div class="wrapper">
-      <ion-icon class="content__seta" src="../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+    <div class="wrapper">
+        <ion-icon class="content__seta" src="../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 
-      <div class="content">
-          <ion-text>
-              <h1 class="content__h1">Bem vindo!</h1>
-          </ion-text>
-  
-          <ion-list class="form" lines="none">
+        <div class="content">
+            <ion-text>
+                <h1 class="content__h1">Bem vindo!</h1>
+            </ion-text>
 
-              <ion-item class="ion_item">
-                  <ion-input class="form__input" placeholder="Digite seu email ou telefone"></ion-input>
-              </ion-item>
+            <ion-list [formGroup]="form" class="form" lines="none">
 
-              <ion-item class="ion_item">
-                  <ion-input type="password" class="form__input" placeholder="Digite sua senha">
-                      <ion-icon class="ion_item__icon" slot="icon-only" name="eye-outline" aria-hidden="true"></ion-icon>
-                  </ion-input>
-              </ion-item>
+                <ion-item class="ion_item">
+                    <ion-input (ionInput)="validacaoInput(form.controls['email'])"
+                        [class.inputErro]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)"
+                        formControlName="email" class="form__input"
+                        placeholder="Digite seu email ou telefone"></ion-input>
+                </ion-item>
+                <span
+                    [ngClass]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.email }}</span>
 
-              <p style="text-align: start;" class="form__p form__p-senha">Esqueceu a <ion-text class="form__text">senha?</ion-text></p>
-  
-              <ion-button class="form__btn">Entrar</ion-button>
-  
-              <p class="form__p">Não tem conta? <ion-text class="form__text">Crie uma</ion-text></p>
+                <ion-item class="ion_item">
+                    <ion-input (ionInput)="validacaoInput(form.controls['senha'])"
+                        [class.inputErro]="form.controls['senha'].invalid && (form.controls['senha'].touched || form.controls['senha'].dirty)"
+                        formControlName="senha" type="password" class="form__input" placeholder="Digite sua senha">
+                        <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                            name="eye-outline" aria-hidden="true"></ion-icon>
+                    </ion-input>
+                </ion-item>
+                <span
+                    [ngClass]="form.controls['senha'].invalid && (form.controls['senha'].touched || form.controls['senha'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.senha }}</span>
 
-          </ion-list>
-      </div>
-  </div>
+                <p style="text-align: start;" class="form__p form__p-senha">Esqueceu a <ion-text
+                        class="form__text">senha?</ion-text></p>
+
+                <ion-button (click)="enviar()" class="form__btn">Entrar</ion-button>
+
+                <p class="form__p">Não tem conta? <ion-text class="form__text">Crie uma</ion-text></p>
+
+            </ion-list>
+        </div>
+    </div>
 </ion-content>

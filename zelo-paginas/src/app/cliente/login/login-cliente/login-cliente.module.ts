@@ -8,12 +8,15 @@ import { LoginClientePageRoutingModule } from './login-cliente-routing.module';
 
 import { LoginClientePage } from './login-cliente.page';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginClientePageRoutingModule
+    LoginClientePageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [LoginClientePage]
 })

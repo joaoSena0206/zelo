@@ -60,6 +60,7 @@ insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmai
 SELECT * FROM cliente;
 
 
+
 CREATE TABLE confirmacao
 (
 	cd_confirmacao INT,

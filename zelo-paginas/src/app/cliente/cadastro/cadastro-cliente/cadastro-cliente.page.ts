@@ -146,7 +146,7 @@ export class CadastroClientePage implements OnInit {
 
             if (erros != null) {
                 Object.keys(erros).forEach(erro => {
-                    this.erro[nome] = erros[erro].msg;
+                    this.erro[nome] = erros![erro].msg;
                 });
             }
             else {

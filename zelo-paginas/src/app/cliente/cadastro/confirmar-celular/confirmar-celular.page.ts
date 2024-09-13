@@ -129,6 +129,8 @@ export class ConfirmarCelularPage implements OnInit {
                     if (res == "ok") {
                         localStorage.removeItem("cliente");
                         localStorage.removeItem("opcao");
+
+                        this.navCl.navigateRoot("/login-cliente");
                     }
                 });
             }
