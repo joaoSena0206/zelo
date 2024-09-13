@@ -28,7 +28,7 @@ Create Table trabalhador
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
 
-Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24','brenofelixdeolivera@gmail.com', '1234', 'brenofelixdeolivera@gmail.com', true);
+Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24','brenofelixdeolivera@gmail.com', '1234', 'brenofelixdeolivera@gmail.com', true, false);
 
 -- LIGAÇÃO TABELA SERVICO TRABALHADOR --
 Create Table servico_trabalhador
@@ -55,7 +55,7 @@ Create Table cliente
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
-insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'));
+insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'), false);  
 
 SELECT * FROM cliente;
 
