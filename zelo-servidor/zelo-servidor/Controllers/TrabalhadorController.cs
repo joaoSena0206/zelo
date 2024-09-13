@@ -93,7 +93,7 @@ public class TrabalhadorController : Controller
     }
 
     [HttpPost]
-    [Route("Verificar")]
+    [Route("VerificarSituacao")]
     public bool VerificarSituacao()
     {
         Banco banco = new Banco();
@@ -118,11 +118,32 @@ public class TrabalhadorController : Controller
 
         #endregion
 
-        //#region Atualizar banco
+    }
 
-        //comando = $@"UPDATE trabalhador SET ic_disponivel_trabalhador = true WHERE cd_cpf_trabalhador = '535305697'";
-        //banco.Executar(comando);
+    [HttpPost]
+    [Route("AtualizarSituacao")]
+    public void AtualizarSituacao()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
 
-        //#endregion
+        #region Atualizar banco
+
+        string codigoResultado = Request["Resultado"].ToString();
+
+        if (Request["Resultado"] == null)
+        {
+
+        }
+
+        if (String.IsNullOrEmpty(Request["Resultado"]))
+        {
+
+        }
+
+        string comando = $@"UPDATE trabalhador SET ic_disponivel_trabalhador = {codigoResultado} WHERE cd_cpf_trabalhador = '535305697'";
+        banco.Executar(comando);
+
+        #endregion
     }
 }

@@ -14,7 +14,6 @@ export class InicialPage implements OnInit {
 
     ngOnInit() { }
 
-    Ic_situacao: any;
     cpf: any = 535305697
     situacao: any = '';
     resultado: any = '';
@@ -24,8 +23,7 @@ export class InicialPage implements OnInit {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        this.http.post('http://localhost:57879/Trabalhador/Verificar', JSON.stringify(this.cpf), {responseType: 'text'}).subscribe(res => {
-            console.log(res);
+        this.http.post('http://localhost:57879/Trabalhador/VerificarSituacao', JSON.stringify(this.cpf), {responseType: 'text'}).subscribe(res => {
 
             if(res == "True")
             {
@@ -84,6 +82,8 @@ export class InicialPage implements OnInit {
             this.situacao = 'Indisponível';
             this.msgTrabalho = 'Deseja trabalhar agora?';
 
+            this.resultado = false;
+
         } else {
             botaoSituacao?.classList.remove('btn_situacao_trabalhador');
             botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
@@ -96,11 +96,16 @@ export class InicialPage implements OnInit {
             this.situacao = 'Disponível';
             this.msgTrabalho = 'Deseja parar de trabalhar?';
 
-            this.resultado = true
-
-            /* this.http.post('http://localhost:57879/Trabalhador/Verificar', JSON.stringify(this.resultado)).subscribe(res => {
-                console.log(res);
-            }) */
+            this.resultado = true;
         }
+
+        let link = "http://localhost:57879/Trabalhador/AtualizarSituacao";
+
+        let dadosForm = new FormData();
+        dadosForm.append("Resultado", this.resultado!);
+
+        this.http.post(link, dadosForm, {responseType: 'text'}).subscribe(res => {
+        })
+        
     }
 }
