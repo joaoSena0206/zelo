@@ -73,7 +73,7 @@ export class EnderecoPage implements OnInit {
 
             if (erros != null) {
                 Object.keys(erros).forEach(erro => {
-                    this.erro[nome] = erros[erro].msg;
+                    this.erro[nome] = erros![erro].msg;
                 });
             }
             else {
@@ -113,12 +113,12 @@ export class EnderecoPage implements OnInit {
             let link = "http://localhost:57879/Cliente/Adicionar";
             let cliente = JSON.parse(localStorage.getItem("cliente")!);
             let endereco = {
-                cpfCliente: cliente.cpf,
-                identificacao: this.endereco.controls['identificacao'].value,
-                cep: this.endereco.controls['cep'].value?.replace("-", ""),
-                numero: this.endereco.controls['numero'].value,
-                complemento: this.endereco.controls['complemento'].value,
-                referencia: this.endereco.controls['pontoReferencia'].value
+                CpfCliente: cliente.Cpf,
+                Identificacao: this.endereco.controls['identificacao'].value,
+                Cep: this.endereco.controls['cep'].value?.replace("-", ""),
+                Numero: this.endereco.controls['numero'].value,
+                Complemento: this.endereco.controls['complemento'].value,
+                Referencia: this.endereco.controls['pontoReferencia'].value
             };
 
             let dadosForm = new FormData();
