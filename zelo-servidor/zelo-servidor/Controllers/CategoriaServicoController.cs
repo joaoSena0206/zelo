@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,14 @@ public class CategoriaServicoController : Controller
 {
     [HttpGet]
     [Route("CarregarCategoria")]
-    public List<CategoriaServico> CarregarCategoria()
+    public string CarregarCategoria()
     {
         Banco banco = new Banco();
         banco.Conectar();
 
         #region Carrega as categorias do banco
 
-        string comando = "SELECT * FROM categoria_servico";
+        string comando = "SELECT * FROM categoria_servico ORDER BY nm_categoria_servico";
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<CategoriaServico> listaCategoria = new List<CategoriaServico>();
@@ -37,7 +38,7 @@ public class CategoriaServicoController : Controller
         dados.Close();
         banco.Desconectar();
 
-        return listaCategoria;
+        return JsonConvert.SerializeObject(listaCategoria, Formatting.Indented);
 
         #endregion
     }

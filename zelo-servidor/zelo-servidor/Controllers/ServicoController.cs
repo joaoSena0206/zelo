@@ -19,7 +19,7 @@ public class ServicoController : Controller
 
         #region Carrega os serviços do banco de acordo com a categoria
 
-        string comando = $"SELECT cd_servico, nm_servico FROM servico WHERE cd_categoria_servico = {codigoCategoria}";
+        string comando = $"SELECT cd_servico, nm_servico FROM servico WHERE cd_categoria_servico = {codigoCategoria} ORDER BY nm_servico";
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<Servico> listaServico = new List<Servico>();

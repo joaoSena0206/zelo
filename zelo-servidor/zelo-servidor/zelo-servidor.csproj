@@ -147,9 +147,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Banco.cs" />
+    <Compile Include="Controllers\CategoriaServicoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ConfirmacaoController.cs" />
     <Compile Include="Controllers\EnderecoController.cs" />
+    <Compile Include="Controllers\ServicoController.cs" />
+    <Compile Include="Models\CategoriaServico.cs" />
+    <Compile Include="Models\Servico.cs" />
     <Compile Include="Models\Trabalhador.cs" />
     <Compile Include="Controllers\TrabalhadorController.cs" />
     <Compile Include="Global.asax.cs">
