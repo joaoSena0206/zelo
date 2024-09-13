@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-inicial',
@@ -9,7 +10,7 @@ export class InicialPage implements OnInit {
     situacao: any = 'Indisponível';
     msgTrabalho: any = 'Deseja trabalhar agora?';
 
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
     ngOnInit() { }
 
@@ -18,6 +19,7 @@ export class InicialPage implements OnInit {
         const img = document.querySelector('.img_btn_situacao');
 
         if (this.situacao == 'Disponível') {
+
             botaoSituacao?.classList.add('btn_situacao_trabalhador');
             botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
 
@@ -25,6 +27,11 @@ export class InicialPage implements OnInit {
 
             this.situacao = 'Indisponível';
             this.msgTrabalho = 'Deseja trabalhar agora?';
+
+            this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(false)).subscribe(res => {
+                console.log(res);
+            })
+
         } else {
             botaoSituacao?.classList.remove('btn_situacao_trabalhador');
             botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
