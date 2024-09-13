@@ -196,24 +196,24 @@ export class CadastroClientePage implements OnInit {
         }
         else {
             let cliente = {
-                cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
-                nome: this.form.controls['nome'].value,
-                dataNascimento: this.form.controls['data'].value?.substring(0, 10),
-                email: this.form.controls['email'].value,
-                senha: this.form.controls['senhas'].controls['senha'].value,
+                Cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
+                Nome: this.form.controls['nome'].value,
+                DataNascimento: this.form.controls['data'].value?.substring(0, 10),
+                Email: this.form.controls['email'].value,
+                Senha: this.form.controls['senhas'].controls['senha'].value,
             };
 
             if (localStorage.getItem("cliente")) {
                 let clienteStorage = JSON.parse(localStorage.getItem("cliente")!);
 
-                if (cliente.cpf != clienteStorage.cpf && cliente.email != clienteStorage.email) {
+                if (cliente.Cpf != clienteStorage.Cpf && cliente.Email != clienteStorage.Email) {
                     this.checarCadastro(cliente);
                 }
-                else if (cliente.cpf != clienteStorage.cpf)
+                else if (cliente.Cpf != clienteStorage.Cpf)
                 {
                     this.checarCadastro(cliente, "email");
                 }
-                else if (cliente.email != clienteStorage.email)
+                else if (cliente.Email != clienteStorage.Email)
                 {
                     this.checarCadastro(cliente, "cpf");
                 }

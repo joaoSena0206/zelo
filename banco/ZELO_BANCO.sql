@@ -56,10 +56,7 @@ Create Table cliente
 );
 
 insert into cliente values ('525305698', 'Marco', '2006-05-24', 'marcojuino@gmail.com', md5('1234'), false);  
-SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
-WHERE nm_email_cliente = 'marcojuino@gmail.com' AND nm_senha_cliente = md5('1234');
 
-SELECT * FROM cliente;
 
 
 CREATE TABLE confirmacao
@@ -74,22 +71,7 @@ CREATE TABLE confirmacao
 	CONSTRAINT fk_confirmacao_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
-/*
-INSERT INTO confirmacao VALUES
-(
-	(SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM (SELECT cd_confirmacao FROM confirmacao) AS temp),
-	'50082480818',
-	NULL,
-	'12345'
-);
-*/
-
-SELECT * FROM confirmacao;
-
 DELETE FROM confirmacao WHERE cd_cpf_cliente = '50082480818';
-
-
-
 
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
 Create Table solicitacao_servico
@@ -125,22 +107,6 @@ Create Table endereco
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
 
-SELECT * FROM endereco;
-SELECT * FROM confirmacao;
-
-/*
-INSERT INTO endereco VALUES 
-(
-	(SELECT IFNULL(MAX(cd_endereco) + 1, 1) FROM (SELECT cd_endereco FROM endereco) AS temp),
-	'11081260',
-	'Casa',
-	'50082480818',
-	4,
-	'Complemento',
-	'Vila Criativa'
-);
-*/
-
 -- TABELA CERTIFICADO TRABALHADOR -- 
 Create table certificado
 (
@@ -153,4 +119,3 @@ Create table certificado
 );
 
 Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
-SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '';

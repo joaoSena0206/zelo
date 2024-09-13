@@ -95,7 +95,7 @@ export class ConfirmarCelularPage implements OnInit {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
         let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.cpf);
+        dadosForm.append("cpf", cliente.Cpf);
         dadosForm.append("tipo", "cliente");
 
         this.http.post(link, dadosForm).subscribe(res => {
