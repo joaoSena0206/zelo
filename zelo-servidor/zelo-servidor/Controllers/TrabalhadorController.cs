@@ -82,7 +82,7 @@ public class TrabalhadorController : Controller
 
         #region Adiciona o cliente no banco
 
-        comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}','{trabalhador.Email}', md5('{trabalhador.Senha}'), '{trabalhador.Pix}', false)";
+        comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}','{trabalhador.Email}', md5('{trabalhador.Senha}'), '{trabalhador.Pix}', false, false)";
         banco.Executar(comando);
 
         return "ok";

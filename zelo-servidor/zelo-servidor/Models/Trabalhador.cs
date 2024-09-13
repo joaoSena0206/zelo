@@ -62,6 +62,15 @@ public class Trabalhador
         set { _disponivel = value; }
     }
 
+    private bool _confirmado;
+
+    public bool Confirmado
+    {
+        get { return _confirmado; }
+        set { _confirmado = value; }
+    }
+
+
     public Trabalhador()
     {
 
