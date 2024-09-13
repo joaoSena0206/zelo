@@ -13,6 +13,7 @@ CREATE TABLE categoria_servico
 
 INSERT INTO categoria_servico VALUES (1, 'Reformas e reparos');
 
+
 -- TABELA DO SERVIÇO --
 CREATE TABLE servico
 (
