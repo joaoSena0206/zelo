@@ -26,6 +26,8 @@ public class EnderecoController : Controller
         );";
         banco.Executar(comando);
 
+        banco.Desconectar();
+
         #endregion 
     }
 }

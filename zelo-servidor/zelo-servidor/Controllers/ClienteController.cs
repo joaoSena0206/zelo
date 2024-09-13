@@ -32,6 +32,8 @@ public class ClienteController : Controller
         EnderecoController enderecoController = new EnderecoController();
         enderecoController.AdicionarEndereco(endereco);
 
+        banco.Desconectar();
+
         return "ok";
 
         #endregion
@@ -89,5 +91,22 @@ public class ClienteController : Controller
         return json;
 
         #endregion
+    }
+
+    [HttpPost]
+    [Route("ConfirmarEmail")]
+    public string ConfirmarEmail()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cpf = Request["cpf"];
+
+        string comando = $"UPDATE cliente SET ic_email_confirmado_cliente = true WHERE cd_cpf_cliente = '{cpf}'";
+        banco.Executar(comando);
+
+        banco.Desconectar();
+
+        return "ok";
     }
 }
