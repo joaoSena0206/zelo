@@ -138,7 +138,6 @@ public class ClienteController : Controller
             cliente.Nome = dados.GetString(1);
             cliente.DataNascimento = dados.GetString(2);
             cliente.Email = email;
-            cliente.Senha = senha;
             cliente.Confirmado = dados.GetBoolean(3);
         }
 
