@@ -32,7 +32,7 @@ Insert into servico values (4, 1, 'Chaveiro');
 Insert into servico values (5, 1, 'Jardineiro');
 Insert into servico values (6, 1, 'Marceneiro');
 Insert into servico values (7, 1, 'Pintor');
-Insert into servico values (8, 1, 'TEC em r-condicionado');
+Insert into servico values (8, 1, 'TEC em ar-condicionado');
 Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
 
 
