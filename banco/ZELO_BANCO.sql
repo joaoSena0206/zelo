@@ -53,6 +53,17 @@ Create Table trabalhador
 
 Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24','brenofelixdeolivera@gmail.com', '1234', 'brenofelixdeolivera@gmail.com', true, false);
 
+
+CREATE TABLE patrocinio
+(	
+	cd_cpf_trabalhador CHAR(11),
+	qt_semanas_patrocinado INT,
+	vl_patrocinio DECIMAL,
+
+	CONSTRAINT pk_patrocinio PRIMARY KEY (cd_cpf_trabalhador),
+	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
+);
+
 -- LIGAÇÃO TABELA SERVICO TRABALHADOR --
 Create Table servico_trabalhador
 (
