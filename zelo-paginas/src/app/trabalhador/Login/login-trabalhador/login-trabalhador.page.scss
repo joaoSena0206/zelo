@@ -8,7 +8,7 @@
 
 ion-content
 {
-    --background: linear-gradient(90deg, #CB2316 0%, #65110B 100%);
+    --background: linear-gradient(90deg, #CB2316 38%, #65110B 120%);
 }
 
 
@@ -23,7 +23,7 @@ ion-content
 
 .content
 {
-    padding: 0 30px;
+    padding: 0 31px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -37,9 +37,8 @@ ion-content
     font-size: 30px;
     flex-shrink: 0;
     position: absolute;
-    top: 30px;
-    left: 30px;
-    color: white;
+    top: 31px;
+    left: 31px;
 }
 
 .content__h1
@@ -68,6 +67,7 @@ ion-content
     transform: translate(-50%, -50%);
     right: 19px;
     font-size: 18px;
+    z-index: 100;
 }
 
 
@@ -93,6 +93,7 @@ ion-content
     font-weight: 700;
     border-radius: 26px;
     font-size: 15px;
+    height: 57px;
 }
 
 .form__btn
@@ -117,7 +118,6 @@ ion-content
     text-align: center;
     margin: 0;
     font-size: 15px;
-    font-weight: bold;
 }
 
 
@@ -125,4 +125,18 @@ ion-content
 {
     color: #CB2316;
     font-weight: 700;
+}
+
+.erro {
+    color: red;
+    font-size: 14px;
+    margin: 0 25px 14px 25px;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
+.escondido {
+    display: none;
 }

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 	styleUrls: ['./login-cliente.page.scss'],
 })
 export class LoginClientePage implements OnInit {
+
 	form = new FormGroup({
 		email: new FormControl("", [Validators.required, Validators.email]),
 		senha: new FormControl("", Validators.required)

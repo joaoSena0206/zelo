@@ -8,12 +8,15 @@ import { LoginTrabalhadorPageRoutingModule } from './login-trabalhador-routing.m
 
 import { LoginTrabalhadorPage } from './login-trabalhador.page';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginTrabalhadorPageRoutingModule
+    LoginTrabalhadorPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [LoginTrabalhadorPage]
 })
