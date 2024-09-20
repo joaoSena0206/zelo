@@ -8,12 +8,15 @@ import { TipoSaquePageRoutingModule } from './tipo-saque-routing.module';
 
 import { TipoSaquePage } from './tipo-saque.page';
 
+import { ReactiveFormsModule } from '@angular/forms'; 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TipoSaquePageRoutingModule
+    TipoSaquePageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [TipoSaquePage]
 })

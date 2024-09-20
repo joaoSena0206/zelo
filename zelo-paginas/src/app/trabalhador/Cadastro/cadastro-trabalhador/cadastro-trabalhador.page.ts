@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { Renderer2 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { cpf } from 'cpf-cnpj-validator';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -17,14 +18,12 @@ export class CadastroTrabalhadorPage implements OnInit {
         cpf: new FormControl("", [Validators.required, validadorTamanhoMinimo(), validadorCpf()]),
         data: new FormControl("", [Validators.required, validadorIdade()]),
         email: new FormControl("", [Validators.required, Validators.email]),
-        celular: new FormControl("", [Validators.required, validadorCel()]),
         senhas: new FormGroup({
             senha: new FormControl("", [Validators.required, validadorSenha()]),
             confirmarSenha: new FormControl("")
         }, validadorSenhaConfere()),
         termos: new FormControl("", validadorTermos())
     });
-    
 
     inputData: any;
     erro: any = {
@@ -32,7 +31,6 @@ export class CadastroTrabalhadorPage implements OnInit {
         cpf: "Cpf obrigatório!",
         data: "Data obrigatório!",
         email: "Email obrigatório!",
-        celular: "Celular obrigatório!",
         senha: "Senha obrigatório!"
     };
     nomeClass: any = "form__input";
@@ -44,39 +42,35 @@ export class CadastroTrabalhadorPage implements OnInit {
         mask: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
     };
 
-    readonly celMask: MaskitoOptions = {
-        mask: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]
-    };
-
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor(private renderer: Renderer2, private navCl: NavController, private http: HttpClient) {
+    constructor( private navCl: NavController, private http: HttpClient) {
 
     }
 
     ngOnInit() {
-
-    }
-
-    ngAfterViewInit() {
-
+        localStorage.setItem("opcao", "cadastro");
     }
 
     ionViewWillEnter() {
         if (localStorage.getItem("trabalhador")) {
             if (this.form.controls['cpf'].value == "") {
-                let Trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+                let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
-                this.form.controls['nome'].setValue(Trabalhador.nome);
-                this.form.controls['cpf'].setValue(Trabalhador.cpf);
-                this.form.controls['data'].setValue(Trabalhador.dataNascimento);
-                this.form.controls['email'].setValue(Trabalhador.email);
-                this.form.controls['senhas'].controls['senha'].setValue(Trabalhador.senha);
-                this.form.controls['senhas'].controls['confirmarSenha'].setValue(Trabalhador.senha);
+                this.form.controls['nome'].setValue(trabalhador.nome);
+                this.form.controls['cpf'].setValue(trabalhador.cpf);
+                this.form.controls['data'].setValue(trabalhador.dataNascimento);
+                this.form.controls['email'].setValue(trabalhador.email);
+                this.form.controls['senhas'].controls['senha'].setValue(trabalhador.senha);
+                this.form.controls['senhas'].controls['confirmarSenha'].setValue(trabalhador.senha);
 
                 this.mostrarData();
             }
         }
+    }
+
+    pagAnterior() {
+        this.navCl.navigateBack("/home/opcoes-de-cadastro");
     }
 
     estadoSenha(event: any) {
@@ -155,8 +149,7 @@ export class CadastroTrabalhadorPage implements OnInit {
                     this.erro[nome] = erros![erro].msg;
                 });
             }
-            else
-            {
+            else {
                 this.erro[nome] = "";
             }
         }
@@ -164,15 +157,11 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     mostrarData() {
         let data = this.form.controls['data'].value;
-
-        if (data != null && data != "") {
-            let date = new Date(data);
-            this.inputData = date.toLocaleDateString();
-        }
+        this.inputData = moment(data).format("DD/MM/YYYY");
     }
 
-    /* checarCadastro(trabalhador: any, dado: string = "padrão") {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/ChecarExistencia";
+    checarCadastro(trabalhador: any, dado: string = "padrão") {
+        let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.cpf!);
         dadosForm.append("email", trabalhador.email!);
@@ -183,43 +172,10 @@ export class CadastroTrabalhadorPage implements OnInit {
         }
 
         this.http.post(link, dadosForm).subscribe(res => {
-
             let objRes = res as any;
 
             if (objRes.cadastrado.length == 0) {
-
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
-
-            }
-            else {
-                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
-                    
-                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
-
-                    this.form.controls[cadastrado].setErrors({ existe: true });
-                    this.form.controls[cadastrado].markAsDirty();
-
-                });
-            }
-        });
-    } */
-
-    checarCadastro(cliente: any, dado: string = "padrão") {
-        let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
-        let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.cpf!);
-        dadosForm.append("email", cliente.email!);
-
-        if (dado != "padrão")
-        {
-            dadosForm.set(dado, "null");
-        }
-
-        this.http.post(link, dadosForm).subscribe(res => {
-            let objRes = res as any;
-
-            if (objRes.cadastrado.length == 0) {
-                localStorage.setItem("trabalhador", JSON.stringify(cliente));
 
                 this.navCl.navigateForward("/tipo-saque");
             }
@@ -239,49 +195,45 @@ export class CadastroTrabalhadorPage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            console.log("foi");
-
-            let Trabalhador = {
-                cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
-                nome: this.form.controls['nome'].value,
-                dataNascimento: this.form.controls['data'].value?.substring(0, 10),
-                email: this.form.controls['email'].value,
-                senha: this.form.controls['senhas'].controls['senha'].value,
-                pix: null,
-                disponivel: false,
+            let trabalhador = {
+                Cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
+                Nome: this.form.controls['nome'].value,
+                DataNascimento: this.form.controls['data'].value?.substring(0, 10),
+                Email: this.form.controls['email'].value,
+                Senha: this.form.controls['senhas'].controls['senha'].value,
             };
 
             if (localStorage.getItem("trabalhador")) {
                 let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
 
-                if (Trabalhador.cpf != trabalhadorStorage.cpf && Trabalhador.email != trabalhadorStorage.email) {
-                    this.checarCadastro(Trabalhador);
+                if (trabalhador.Cpf != trabalhadorStorage.Cpf && trabalhador.Email != trabalhadorStorage.Email) {
+                    this.checarCadastro(trabalhador);
                 }
-                else if (Trabalhador.cpf != trabalhadorStorage.cpf)
+                else if (trabalhador.Cpf != trabalhadorStorage.Cpf)
                 {
-                    this.checarCadastro(Trabalhador, "email");
+                    this.checarCadastro(trabalhador, "email");
                 }
-                else if (Trabalhador.email != trabalhadorStorage.email)
+                else if (trabalhador.Email != trabalhadorStorage.Email)
                 {
-                    this.checarCadastro(Trabalhador, "cpf");
+                    this.checarCadastro(trabalhador, "cpf");
                 }
                 else if (this.form.dirty)
                 {
-                    localStorage.setItem("trabalhador", JSON.stringify(Trabalhador));
+                    localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+
+                    this.navCl.navigateForward("/tipo-saque");
+                }
+                else
+                {
+                    this.navCl.navigateForward("/tipo-saque");
                 }
             }
             else {
-                this.checarCadastro(Trabalhador);
+                this.checarCadastro(trabalhador);
             }
-
-
-            /* this.http.post('http://localhost:57879/Trabalhador/Adicionar', JSON.stringify(Trabalhador)).subscribe(res => {
-                console.log(res);
-            }) */
         }
     }
 }
-
 
 export function validadorCpf(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -305,18 +257,6 @@ export function validadorTamanhoMinimo(): ValidatorFn {
 
         if (vl.length < 11) {
             return { tamanhoMinimo: { msg: "Cpf deve ter 11 dígitos!" } };
-        }
-
-        return null;
-    };
-};
-
-export function validadorCel(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-        let cel = control.value.replace(/[^/\d/]+/g, "");
-
-        if (cel.length < 11) {
-            return { celTamanho: { msg: 'O celular deve ter 9 dígitos, fora o DD!' } };
         }
 
         return null;
