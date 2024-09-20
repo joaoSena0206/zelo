@@ -44,7 +44,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-    constructor( private navCl: NavController, private http: HttpClient) {
+    constructor(private navCl: NavController, private http: HttpClient) {
 
     }
 
@@ -54,18 +54,16 @@ export class CadastroTrabalhadorPage implements OnInit {
 
     ionViewWillEnter() {
         if (localStorage.getItem("trabalhador")) {
-            if (this.form.controls['cpf'].value == "") {
-                let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+            let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
-                this.form.controls['nome'].setValue(trabalhador.nome);
-                this.form.controls['cpf'].setValue(trabalhador.cpf);
-                this.form.controls['data'].setValue(trabalhador.dataNascimento);
-                this.form.controls['email'].setValue(trabalhador.email);
-                this.form.controls['senhas'].controls['senha'].setValue(trabalhador.senha);
-                this.form.controls['senhas'].controls['confirmarSenha'].setValue(trabalhador.senha);
+            this.form.controls['nome'].setValue(trabalhador.Nome);
+            this.form.controls['cpf'].setValue(trabalhador.Cpf);
+            this.form.controls['data'].setValue(trabalhador.DataNascimento);
+            this.form.controls['email'].setValue(trabalhador.Email);
+            this.form.controls['senhas'].controls['senha'].setValue(trabalhador.Senha);
+            this.form.controls['senhas'].controls['confirmarSenha'].setValue(trabalhador.Senha);
 
-                this.mostrarData();
-            }
+            this.mostrarData();
         }
     }
 
@@ -166,8 +164,7 @@ export class CadastroTrabalhadorPage implements OnInit {
         dadosForm.append("cpf", trabalhador.cpf!);
         dadosForm.append("email", trabalhador.email!);
 
-        if (dado != "padrão")
-        {
+        if (dado != "padrão") {
             dadosForm.set(dado, "null");
         }
 
@@ -190,8 +187,7 @@ export class CadastroTrabalhadorPage implements OnInit {
         });
     }
 
-    voltarPag()
-    {
+    voltarPag() {
         this.navCl.back();
     }
 
@@ -214,22 +210,18 @@ export class CadastroTrabalhadorPage implements OnInit {
                 if (trabalhador.Cpf != trabalhadorStorage.Cpf && trabalhador.Email != trabalhadorStorage.Email) {
                     this.checarCadastro(trabalhador);
                 }
-                else if (trabalhador.Cpf != trabalhadorStorage.Cpf)
-                {
+                else if (trabalhador.Cpf != trabalhadorStorage.Cpf) {
                     this.checarCadastro(trabalhador, "email");
                 }
-                else if (trabalhador.Email != trabalhadorStorage.Email)
-                {
+                else if (trabalhador.Email != trabalhadorStorage.Email) {
                     this.checarCadastro(trabalhador, "cpf");
                 }
-                else if (this.form.dirty)
-                {
+                else if (this.form.dirty) {
                     localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
 
                     this.navCl.navigateForward("/tipo-saque");
                 }
-                else
-                {
+                else {
                     this.navCl.navigateForward("/tipo-saque");
                 }
             }
