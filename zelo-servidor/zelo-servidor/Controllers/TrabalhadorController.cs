@@ -19,77 +19,24 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Lê o conteúdo do body e converte o JSON em um objeto Trabalhador
+        #region Adiciona o trabalhador no banco
 
-        string json;
-        using (var reader = new StreamReader(Request.InputStream))
-        {
-            json = reader.ReadToEnd();
-        }
+        Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(Request["trabalhador"]);
 
-        Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(json);
+        //string enderecoJson = Request["endereco"].Replace("-", "");
+        //Endereco endereco = JsonConvert.DeserializeObject<Endereco>(enderecoJson);
 
-        #endregion
-
-        #region Checa a existência do email e do cpf
-
-        string comando = $"SELECT COUNT(cd_cpf_trabalhador) FROM trabalhador WHERE cd_cpf_trabalhador = '{trabalhador.Cpf}'";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        bool cpfExiste = false;
-        bool emailExiste = false;
-
-        if (dados != null)
-        {
-            if (dados.Read())
-            {
-                if (dados.GetInt32(0) >= 1)
-                {
-                    cpfExiste = true;
-                }
-            }
-        }
-
-        dados.Close();
-
-        comando = $"SELECT COUNT(nm_email_trabalhador) FROM trabalhador WHERE nm_email_trabalhador = '{trabalhador.Email}'";
-        dados = banco.Consultar(comando);
-
-        if (dados != null)
-        {
-            if (dados.Read())
-            {
-                if (dados.GetInt32(0) >= 1)
-                {
-                    emailExiste = true;
-                }
-            }
-        }
-
-        dados.Close();
-
-        if (cpfExiste == true)
-        {
-            return "Cpf já cadastrado!";
-        }
-
-        if (emailExiste == true)
-        {
-            return "Email já cadastrado!";
-        }
-
-        #endregion
-
-        #region Adiciona o cliente no banco
-
-        comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}','{trabalhador.Email}', md5('{trabalhador.Senha}'), '{trabalhador.Pix}', false, false)";
+        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}','{trabalhador.Email}', md5('{trabalhador.Senha}'), false)";
         banco.Executar(comando);
+
+        //EnderecoController enderecoController = new EnderecoController();
+        //enderecoController.AdicionarEndereco(endereco);
+
+        banco.Desconectar();
 
         return "ok";
 
         #endregion
-
-        return "foi";
     }
 
     [HttpPost]

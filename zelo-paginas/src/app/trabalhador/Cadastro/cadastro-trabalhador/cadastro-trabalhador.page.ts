@@ -152,7 +152,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
             if (erros != null) {
                 Object.keys(erros).forEach(erro => {
-                    this.erro[nome] = erros[erro].msg;
+                    this.erro[nome] = erros![erro].msg;
                 });
             }
             else
@@ -171,7 +171,7 @@ export class CadastroTrabalhadorPage implements OnInit {
         }
     }
 
-    checarCadastro(trabalhador: any, dado: string = "padrão") {
+    /* checarCadastro(trabalhador: any, dado: string = "padrão") {
         let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.cpf!);
@@ -199,6 +199,36 @@ export class CadastroTrabalhadorPage implements OnInit {
                     this.form.controls[cadastrado].setErrors({ existe: true });
                     this.form.controls[cadastrado].markAsDirty();
 
+                });
+            }
+        });
+    } */
+
+    checarCadastro(cliente: any, dado: string = "padrão") {
+        let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cliente.cpf!);
+        dadosForm.append("email", cliente.email!);
+
+        if (dado != "padrão")
+        {
+            dadosForm.set(dado, "null");
+        }
+
+        this.http.post(link, dadosForm).subscribe(res => {
+            let objRes = res as any;
+
+            if (objRes.cadastrado.length == 0) {
+                localStorage.setItem("trabalhador", JSON.stringify(cliente));
+
+                this.navCl.navigateForward("/tipo-saque");
+            }
+            else {
+                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+
+                    this.form.controls[cadastrado].setErrors({ existe: true });
+                    this.form.controls[cadastrado].markAsDirty();
                 });
             }
         });
