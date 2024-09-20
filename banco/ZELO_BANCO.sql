@@ -68,8 +68,14 @@ CREATE TABLE patrocinio
 );
 
 INSERT INTO patrocinio VALUE(
-	'56787654567',2,200
+	'56787654567', 2, 200
 );
+
+
+INSERT INTO patrocinio VALUE(
+	'56787654566',1, 100
+);
+
 
 -- LIGAÇÃO TABELA SERVICO TRABALHADOR --
 Create Table servico_trabalhador
