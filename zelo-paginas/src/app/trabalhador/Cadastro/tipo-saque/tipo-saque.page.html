@@ -1,45 +1,46 @@
 <ion-content>
-  <div class="wrapper">
-    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+    <div class="wrapper">
+        <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
 
-    <div class="content">
-      <ion-text>
-        <h1 class="content__h1">Tipo de saque</h1>
-      </ion-text>
+        <div class="content">
+            <ion-text>
+                <h1 class="content__h1">Tipo de saque</h1>
+            </ion-text>
 
-      <ion-list [formGroup]="form" class="form" lines="none">
+            <ion-list [formGroup]="form" class="form" lines="none">
 
 
-        <ion-text>
-          <p style="font-weight: bold; font-size: 17px;">Forma de receber seu dinheiro</p>
-        </ion-text>
+                <ion-text>
+                    <p style="font-weight: bold; font-size: 17px;">Forma de receber seu dinheiro</p>
+                </ion-text>
 
-        <ion-item class="ion_item">
-          <ion-input (ionInput)="validacaoInput(form.controls['pix'])"
-            [class.inputErro]="form.controls['pix'].invalid && (form.controls['pix'].touched || form.controls['pix'].dirty)"
-            formControlName="pix" class="form__input" id="txtPix" placeholder="Adicione sua chave pix:"></ion-input>
-        </ion-item>
-        <span
-          [ngClass]="form.controls['pix'].invalid && (form.controls['pix'].touched || form.controls['pix'].dirty) ? 'erro' : 'escondido'">{{
-          erro.pix }}</span>
+                <ion-item class="ion_item">
+                    <ion-input (ionInput)="validacaoInput(form.controls['pix'])"
+                        [class.inputErro]="form.controls['pix'].invalid && (form.controls['pix'].touched || form.controls['pix'].dirty)"
+                        formControlName="pix" class="form__input" id="txtPix"
+                        placeholder="Adicione sua chave pix:"></ion-input>
+                </ion-item>
+                <span
+                    [ngClass]="form.controls['pix'].invalid && (form.controls['pix'].touched || form.controls['pix'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.pix }}</span>
 
-        <ion-text style="margin: 25px 0 0 0;">
-          <p style="font-weight: bold; font-size: 17px;">Digite o valor padrão de sua visita</p>
-        </ion-text>
+                <ion-text style="margin: 25px 0 0 0;">
+                    <p style="font-weight: bold; font-size: 17px;">Digite o valor padrão de sua visita</p>
+                </ion-text>
 
-        <ion-item class="ion_item">
-          <ion-input (ionInput)="validacaoInput(form.controls['valor'])"
-            [class.inputErro]="form.controls['valor'].invalid && (form.controls['valor'].touched || form.controls['valor'].dirty)"
-            type="number" formControlName="valor" id="txtValor" placeholder="R$: " class="form__input"></ion-input>
-        </ion-item>
-        <span
-          [ngClass]="form.controls['valor'].invalid && (form.controls['valor'].touched || form.controls['valor'].dirty) ? 'erro' : 'escondido'">{{
-          erro.valor }}</span>
+                <ion-item class="ion_item">
+                    <ion-input (ionInput)="validacaoInput(form.controls['valor']); filtroInput($event.target)"
+                        [class.inputErro]="form.controls['valor'].invalid && (form.controls['valor'].touched || form.controls['valor'].dirty)"
+                        formControlName="valor" id="txtValor" placeholder="R$: " class="form__input"></ion-input>
+                </ion-item>
+                <span
+                    [ngClass]="form.controls['valor'].invalid && (form.controls['valor'].touched || form.controls['valor'].dirty) ? 'erro' : 'escondido'">{{
+                    erro.valor }}</span>
 
-        <!-- [maskito]="cardMask" [maskitoElement]="maskPredicate" -->
-        <ion-button (click)="enviar()" class="form__btn">Confirmar</ion-button>
+                <!-- [maskito]="cardMask" [maskitoElement]="maskPredicate" -->
+                <ion-button (click)="enviar()" class="form__btn">Confirmar</ion-button>
 
-      </ion-list>
+            </ion-list>
+        </div>
     </div>
-  </div>
 </ion-content>

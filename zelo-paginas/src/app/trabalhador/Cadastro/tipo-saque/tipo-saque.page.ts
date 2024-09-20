@@ -63,6 +63,11 @@ export class TipoSaquePage implements OnInit {
         }
     }
 
+    filtroInput(input: HTMLIonInputElement)
+    {
+        input.value = input.value?.toString().replace(/[^0-9.,]+|(?<=\.\d{2})\d+|(?<=,\d{2})\d+/g, "");
+    }
+
 	enviar() {
 		let txtPix = document.querySelector("#txtPix") as HTMLIonInputElement;
 		let txtValor = document.querySelector("#txtValor") as HTMLIonInputElement;
