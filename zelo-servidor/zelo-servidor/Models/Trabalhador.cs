@@ -22,14 +22,22 @@ public class Trabalhador
         set { _nome = value; }
     }
 
-    private string _dataNascimento;
+    private DateTime _dataNascimento;
 
-    public string DataNascimento
+    public DateTime DataNascimento
     {
         get { return _dataNascimento; }
         set { _dataNascimento = value; }
     }
 
+    private DateTime _dataCadastro;
+
+    public DateTime DataCadastro
+    {
+        get { return _dataCadastro; }
+        set { _dataCadastro = value; }
+    }
+    
     private string _email;
 
     public string Email
@@ -76,10 +84,12 @@ public class Trabalhador
 
     }
 
-    public Trabalhador(string cpf, string nome, string email, string senha, string pix, bool disponivel)
+    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel)
     {
         this.Cpf = cpf;
         this.Nome = nome;
+        this.DataNascimento = dataNascimento;
+        this.DataCadastro = dataCadastro;
         this.Email = email;
         this.Senha = senha;
         this.Pix = pix;

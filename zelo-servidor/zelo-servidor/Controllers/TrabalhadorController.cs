@@ -23,14 +23,8 @@ public class TrabalhadorController : Controller
 
         Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(Request["trabalhador"]);
 
-        //string enderecoJson = Request["endereco"].Replace("-", "");
-        //Endereco endereco = JsonConvert.DeserializeObject<Endereco>(enderecoJson);
-
-        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}','{trabalhador.Email}', md5('{trabalhador.Senha}'), false)";
+        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}', '{trabalhador.DataCadastro}','{trabalhador.Email}', md5('{trabalhador.Senha}'), false)";
         banco.Executar(comando);
-
-        //EnderecoController enderecoController = new EnderecoController();
-        //enderecoController.AdicionarEndereco(endereco);
 
         banco.Desconectar();
 
