@@ -174,7 +174,7 @@ export class CadastroTrabalhadorPage implements OnInit {
             if (objRes.cadastrado.length == 0) {
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
 
-                this.navCl.navigateForward("/tipo-saque");
+                this.navCl.navigateForward("/trabalhador/confirmar-celular");
             }
             else {
                 objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
@@ -219,10 +219,10 @@ export class CadastroTrabalhadorPage implements OnInit {
                 else if (this.form.dirty) {
                     localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
 
-                    this.navCl.navigateForward("/tipo-saque");
+                    this.navCl.navigateForward("/trabalhador/confirmar-celular");
                 }
                 else {
-                    this.navCl.navigateForward("/tipo-saque");
+                    this.navCl.navigateForward("/trabalhador/confirmar-celular");
                 }
             }
             else {
