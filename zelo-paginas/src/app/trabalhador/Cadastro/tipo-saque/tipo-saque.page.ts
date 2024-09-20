@@ -1,40 +1,95 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaskitoOptions, MaskitoElementPredicate, maskitoTransform } from '@maskito/core';
-
+import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-tipo-saque',
-  templateUrl: './tipo-saque.page.html',
-  styleUrls: ['./tipo-saque.page.scss'],
+	selector: 'app-tipo-saque',
+	templateUrl: './tipo-saque.page.html',
+	styleUrls: ['./tipo-saque.page.scss'],
 })
 export class TipoSaquePage implements OnInit {
+	form = new FormGroup({
+		pix: new FormControl("", Validators.required),
+		valor: new FormControl("", Validators.required)
+	});
 
-  constructor() { }
+	erro: any = {
+		pix: "Pix obrigatório!",
+		valor: "Valor obrigatório!"
+	};
 
-  ngOnInit() {
-  }
+	constructor(private navCl: NavController) { }
 
-  readonly phoneMask: MaskitoOptions = {
-    mask: ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
-  };
+	ngOnInit() {
+	}
 
-  //If you need to set an initial value, you can use maskitoTransform to ensure the value is valid
-  myPhoneNumber = maskitoTransform('5555551212', this.phoneMask);
+	acharNomeControl(control: FormControl) {
+        let controlName = "";
 
-  readonly cardMask: MaskitoOptions = {
-    mask: [
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(4).fill(/\d/),
-      ' ',
-      ...Array(3).fill(/\d/),
-    ],
-  };
+        Object.keys(this.form.controls).forEach(item => {
 
-  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+            if (this.form.get(item) === control) {
+                controlName = item;
+            }
+        });
+
+        return controlName;
+    }
+	
+	validacaoInput(control: FormControl) {
+        let nome = this.acharNomeControl(control);
+        let vlControl = control.value as String;
+
+        if (control.hasError("required")) {
+            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
+        }
+        else if (control.hasError("email")) {
+            this.erro[nome] = `Email inválido!`;
+
+            return;
+        }
+        else {
+            let erros = control.errors;
+
+            if (erros != null) {
+                Object.keys(erros).forEach(erro => {
+                    this.erro[nome] = erros![erro].msg;
+                });
+            }
+            else {
+                this.erro[nome] = "";
+            }
+        }
+    }
+
+	enviar() {
+		let txtPix = document.querySelector("#txtPix") as HTMLIonInputElement;
+		let txtValor = document.querySelector("#txtValor") as HTMLIonInputElement;
+
+		if (this.form.invalid)
+		{
+			this.form.markAllAsTouched();
+		}
+		else
+		{
+			this.form.controls['pix'].value;
+			this.form.controls['valor'].value;
+
+			if (localStorage.getItem("trabalhador")) {
+
+                let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
+				trabalhadorStorage.pix = this.form.controls['pix'].value;
+				trabalhadorStorage.valor = this.form.controls['valor'].value;
+
+				localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
+
+				this.navCl.navigateForward("/categoria");
+				
+			}
+            
+
+		}
+	}
 
 }

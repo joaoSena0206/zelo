@@ -20,6 +20,20 @@ ion-content
     align-items: center;
 }
 
+.erro {
+    color: red;
+    font-size: 14px;
+    margin: 0 25px 14px 25px;
+}
+
+.escondido {
+    display: none;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
 
 .content
 {

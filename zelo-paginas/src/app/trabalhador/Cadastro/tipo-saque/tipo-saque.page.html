@@ -7,25 +7,37 @@
         <h1 class="content__h1">Tipo de saque</h1>
       </ion-text>
 
-      <ion-list class="form" lines="none">
+      <ion-list [formGroup]="form" class="form" lines="none">
 
-        
+
         <ion-text>
           <p style="font-weight: bold; font-size: 17px;">Forma de receber seu dinheiro</p>
         </ion-text>
+
         <ion-item class="ion_item">
-          <ion-input class="form__input" placeholder="Adicione sua chave pix:"></ion-input>
+          <ion-input (ionInput)="validacaoInput(form.controls['pix'])"
+            [class.inputErro]="form.controls['pix'].invalid && (form.controls['pix'].touched || form.controls['pix'].dirty)"
+            formControlName="pix" class="form__input" id="txtPix" placeholder="Adicione sua chave pix:"></ion-input>
         </ion-item>
+        <span
+          [ngClass]="form.controls['pix'].invalid && (form.controls['pix'].touched || form.controls['pix'].dirty) ? 'erro' : 'escondido'">{{
+          erro.pix }}</span>
 
         <ion-text style="margin: 25px 0 0 0;">
           <p style="font-weight: bold; font-size: 17px;">Digite o valor padrão de sua visita</p>
         </ion-text>
+
         <ion-item class="ion_item">
-          <ion-input type="number" placeholder="R$: " class="form__input"></ion-input>
+          <ion-input (ionInput)="validacaoInput(form.controls['valor'])"
+            [class.inputErro]="form.controls['valor'].invalid && (form.controls['valor'].touched || form.controls['valor'].dirty)"
+            type="number" formControlName="valor" id="txtValor" placeholder="R$: " class="form__input"></ion-input>
         </ion-item>
+        <span
+          [ngClass]="form.controls['valor'].invalid && (form.controls['valor'].touched || form.controls['valor'].dirty) ? 'erro' : 'escondido'">{{
+          erro.valor }}</span>
 
         <!-- [maskito]="cardMask" [maskitoElement]="maskPredicate" -->
-        <ion-button class="form__btn">Confirmar</ion-button>
+        <ion-button (click)="enviar()" class="form__btn">Confirmar</ion-button>
 
       </ion-list>
     </div>
