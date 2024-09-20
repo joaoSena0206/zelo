@@ -190,6 +190,11 @@ export class CadastroTrabalhadorPage implements OnInit {
         });
     }
 
+    voltarPag()
+    {
+        this.navCl.back();
+    }
+
     enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();

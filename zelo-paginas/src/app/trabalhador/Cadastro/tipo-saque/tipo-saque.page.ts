@@ -36,6 +36,11 @@ export class TipoSaquePage implements OnInit {
 
         return controlName;
     }
+
+    voltarPag()
+    {
+        this.navCl.back();
+    }
 	
 	validacaoInput(control: FormControl) {
         let nome = this.acharNomeControl(control);
