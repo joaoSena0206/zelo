@@ -158,6 +158,22 @@ export class CadastroTrabalhadorPage implements OnInit {
         this.inputData = moment(data).format("DD/MM/YYYY");
     }
 
+    cadastrarBanco()
+    {
+        let link = "http://localhost:57879/Trabalhador/Adicionar";
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+
+        let dadosForm = new FormData();
+        dadosForm.append("trabalhador", JSON.stringify(trabalhador));
+
+        this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
+            if (res == "ok")
+            {
+                this.navCl.navigateForward("/trabalhador/confirmar-celular");
+            }
+        });
+    }
+
     checarCadastro(trabalhador: any, dado: string = "padrão") {
         let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
@@ -174,7 +190,7 @@ export class CadastroTrabalhadorPage implements OnInit {
             if (objRes.cadastrado.length == 0) {
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
 
-                this.navCl.navigateForward("/trabalhador/confirmar-celular");
+                this.cadastrarBanco();
             }
             else {
                 objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
@@ -196,10 +212,13 @@ export class CadastroTrabalhadorPage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
+            let dataAtual = new Date();
+
             let trabalhador = {
                 Cpf: this.form.controls['cpf'].value?.replace(/\./g, "").replace("-", ""),
                 Nome: this.form.controls['nome'].value,
                 DataNascimento: this.form.controls['data'].value?.substring(0, 10),
+                DataCadastro: dataAtual.toISOString().substring(0, 10),
                 Email: this.form.controls['email'].value,
                 Senha: this.form.controls['senhas'].controls['senha'].value,
             };
@@ -219,10 +238,10 @@ export class CadastroTrabalhadorPage implements OnInit {
                 else if (this.form.dirty) {
                     localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
 
-                    this.navCl.navigateForward("/trabalhador/confirmar-celular");
+                    this.cadastrarBanco();
                 }
                 else {
-                    this.navCl.navigateForward("/trabalhador/confirmar-celular");
+                    this.cadastrarBanco();
                 }
             }
             else {
