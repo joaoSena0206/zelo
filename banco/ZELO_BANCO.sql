@@ -41,7 +41,7 @@ Create Table trabalhador
 (
 	cd_cpf_trabalhador CHAR(11),
 	nm_trabalhador VARCHAR(100),
-	dt_nascimento_trabalhador VARCHAR(10),
+	dt_nascimento_trabalhador DATE,
 	dt_cadastro_trabalhador DATE,
 	nm_email_trabalhador VARCHAR(30),
 	nm_senha_trabalhador VARCHAR(255),
@@ -55,7 +55,6 @@ Create Table trabalhador
 Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false);
 INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true);
 INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true);
-
 
 CREATE TABLE patrocinio
 (	
@@ -94,7 +93,7 @@ Create Table cliente
 (
 	cd_cpf_cliente CHAR(11),
 	nm_cliente VARCHAR(100),
-	dt_nascimento_cliente VARCHAR(10),
+	dt_nascimento_cliente DATE,
 	nm_email_cliente VARCHAR(30),
 	nm_senha_cliente VARCHAR(255),
 	ic_email_confirmado_cliente BOOL,
@@ -102,7 +101,6 @@ Create Table cliente
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
-insert into cliente values ('50082480818', 'João Sena', '2006-05-24', 'joaosena0206@gmail.com', md5('Joao1234@'), true);  
 
 
 
@@ -118,7 +116,7 @@ CREATE TABLE confirmacao
 	CONSTRAINT fk_confirmacao_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
-DELETE FROM confirmacao WHERE cd_cpf_cliente = '50082480818';
+SELECT * FROM confirmacao;
 
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
 Create Table solicitacao_servico
@@ -137,7 +135,7 @@ Create Table solicitacao_servico
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
     CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
-Insert into solicitacao_servico values(10, '535305697', '50082480818', 20/04/2024, 'Cano da pia está quebrado!', 'Excelente,bem feito.', 4, 'Muito simpático.', 5); 
+
 
 -- TABELA ENDERECO CLIENTE --
 Create Table endereco
@@ -166,3 +164,4 @@ Create table certificado
 );
 
 Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
+
