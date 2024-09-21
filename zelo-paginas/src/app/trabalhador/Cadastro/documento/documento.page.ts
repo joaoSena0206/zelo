@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-documento',
-  templateUrl: './documento.page.html',
-  styleUrls: ['./documento.page.scss'],
+    selector: 'app-documento',
+    templateUrl: './documento.page.html',
+    styleUrls: ['./documento.page.scss'],
 })
 export class DocumentoPage implements OnInit {
 
-  constructor() { }
+    constructor(private navCl: NavController) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    voltarPag()
+    {
+        this.navCl.back();
+    }
 
 }

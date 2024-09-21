@@ -24,6 +24,16 @@ export class TipoSaquePage implements OnInit {
     ngOnInit() {
     }
 
+    ngAfterViewInit()
+    {
+        if (localStorage.getItem("trabalhador"))
+        {
+            let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+            this.form.controls['pix'].setValue(trabalhador.pix);
+            this.form.controls['valor'].setValue(trabalhador.valor);    
+        }
+    }
+
     acharNomeControl(control: FormControl) {
         let controlName = "";
 
@@ -83,7 +93,7 @@ export class TipoSaquePage implements OnInit {
 
                 let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
                 trabalhadorStorage.pix = this.form.controls['pix'].value;
-                trabalhadorStorage.valor = this.form.controls['valor'].value?.replace(".", ",");
+                trabalhadorStorage.valor = this.form.controls['valor'].value?.replace(",", ".");
 
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
 
