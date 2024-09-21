@@ -4,27 +4,27 @@ import { MaskitoOptions, MaskitoElementPredicate, maskitoTransform } from '@mask
 import { NavController } from '@ionic/angular';
 
 @Component({
-	selector: 'app-tipo-saque',
-	templateUrl: './tipo-saque.page.html',
-	styleUrls: ['./tipo-saque.page.scss'],
+    selector: 'app-tipo-saque',
+    templateUrl: './tipo-saque.page.html',
+    styleUrls: ['./tipo-saque.page.scss'],
 })
 export class TipoSaquePage implements OnInit {
-	form = new FormGroup({
-		pix: new FormControl("", Validators.required),
-		valor: new FormControl("", Validators.required)
-	});
+    form = new FormGroup({
+        pix: new FormControl("", Validators.required),
+        valor: new FormControl("", Validators.required)
+    });
 
-	erro: any = {
-		pix: "Pix obrigatório!",
-		valor: "Valor obrigatório!"
-	};
+    erro: any = {
+        pix: "Pix obrigatório!",
+        valor: "Valor obrigatório!"
+    };
 
-	constructor(private navCl: NavController) { }
+    constructor(private navCl: NavController) { }
 
-	ngOnInit() {
-	}
+    ngOnInit() {
+    }
 
-	acharNomeControl(control: FormControl) {
+    acharNomeControl(control: FormControl) {
         let controlName = "";
 
         Object.keys(this.form.controls).forEach(item => {
@@ -37,12 +37,11 @@ export class TipoSaquePage implements OnInit {
         return controlName;
     }
 
-    voltarPag()
-    {
+    voltarPag() {
         this.navCl.back();
     }
-	
-	validacaoInput(control: FormControl) {
+
+    validacaoInput(control: FormControl) {
         let nome = this.acharNomeControl(control);
         let vlControl = control.value as String;
 
@@ -68,38 +67,29 @@ export class TipoSaquePage implements OnInit {
         }
     }
 
-    filtroInput(input: HTMLIonInputElement)
-    {
+    filtroInput(input: HTMLIonInputElement) {
         input.value = input.value?.toString().replace(/[^0-9.,]+|(?<=\.\d{2})\d+|(?<=,\d{2})\d+/g, "");
     }
 
-	enviar() {
-		let txtPix = document.querySelector("#txtPix") as HTMLIonInputElement;
-		let txtValor = document.querySelector("#txtValor") as HTMLIonInputElement;
+    enviar() {
+        let txtPix = document.querySelector("#txtPix") as HTMLIonInputElement;
+        let txtValor = document.querySelector("#txtValor") as HTMLIonInputElement;
 
-		if (this.form.invalid)
-		{
-			this.form.markAllAsTouched();
-		}
-		else
-		{
-			this.form.controls['pix'].value;
-			this.form.controls['valor'].value;
-
-			if (localStorage.getItem("trabalhador")) {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+        }
+        else {
+            if (localStorage.getItem("trabalhador")) {
 
                 let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
-				trabalhadorStorage.pix = this.form.controls['pix'].value;
-				trabalhadorStorage.valor = this.form.controls['valor'].value;
+                trabalhadorStorage.pix = this.form.controls['pix'].value;
+                trabalhadorStorage.valor = this.form.controls['valor'].value?.replace(".", ",");
 
-				localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
+                localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
 
-				this.navCl.navigateForward("/categoria");
-				
-			}
-            
-
-		}
-	}
+                this.navCl.navigateForward("/categoria");
+            }
+        }
+    }
 
 }
