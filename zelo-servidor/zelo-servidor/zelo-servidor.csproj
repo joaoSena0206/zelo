@@ -147,6 +147,8 @@
     <Content Include="Imgs\Servicos\4.png" />
     <Content Include="Imgs\Servicos\5.png" />
     <Content Include="Imgs\Servicos\8.png" />
+    <Content Include="Imgs\Trabalhadores\56787654567.jpg" />
+    <Content Include="Imgs\Trabalhadores\56787654566.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +157,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ConfirmacaoController.cs" />
     <Compile Include="Controllers\EnderecoController.cs" />
+    <Compile Include="Controllers\PatrocinioController.cs" />
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Models\CategoriaServico.cs" />
     <Compile Include="Models\Patrocinio.cs" />
@@ -179,9 +182,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Imgs\Trabalhadores\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
