@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { noop } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-categoria',
@@ -8,27 +9,25 @@ import { noop } from 'rxjs';
 })
 export class CategoriaPage implements OnInit {
 
-  constructor() {
-    
-   }
+  constructor(private navCl: NavController) {
+
+  }
 
   ngOnInit() {
     let listaBotao = document.querySelectorAll('.geralCard ion-card ion-button')
 
     for (let i = 0; i < listaBotao.length; i++) {
-      
+
       listaBotao[i].addEventListener('click', marcado)
 
-      function marcado(){
+      function marcado() {
         let botao = listaBotao[i];
         let texto = botao.textContent;
 
-        if(botao.id == 'marcado')
-        {
+        if (botao.id == 'marcado') {
           botao.id = 'desmarcado';
         }
-        else
-        {
+        else {
           botao.id = 'marcado';
         }
       }
@@ -36,50 +35,36 @@ export class CategoriaPage implements OnInit {
   }
 
 
-  Salvar(){
+  enviar() {
 
     let listaBotao2 = document.querySelectorAll('.geralCard ion-card ion-button')
     let texto: any;
-    let lista: any = []
+    let categorias: any = []
 
     for (let i = 0; i < listaBotao2.length; i++) {
 
-        if(listaBotao2[i].id == 'marcado')
-        {
-          texto = listaBotao2[i].textContent;
-          lista.push(texto);
-        }
+      if (listaBotao2[i].id == 'marcado') {
+        texto = listaBotao2[i].textContent;
+        categorias.push(texto);
+      }
+
     }
 
-    if(lista.length == 0)
+    if (categorias.length == 0) 
     {
       console.log('erro')
     }
+    else 
+    {
+      if (localStorage.getItem("trabalhador")) {
 
-    let categoria = lista;
-    
-    async function enviarDadosUsuario(categoria: any) {
-        try
-        {
-            const formData = new FormData;
-            formData.append('categoria', categoria);
+        let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
+        trabalhadorStorage.categorias = categorias;
 
-            const response = await fetch('http://www.nsa.sp.gov.br', {
-                method: 'post',
-                body: formData
-            });
+        localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
 
-            const data = await response.json();
-            console.log(data);
-        }
-        catch (error)
-        {
-            console.log('erro ao buscar os dados!', error);
-        }
+        this.navCl.navigateForward("/documento");
+      }
     }
-
-    enviarDadosUsuario(categoria);
-
   }
-
 }
