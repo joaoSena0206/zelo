@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Sanitizer, SecurityContext } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 
 @Component({
     selector: 'app-documento',
@@ -11,7 +13,7 @@ export class DocumentoPage implements OnInit {
     arquivos: any = [];
     imgSrc: any;
 
-    constructor(private navCl: NavController) { }
+    constructor(private navCl: NavController, private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
     }
@@ -28,17 +30,30 @@ export class DocumentoPage implements OnInit {
             });
             const arquivo = resultado.files[0].blob;
 
-            let obj = {
-                arquivo: arquivo,
-                mostrar: null
+            interface objSafeUrl {
+                arquivo: any,
+                img: any,
+                pdf: any
+            }
+
+            let obj: objSafeUrl = {
+                arquivo: null,
+                img: null,
+                pdf: null
             };
 
-            if (arquivo)
-            {
+            obj.arquivo = arquivo;
+
+            if (arquivo) {
                 const reader = new FileReader();
 
                 reader.onload = (e: any) => {
-                    obj.mostrar = e.target.result;
+                    if (arquivo.type == "image/png" || arquivo.type == "image/jpeg") {
+                        obj.img = e.target.result;
+                    }
+                    else {
+                        obj.pdf = this.sanitizer.bypassSecurityTrustResourceUrl(e.target.result)!;
+                    }
                 };
 
                 reader.readAsDataURL(arquivo);
@@ -48,5 +63,19 @@ export class DocumentoPage implements OnInit {
         };
 
         pegarArquivos();
+    }
+
+    mostrarArquivo(elem: any) {
+        for (let i = 0; i < this.arquivos.length; i++) {
+            if (this.arquivos[i].img === elem.src || this.arquivos[i].pdf === elem.data) {
+                const open = async () => {
+                    await FileOpener.openFile({
+                        blob: this.arquivos[i].arquivo
+                    });
+                };
+
+                open();
+            }
+        }
     }
 }
