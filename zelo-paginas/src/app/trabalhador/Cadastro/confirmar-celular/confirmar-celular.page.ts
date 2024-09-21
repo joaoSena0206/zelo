@@ -127,7 +127,6 @@ export class ConfirmarCelularPage implements OnInit {
 
                 this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
                     if (res == "ok") {
-                        localStorage.removeItem("trabalhador");
                         localStorage.removeItem("opcao");
 
                         this.navCl.navigateRoot("/tipo-saque");
