@@ -25,7 +25,11 @@
                         <p style="font-size: 17px; color: black; margin: 10px 0;">Certificado ou especialização</p>
                     </ion-text>
 
-                    <ion-button class="Foto__btn" fill="clear">
+                    <div class="certificados" *ngFor="let arquivo of arquivos">
+                        <img class="imgCertificado" [src]="arquivo.mostrar">
+                    </div>
+
+                    <ion-button (click)="abrirArquivo()" class="Foto__btn" fill="clear">
                         <ion-icon class="arquivo" name="document-outline"></ion-icon>
                     </ion-button>
                 </ion-card>
