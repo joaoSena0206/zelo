@@ -110,7 +110,7 @@ public class ConfirmacaoController : Controller
 
         string comando = $"SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '{confirmacao.CpfCliente}';";
 
-        if (confirmacao.CpfCliente == "")
+        if (confirmacao.CpfCliente == "" || confirmacao.CpfCliente == null)
         {
             comando = $"SELECT nm_email_trabalhador FROM trabalhador WHERE cd_cpf_trabalhador = '{confirmacao.CpfTrabalhador}';";
         }
@@ -130,14 +130,14 @@ public class ConfirmacaoController : Controller
         #region Cria e envia o email
 
         SmtpClient cliente = new SmtpClient();
-        cliente.Host = "smtp-mail.outlook.com";
+        cliente.Host = "smtp.gmail.com";
         cliente.Port = 587;
         cliente.EnableSsl = true;
-        cliente.Credentials = new NetworkCredential("zelocontato@hotmail.com", "zelo1234");
+        cliente.Credentials = new NetworkCredential("zelo.ccontato@gmail.com", "cuba vbdx lqag qtmn");
 
         MailMessage email = new MailMessage();
         email.To.Add(emailUsuario);
-        email.From = new MailAddress("zelocontato@hotmail.com", "Zelo", System.Text.Encoding.UTF8);
+        email.From = new MailAddress("zelo.ccontato@gmail.com", "Zelo", System.Text.Encoding.UTF8);
 
         email.Subject = "Confirmação de email";
         email.SubjectEncoding = System.Text.Encoding.UTF8;

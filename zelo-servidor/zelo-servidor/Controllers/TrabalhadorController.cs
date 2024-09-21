@@ -23,7 +23,7 @@ public class TrabalhadorController : Controller
 
         Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(Request["trabalhador"]);
 
-        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento}', '{trabalhador.DataCadastro}','{trabalhador.Email}', md5('{trabalhador.Senha}'), false)";
+        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false)";
         banco.Executar(comando);
 
         banco.Desconectar();
@@ -130,7 +130,7 @@ public class TrabalhadorController : Controller
         {
             trabalhador.Cpf = dados.GetString(0);
             trabalhador.Nome = dados.GetString(1);
-            trabalhador.DataNascimento = dados.GetString(2);
+            trabalhador.DataNascimento = dados.GetDateTime(2);
             trabalhador.Email = email;
             trabalhador.Confirmado = dados.GetBoolean(3);
             trabalhador.Pix = dados.GetString(4);
