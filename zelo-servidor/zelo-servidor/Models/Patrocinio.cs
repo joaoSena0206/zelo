@@ -6,12 +6,12 @@ using System.Web;
 
 public class Patrocinio
 {
-	private string _cpfTrabalhador;
+	private Trabalhador _trabalhador;
 
-	public string CpfTrabalhador
+	public Trabalhador Trabalhador
 	{
-		get { return _cpfTrabalhador; }
-		set { _cpfTrabalhador = value; }
+		get { return _trabalhador; }
+		set { _trabalhador = value; }
 	}
 
 	private int _qtSemanas;
@@ -30,17 +30,35 @@ public class Patrocinio
 		set { _valor = value; }
 	}
 
+	private DateTime _dtAdesao;
+
+	public DateTime DtAdesao
+	{
+		get { return _dtAdesao; }
+		set { _dtAdesao = value; }
+	}
+
+	private string _servico;
+
+	public string Servico
+	{
+		get { return _servico; }
+		set { _servico = value; }
+	}
+
+
+
 	public Patrocinio()
 	{
 
 	}
 
-	public Patrocinio(string cpf, int semanas, string valor)
+	public Patrocinio(Trabalhador trabalhador, int semanas, string valor, DateTime dataAdesao, string servico)
 	{
-		this.CpfTrabalhador = cpf;
+		this.Trabalhador = trabalhador;
 		this.QtSemanas = semanas;
+		this.Valor = valor;
+		this.DtAdesao = dataAdesao;
+		this.Servico = servico;
 	}
-
-
-
 }
