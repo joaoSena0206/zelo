@@ -61,32 +61,35 @@ CREATE TABLE patrocinio
 	cd_cpf_trabalhador CHAR(11),
 	qt_semanas_patrocinado INT,
 	vl_patrocinio DECIMAL,
+	dt_adesao_patrocinio DATE,
 
 	CONSTRAINT pk_patrocinio PRIMARY KEY (cd_cpf_trabalhador),
 	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
 INSERT INTO patrocinio VALUE(
-	'56787654567', 2, 200
+	'56787654567', 2, 200, '2024-09-21'
 );
 
 
 INSERT INTO patrocinio VALUE(
-	'56787654566',1, 100
+	'56787654566', 1, 100, '2024-09-20'
 );
-
 
 -- LIGAÇÃO TABELA SERVICO TRABALHADOR --
 Create Table servico_trabalhador
 (
 	cd_cpf_trabalhador CHAR(11),
 	cd_servico INT,
-	vl_visita_trabalhador NUMERIC,
+	vl_visita_trabalhador DECIMAL,
 
 	CONSTRAINT fk_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
 	CONSTRAINT fk_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
 Insert into servico_trabalhador values('535305697', 1, 25);
+Insert into servico_trabalhador values('56787654567', 2, 30.50);
+Insert into servico_trabalhador values('56787654566', 7, 25);
+
 
 -- TABELA CLIENTE --
 Create Table cliente
