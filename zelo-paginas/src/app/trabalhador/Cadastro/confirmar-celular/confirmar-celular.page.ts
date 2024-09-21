@@ -92,11 +92,11 @@ export class ConfirmarCelularPage implements OnInit {
         }
 
         let link = "http://localhost:57879/Confirmacao/GerarCodigo";
-        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.Cpf);
-        dadosForm.append("tipo", "cliente");
+        dadosForm.append("cpf", trabalhador.Cpf);
+        dadosForm.append("tipo", "trabalhador");
 
         this.http.post(link, dadosForm).subscribe(res => {
             let resposta: any = res;
@@ -120,17 +120,17 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input5"].value;
 
             if (codigo == this.codigoAleatorio) {
-                let link = "http://localhost:57879/Cliente/ConfirmarEmail";
-                let cliente = JSON.parse(localStorage.getItem("cliente")!);
+                let link = "http://localhost:57879/Trabalhador/ConfirmarEmail";
+                let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
                 let dadosForm = new FormData();
-                dadosForm.append("cpf", cliente.cpf);
+                dadosForm.append("cpf", trabalhador.Cpf);
 
                 this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
                     if (res == "ok") {
-                        localStorage.removeItem("cliente");
+                        localStorage.removeItem("trabalhador");
                         localStorage.removeItem("opcao");
 
-                        this.navCl.navigateRoot("/login-cliente");
+                        this.navCl.navigateRoot("/tipo-saque");
                     }
                 });
             }
