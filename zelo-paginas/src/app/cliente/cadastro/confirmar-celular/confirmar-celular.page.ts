@@ -123,7 +123,7 @@ export class ConfirmarCelularPage implements OnInit {
                 let link = "http://localhost:57879/Cliente/ConfirmarEmail";
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let dadosForm = new FormData();
-                dadosForm.append("cpf", cliente.cpf);
+                dadosForm.append("cpf", cliente.Cpf);
 
                 this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
                     if (res == "ok") {
