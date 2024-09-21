@@ -116,8 +116,6 @@ CREATE TABLE confirmacao
 	CONSTRAINT fk_confirmacao_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
-SELECT * FROM confirmacao;
-
 -- LIGAÇÃO TABELA SERVICO CLIENTE --
 Create Table solicitacao_servico
 (
