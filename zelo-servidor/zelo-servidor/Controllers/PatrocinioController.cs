@@ -6,7 +6,7 @@ using System.Web;
 
 public class PatrocinioController
 {
-    public string CarregarPatrocinados()
+    public List<Patrocinio> CarregarPatrocinados()
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -26,7 +26,7 @@ public class PatrocinioController
         {
             while (dados.Read())
             {
-                Patrocinio patrocinio = new Patrocinio()
+                Patrocinio patrocinio = new Patrocinio();
                 Trabalhador trabalhador = new Trabalhador();
 
                 trabalhador.Cpf = dados.GetString(0);
@@ -36,7 +36,7 @@ public class PatrocinioController
                 patrocinio.Trabalhador = trabalhador;
                 patrocinio.Servico = dados.GetString(3);
 
-                listaPatrocinio.Add(patrocinio)
+                listaPatrocinio.Add(patrocinio);
             }
         }
 

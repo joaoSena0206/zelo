@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { noop } from 'rxjs';
 import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-categoria',
@@ -9,7 +10,7 @@ import { NavController } from '@ionic/angular';
 })
 export class CategoriaPage implements OnInit {
 
-    constructor(private navCl: NavController) {
+    constructor(private navCl: NavController, private http: HttpClient) {
 
     }
 
@@ -58,6 +59,24 @@ export class CategoriaPage implements OnInit {
         }
     }
 
+    listaCategorias: any = []
+    Nome: any = []
+
+    ionViewDidEnter(){
+        this.http.get('http://localhost:57879/Servico/CarregarServicos', {responseType: 'text'}).subscribe(res => {
+            console.log(res);
+
+            this.listaCategorias = res;
+            this.Nome = this.listaCategorias;
+
+            console.log(`Nome: ${this.listaCategorias.nome}`);
+
+            for (const pessoa of this.listaCategorias) {
+                console.log(`Nome: ${pessoa.nome}`);
+            }
+
+        })
+    }
 
     enviar() {
 

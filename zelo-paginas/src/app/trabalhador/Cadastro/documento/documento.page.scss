@@ -21,10 +21,21 @@ ion-content
 
 .certificados
 {
+    color: black;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 15px;
+}
+
+.certificados ion-icon
+{
+    font-size: 22px;
+}
+
+.certificados img
+{
+    width: 22px;
+    height: 22px;
 }
 
 .imgCertificado
