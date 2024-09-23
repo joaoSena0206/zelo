@@ -105,8 +105,6 @@ Create Table cliente
 );
 
 
-
-
 CREATE TABLE confirmacao
 (
 	cd_confirmacao INT,
@@ -136,7 +134,6 @@ Create Table solicitacao_servico
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
     CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
-
 
 -- TABELA ENDERECO CLIENTE --
 Create Table endereco
