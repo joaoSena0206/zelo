@@ -46,11 +46,11 @@ export class InicialPage implements OnInit {
 
                 this.situacao = 'Indisponível';
             }
-        })
-
+        });
+        
         this.http.get('http://localhost:57879/SolicitacaoServico/CarregarUltimosPedidos', {responseType: 'text'}).subscribe(res => {
             console.log(res)
-        })
+        });
 
         const estrelas = document.querySelectorAll(".estrelas ion-icon");
 
