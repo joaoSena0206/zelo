@@ -124,9 +124,9 @@ Create Table solicitacao_servico
 	dt_solicitacao_servico DATE,
 	ds_servico TEXT,
 	ds_comentario_avaliacao_servico TEXT,
-	qt_estrelas_avaliacao_servico INT,
+	qt_estrelas_avaliacao_servico DECIMAL,
 	ds_comentario_avaliacao_cliente TEXT,
-	qt_estrelas_avaliacao_cliente INT,
+	qt_estrelas_avaliacao_cliente DECIMAL,
 
     CONSTRAINT pk_solicitacao_servico PRIMARY KEY (cd_solicitacao_servico),
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
