@@ -204,5 +204,37 @@ public class TrabalhadorController : Controller
         #endregion
     }
 
-    
+    [HttpPost]
+    [Route("AdicionarCertificado")]
+    public void AdicionarCertificado()
+    {
+        string cpf = Request["cpf"];
+
+        #region Cria uma pasta com o cpf do trabalhador
+
+        string caminhoPasta = Server.MapPath("~/Certificados/" + cpf);
+
+        if (!Directory.Exists(caminhoPasta))
+        {
+            Directory.CreateDirectory(caminhoPasta);
+        }
+
+        #endregion
+
+        #region Lê o arquivo e grava na pasta do trabalhador
+
+        for (int i = 0; i < Request.Files.Count; i++)
+        {
+            HttpPostedFileBase file = Request.Files[i];
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string caminho = Path.Combine(Server.MapPath("~/Certificados/" + cpf), Path.GetFileName(file.FileName));
+
+                file.SaveAs(caminho);
+            }
+        }
+
+        #endregion
+    }
 }

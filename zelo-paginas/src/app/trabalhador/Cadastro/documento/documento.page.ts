@@ -85,4 +85,9 @@ export class DocumentoPage implements OnInit {
             });
         }
     }
+
+    removerArquivo(event: any)
+    {
+        console.log(event.parentElement.children[0]);
+    }
 }

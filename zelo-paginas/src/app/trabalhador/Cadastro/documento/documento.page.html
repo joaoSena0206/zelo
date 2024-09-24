@@ -33,7 +33,7 @@
                                 <p>{{ arquivo.arquivo.name }}</p>
                             </div>
 
-                            <ion-icon class="div_icones__icone" name="trash-outline"></ion-icon>
+                            <ion-icon (click)="removerArquivo($event.target)" class="div_icones__icone" name="trash-outline"></ion-icon>
                         </div>
 
                         <div *ngIf="arquivo.pdf" class="certificados__div">
