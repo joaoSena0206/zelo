@@ -22,3 +22,9 @@ INSERT INTO solicitacao_servico VALUES
 );
 
 select SS.ds_servico, C.nm_cliente from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = 56787654364;
+
+UPDATE trabalhador SET nm_pix_trabalhador = '50082480818', vl_visita_trabalhador = 25.50
+WHERE cd_cpf_trabalhador = '50082480818';
+
+SELECT IFNULL(AVG(qt_estrelas_avaliacao_servico), 5) FROM solicitacao_servico
+WHERE cd_cpf_trabalhador = '50082480818';

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class InicialPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     categorias: any;
+    patrocinados: any;
 
     constructor(private http: HttpClient) { }
 
@@ -16,6 +17,22 @@ export class InicialPage implements OnInit {
     }
 
     ngAfterViewInit() {
+        this.carregarCategorias();
+        this.carregarPatrocinados();
+    }
+
+    carregarPatrocinados()
+    {
+        let link = "http://localhost:57879/Patrocinio/CarregarPatrocinados";
+
+        this.http.get(link).subscribe(res => {
+            this.patrocinados = res;
+
+            console.log(this.patrocinados);
+        });
+    }
+
+    carregarCategorias() {
         let link = "http://localhost:57879/CategoriaServico/CarregarCategoria";
 
         this.http.get(link).subscribe(res => {

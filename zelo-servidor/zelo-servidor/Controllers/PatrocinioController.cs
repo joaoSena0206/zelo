@@ -1,12 +1,17 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-public class PatrocinioController
+[RoutePrefix("Patrocinio")]
+public class PatrocinioController : Controller
 {
-    public List<Patrocinio> CarregarPatrocinados()
+    [HttpGet]
+    [Route("CarregarPatrocinados")]
+    public string CarregarPatrocinados()
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -21,6 +26,7 @@ public class PatrocinioController
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<Patrocinio> listaPatrocinio = new List<Patrocinio>();
+        TrabalhadorController trabalhadorController = new TrabalhadorController();
 
         if (dados != null)
         {
@@ -32,6 +38,7 @@ public class PatrocinioController
                 trabalhador.Cpf = dados.GetString(0);
                 trabalhador.Nome = dados.GetString(1);
                 trabalhador.DataCadastro = dados.GetDateTime(2);
+                trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
 
                 patrocinio.Trabalhador = trabalhador;
                 patrocinio.Servico = dados.GetString(3);
@@ -43,7 +50,7 @@ public class PatrocinioController
         dados.Close();
         banco.Desconectar();
 
-        return listaPatrocinio;
+        return JsonConvert.SerializeObject(listaPatrocinio, Formatting.Indented);
 
         #endregion
     }

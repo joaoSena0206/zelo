@@ -31,16 +31,16 @@
         </div>
 
         <div class="div_trabalhadores">
-            <ion-card>
+            <ion-card *ngFor="let patrocinado of patrocinados">
                 <figure>
-                    <img draggable="false" src="../../../assets/icon/cliente/trabalhador_eletricista.jpg" alt="">
+                    <img draggable="false" [src]="'http://localhost:57879/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'" alt="">
                     <div class="info_trabalhador">
                         <div class="fundoLaranja"></div>
                         <div class="divInfos">
-                            <p class="nome_trabalhador">Robson Santos</p>
-                            <p>Profissional ZELO desde 2020</p>
+                            <p class="nome_trabalhador">{{ patrocinado.Trabalhador.Nome }}</p>
+                            <p>Profissional ZELO desde {{ patrocinado.Trabalhador.DataCadastro.substring(0, 4) }}</p>
                             <div class="avaliacaoDiv">
-                                <p>5.0</p>
+                                <p>{{ patrocinado.Trabalhador.Avaliacao.toFixed(1) }}</p>
                                 <div class="estrelas">
                                     <ion-icon name="star"></ion-icon>
                                 </div>
@@ -53,18 +53,18 @@
                     <div>
                         <ion-icon class="ferramenta-chave"
                             src="../../../../assets/icon/cliente/ferramenta-chave.svg"></ion-icon>
-                        <h1>Assistência Técnica</h1>
+                        <h1>{{ patrocinado.Servico }}</h1>
                     </div>
 
                     <div class="divAnuncioInfo">
-                        <p>Soluções rápidas e eficientes para todos os seus dispositivos.</p>
+                        <p>Soluções rápidas e eficientes.</p>
 
                         <ion-button>Ver trabalhador</ion-button>
                     </div>
                 </div>
             </ion-card>
 
-            <ion-card>
+            <!-- <ion-card>
                 <figure>
                     <img draggable="false" src="../../../assets/icon/cliente/trabalhador_pintor.jpg" alt="">
                     <div class="info_trabalhador">
@@ -95,7 +95,7 @@
                         <ion-button>Ver trabalhador</ion-button>
                     </div>
                 </div>
-            </ion-card>
+            </ion-card> -->
         </div>
 
 
