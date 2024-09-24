@@ -78,13 +78,22 @@ public class Trabalhador
         set { _confirmado = value; }
     }
 
+    private decimal _avaliacao;
+
+    public decimal Avaliacao
+    {
+        get { return _avaliacao; }
+        set { _avaliacao = value; }
+    }
+
+
 
     public Trabalhador()
     {
 
     }
 
-    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel)
+    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao)
     {
         this.Cpf = cpf;
         this.Nome = nome;
@@ -94,5 +103,6 @@ public class Trabalhador
         this.Senha = senha;
         this.Pix = pix;
         this.Disponivel = disponivel;
+        this.Avaliacao = avaliacao;
     }
 }
