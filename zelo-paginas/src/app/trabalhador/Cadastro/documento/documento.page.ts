@@ -32,12 +32,14 @@ export class DocumentoPage implements OnInit {
             const arquivo = resultado.files[0].blob;
 
             interface objSafeUrl {
+                id: any,
                 arquivo: any,
                 img: any,
                 pdf: any
             }
 
             let obj: objSafeUrl = {
+                id: null,
                 arquivo: null,
                 img: null,
                 pdf: null
@@ -88,6 +90,14 @@ export class DocumentoPage implements OnInit {
 
     removerArquivo(event: any)
     {
-        console.log(event.parentElement.children[0]);
+        let nomeArquivo = event.parentElement.children[0].children[1].textContent;
+
+        for (let i = 0; i < this.arquivos.length; i++)
+        {
+            if (nomeArquivo == this.arquivos[i].arquivo.name)
+            {
+                this.arquivos.splice(i, 1);
+            }
+        }
     }
 }
