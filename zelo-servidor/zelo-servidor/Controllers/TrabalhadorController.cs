@@ -255,4 +255,30 @@ public class TrabalhadorController : Controller
 
         banco.Desconectar();
     }
+
+    public decimal PegarEstrelas(string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        #region Pega a média de avaliação do trabalhador no banco
+
+        string comando = $@"SELECT IFNULL(AVG(qt_estrelas_avaliacao_servico), 5) FROM solicitacao_servico
+        WHERE cd_cpf_trabalhador = '{cpf}'";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        decimal estrelas = 0;
+
+        if (dados != null && dados.Read())
+        {
+            estrelas = dados.GetDecimal(0);
+        }
+
+        dados.Close();
+        banco.Desconectar();
+
+        return estrelas;
+
+        #endregion
+    }
 }
