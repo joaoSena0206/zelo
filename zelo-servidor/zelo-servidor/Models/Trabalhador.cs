@@ -86,6 +86,15 @@ public class Trabalhador
         set { _avaliacao = value; }
     }
 
+    private decimal _valorVisita;
+
+    public decimal ValorVisita
+    {
+        get { return _valorVisita; }
+        set { _valorVisita = value; }
+    }
+
+
 
 
     public Trabalhador()
@@ -93,7 +102,7 @@ public class Trabalhador
 
     }
 
-    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao)
+    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita)
     {
         this.Cpf = cpf;
         this.Nome = nome;
@@ -104,5 +113,6 @@ public class Trabalhador
         this.Pix = pix;
         this.Disponivel = disponivel;
         this.Avaliacao = avaliacao;
+        this.ValorVisita = valorVisita;
     }
 }
