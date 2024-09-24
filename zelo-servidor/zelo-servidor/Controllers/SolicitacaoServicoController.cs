@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
 [RoutePrefix("SolicitacaoServico")]
-public class SolicitacaoServicoController
+public class SolicitacaoServicoController : Controller
 {
     [HttpGet]
     [Route("CarregarUltimosPedidos")]
