@@ -52,7 +52,7 @@ export class InicialPage implements OnInit {
             console.log(res)
 
             const lista = JSON.parse(res);
-            console.log(lista[0]['Cliente']['Nome'])
+            console.log(lista)
 
             const areaUltimosPedidos = document.querySelector('.local_ultimos_trabalhos');
 
@@ -60,11 +60,14 @@ export class InicialPage implements OnInit {
 
                 const divUltimosPedidos = document.createElement('ion-card') as HTMLIonCardElement;
                 divUltimosPedidos.classList.add('oi');
+                
+                divUltimosPedidos.innerHTML +=  `<img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
+                                                <p class="nm_cliente_pedido">${lista[i]['Cliente']['Nome']}</p>
+                                                <p class="ds_pedido">${lista[i]['DsServico']}</p>`;
+
                 areaUltimosPedidos?.appendChild(divUltimosPedidos);
 
-                divUltimosPedidos.innerHTML =  `<img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
-                                                <p class="nm_cliente_pedido">${lista[i]['Cliente']['Nome']}</p>
-                                                <p class="ds_pedido">Minha geladeira está descongelando sozinha...</p>`;
+                
 
             }
             
