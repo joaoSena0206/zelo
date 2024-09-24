@@ -26,14 +26,24 @@
                     </ion-text>
 
                     <div class="certificados" *ngFor="let arquivo of arquivos">
-                        <div (click)="mostrarArquivo($event.target)" *ngIf="arquivo.img" style="display: flex; align-items: center;">
-                            <ion-icon style="margin-right: 10px;" name="image-outline"></ion-icon>
-                            <p>{{ arquivo.arquivo.name }}</p>
+                        <div *ngIf="arquivo.img" class="certificados__div">
+                            <div class="div_icones">
+                                <ion-icon style="margin-right: 10px;" class="div_icones__icone"
+                                    name="image-outline"></ion-icon>
+                                <p>{{ arquivo.arquivo.name }}</p>
+                            </div>
+
+                            <ion-icon class="div_icones__icone" name="trash-outline"></ion-icon>
                         </div>
 
-                        <div *ngIf="arquivo.pdf" style="display: flex; align-items: center;">
-                            <ion-icon style="margin-right: 10px;" name="document-outline"></ion-icon>
-                            <p>{{ arquivo.arquivo.name }}</p>
+                        <div *ngIf="arquivo.pdf" class="certificados__div">
+                            <div class="div_icones">
+                                <ion-icon style="margin-right: 10px;" class="div_icones__icone"
+                                    name="document-outline"></ion-icon>
+                                <p>{{ arquivo.arquivo.name }}</p>
+                            </div>
+
+                            <ion-icon class="div_icones__icone" name="trash-outline"></ion-icon>
                         </div>
                     </div>
 
@@ -42,8 +52,7 @@
                     </ion-button>
                 </ion-card>
 
-                <ion-button [routerLink]="['/categoria']" class="form__btn">Confirmar</ion-button>
-
+                <ion-button (click)="enviarArquivos()" class="form__btn">Confirmar</ion-button>
             </ion-list>
         </div>
     </div>

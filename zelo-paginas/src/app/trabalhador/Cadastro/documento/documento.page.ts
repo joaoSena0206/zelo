@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FileOpener } from '@capawesome-team/capacitor-file-opener';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-documento',
@@ -13,7 +14,7 @@ export class DocumentoPage implements OnInit {
     arquivos: any = [];
     imgSrc: any;
 
-    constructor(private navCl: NavController, private sanitizer: DomSanitizer) { }
+    constructor(private navCl: NavController, private sanitizer: DomSanitizer, private http: HttpClient) { }
 
     ngOnInit() {
     }
@@ -65,17 +66,23 @@ export class DocumentoPage implements OnInit {
         pegarArquivos();
     }
 
-    mostrarArquivo(elem: any) {
-        for (let i = 0; i < this.arquivos.length; i++) {
-            if (this.arquivos[i].img === elem.src || this.arquivos[i].pdf === elem.data) {
-                const open = async () => {
-                    await FileOpener.openFile({
-                        blob: this.arquivos[i].arquivo
-                    });
-                };
+    enviarArquivos()
+    {
+        if (this.arquivos.length != 0)
+        {
+            let link = "http://localhost:57879/Trabalhador/AdicionarCertificado";
+            let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+            let dadosForm = new FormData();
+            dadosForm.append("cpf", trabalhador.Cpf);
 
-                open();
+            for (let i = 0; i < this.arquivos.length; i++)
+            {
+                dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
             }
+
+            this.http.post(link, dadosForm).subscribe(res => {
+                console.log(res);
+            });
         }
     }
 }
