@@ -34,8 +34,6 @@ Insert into servico values (7, 1, 'Pintor');
 Insert into servico values (8, 1, 'TEC em ar-condicionado');
 Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
 
-select cd_servico, nm_servico from servico;
-
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
 (
