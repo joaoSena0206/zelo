@@ -34,8 +34,6 @@ Insert into servico values (7, 1, 'Pintor');
 Insert into servico values (8, 1, 'TEC em ar-condicionado');
 Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
 
-select cd_servico, nm_servico from servico;
-
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
 (
@@ -48,13 +46,14 @@ Create Table trabalhador
 	nm_pix_trabalhador VARCHAR(255),
 	ic_disponivel_trabalhador BOOL,
 	ic_email_confirmado_trabalhador BOOL,
+	vl_visita_trabalhador DECIMAL,
 
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
 
-Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false);
-INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true);
-INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true);
+Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false, 25);
+INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true, 25.50);
+INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65);
 
 CREATE TABLE patrocinio
 (	
@@ -81,14 +80,13 @@ Create Table servico_trabalhador
 (
 	cd_cpf_trabalhador CHAR(11),
 	cd_servico INT,
-	vl_visita_trabalhador DECIMAL,
 
 	CONSTRAINT fk_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
 	CONSTRAINT fk_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
-Insert into servico_trabalhador values('535305697', 1, 25);
-Insert into servico_trabalhador values('56787654567', 2, 30.50);
-Insert into servico_trabalhador values('56787654566', 7, 25);
+Insert into servico_trabalhador values('535305697', 1);
+Insert into servico_trabalhador values('56787654567', 2);
+Insert into servico_trabalhador values('56787654566', 7);
 
 
 -- TABELA CLIENTE --

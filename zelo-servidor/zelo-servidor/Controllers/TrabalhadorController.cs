@@ -23,7 +23,7 @@ public class TrabalhadorController : Controller
 
         Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(Request["trabalhador"]);
 
-        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false)";
+        string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0)";
         banco.Executar(comando);
 
         banco.Desconectar();
@@ -236,5 +236,23 @@ public class TrabalhadorController : Controller
         }
 
         #endregion
+    }
+
+    [HttpPost]
+    [Route("AdicionarSaque")]
+    public void AdicionarSaque()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cpf = Request["cpf"];
+        string pix = Request["pix"];
+        string valorVisita = Request["valor"];
+
+        string comando = $@"UPDATE trabalhador SET nm_pix_trabalhador = '{pix}', vl_visita_trabalhador = {valorVisita}
+        WHERE cd_cpf_trabalhador = '{cpf}'";
+        banco.Executar(comando);
+
+        banco.Desconectar();
     }
 }
