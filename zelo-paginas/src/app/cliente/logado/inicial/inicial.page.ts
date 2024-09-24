@@ -10,6 +10,7 @@ export class InicialPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     categorias: any;
     patrocinados: any;
+    historico: any;
 
     constructor(private http: HttpClient) { }
 
@@ -19,16 +20,25 @@ export class InicialPage implements OnInit {
     ngAfterViewInit() {
         this.carregarCategorias();
         this.carregarPatrocinados();
+        this.carregarHistorico();
     }
 
-    carregarPatrocinados()
-    {
+    carregarPatrocinados() {
         let link = "http://localhost:57879/Patrocinio/CarregarPatrocinados";
 
         this.http.get(link).subscribe(res => {
             this.patrocinados = res;
+        });
+    }
 
-            console.log(this.patrocinados);
+    carregarHistorico() {
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let link = `http://localhost:57879/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
+
+        this.http.get(link).subscribe(res => {
+            this.historico = res;
+
+            console.log(this.historico);
         });
     }
 

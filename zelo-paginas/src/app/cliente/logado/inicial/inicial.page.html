@@ -33,7 +33,9 @@
         <div class="div_trabalhadores">
             <ion-card *ngFor="let patrocinado of patrocinados">
                 <figure>
-                    <img draggable="false" [src]="'http://localhost:57879/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'" alt="">
+                    <img draggable="false"
+                        [src]="'http://localhost:57879/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'"
+                        alt="">
                     <div class="info_trabalhador">
                         <div class="fundoLaranja"></div>
                         <div class="divInfos">
@@ -63,39 +65,6 @@
                     </div>
                 </div>
             </ion-card>
-
-            <!-- <ion-card>
-                <figure>
-                    <img draggable="false" src="../../../assets/icon/cliente/trabalhador_pintor.jpg" alt="">
-                    <div class="info_trabalhador">
-                        <div class="fundoLaranja"></div>
-                        <div class="divInfos">
-                            <p class="nome_trabalhador">Julberto</p>
-                            <p>Profissional ZELO desde 2021</p>
-                            <div class="avaliacaoDiv">
-                                <p>5.0</p>
-                                <div class="estrelas">
-                                    <ion-icon name="star"></ion-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </figure>
-
-                <div class="divAnuncio">
-                    <div>
-                        <ion-icon class="ferramenta-chave"
-                            src="../../../../assets/icon/cliente/ferramenta-chave.svg"></ion-icon>
-                        <h1>Pintor</h1>
-                    </div>
-
-                    <div class="divAnuncioInfo">
-                        <p>Soluções rápidas e eficientes para todos os seus dispositivos.</p>
-
-                        <ion-button>Ver trabalhador</ion-button>
-                    </div>
-                </div>
-            </ion-card> -->
         </div>
 
 
@@ -104,60 +73,32 @@
         </div>
 
         <div class="UltimosPedidosDiv">
-            <div class="areaUltimoPedido">
+            <div class="areaUltimoPedido" *ngFor="let pedido of historico">
                 <div class="infoTrabalhorPedido">
                     <figure class="fotoTrabalhadorPedido">
-                        <img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
+                        <img draggable="false" [src]="'http://localhost:57879/Imgs/Perfil/' + pedido.Trabalhador.Cpf + '.jpg'">
                     </figure>
 
                     <div>
                         <div>
-                            <h3 class="titulo tituloPedido">Breno Santos</h3>
-                            <h3 class="titulo tituloPedido">Eletricista</h3>
+                            <h3 class="titulo tituloPedido">{{ pedido.Trabalhador.Nome }}</h3>
+                            <h3 class="titulo tituloPedido">{{ pedido.Servico }}</h3>
 
                             <div class="estrelaPreco">
                                 <ion-icon name="star"></ion-icon>
-                                <p class="titulo">3.5</p>
+                                <p class="titulo">{{ pedido.Trabalhador.Avaliacao.toFixed(1) }}</p>
                             </div>
                         </div>
 
                         <div class="divCalendario">
                             <ion-icon src="../../../../assets/icon/cliente/calendario.svg"></ion-icon>
-                            <p>12/01/2024</p>
+                            <p>{{ pedido.DtSolicitacaoServico.substring(8, 10) + '/' +
+                                pedido.DtSolicitacaoServico.substring(5, 7) + '/' + pedido.DtSolicitacaoServico.substring(0, 4) }}</p>
                         </div>
                     </div>
                 </div>
 
-                <p class="titulo precoPedido">R$ 45,00</p>
-
-                <p class="verPerfil">Ver perfil</p>
-            </div>
-
-            <div class="areaUltimoPedido">
-                <div class="infoTrabalhorPedido">
-                    <figure class="fotoTrabalhadorPedido">
-                        <img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
-                    </figure>
-
-                    <div>
-                        <div>
-                            <h3 class="titulo tituloPedido">Rodrigo Oliveira</h3>
-                            <h3 class="titulo tituloPedido">Encanador</h3>
-
-                            <div class="estrelaPreco">
-                                <ion-icon name="star"></ion-icon>
-                                <p class="titulo">2.5</p>
-                            </div>
-                        </div>
-
-                        <div class="divCalendario">
-                            <ion-icon src="../../../../assets/icon/cliente/calendario.svg"></ion-icon>
-                            <p>15/01/2024</p>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="titulo precoPedido">R$ 35,00</p>
+                <p class="titulo precoPedido">R$ {{ pedido.Trabalhador.ValorVisita.toFixed(2).replace('.', ',') }}</p>
 
                 <p class="verPerfil">Ver perfil</p>
             </div>

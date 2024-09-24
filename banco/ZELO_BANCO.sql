@@ -46,7 +46,7 @@ Create Table trabalhador
 	nm_pix_trabalhador VARCHAR(255),
 	ic_disponivel_trabalhador BOOL,
 	ic_email_confirmado_trabalhador BOOL,
-	vl_visita_trabalhador DECIMAL,
+	vl_visita_trabalhador DECIMAL(5, 2),
 
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
@@ -54,6 +54,7 @@ Create Table trabalhador
 Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false, 25);
 INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true, 25.50);
 INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65);
+Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25);
 
 CREATE TABLE patrocinio
 (	
@@ -87,6 +88,7 @@ Create Table servico_trabalhador
 Insert into servico_trabalhador values('535305697', 1);
 Insert into servico_trabalhador values('56787654567', 2);
 Insert into servico_trabalhador values('56787654566', 7);
+Insert into servico_trabalhador values('50082480818', 3);
 
 
 -- TABELA CLIENTE --
@@ -100,6 +102,16 @@ Create Table cliente
 	ic_email_confirmado_cliente BOOL,
 
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
+);
+
+INSERT INTO cliente VALUES
+(
+	'50082480818',
+	'João Sena',
+	'2006-06-02',
+	'joaosena0206@gmail.com',
+	md5('1234'),
+	true
 );
 
 
@@ -124,13 +136,26 @@ Create Table solicitacao_servico
 	dt_solicitacao_servico DATE,
 	ds_servico TEXT,
 	ds_comentario_avaliacao_servico TEXT,
-	qt_estrelas_avaliacao_servico DECIMAL,
+	qt_estrelas_avaliacao_servico DECIMAL(2, 1),
 	ds_comentario_avaliacao_cliente TEXT,
-	qt_estrelas_avaliacao_cliente DECIMAL,
+	qt_estrelas_avaliacao_cliente DECIMAL(2, 1),
 
     CONSTRAINT pk_solicitacao_servico PRIMARY KEY (cd_solicitacao_servico),
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
     CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
+);
+
+INSERT INTO solicitacao_servico VALUES
+(
+	1,
+	'50082480818',
+	'50082480818',
+	'2024-09-24',
+	'Mangueira quebrou',
+	'',
+	4.5,
+	'Ótimo serviço, mas faltou na educação',
+	4.0
 );
 
 -- TABELA ENDERECO CLIENTE --

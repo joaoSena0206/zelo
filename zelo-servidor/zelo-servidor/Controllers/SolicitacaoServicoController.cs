@@ -16,10 +16,10 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string tipo = Request["tipo"];
-        string cpf = Request["cpf"];
+        string tipo = Request["t"];
+        string cpf = Request["c"];
 
-        string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador FROM solicitacao_servico ss
+        string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador FROM solicitacao_servico ss
         JOIN trabalhador t ON (ss.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
         JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
         JOIN servico s ON (st.cd_servico = s.cd_servico)
@@ -33,6 +33,7 @@ public class SolicitacaoServicoController : Controller
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
+        TrabalhadorController trabalhadorController = new TrabalhadorController();
 
         if (dados != null)
         {
@@ -43,8 +44,10 @@ public class SolicitacaoServicoController : Controller
                     SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
                     Trabalhador trabalhador = new Trabalhador();
 
+                    trabalhador.Cpf = dados.GetString(4);
                     trabalhador.Nome = dados.GetString(0);
                     trabalhador.ValorVisita = dados.GetDecimal(3);
+                    trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
 
                     solicitacaoServico.Trabalhador = trabalhador;
                     solicitacaoServico.Servico = dados.GetString(1);
