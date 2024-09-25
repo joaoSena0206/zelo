@@ -91,7 +91,7 @@ export class DocumentoPage implements OnInit {
                     this.http.post(link, dadosForm).subscribe(res => {
                         if (res == null)
                         {
-                            this.navCl.navigateRoot("/login");
+                            this.navCl.navigateRoot("/login-trabalhador");
                         }
                     });
                 }

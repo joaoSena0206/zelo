@@ -61,17 +61,8 @@ export class CategoriaPage implements OnInit {
 
     ionViewDidEnter() {
         this.http.get('http://localhost:57879/Servico/CarregarServicos', { responseType: 'text' }).subscribe(res => {
-            console.log(res);
-
             this.listaCategorias = res;
             this.Nome = this.listaCategorias;
-
-            console.log(`Nome: ${this.listaCategorias.nome}`);
-
-            for (const pessoa of this.listaCategorias) {
-                console.log(`Nome: ${pessoa.nome}`);
-            }
-
         })
     }
 
