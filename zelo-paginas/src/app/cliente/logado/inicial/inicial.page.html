@@ -76,7 +76,7 @@
             <div class="areaUltimoPedido" *ngFor="let pedido of historico">
                 <div class="infoTrabalhorPedido">
                     <figure class="fotoTrabalhadorPedido">
-                        <img draggable="false" [src]="'http://localhost:57879/Imgs/Perfil/Trabalhador' + pedido.Trabalhador.Cpf + '.jpg'">
+                        <img style="border-radius: 100px;" draggable="false" [src]="'http://localhost:57879/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
                     </figure>
 
                     <div>
