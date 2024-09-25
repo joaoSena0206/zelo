@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -28,7 +30,37 @@ public class TrabalhadorController : Controller
 
         banco.Desconectar();
 
+        AdicionarFotoPerfil(trabalhador.Cpf, null);
+
         return "ok";
+
+        #endregion
+    }
+
+    public async Task AdicionarFotoPerfil(string cpf, HttpPostedFileBase file)
+    {
+        string caminhoPasta = Server.MapPath("~/Imgs/Perfil/Trabalhador/");
+
+        #region Grava a foto de perfil, e caso nula, pega o svg da web e grava no lugar
+
+        if (file != null && file.ContentLength > 0)
+        {
+            string caminho = Path.Combine(caminhoPasta, Path.GetFileName(file.FileName));
+
+            file.SaveAs(caminho);
+        }
+        else
+        {
+            string svg = "https://ionicframework.com/docs/img/demos/avatar.svg";
+            string caminhoArquivo = Path.Combine(caminhoPasta, cpf + ".svg");
+
+            using (HttpClient client = new HttpClient())
+            {
+                string conteudoSvg = await client.GetStringAsync(svg);
+
+                System.IO.File.WriteAllText(caminhoArquivo, conteudoSvg);
+            }
+        }
 
         #endregion
     }

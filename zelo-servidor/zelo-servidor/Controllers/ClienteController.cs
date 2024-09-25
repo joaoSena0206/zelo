@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 [RoutePrefix("Cliente")]
 public class ClienteController : Controller
@@ -27,7 +28,7 @@ public class ClienteController : Controller
         string enderecoJson = Request["endereco"].Replace("-", "");
         Endereco endereco = JsonConvert.DeserializeObject<Endereco>(enderecoJson);
 
-        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento}','{cliente.Email}', md5('{cliente.Senha}'), false)";
+        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false)";
         banco.Executar(comando);
 
         EnderecoController enderecoController = new EnderecoController();
@@ -35,12 +36,14 @@ public class ClienteController : Controller
 
         banco.Desconectar();
 
+        AdicionarFotoPerfil(cliente.Cpf, null);
+
         return "ok";
 
         #endregion
     }
 
-    public async void AdicionarFotoPerfil(string cpf, HttpPostedFileBase file)
+    public async Task AdicionarFotoPerfil(string cpf, HttpPostedFileBase file)
     {
         string caminhoPasta = Server.MapPath("~/Imgs/Perfil/Cliente/");
 
@@ -55,7 +58,7 @@ public class ClienteController : Controller
         else
         {
             string svg = "https://ionicframework.com/docs/img/demos/avatar.svg";
-            string caminhoArquivo = Path.Combine(caminhoPasta, cpf);
+            string caminhoArquivo = Path.Combine(caminhoPasta, cpf + ".svg");
 
             using (HttpClient client = new HttpClient())
             {

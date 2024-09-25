@@ -57,12 +57,15 @@ export class CadastroClientePage implements OnInit {
             if (this.form.controls['cpf'].value == "") {
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
-                this.form.controls['nome'].setValue(cliente.nome);
-                this.form.controls['cpf'].setValue(cliente.cpf);
-                this.form.controls['data'].setValue(cliente.dataNascimento);
-                this.form.controls['email'].setValue(cliente.email);
-                this.form.controls['senhas'].controls['senha'].setValue(cliente.senha);
-                this.form.controls['senhas'].controls['confirmarSenha'].setValue(cliente.senha);
+                this.form.controls['nome'].setValue(cliente.Nome);
+                this.form.controls['cpf'].setValue(cliente.Cpf);
+                this.form.controls['data'].setValue(cliente.DataNascimento);
+                this.form.controls['email'].setValue(cliente.Email);
+
+                if (cliente.Senha != null) {
+                    this.form.controls['senhas'].controls['senha'].setValue(cliente.Senha);
+                    this.form.controls['senhas'].controls['confirmarSenha'].setValue(cliente.Senha);
+                }
 
                 this.mostrarData();
             }
@@ -166,8 +169,7 @@ export class CadastroClientePage implements OnInit {
         dadosForm.append("cpf", cliente.cpf!);
         dadosForm.append("email", cliente.email!);
 
-        if (dado != "padrão")
-        {
+        if (dado != "padrão") {
             dadosForm.set(dado, "null");
         }
 
@@ -209,22 +211,18 @@ export class CadastroClientePage implements OnInit {
                 if (cliente.Cpf != clienteStorage.Cpf && cliente.Email != clienteStorage.Email) {
                     this.checarCadastro(cliente);
                 }
-                else if (cliente.Cpf != clienteStorage.Cpf)
-                {
+                else if (cliente.Cpf != clienteStorage.Cpf) {
                     this.checarCadastro(cliente, "email");
                 }
-                else if (cliente.Email != clienteStorage.Email)
-                {
+                else if (cliente.Email != clienteStorage.Email) {
                     this.checarCadastro(cliente, "cpf");
                 }
-                else if (this.form.dirty)
-                {
+                else if (this.form.dirty) {
                     localStorage.setItem("cliente", JSON.stringify(cliente));
 
                     this.navCl.navigateForward("/endereco");
                 }
-                else
-                {
+                else {
                     this.navCl.navigateForward("/endereco");
                 }
             }
