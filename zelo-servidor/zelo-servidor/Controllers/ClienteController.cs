@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Net.Http;
 
 [RoutePrefix("Cliente")]
 public class ClienteController : Controller
@@ -35,6 +36,34 @@ public class ClienteController : Controller
         banco.Desconectar();
 
         return "ok";
+
+        #endregion
+    }
+
+    public async void AdicionarFotoPerfil(string cpf, HttpPostedFileBase file)
+    {
+        string caminhoPasta = Server.MapPath("~/Imgs/Perfil/Cliente/");
+
+        #region Grava a foto de perfil, e caso nula, pega o svg da web e grava no lugar
+
+        if (file != null && file.ContentLength > 0)
+        {
+            string caminho = Path.Combine(caminhoPasta, Path.GetFileName(file.FileName));
+
+            file.SaveAs(caminho);
+        }
+        else
+        {
+            string svg = "https://ionicframework.com/docs/img/demos/avatar.svg";
+            string caminhoArquivo = Path.Combine(caminhoPasta, cpf);
+
+            using (HttpClient client = new HttpClient())
+            {
+                string conteudoSvg = await client.GetStringAsync(svg);
+
+                System.IO.File.WriteAllText(caminhoArquivo, conteudoSvg);
+            }
+        }
 
         #endregion
     }
@@ -136,7 +165,7 @@ public class ClienteController : Controller
         {
             cliente.Cpf = dados.GetString(0);
             cliente.Nome = dados.GetString(1);
-            cliente.DataNascimento = dados.GetString(2);
+            cliente.DataNascimento = dados.GetDateTime(2);
             cliente.Email = email;
             cliente.Confirmado = dados.GetBoolean(3);
         }
