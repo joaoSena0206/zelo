@@ -212,7 +212,7 @@ public class TrabalhadorController : Controller
 
         #region Cria uma pasta com o cpf do trabalhador
 
-        string caminhoPasta = Server.MapPath("~/Certificados/" + cpf);
+        string caminhoPasta = Server.MapPath("~/Imgs/Certificados/" + cpf);
 
         if (!Directory.Exists(caminhoPasta))
         {
