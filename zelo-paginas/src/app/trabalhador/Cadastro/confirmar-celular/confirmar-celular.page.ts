@@ -127,9 +127,13 @@ export class ConfirmarCelularPage implements OnInit {
 
                 this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
                     if (res == "ok") {
-                        localStorage.removeItem("opcao");
+                        link = "http://localhost:57879/Trabalhador/AdicionarFotoPerfil";
 
-                        this.navCl.navigateRoot("/tipo-saque");
+                        this.http.post(link, dadosForm).subscribe(res => {
+                            if (res == null) {
+                                this.navCl.navigateRoot("/tipo-saque");
+                            }
+                        });
                     }
                 });
             }
