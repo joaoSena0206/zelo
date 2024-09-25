@@ -11,8 +11,6 @@ CREATE TABLE categoria_servico
 	CONSTRAINT pk_categoria_servico PRIMARY KEY (cd_categoria_servico)
 );
 
-INSERT INTO categoria_servico VALUES (1, 'Reformas e reparos');
-
 -- TABELA DO SERVIÇO --
 CREATE TABLE servico
 (
@@ -24,15 +22,7 @@ CREATE TABLE servico
 	CONSTRAINT fk_servico_categoria_servico FOREIGN KEY (cd_categoria_servico) REFERENCES categoria_servico(cd_categoria_servico)
 );
 
-Insert into servico values (1, 1, 'Limpeza');
-Insert into servico values (2, 1, 'Eletricista');
-Insert into servico values (3, 1, 'Encanador');
-Insert into servico values (4, 1, 'Chaveiro');
-Insert into servico values (5, 1, 'Jardineiro');
-Insert into servico values (6, 1, 'Marceneiro');
-Insert into servico values (7, 1, 'Pintor');
-Insert into servico values (8, 1, 'TEC em ar-condicionado');
-Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
+
 
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
@@ -51,10 +41,7 @@ Create Table trabalhador
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
 
-Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false, 25);
-INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true, 25.50);
-INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65);
-Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25);
+
 
 CREATE TABLE patrocinio
 (	
@@ -67,14 +54,7 @@ CREATE TABLE patrocinio
 	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
-INSERT INTO patrocinio VALUE(
-	'56787654567', 2, 200, '2024-09-21'
-);
 
-
-INSERT INTO patrocinio VALUE(
-	'56787654566', 1, 100, '2024-09-20'
-);
 
 -- LIGAÇÃO TABELA SERVICO TRABALHADOR --
 Create Table servico_trabalhador
@@ -85,10 +65,7 @@ Create Table servico_trabalhador
 	CONSTRAINT fk_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
 	CONSTRAINT fk_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
-Insert into servico_trabalhador values('535305697', 1);
-Insert into servico_trabalhador values('56787654567', 2);
-Insert into servico_trabalhador values('56787654566', 7);
-Insert into servico_trabalhador values('50082480818', 3);
+
 
 
 -- TABELA CLIENTE --
@@ -104,15 +81,7 @@ Create Table cliente
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
-INSERT INTO cliente VALUES
-(
-	'50082480818',
-	'João Sena',
-	'2006-06-02',
-	'joaosena0206@gmail.com',
-	md5('1234'),
-	true
-);
+
 
 
 CREATE TABLE confirmacao
@@ -145,18 +114,7 @@ Create Table solicitacao_servico
     CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
 
-INSERT INTO solicitacao_servico VALUES
-(
-	1,
-	'50082480818',
-	'50082480818',
-	'2024-09-24',
-	'Mangueira quebrou',
-	'',
-	4.5,
-	'Ótimo serviço, mas faltou na educação',
-	4.0
-);
+
 
 -- TABELA ENDERECO CLIENTE --
 Create Table endereco
