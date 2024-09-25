@@ -142,5 +142,4 @@ Create table certificado
 	CONSTRAINT fk_certificado_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
 
-Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
 

@@ -17,6 +17,7 @@ INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '202
 INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65);
 Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25);
 INSERT INTO trabalhador VALUE('56787654364', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true);
+Insert into trabalhador values('50082480818', 'João Sena', '2001-09-25', '2024-09-25','joaosena0206@gmail.com', md5('Joao1234@'), null, false, false, 0);
 
 INSERT INTO patrocinio VALUE(
 	'56787654567', 2, 200, '2024-09-21'
@@ -69,4 +70,4 @@ INSERT INTO solicitacao_servico VALUES
     4
 );
 
-Insert into trabalhador values('50082480818', 'João Sena', '2001-09-25', '2024-09-25','joaosena0206@gmail.com', md5('Joao1234@'), null, false, false, 0);
+Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
