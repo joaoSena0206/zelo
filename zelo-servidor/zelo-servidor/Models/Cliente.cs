@@ -22,9 +22,9 @@ public class Cliente
 		set { _nome = value; }
 	}
 
-	private string _dataNascimento;
+	private DateTime _dataNascimento;
 
-	public string DataNascimento
+	public DateTime DataNascimento
 	{
 		get { return _dataNascimento; }
 		set { _dataNascimento = value; }
@@ -60,11 +60,13 @@ public class Cliente
 
 	}
 
-	public Cliente(string cpf, string nome, string email, string senha)
+	public Cliente(string cpf, string nome, DateTime dataNascimento,string email, string senha, bool confirmado)
 	{
 		this.Cpf = cpf;
 		this.Nome = nome;
+		this.DataNascimento = dataNascimento;
 		this.Email = email;
 		this.Senha = senha;
+		this.Confirmado = confirmado;
 	}
 }
