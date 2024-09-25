@@ -18,20 +18,17 @@ export class CategoriaPage implements OnInit {
         this.navCl.back();
     }
 
-    ngAfterViewInit()
-    {
-        if (localStorage.getItem("trabalhador"))
-        {
+    ngAfterViewInit() {
+        if (localStorage.getItem("trabalhador")) {
             let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
-            const btns = document.querySelectorAll("ion-button");
-            for (let i = 0; i < btns.length; i++)
-            {
-                for (let j = 0; j < trabalhador.categorias.length; j++)
-                {
-                    if (btns[i].textContent == trabalhador.categorias[j])
-                    {
-                        btns[i].setAttribute("id", "marcado");
+            if (trabalhador.categorias) {
+                const btns = document.querySelectorAll("ion-button");
+                for (let i = 0; i < btns.length; i++) {
+                    for (let j = 0; j < trabalhador.categorias.length; j++) {
+                        if (btns[i].textContent == trabalhador.categorias[j]) {
+                            btns[i].setAttribute("id", "marcado");
+                        }
                     }
                 }
             }
@@ -62,8 +59,8 @@ export class CategoriaPage implements OnInit {
     listaCategorias: any = []
     Nome: any = []
 
-    ionViewDidEnter(){
-        this.http.get('http://localhost:57879/Servico/CarregarServicos', {responseType: 'text'}).subscribe(res => {
+    ionViewDidEnter() {
+        this.http.get('http://localhost:57879/Servico/CarregarServicos', { responseType: 'text' }).subscribe(res => {
             console.log(res);
 
             this.listaCategorias = res;
