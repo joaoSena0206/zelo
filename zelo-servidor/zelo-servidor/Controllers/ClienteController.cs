@@ -57,14 +57,14 @@ public class ClienteController : Controller
         }
         else
         {
-            string svg = "https://ionicframework.com/docs/img/demos/avatar.svg";
-            string caminhoArquivo = Path.Combine(caminhoPasta, cpf + ".svg");
+            string avatar = "https://joaosena0206.github.io/zelo_imagens/imgs/avatar.jpg";
+            string caminhoArquivo = Path.Combine(caminhoPasta, cpf + ".jpg");
 
             using (HttpClient client = new HttpClient())
             {
-                string conteudoSvg = await client.GetStringAsync(svg);
+                string conteudoJpg = await client.GetStringAsync(avatar);
 
-                System.IO.File.WriteAllText(caminhoArquivo, conteudoSvg);
+                System.IO.File.WriteAllText(caminhoArquivo, conteudoJpg);
             }
         }
 
