@@ -16,7 +16,7 @@ public class ClienteController : Controller
 {
     [HttpPost]
     [Route("Adicionar")]
-    public string Adicionar()
+    public async Task<string> Adicionar()
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -36,13 +36,13 @@ public class ClienteController : Controller
 
         banco.Desconectar();
 
-        AdicionarFotoPerfil(cliente.Cpf, null);
-
         return "ok";
 
         #endregion
     }
 
+    [HttpPost]
+    [Route("AdicionarFotoPerfil")]
     public async Task AdicionarFotoPerfil(string cpf, HttpPostedFileBase file)
     {
         string caminhoPasta = Server.MapPath("~/Imgs/Perfil/Cliente/");
@@ -62,9 +62,9 @@ public class ClienteController : Controller
 
             using (HttpClient client = new HttpClient())
             {
-                string conteudoJpg = await client.GetStringAsync(avatar);
+                byte[] avatarBytes = await client.GetByteArrayAsync(avatar);
 
-                System.IO.File.WriteAllText(caminhoArquivo, conteudoJpg);
+                System.IO.File.WriteAllBytes(caminhoArquivo, avatarBytes);
             }
         }
 

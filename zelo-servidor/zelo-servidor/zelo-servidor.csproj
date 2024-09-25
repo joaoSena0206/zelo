@@ -224,8 +224,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Certificados\" />
+    <Folder Include="Imgs\Certificados\" />
     <Folder Include="Imgs\Perfil\Cliente\" />
+    <Folder Include="Imgs\Perfil\Trabalhador\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

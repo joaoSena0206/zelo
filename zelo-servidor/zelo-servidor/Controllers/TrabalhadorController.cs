@@ -30,13 +30,14 @@ public class TrabalhadorController : Controller
 
         banco.Desconectar();
 
-        AdicionarFotoPerfil(trabalhador.Cpf, null);
-
         return "ok";
 
         #endregion
     }
 
+
+    [HttpPost]
+    [Route("AdicionarFotoPerfil")]
     public async Task AdicionarFotoPerfil(string cpf, HttpPostedFileBase file)
     {
         string caminhoPasta = Server.MapPath("~/Imgs/Perfil/Trabalhador/");
@@ -56,9 +57,9 @@ public class TrabalhadorController : Controller
 
             using (HttpClient client = new HttpClient())
             {
-                string conteudoJpg = await client.GetStringAsync(avatar);
+                byte[] avatarBytes = await client.GetByteArrayAsync(avatar);
 
-                System.IO.File.WriteAllText(caminhoArquivo, conteudoJpg);
+                System.IO.File.WriteAllBytes(caminhoArquivo, avatarBytes);
             }
         }
 
@@ -244,7 +245,7 @@ public class TrabalhadorController : Controller
 
         #region Cria uma pasta com o cpf do trabalhador
 
-        string caminhoPasta = Server.MapPath("~/Imgs/Certificados/" + cpf);
+        string caminhoPasta = Server.MapPath(Path.Combine("~/Imgs/Certificados", cpf));
 
         if (!Directory.Exists(caminhoPasta))
         {
@@ -261,7 +262,7 @@ public class TrabalhadorController : Controller
 
             if (file != null && file.ContentLength > 0)
             {
-                string caminho = Path.Combine(Server.MapPath("~/Certificados/" + cpf), Path.GetFileName(file.FileName));
+                string caminho = Path.Combine(Server.MapPath("~/Imgs/Certificados/" + cpf), Path.GetFileName(file.FileName));
 
                 file.SaveAs(caminho);
             }
