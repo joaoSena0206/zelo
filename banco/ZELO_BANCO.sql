@@ -132,16 +132,3 @@ Create Table endereco
 	CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco, cd_cep_endereco),
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
-
--- TABELA CERTIFICADO TRABALHADOR -- 
-Create table certificado
-(
-	cd_certificado INT,
-	cd_cpf_trabalhador CHAR(11),
-	nm_certificado VARCHAR(100),
-
-	CONSTRAINT pk_certificado PRIMARY KEY (cd_certificado),
-	CONSTRAINT fk_certificado_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
-);
-
-

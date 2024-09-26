@@ -47,6 +47,7 @@ INSERT INTO solicitacao_servico VALUES
 	1,
 	'50082480818',
 	'50082480818',
+	3,
 	'2024-09-24',
 	'Mangueira quebrou',
 	'',
@@ -54,5 +55,3 @@ INSERT INTO solicitacao_servico VALUES
 	'Ótimo serviço, mas faltou na educação',
 	4.0
 );
-
-Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
