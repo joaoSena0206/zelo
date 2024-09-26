@@ -4,6 +4,7 @@ import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-documento',
@@ -13,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 export class DocumentoPage implements OnInit {
     arquivos: any = [];
     imgSrc: any;
+    carregar: boolean = false;
 
     constructor(private navCl: NavController, private sanitizer: DomSanitizer, private http: HttpClient) { }
 
@@ -68,7 +70,7 @@ export class DocumentoPage implements OnInit {
         pegarArquivos();
     }
 
-    enviarArquivos() {
+    async enviarArquivos() {
         if (this.arquivos.length != 0) {
             let link = "http://localhost:57879/Trabalhador/AdicionarSaque";
             let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
@@ -77,27 +79,30 @@ export class DocumentoPage implements OnInit {
             dadosForm.append("pix", trabalhador.pix);
             dadosForm.append("valor", trabalhador.valor);
 
-            this.http.post(link, dadosForm).subscribe(res => {
-                if (res == null) {
-                    link = "http://localhost:57879/Trabalhador/AdicionarCertificado"
+            this.carregar = true;
 
-                    dadosForm = new FormData();
-                    dadosForm.append("cpf", trabalhador.Cpf);
+            let res = await firstValueFrom(this.http.post(link, dadosForm));
 
-                    for (let i = 0; i < this.arquivos.length; i++) {
-                        dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
-                    }
+            if (res == null) {
+                link = "http://localhost:57879/Trabalhador/AdicionarCertificado"
 
-                    this.http.post(link, dadosForm).subscribe(res => {
-                        if (res == null)
-                        {
-                            this.navCl.navigateRoot("/login-trabalhador");
-                        }
-                    });
+                dadosForm = new FormData();
+                dadosForm.append("cpf", trabalhador.Cpf);
+
+                for (let i = 0; i < this.arquivos.length; i++) {
+                    dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
                 }
-            });
 
+                res = await firstValueFrom(this.http.post(link, dadosForm));
 
+                if (res == null) {
+                    localStorage.removeItem("trabalhador");
+
+                    this.navCl.navigateRoot("/login-trabalhador");
+                }
+
+                this.carregar = false;
+            }
         }
     }
 

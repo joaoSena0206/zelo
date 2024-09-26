@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -25,6 +26,7 @@ export class CadastroClientePage implements OnInit {
         termos: new FormControl("", validadorTermos())
     });
 
+    carregar: boolean = false;
     inputData: any;
     erro: any = {
         nome: "Nome obrigatório!",
@@ -163,33 +165,37 @@ export class CadastroClientePage implements OnInit {
         this.inputData = moment(data).format("DD/MM/YYYY");
     }
 
-    checarCadastro(cliente: any, dado: string = "padrão") {
+    async checarCadastro(cliente: any, dado: string = "padrão") {
         let link = "http://localhost:57879/Cliente/ChecarExistencia";
         let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.cpf!);
-        dadosForm.append("email", cliente.email!);
+        dadosForm.append("cpf", cliente.Cpf!);
+        dadosForm.append("email", cliente.Email!);
 
         if (dado != "padrão") {
             dadosForm.set(dado, "null");
         }
 
-        this.http.post(link, dadosForm).subscribe(res => {
-            let objRes = res as any;
+        this.carregar = true;
 
-            if (objRes.cadastrado.length == 0) {
-                localStorage.setItem("cliente", JSON.stringify(cliente));
+        let resposta = await firstValueFrom(this.http.post(link, dadosForm));
 
-                this.navCl.navigateForward("/endereco");
-            }
-            else {
-                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
-                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+        this.carregar = false;
 
-                    this.form.controls[cadastrado].setErrors({ existe: true });
-                    this.form.controls[cadastrado].markAsDirty();
-                });
-            }
-        });
+        let objRes = resposta as any;
+
+        if (objRes.cadastrado.length == 0) {
+            localStorage.setItem("cliente", JSON.stringify(cliente));
+
+            this.navCl.navigateForward("/endereco");
+        }
+        else {
+            objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+
+                this.form.controls[cadastrado].setErrors({ existe: true });
+                this.form.controls[cadastrado].markAsDirty();
+            });
+        }
     }
 
     enviar() {

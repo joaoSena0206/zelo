@@ -1,4 +1,8 @@
 <ion-content class="ion_content">
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
+    </div>
+
     <div class="wrapper">
         <ion-icon (click)="voltarPag()" class="content__seta" src="../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 

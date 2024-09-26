@@ -1,4 +1,8 @@
 <ion-content>
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
+    </div>
+
     <div class="wrapper">
         <ion-icon (click)="voltarPag()" class="content__seta"
             src="../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
@@ -13,8 +17,7 @@
                 <ion-item class="ion_item">
                     <ion-input (ionInput)="validacaoInput(form.controls['email'])"
                         [class.inputErro]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)"
-                        formControlName="email" class="form__input"
-                        placeholder="Digite seu email"></ion-input>
+                        formControlName="email" class="form__input" placeholder="Digite seu email"></ion-input>
                 </ion-item>
                 <span
                     [ngClass]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty) ? 'erro' : 'escondido'">{{
@@ -35,7 +38,8 @@
                 <p style="text-align: start;" class="form__p form__p-senha">Esqueceu a <ion-text
                         class="form__text">senha?</ion-text></p>
 
-                <span class="erro" style="margin: 0; margin-top: 20px; font-size: 15px;" *ngIf="erro.form">{{ erro.form }}</span>
+                <span class="erro" style="margin: 0; margin-top: 20px; font-size: 15px;" *ngIf="erro.form">{{ erro.form
+                    }}</span>
                 <ion-button (click)="enviar()" class="form__btn">Entrar</ion-button>
 
                 <p (click)="irCadastro()" class="form__p">Não tem conta? <ion-text class="form__text">Crie
