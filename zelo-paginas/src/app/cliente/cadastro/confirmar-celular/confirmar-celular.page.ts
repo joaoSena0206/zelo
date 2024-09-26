@@ -129,19 +129,22 @@ export class ConfirmarCelularPage implements OnInit {
 
                 this.carregar = true;
 
-                let resEmail = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-                let resFoto = await firstValueFrom(this.http.post("http://localhost:57879/Trabalhador/AdicionarFotoPerfil", dadosForm));
+                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-                this.carregar = false;
+                if (res == "ok") {
+                    link = "http://localhost:57879/Trabalhador/AdicionarFotoPerfil";
 
-                if (resEmail == "ok") {
                     localStorage.removeItem("cliente");
                     localStorage.removeItem("opcao");
 
-                    if (resFoto == null) {
+                    res = await firstValueFrom(this.http.post(link, dadosForm));
+
+                    if (res == null) {
                         this.navCl.navigateRoot("/login-cliente");
                     }
                 }
+
+                this.carregar = false;
             }
         }
     }
