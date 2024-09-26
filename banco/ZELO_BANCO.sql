@@ -102,6 +102,7 @@ Create Table solicitacao_servico
 	cd_solicitacao_servico INT,
 	cd_cpf_trabalhador CHAR(11),
 	cd_cpf_cliente CHAR(11),
+	cd_servico INT,
 	dt_solicitacao_servico DATE,
 	ds_servico TEXT,
 	ds_comentario_avaliacao_servico TEXT,
@@ -111,7 +112,8 @@ Create Table solicitacao_servico
 
     CONSTRAINT pk_solicitacao_servico PRIMARY KEY (cd_solicitacao_servico),
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
-    CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
+    CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
+	CONSTRAINT fk_solicitacao_servico_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
 
 
