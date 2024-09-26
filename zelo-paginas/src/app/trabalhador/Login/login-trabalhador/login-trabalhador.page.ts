@@ -113,7 +113,12 @@ export class LoginTrabalhadorPage implements OnInit {
             dadosForm.append("email", email!);
             dadosForm.append("senha", senha!);
 
+            this.carregar = true;
+
             let res = await firstValueFrom(this.http.post(link, dadosForm));
+
+            this.carregar = false;
+
             let obj: any = res;
 
             if (obj.erro != true) {
