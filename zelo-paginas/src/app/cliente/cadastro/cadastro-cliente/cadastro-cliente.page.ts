@@ -168,8 +168,8 @@ export class CadastroClientePage implements OnInit {
     async checarCadastro(cliente: any, dado: string = "padrão") {
         let link = "http://localhost:57879/Cliente/ChecarExistencia";
         let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.cpf!);
-        dadosForm.append("email", cliente.email!);
+        dadosForm.append("cpf", cliente.Cpf!);
+        dadosForm.append("email", cliente.Email!);
 
         if (dado != "padrão") {
             dadosForm.set(dado, "null");
@@ -180,7 +180,7 @@ export class CadastroClientePage implements OnInit {
         let resposta = await firstValueFrom(this.http.post(link, dadosForm));
 
         this.carregar = false;
-    
+
         let objRes = resposta as any;
 
         if (objRes.cadastrado.length == 0) {

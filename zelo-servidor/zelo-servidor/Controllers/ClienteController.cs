@@ -91,7 +91,7 @@ public class ClienteController : Controller
         {
             if (dados.Read())
             {
-                if (dados.GetInt32(0) >= 1)
+                if (dados.GetBoolean(0) == true)
                 {
                     json += "'cpf',";
                 }
@@ -107,7 +107,7 @@ public class ClienteController : Controller
         {
             if (dados.Read())
             {
-                if (dados.GetInt32(0) >= 1)
+                if (dados.GetBoolean(0))
                 {
                     json += "'email',";
                 }

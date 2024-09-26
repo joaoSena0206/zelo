@@ -181,14 +181,19 @@ export class CadastroTrabalhadorPage implements OnInit {
     async checarCadastro(trabalhador: any, dado: string = "padrão") {
         let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
-        dadosForm.append("cpf", trabalhador.cpf!);
-        dadosForm.append("email", trabalhador.email!);
+        dadosForm.append("cpf", trabalhador.Cpf!);
+        dadosForm.append("email", trabalhador.Email!);
 
         if (dado != "padrão") {
             dadosForm.set(dado, "null");
         }
 
+        this.carregar = true;
+
         let res = await firstValueFrom(this.http.post(link, dadosForm));
+
+        this.carregar = false;
+
         let objRes = res as any;
 
         if (objRes.cadastrado.length == 0) {
