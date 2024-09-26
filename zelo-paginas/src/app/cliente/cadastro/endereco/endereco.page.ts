@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
 import { NavController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-endereco',
@@ -21,6 +22,8 @@ export class EnderecoPage implements OnInit {
         complemento: new FormControl(""),
         pontoReferencia: new FormControl("")
     });
+
+    carregar: boolean = false;
 
     readonly cepMask: MaskitoOptions = {
         mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]
@@ -44,8 +47,7 @@ export class EnderecoPage implements OnInit {
     ngOnInit() {
     }
 
-    voltarPag()
-    {
+    voltarPag() {
         this.navCl.back();
     }
 
@@ -105,7 +107,7 @@ export class EnderecoPage implements OnInit {
         }
     }
 
-    enviar() {
+    async enviar() {
         if (this.endereco.invalid) {
             this.endereco.markAllAsTouched();
         }
@@ -125,18 +127,15 @@ export class EnderecoPage implements OnInit {
             dadosForm.append("cliente", JSON.stringify(cliente));
             dadosForm.append("endereco", JSON.stringify(endereco));
 
-            const carregamento = document.querySelector(".divCarregamento") as HTMLDivElement;
+            this.carregar = true;
 
-            carregamento.style.display = "flex";
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-            this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
-                if (res == "ok")
-                {
-                    this.navCl.navigateForward("/confirmar-celular");
-                }
-            });
+            this.carregar = false;
 
-            carregamento.style.display = "none";
+            if (res == "ok") {
+                this.navCl.navigateForward("/confirmar-celular");
+            }
         }
     }
 }
