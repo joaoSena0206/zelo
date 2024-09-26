@@ -14,7 +14,7 @@
                     <ion-input (ionInput)="validacaoInput(form.controls['email'])"
                         [class.inputErro]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)"
                         formControlName="email" class="form__input"
-                        placeholder="Digite seu email ou telefone"></ion-input>
+                        placeholder="Digite seu email"></ion-input>
                 </ion-item>
                 <span
                     [ngClass]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty) ? 'erro' : 'escondido'">{{
