@@ -46,12 +46,14 @@ Create Table trabalhador
 CREATE TABLE patrocinio
 (	
 	cd_cpf_trabalhador CHAR(11),
+	cd_servico INT,
 	qt_semanas_patrocinado INT,
 	vl_patrocinio DECIMAL,
 	dt_adesao_patrocinio DATE,
 
-	CONSTRAINT pk_patrocinio PRIMARY KEY (cd_cpf_trabalhador),
-	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
+	CONSTRAINT pk_patrocinio PRIMARY KEY (cd_cpf_trabalhador, cd_servico),
+	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
+	CONSTRAINT fk_patrocinio_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
 
 
