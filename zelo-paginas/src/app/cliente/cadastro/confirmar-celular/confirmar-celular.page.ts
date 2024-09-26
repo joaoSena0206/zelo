@@ -98,6 +98,9 @@ export class ConfirmarCelularPage implements OnInit {
         dadosForm.append("cpf", cliente.Cpf);
         dadosForm.append("tipo", "cliente");
 
+        const carregamento = document.querySelector(".divCarregamento") as HTMLDivElement;
+        carregamento.style.display = "flex";
+
         this.http.post(link, dadosForm).subscribe(res => {
             let resposta: any = res;
 
@@ -105,6 +108,8 @@ export class ConfirmarCelularPage implements OnInit {
                 this.codigoAleatorio = resposta.codigo;
             }
         });
+
+        carregamento.style.display = "none";
     }
 
     enviar() {
@@ -125,6 +130,9 @@ export class ConfirmarCelularPage implements OnInit {
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.Cpf);
 
+                const carregamento = document.querySelector(".divCarregamento") as HTMLDivElement;
+                carregamento.style.display = "flex";
+
                 this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
                     if (res == "ok") {
                         localStorage.removeItem("cliente");
@@ -137,6 +145,8 @@ export class ConfirmarCelularPage implements OnInit {
                         });
                     }
                 });
+
+                carregamento.style.display = "none";
             }
         }
     }
