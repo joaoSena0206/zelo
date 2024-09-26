@@ -80,7 +80,7 @@ export class ConfirmarCelularPage implements OnInit {
         this.gerarCodigo(null);
     }
 
-    async gerarCodigo(event: any) {
+    gerarCodigo(event: any) {
         if (event != null) {
             this.tempo = 60;
 
