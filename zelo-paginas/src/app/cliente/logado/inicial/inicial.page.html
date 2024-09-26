@@ -1,3 +1,7 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento"></div>
+</div>
+
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-title>Olá, <ion-text class="nm_titulo">{{ cliente.Nome }}</ion-text></ion-title>
@@ -5,10 +9,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <div *ngIf="carregar" class="divCarregamento">
-    <div class="carregamento"></div>
-    </div>
-
     <div class="content">
 
         <ion-searchbar placeholder="Procurar serviços"></ion-searchbar>
@@ -58,7 +58,7 @@
                 <div class="divAnuncio">
                     <div>
                         <ion-icon class="ferramenta-chave"
-                            src="../../../../assets/icon/cliente/ferramenta-chave.svg"></ion-icon>
+                            [src]="'../../../../assets/geral/servicos/' + patrocinado.Servico.Codigo + '.svg'"></ion-icon>
                         <h1>{{ patrocinado.Servico }}</h1>
                     </div>
 
@@ -73,7 +73,7 @@
 
 
         <div class="título_ultimos_pedidos">
-            <h3 class="titulo">Últimos pedidos</h3>
+            <h3 *ngIf="historico" class="titulo">Últimos pedidos</h3>
         </div>
 
         <div class="UltimosPedidosDiv">
@@ -87,7 +87,7 @@
                     <div>
                         <div>
                             <h3 class="titulo tituloPedido">{{ pedido.Trabalhador.Nome }}</h3>
-                            <h3 class="titulo tituloPedido">{{ pedido.Servico }}</h3>
+                            <h3 class="titulo tituloPedido">{{ pedido.Servico.Nome }}</h3>
 
                             <div class="estrelaPreco">
                                 <ion-icon name="star"></ion-icon>

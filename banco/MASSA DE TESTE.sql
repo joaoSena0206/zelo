@@ -18,12 +18,12 @@ INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-
 Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25);
 
 INSERT INTO patrocinio VALUE(
-	'56787654567', 2, 200, '2024-09-21'
+	'56787654567', 2, 2, 200, '2024-09-21'
 );
 
 
 INSERT INTO patrocinio VALUE(
-	'56787654566', 1, 100, '2024-09-20'
+	'56787654566', 7, 1, 100, '2024-09-20'
 );
 
 Insert into servico_trabalhador values('535305697', 1);
