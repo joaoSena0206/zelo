@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento"></div>
+    </div>
+
     <div class="content">
 
         <ion-searchbar placeholder="Procurar serviços"></ion-searchbar>
@@ -76,7 +80,8 @@
             <div class="areaUltimoPedido" *ngFor="let pedido of historico">
                 <div class="infoTrabalhorPedido">
                     <figure class="fotoTrabalhadorPedido">
-                        <img style="border-radius: 100px;" draggable="false" [src]="'http://localhost:57879/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
+                        <img style="border-radius: 100px;" draggable="false"
+                            [src]="'http://localhost:57879/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
                     </figure>
 
                     <div>
@@ -93,7 +98,8 @@
                         <div class="divCalendario">
                             <ion-icon src="../../../../assets/icon/cliente/calendario.svg"></ion-icon>
                             <p>{{ pedido.DtSolicitacaoServico.substring(8, 10) + '/' +
-                                pedido.DtSolicitacaoServico.substring(5, 7) + '/' + pedido.DtSolicitacaoServico.substring(0, 4) }}</p>
+                                pedido.DtSolicitacaoServico.substring(5, 7) + '/' +
+                                pedido.DtSolicitacaoServico.substring(0, 4) }}</p>
                         </div>
                     </div>
                 </div>
