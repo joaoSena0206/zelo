@@ -100,11 +100,7 @@ export class ConfirmarCelularPage implements OnInit {
         dadosForm.append("cpf", cliente.Cpf);
         dadosForm.append("tipo", "cliente");
 
-        this.carregar = true;
-
         let res = await firstValueFrom(this.http.post(link, dadosForm));
-
-        this.carregar = false;
 
         let resposta: any = res;
 
@@ -131,17 +127,20 @@ export class ConfirmarCelularPage implements OnInit {
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.Cpf);
 
-                let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                this.carregar = true;
 
-                if (res == "ok") {
+                let resEmail = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                let resFoto = await firstValueFrom(this.http.post("http://localhost:57879/Trabalhador/AdicionarFotoPerfil", dadosForm));
+
+                this.carregar = false;
+
+                if (resEmail == "ok") {
                     localStorage.removeItem("cliente");
                     localStorage.removeItem("opcao");
 
-                    this.http.post(link, dadosForm).subscribe(res => {
-                        if (res == null) {
-                            this.navCl.navigateRoot("/login-cliente");
-                        }
-                    });
+                    if (resFoto == null) {
+                        this.navCl.navigateRoot("/login-cliente");
+                    }
                 }
             }
         }
