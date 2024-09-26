@@ -26,7 +26,7 @@ public class SolicitacaoServicoController : Controller
 
         if (tipo == "trabalhador")
         {
-            comando = $"select SS.ds_servico, C.nm_cliente from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = '{cpf}'";
+            comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = '{cpf}'";
         }
 
         MySqlDataReader dados = banco.Consultar(comando);
@@ -66,6 +66,7 @@ public class SolicitacaoServicoController : Controller
                     cliente.Nome = dados.GetString(1);
 
                     solicitacaoServico.DsServico = dados.GetString(0);
+                    solicitacaoServico.CdSolicitacaoServico = dados.GetInt32(2);
                     solicitacaoServico.Cliente = cliente;
 
                     listaHistorico.Add(solicitacaoServico);
