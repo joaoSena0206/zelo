@@ -33,14 +33,18 @@ public class PatrocinioController : Controller
             {
                 Patrocinio patrocinio = new Patrocinio();
                 Trabalhador trabalhador = new Trabalhador();
+                Servico servico = new Servico();
 
                 trabalhador.Cpf = dados.GetString(0);
                 trabalhador.Nome = dados.GetString(1);
                 trabalhador.DataCadastro = dados.GetDateTime(2);
                 trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
 
+                servico.Codigo = dados.GetInt32(4);
+                servico.Nome = dados.GetString(3);
+
                 patrocinio.Trabalhador = trabalhador;
-                patrocinio.Servico = dados.GetString(3);
+                patrocinio.Servico = servico;
 
                 listaPatrocinio.Add(patrocinio);
             }
