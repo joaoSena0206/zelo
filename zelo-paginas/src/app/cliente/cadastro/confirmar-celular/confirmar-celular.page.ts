@@ -19,6 +19,7 @@ export class ConfirmarCelularPage implements OnInit {
         input5: new FormControl("", Validators.required)
     });
     codigoAleatorio: string;
+    carregar: boolean = false;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -112,7 +113,7 @@ export class ConfirmarCelularPage implements OnInit {
         carregamento.style.display = "none";
     }
 
-    enviar() {
+    async enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
@@ -133,7 +134,7 @@ export class ConfirmarCelularPage implements OnInit {
                 const carregamento = document.querySelector(".divCarregamento") as HTMLDivElement;
                 carregamento.style.display = "flex";
 
-                this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
+                /* this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
                     if (res == "ok") {
                         localStorage.removeItem("cliente");
                         localStorage.removeItem("opcao");
@@ -146,7 +147,7 @@ export class ConfirmarCelularPage implements OnInit {
                     }
                 });
 
-                carregamento.style.display = "none";
+                carregamento.style.display = "none"; */
             }
         }
     }
