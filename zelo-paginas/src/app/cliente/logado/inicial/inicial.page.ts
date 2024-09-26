@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-inicial',
@@ -14,7 +15,7 @@ export class InicialPage implements OnInit {
     historico: any;
     carregar: boolean = false;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private navCl: NavController) { }
 
     ngOnInit() {
     }
@@ -87,6 +88,6 @@ export class InicialPage implements OnInit {
     }
 
     mostrarTrabalhos() {
-
+        this.navCl.navigateForward("/trabalhos");
     }
 }
