@@ -19,10 +19,9 @@ public class SolicitacaoServicoController : Controller
         string tipo = Request["t"];
         string cpf = Request["c"];
 
-        string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador FROM solicitacao_servico ss
+        string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador, ss.cd_servico FROM solicitacao_servico ss
         JOIN trabalhador t ON (ss.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
-        JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
-        JOIN servico s ON (st.cd_servico = s.cd_servico)
+        JOIN servico s ON (ss.cd_servico = s.cd_servico)
         WHERE ss.cd_cpf_trabalhador = '{cpf}'";
 
         if (tipo == "trabalhador")
@@ -43,14 +42,18 @@ public class SolicitacaoServicoController : Controller
                 {
                     SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
                     Trabalhador trabalhador = new Trabalhador();
+                    Servico servico = new Servico();
 
                     trabalhador.Cpf = dados.GetString(4);
                     trabalhador.Nome = dados.GetString(0);
                     trabalhador.ValorVisita = dados.GetDecimal(3);
                     trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
 
+                    servico.Codigo = dados.GetInt32(5);
+                    servico.Nome = dados.GetString(1);
+
                     solicitacaoServico.Trabalhador = trabalhador;
-                    solicitacaoServico.Servico = dados.GetString(1);
+                    solicitacaoServico.Servico = servico;
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime(2);
 
                     listaHistorico.Add(solicitacaoServico);
