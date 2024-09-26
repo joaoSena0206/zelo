@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { noop } from 'rxjs';
+import { firstValueFrom, noop } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./categoria.page.scss'],
 })
 export class CategoriaPage implements OnInit {
+    carregar: boolean = false;
 
     constructor(private navCl: NavController, private http: HttpClient) {
 
@@ -60,10 +61,18 @@ export class CategoriaPage implements OnInit {
     Nome: any = []
 
     ionViewDidEnter() {
-        this.http.get('http://localhost:57879/Servico/CarregarServicos', { responseType: 'text' }).subscribe(res => {
-            this.listaCategorias = res;
-            this.Nome = this.listaCategorias;
-        })
+        this.carregarServicos();
+    }
+
+    async carregarServicos() {
+        this.carregar = true;
+
+        let res = await firstValueFrom(this.http.get('http://localhost:57879/Servico/CarregarServicos', { responseType: 'text' }));
+
+        this.carregar = false;
+
+        this.listaCategorias = res;
+        this.Nome = this.listaCategorias;
     }
 
     enviar() {

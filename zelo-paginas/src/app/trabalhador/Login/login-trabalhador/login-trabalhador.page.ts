@@ -1,82 +1,84 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular'; 
-import { HttpClient } from '@angular/common/http'; 
+import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-login-trabalhador',
-  templateUrl: './login-trabalhador.page.html',
-  styleUrls: ['./login-trabalhador.page.scss'],
+    selector: 'app-login-trabalhador',
+    templateUrl: './login-trabalhador.page.html',
+    styleUrls: ['./login-trabalhador.page.scss'],
 })
 export class LoginTrabalhadorPage implements OnInit {
 
-  form = new FormGroup({
-		email: new FormControl("", [Validators.required, Validators.email]),
-		senha: new FormControl("", Validators.required)
-	});
+    form = new FormGroup({
+        email: new FormControl("", [Validators.required, Validators.email]),
+        senha: new FormControl("", Validators.required)
+    });
 
-	erro: any = {
-		form: "",
-		email: "Email obrigatório",
-		senha: "Senha obrigatório"
-	};
+    erro: any = {
+        form: "",
+        email: "Email obrigatório",
+        senha: "Senha obrigatório"
+    };
 
-	constructor(private navCl: NavController, private http: HttpClient) { }
+    carregar: boolean = false;
 
-	ngOnInit() {
-		localStorage.setItem("opcao", "login");
-	}
+    constructor(private navCl: NavController, private http: HttpClient) { }
 
-	acharNomeControl(control: FormControl) {
-		let controlName = "";
+    ngOnInit() {
+        localStorage.setItem("opcao", "login");
+    }
 
-		Object.keys(this.form.controls).forEach(item => {
-			if (this.form.get(item) === control) {
-				controlName = item;
-			}
-		});
+    acharNomeControl(control: FormControl) {
+        let controlName = "";
 
-		return controlName;
-	}
+        Object.keys(this.form.controls).forEach(item => {
+            if (this.form.get(item) === control) {
+                controlName = item;
+            }
+        });
 
-	validacaoInput(control: FormControl) {
-		let nome = this.acharNomeControl(control);
-		let vlControl = control.value as String;
-		let invalido = false;
+        return controlName;
+    }
 
-		Object.keys(this.form.controls).forEach(item => {
-			if (this.form.get(item)?.hasError("invalido"))
-			{
-				this.form.get(item)?.setErrors({invalido: null});
-				this.form.get(item)?.updateValueAndValidity();
-			}
-		});
+    validacaoInput(control: FormControl) {
+        let nome = this.acharNomeControl(control);
+        let vlControl = control.value as String;
+        let invalido = false;
 
-		this.erro.form = "";
+        Object.keys(this.form.controls).forEach(item => {
+            if (this.form.get(item)?.hasError("invalido")) {
+                this.form.get(item)?.setErrors({ invalido: null });
+                this.form.get(item)?.updateValueAndValidity();
+            }
+        });
 
-		if (control.hasError("required")) {
-			this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
-		}
-		else if (control.hasError("email")) {
-			this.erro[nome] = `Email inválido!`;
+        this.erro.form = "";
 
-			return;
-		}
-		else {
-			let erros = control.errors;
+        if (control.hasError("required")) {
+            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
+        }
+        else if (control.hasError("email")) {
+            this.erro[nome] = `Email inválido!`;
 
-			if (erros != null) {
-				Object.keys(erros).forEach(erro => {
-					this.erro[nome] = erros![erro].msg;
-				});
-			}
-			else {
-				this.erro[nome] = "";
-			}
-		}
-	}
+            return;
+        }
+        else {
+            let erros = control.errors;
 
-	estadoSenha(event: any) {
+            if (erros != null) {
+                Object.keys(erros).forEach(erro => {
+                    this.erro[nome] = erros![erro].msg;
+                });
+            }
+            else {
+                this.erro[nome] = "";
+            }
+        }
+    }
+
+    estadoSenha(event: any) {
         const olho = event.target as HTMLIonIconElement;
         const input = event.target.parentElement as HTMLIonInputElement;
 
@@ -90,59 +92,50 @@ export class LoginTrabalhadorPage implements OnInit {
         }
     }
 
-	voltarPag()
-	{
-		this.navCl.navigateBack("home/opcoes-de-cadastro");
-	}
+    voltarPag() {
+        this.navCl.navigateBack("home/opcoes-de-cadastro");
+    }
 
-	irCadastro()
-	{
-		this.navCl.navigateRoot("/cadastro-trabalhador");
-	}
+    irCadastro() {
+        this.navCl.navigateRoot("/cadastro-trabalhador");
+    }
 
-	enviar()
-	{
-		if (this.form.invalid)
-		{
-			this.form.markAllAsTouched();
-		}
-		else
-		{
-			let link = "http://localhost:57879/Trabalhador/Logar";
-			let email = this.form.controls['email'].value;
-			let senha = this.form.controls['senha'].value;
+    async enviar() {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+        }
+        else {
+            let link = "http://localhost:57879/Trabalhador/Logar";
+            let email = this.form.controls['email'].value;
+            let senha = this.form.controls['senha'].value;
 
-			let dadosForm = new FormData();
-			dadosForm.append("email", email!);
-			dadosForm.append("senha", senha!);
+            let dadosForm = new FormData();
+            dadosForm.append("email", email!);
+            dadosForm.append("senha", senha!);
 
-			this.http.post(link, dadosForm).subscribe(res => {
-				let obj: any = res;
+            let res = await firstValueFrom(this.http.post(link, dadosForm));
+            let obj: any = res;
 
-				if (obj.erro != true)
-				{
-					let cliente = obj;
+            if (obj.erro != true) {
+                let cliente = obj;
 
-					localStorage.setItem("trabalhador", JSON.stringify(cliente));
+                localStorage.setItem("trabalhador", JSON.stringify(cliente));
 
-					if (!cliente.Confirmado)
-					{
-						this.navCl.navigateRoot("/confirmar-celular");
-					}
+                if (!cliente.Confirmado) {
+                    this.navCl.navigateRoot("/confirmar-celular");
+                }
 
-					localStorage.removeItem("opcao");
-          
-					this.navCl.navigateRoot("/trabalhador/inicial");
-				}
-				else
-				{
-					this.erro.form = "Email ou senha incorreto(s)";
+                localStorage.removeItem("opcao");
 
-					this.form.controls["email"].setErrors({invalido: true});
-					this.form.controls["senha"].setErrors({invalido: true});
-				}
-			});
-		}
-	}
+                this.navCl.navigateRoot("/trabalhador/inicial");
+            }
+            else {
+                this.erro.form = "Email ou senha incorreto(s)";
+
+                this.form.controls["email"].setErrors({ invalido: true });
+                this.form.controls["senha"].setErrors({ invalido: true });
+            }
+        }
+    }
 
 }

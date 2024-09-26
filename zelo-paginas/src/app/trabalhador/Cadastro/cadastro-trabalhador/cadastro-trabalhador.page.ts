@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -25,6 +26,7 @@ export class CadastroTrabalhadorPage implements OnInit {
         termos: new FormControl("", validadorTermos())
     });
 
+    carregar: boolean = false;
     inputData: any;
     erro: any = {
         nome: "Nome obrigatório!",
@@ -158,23 +160,25 @@ export class CadastroTrabalhadorPage implements OnInit {
         this.inputData = moment(data).format("DD/MM/YYYY");
     }
 
-    cadastrarBanco()
-    {
+    async cadastrarBanco() {
         let link = "http://localhost:57879/Trabalhador/Adicionar";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
         dadosForm.append("trabalhador", JSON.stringify(trabalhador));
 
-        this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
-            if (res == "ok")
-            {
-                this.navCl.navigateForward("/trabalhador/confirmar-celular");
-            }
-        });
+        this.carregar = true;
+
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+        this.carregar = false;
+
+        if (res == "ok") {
+            this.navCl.navigateForward("/trabalhador/confirmar-celular");
+        }
     }
 
-    checarCadastro(trabalhador: any, dado: string = "padrão") {
+    async checarCadastro(trabalhador: any, dado: string = "padrão") {
         let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.cpf!);
@@ -184,23 +188,22 @@ export class CadastroTrabalhadorPage implements OnInit {
             dadosForm.set(dado, "null");
         }
 
-        this.http.post(link, dadosForm).subscribe(res => {
-            let objRes = res as any;
+        let res = await firstValueFrom(this.http.post(link, dadosForm));
+        let objRes = res as any;
 
-            if (objRes.cadastrado.length == 0) {
-                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+        if (objRes.cadastrado.length == 0) {
+            localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
 
-                this.cadastrarBanco();
-            }
-            else {
-                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
-                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+            this.cadastrarBanco();
+        }
+        else {
+            objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
 
-                    this.form.controls[cadastrado].setErrors({ existe: true });
-                    this.form.controls[cadastrado].markAsDirty();
-                });
-            }
-        });
+                this.form.controls[cadastrado].setErrors({ existe: true });
+                this.form.controls[cadastrado].markAsDirty();
+            });
+        }
     }
 
     voltarPag() {

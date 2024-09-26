@@ -2,6 +2,7 @@ import { Component, input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -19,6 +20,7 @@ export class ConfirmarCelularPage implements OnInit {
         input5: new FormControl("", Validators.required)
     });
     codigoAleatorio: string;
+    carregar: boolean = false;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -78,7 +80,7 @@ export class ConfirmarCelularPage implements OnInit {
         this.gerarCodigo(null);
     }
 
-    gerarCodigo(event: any) {
+    async gerarCodigo(event: any) {
         if (event != null) {
             this.tempo = 60;
 
@@ -98,16 +100,15 @@ export class ConfirmarCelularPage implements OnInit {
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("tipo", "trabalhador");
 
-        this.http.post(link, dadosForm).subscribe(res => {
-            let resposta: any = res;
+        let res = await firstValueFrom(this.http.post(link, dadosForm));
+        let resposta: any = res;
 
-            if (resposta.res == "ok") {
-                this.codigoAleatorio = resposta.codigo;
-            }
-        });
+        if (resposta.res == "ok") {
+            this.codigoAleatorio = resposta.codigo;
+        }
     }
 
-    enviar() {
+    async enviar() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
         }
@@ -125,17 +126,21 @@ export class ConfirmarCelularPage implements OnInit {
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", trabalhador.Cpf);
 
-                this.http.post(link, dadosForm, { responseType: "text" }).subscribe(res => {
-                    if (res == "ok") {
-                        link = "http://localhost:57879/Trabalhador/AdicionarFotoPerfil";
+                this.carregar = true;
 
-                        this.http.post(link, dadosForm).subscribe(res => {
-                            if (res == null) {
-                                this.navCl.navigateRoot("/tipo-saque");
-                            }
-                        });
+                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+                if (res == "ok") {
+                    link = "http://localhost:57879/Trabalhador/AdicionarFotoPerfil";
+
+                    res = await firstValueFrom(this.http.post(link, dadosForm));
+
+                    if (res == null) {
+                        this.navCl.navigateRoot("/tipo-saque");
                     }
-                });
+                }
+
+                this.carregar = false;
             }
         }
     }
