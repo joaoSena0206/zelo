@@ -131,6 +131,8 @@
 
 .img_pedido{
     width: 100%;
+    height: 150px;
+    object-fit: cover;
 }
 
 .nm_cliente_pedido{
@@ -165,6 +167,9 @@
     font-size: 15px;
   }
 
+  .card_servico:not(:last-child){
+    margin-right: 15px;
+  }
   //------------------------------------------------//
 
 .poupop {

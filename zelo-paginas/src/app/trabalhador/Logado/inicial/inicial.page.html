@@ -18,37 +18,17 @@
     </div>
 
     <div class="local_ultimos_trabalhos">
-      
-      <ion-card>
-        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 119.png" alt="">
-        <p class="nm_cliente_pedido">Ivanir da Silva</p>
-        <p class="ds_pedido">Minha geladeira está descongelando sozinha...</p>
-      </ion-card>
-  
-      <!--
-      <ion-card style="margin: 0 0 0 20px;">
-        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
-        <p class="nm_cliente_pedido">Lucas Moratto</p>
-        <p>Minha geladeira está desligando a cada 2 horas...</p>
-      </ion-card>
+      <ion-card class="card_servico" *ngFor="let historico of historico">
+        <img draggable="false" class="img_pedido"
+              [src]="'http://localhost:57879/Imgs/ServicoRealizado/' + historico.CdSolicitacaoServico + '.png'"
+              [alt]="historico.Nome">
+        
+        <p class="nm_cliente_pedido">{{historico.Cliente.Nome}}</p>
 
-      <ion-card style="margin: 0 0 0 20px;">
-        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
-        <p class="nm_cliente_pedido">Lucas Moratto</p>
-        <p>Minha geladeira está desligando a cada 2 horas...</p>
+        <p class="ds_pedido">
+          {{ historico.DsServico.length > 60 ? (historico.DsServico | slice:0:60) + '...' : historico.DsServico }}
+        </p>
       </ion-card>
-
-      <ion-card style="margin: 0 0 0 20px;">
-        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
-        <p class="nm_cliente_pedido">Lucas Moratto</p>
-        <p>Minha geladeira está desligando a cada 2 horas...</p>
-      </ion-card>
-
-      <ion-card style="margin: 0 0 0 20px;">
-        <img class="img_pedido" src="../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
-        <p class="nm_cliente_pedido">Lucas Moratto</p>
-        <p>Minha geladeira está desligando a cada 2 horas...</p>
-      </ion-card> -->
     </div>
 
     <div class="título_ultimos_pedidos">

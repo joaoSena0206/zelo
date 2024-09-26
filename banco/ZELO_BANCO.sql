@@ -141,5 +141,3 @@ Create table certificado
 	CONSTRAINT pk_certificado PRIMARY KEY (cd_certificado),
 	CONSTRAINT fk_certificado_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );
-
-
