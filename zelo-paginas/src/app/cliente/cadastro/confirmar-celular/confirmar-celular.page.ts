@@ -131,11 +131,7 @@ export class ConfirmarCelularPage implements OnInit {
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.Cpf);
 
-                this.carregar = true;
-
                 let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-
-                this.carregar = false;
 
                 if (res == "ok") {
                     localStorage.removeItem("cliente");
