@@ -16,7 +16,7 @@ public class ClienteController : Controller
 {
     [HttpPost]
     [Route("Adicionar")]
-    public async Task<string> Adicionar()
+    public string Adicionar()
     {
         Banco banco = new Banco();
         banco.Conectar();

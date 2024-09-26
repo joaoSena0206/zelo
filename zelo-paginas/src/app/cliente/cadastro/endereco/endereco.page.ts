@@ -131,7 +131,7 @@ export class EnderecoPage implements OnInit {
 
             let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-            this.carregar = false;
+            this.carregar = false;  
 
             if (res == "ok") {
                 this.navCl.navigateForward("/confirmar-celular");
