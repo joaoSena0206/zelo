@@ -125,12 +125,18 @@ export class EnderecoPage implements OnInit {
             dadosForm.append("cliente", JSON.stringify(cliente));
             dadosForm.append("endereco", JSON.stringify(endereco));
 
+            const carregamento = document.querySelector(".divCarregamento") as HTMLDivElement;
+
+            carregamento.style.display = "flex";
+
             this.http.post(link, dadosForm, {responseType: "text"}).subscribe(res => {
                 if (res == "ok")
                 {
                     this.navCl.navigateForward("/confirmar-celular");
                 }
             });
+
+            carregamento.style.display = "none";
         }
     }
 }
