@@ -100,12 +100,13 @@ export class ConfirmarCelularPage implements OnInit {
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("tipo", "trabalhador");
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm));
-        let resposta: any = res;
+        this.http.post(link, dadosForm).subscribe(res => {
+            let resposta: any = res;
 
-        if (resposta.res == "ok") {
-            this.codigoAleatorio = resposta.codigo;
-        }
+            if (resposta.res == "ok") {
+                this.codigoAleatorio = resposta.codigo;
+            }
+        });
     }
 
     async enviar() {
