@@ -173,6 +173,10 @@ export class CadastroClientePage implements OnInit {
             dadosForm.set(dado, "null");
         }
 
+        const carregamento = document.querySelector(".divCarregamento") as HTMLDivElement;
+
+        carregamento.style.display = "flex";
+
         this.http.post(link, dadosForm).subscribe(res => {
             let objRes = res as any;
 
@@ -190,6 +194,8 @@ export class CadastroClientePage implements OnInit {
                 });
             }
         });
+
+        carregamento.style.display = "none";
     }
 
     enviar() {
