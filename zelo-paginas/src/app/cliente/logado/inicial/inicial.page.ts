@@ -77,10 +77,6 @@ export class InicialPage implements OnInit {
                     this.categorias[i].Servicos = [];
 
                     for (let j = 0; j < servicos.length; j++) {
-                        if (j == 5) {
-                            break;
-                        }
-
                         if (this.categorias[i].Codigo == servicos[j].CodigoCategoria) {
                             this.categorias[i].Servicos.push(servicos[j]);
                         }
@@ -88,5 +84,9 @@ export class InicialPage implements OnInit {
                 }
             }
         }
+    }
+
+    mostrarTrabalhos() {
+
     }
 }

@@ -17,19 +17,21 @@
             <div *ngFor="let categoria of categorias">
                 <div class="título_ultimos_pedidos">
                     <h3 class="titulo">{{ categoria.Nome }}</h3>
-                    <p class="título_ultimos_pedidos__p">Ver trabalhos</p>
+                    <p class="título_ultimos_pedidos__p" (click)="mostrarTrabalhos()">Ver trabalhos</p>
                 </div>
 
                 <div class="local_ultimos_trabalhos">
-                    <ion-card *ngFor="let servico of categoria.Servicos" button="true">
-                        <ion-ripple-effect></ion-ripple-effect>
-                        <img draggable="false" class="img_pedido"
-                            [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"
-                            [alt]="servico.Nome">
-                        <div class="div_pedido">
-                            <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
-                        </div>
-                    </ion-card>
+                    <ng-container *ngFor="let servico of categoria.Servicos; let i = index">
+                        <ion-card button="true" *ngIf="i < 5">
+                            <ion-ripple-effect></ion-ripple-effect>
+                            <img draggable="false" class="img_pedido"
+                                [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"
+                                [alt]="servico.Nome">
+                            <div class="div_pedido">
+                                <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
+                            </div>
+                        </ion-card>
+                    </ng-container>
                 </div>
             </div>
         </div>
