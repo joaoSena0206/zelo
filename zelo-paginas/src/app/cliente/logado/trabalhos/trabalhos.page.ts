@@ -91,7 +91,7 @@ export class TrabalhosPage implements OnInit {
 
     pesquisarServicos(input: any) {
         const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
-        let valor = input.value;
+        let valor = input.value.toLowerCase();
 
         for (let i = 0; i < this.categorias.length; i++) {
             for (let j = 0; j < this.categorias[i].Servicos.length; j++) {
