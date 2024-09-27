@@ -90,4 +90,29 @@ export class InicialPage implements OnInit {
     mostrarTrabalhos() {
         this.navCl.navigateForward("/trabalhos");
     }
+
+    pesquisarServicos(input: any) {
+        const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
+
+        let valor = input.value.toLowerCase();
+
+        for (let i = 0; i < cards.length; i++) {
+            if (valor == "") {
+                if (i < 5) {
+                    cards[i].classList.remove("escondido");
+                }
+                else {
+                    cards[i].classList.add("escondido");
+                }
+            }
+            else {
+                if (cards[i].textContent?.toLowerCase().includes(valor)) {
+                    cards[i].classList.remove("escondido");
+                }
+                else {
+                    cards[i].classList.add("escondido");
+                }
+            }
+        }
+    }
 }

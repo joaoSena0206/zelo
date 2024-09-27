@@ -10,7 +10,7 @@
 
 <ion-content [fullscreen]="true">
     <div class="content">
-        <ion-searchbar placeholder="Procurar serviços"></ion-searchbar>
+        <ion-searchbar (ionInput)="pesquisarServicos($event.target)" placeholder="Procurar serviços"></ion-searchbar>
 
         <div id="servicos">
             <div *ngFor="let categoria of categorias">
@@ -21,7 +21,7 @@
 
                 <div class="local_ultimos_trabalhos">
                     <ng-container *ngFor="let servico of categoria.Servicos; let i = index">
-                        <ion-card button="true" *ngIf="i < 5">
+                        <ion-card button="true" [class]="i >= 5 ? 'escondido' : ''">
                             <ion-ripple-effect></ion-ripple-effect>
                             <img draggable="false" class="img_pedido"
                                 [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"

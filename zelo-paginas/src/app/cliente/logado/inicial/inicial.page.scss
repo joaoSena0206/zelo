@@ -111,6 +111,11 @@ ion-title {
     height: fit-content;
 }
 
+.escondido
+{
+    display: none;
+}
+
 .nome_trabalhador {
     font-weight: bold;
     font-size: 17px;
@@ -158,6 +163,7 @@ ion-title {
 
 .local_ultimos_trabalhos ion-card {
     min-width: 180px;
+    height: 213px;
     border-radius: 15px;
     position: relative;
     overflow: hidden;
