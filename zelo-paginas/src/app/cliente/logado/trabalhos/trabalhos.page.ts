@@ -22,31 +22,11 @@ export class TrabalhosPage implements OnInit {
     }
 
     ionViewDidEnter() {
-        this.carregarCategorias();
+
     }
 
     ngAfterViewInit() {
-        this.ngContainer.changes.subscribe(() => {
-            const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
-
-            for (let i = 0; i < cards.length; i++) {
-                if ((cards[i] as HTMLIonCardElement).clientWidth != (cards[0] as HTMLIonCardElement).clientWidth) {
-                    (cards[i] as HTMLIonCardElement).style.maxWidth = `${(cards[0] as HTMLIonCardElement).clientWidth}px`;
-                }
-            }
-
-            window.addEventListener("resize", function () {
-                const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
-
-                for (let i = 0; i < cards.length; i++) {
-                    if ((cards[i] as HTMLIonCardElement).clientWidth != (cards[0] as HTMLIonCardElement).clientWidth) {
-                        (cards[i] as HTMLIonCardElement).style.maxWidth = `${(cards[0] as HTMLIonCardElement).clientWidth}px`;
-                    }
-                }
-            });
-
-
-        });
+        this.carregarCategorias();
     }
 
     async carregarCategorias() {
@@ -90,7 +70,7 @@ export class TrabalhosPage implements OnInit {
     }
 
     pesquisarServicos(input: any) {
-        const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
+        const cards = document.querySelectorAll("#servicos_2 .local_ultimos_trabalhos ion-card");
         let valor = input.value.toLowerCase();
 
         for (let i = 0; i < this.categorias.length; i++) {

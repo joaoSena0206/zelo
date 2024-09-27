@@ -70,8 +70,11 @@
 }
 
 .local_ultimos_trabalhos {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, max-content));
+    grid-gap: 20px;
     flex-wrap: wrap;
+    justify-content: center;
     padding-bottom: 10px;
     scrollbar-width: none;
     gap: 20px;
@@ -172,8 +175,7 @@ ion-title.md {
 
 .local_ultimos_trabalhos ion-card {
     border-radius: 15px;
-    width: clamp(168px, 47%, 200px);
-    flex-grow: 1;
+    width: 170px;
     position: relative;
     overflow: hidden;
 }
