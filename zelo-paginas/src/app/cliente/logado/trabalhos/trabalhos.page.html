@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
     <div class="content">
-        <ion-searchbar placeholder="Procurar serviços"></ion-searchbar>
+        <ion-searchbar (ionInput)="pesquisarServicos($event.target)" placeholder="Procurar serviços"></ion-searchbar>
 
         <div id="servicos">
             <div *ngFor="let categoria of categorias">

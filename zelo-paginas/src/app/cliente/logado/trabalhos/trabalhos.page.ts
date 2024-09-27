@@ -44,6 +44,8 @@ export class TrabalhosPage implements OnInit {
                     }
                 }
             });
+
+
         });
     }
 
@@ -85,5 +87,21 @@ export class TrabalhosPage implements OnInit {
         }
 
         this.carregar = false;
+    }
+
+    pesquisarServicos(input: any) {
+        const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
+        let valor = input.value;
+
+        for (let i = 0; i < this.categorias.length; i++) {
+            for (let j = 0; j < this.categorias[i].Servicos.length; j++) {
+                if (this.categorias[i].Servicos[j].Nome.toLowerCase().includes(valor)) {
+                    (cards[j] as HTMLIonCardElement).style.display = "block";
+                }
+                else {
+                    (cards[j] as HTMLIonCardElement).style.display = "none";
+                }
+            }
+        }
     }
 }
