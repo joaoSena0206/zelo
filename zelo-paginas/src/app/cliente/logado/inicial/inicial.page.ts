@@ -14,6 +14,7 @@ export class InicialPage implements OnInit {
     patrocinados: any;
     historico: any;
     carregar: boolean = false;
+    mostrar: boolean = true;
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -95,6 +96,15 @@ export class InicialPage implements OnInit {
         const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
 
         let valor = input.value.toLowerCase();
+
+        if (valor == "")
+        {
+            this.mostrar = true;
+        }
+        else
+        {
+            this.mostrar = false;
+        }
 
         for (let i = 0; i < cards.length; i++) {
             if (valor == "") {

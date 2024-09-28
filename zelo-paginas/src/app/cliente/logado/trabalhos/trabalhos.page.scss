@@ -74,7 +74,7 @@
     grid-template-columns: repeat(auto-fit, minmax(170px, max-content));
     grid-gap: 20px;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     padding-bottom: 10px;
     scrollbar-width: none;
     gap: 20px;
@@ -176,7 +176,7 @@ ion-title.md {
 .local_ultimos_trabalhos ion-card {
     width: 170px;
     flex-shrink: 0;
-    border-radius: 15px;
+    border-radius: 25px;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -432,4 +432,16 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-chil
 .Clicado {
     background-color: #F66701;
     color: white;
+}
+
+
+@media screen and (max-width: 403px) {
+    .local_ultimos_trabalhos {
+        justify-content: center;
+    }
+
+    .local_ultimos_trabalhos ion-card {
+        width: 100%;
+        height: 300px;
+    }
 }
