@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { IonList } from '@ionic/angular';
 
 @Component({
     selector: 'app-inicial',
@@ -10,6 +11,9 @@ export class InicialPage implements OnInit {
 
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     historico: any;
+    Nome: any = this.trabalhador.Nome.trim();
+    ComentarioAnonimo: any;
+    qtEstrelas: any;
 
     constructor(private http: HttpClient) { }
 
@@ -17,6 +21,56 @@ export class InicialPage implements OnInit {
 
     ngAfterViewInit() {
         this.carregarHistorico();
+        this.carregarComentarioAnonimo();
+    }
+
+    qlComentario(Indice: number): boolean {
+
+        this.qtEstrelas = [];
+
+        for (let i = 0; i < this.ComentarioAnonimo[Indice]['QtEstrelasAvaliacaoServico']; i++) {
+            this.qtEstrelas.push(1);
+        }
+
+        this.formatarEstrelas();
+
+        return this.qtEstrelas;
+    }
+
+    formatarEstrelas()
+    {
+        let estrelas = document.querySelectorAll('.estrela')
+        
+                
+        if (estrelas.length == 3) {
+            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
+        }
+        else if (estrelas.length == 4) {
+            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
+            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
+        }
+        else if (estrelas.length == 5) {
+            
+            (estrelas[0] as HTMLIonIconElement).style.marginTop = "-30px";
+            (estrelas[4] as HTMLIonIconElement).style.marginTop = "-30px";
+
+            (estrelas[0] as HTMLIonIconElement).style.position = "absolute";
+            (estrelas[4] as HTMLIonIconElement).style.position = "absolute";
+
+            (estrelas[0] as HTMLIonIconElement).style.marginLeft = "-45px";
+            (estrelas[4] as HTMLIonIconElement).style.marginRight = "-45px";
+
+            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
+        }
+    }
+
+    carregarComentarioAnonimo()
+    {
+        let link = `http://localhost:57879/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
+
+        this.http.get(link).subscribe(res => {
+            this.ComentarioAnonimo = res;
+        });
     }
 
     carregarHistorico() {
@@ -25,21 +79,10 @@ export class InicialPage implements OnInit {
 
         this.http.get(link).subscribe(res => {
             this.historico = res;
-            console.log(res)
-
-            if(this.historico != null)
-            {
-                for (let i = 0; i < this.historico.length; i++) {
-                    if (i == 5) {
-                        break;
-                    }
-                }
-            }
         });
     }
 
     msgTrabalho: any = 'Deseja trabalhar agora?';
-
     situacao: any = '';
     resultado: any = '';
     
@@ -71,24 +114,6 @@ export class InicialPage implements OnInit {
                 this.situacao = 'Indisponível';
             }
         });
-
-        const estrelas = document.querySelectorAll(".estrelas ion-icon");
-
-        if (estrelas.length == 3)
-        {
-            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-20px";
-        }
-        else if (estrelas.length == 4)
-        {
-            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-20px";
-            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-20px";
-        }
-        else if (estrelas.length == 5)
-        {
-            (estrelas[0] as HTMLIonIconElement).style.marginTop = "-20px";
-            (estrelas[4] as HTMLIonIconElement).style.marginTop = "-20px";
-            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-20px";
-        }
     }
 
     disponivel() {
@@ -129,6 +154,5 @@ export class InicialPage implements OnInit {
 
         this.http.post(link, dadosForm, {responseType: 'text'}).subscribe(res => {
         })
-        
     }
 }
