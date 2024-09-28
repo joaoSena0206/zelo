@@ -124,4 +124,9 @@ export class InicialPage implements OnInit {
             }
         }
     }
+
+    selecionarServico(codigo: number)
+    {
+        this.navCl.navigateForward("/descricao-servico?c=" + codigo);
+    }
 }
