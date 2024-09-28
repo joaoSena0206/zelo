@@ -3,7 +3,7 @@ import { first, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-descricao-servico',
@@ -16,11 +16,11 @@ export class DescricaoServicoPage implements OnInit {
     endereco: any;
 
     form = new FormGroup({
-        descServico: new FormControl("", Validators.required)
+        descServico: new FormControl("", validadorDescricao())
     });
 
     erro: any = {
-        descServico: "Descrição do serviço obrigatório"
+        descServico: "Descrição é obrigatória"
     };
 
     constructor(private http: HttpClient, private route: ActivatedRoute, private navCl: NavController) { }
@@ -32,6 +32,41 @@ export class DescricaoServicoPage implements OnInit {
 
     ngAfterViewInit() {
 
+    }
+
+    ionViewDidEnter() {
+    }
+
+    carregarServico() {
+        const servico = JSON.parse(localStorage.getItem("servico")!);
+        this.servico = servico;
+    }
+
+    async carregarEndereco() {
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let link = "http://localhost:57879/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
+
+        this.carregar = true;
+        let resposta: any = await firstValueFrom(this.http.get(link));
+        this.endereco = resposta;
+
+        link = `https://viacep.com.br/ws/${this.endereco.Cep}/json/`;
+        resposta = await firstValueFrom(this.http.get(link));
+        this.carregar = false;
+
+        this.endereco.Cep = {
+            cep: this.endereco.Cep,
+            bairro: resposta.bairro,
+            rua: resposta.logradouro,
+            estado: resposta.estado,
+            cidade: resposta.localidade
+        };
+    }
+
+    voltarPag() {
+        localStorage.removeItem("servico");
+
+        this.navCl.back();
     }
 
     acharNomeControl(control: FormControl) {
@@ -71,37 +106,28 @@ export class DescricaoServicoPage implements OnInit {
             }
         }
     }
-
-    carregarServico() {
-        const servico = JSON.parse(localStorage.getItem("servico")!);
-        this.servico = servico;
-    }
-
-    async carregarEndereco() {
-        let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = "http://localhost:57879/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
-
-        this.carregar = true;
-        let resposta: any = await firstValueFrom(this.http.get(link));
-        this.endereco = resposta;
-
-        link = `https://viacep.com.br/ws/${this.endereco.Cep}/json/`;
-        resposta = await firstValueFrom(this.http.get(link));
-        this.carregar = false;
-
-        this.endereco.Cep = {
-            cep: this.endereco.Cep,
-            bairro: resposta.bairro,
-            rua: resposta.logradouro,
-            estado: resposta.estado,
-            cidade: resposta.localidade
-        };
-    }
-
-    voltarPag() {
-        localStorage.removeItem("servico");
-
-        this.navCl.back();
-    }
-
 }
+
+export function validadorTamanhoMinimo(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let vl = control.value.replace(/[^/\d/ ]+/g, "");
+
+        if (vl.length < 11) {
+            return { tamanhoMinimo: { msg: "Cpf deve ter 11 dígitos!" } };
+        }
+
+        return null;
+    };
+};
+
+export function validadorDescricao(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let vl = control.value;
+
+        if (vl == "") {
+            return { obrigatorio: { msg: "Descrição é obrigatória!" } };
+        }
+
+        return null;
+    };
+};
