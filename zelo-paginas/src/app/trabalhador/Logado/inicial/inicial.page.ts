@@ -37,35 +37,36 @@ export class InicialPage implements OnInit {
         return this.qtEstrelas;
     }
 
-    formatarEstrelas()
-    {
-        let estrelas = document.querySelectorAll('.estrela')
-        
-                
-        if (estrelas.length == 3) {
-            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
-        }
-        else if (estrelas.length == 4) {
-            (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
-            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
-        }
-        else if (estrelas.length == 5) {
-            
-            (estrelas[0] as HTMLIonIconElement).style.marginTop = "-30px";
-            (estrelas[4] as HTMLIonIconElement).style.marginTop = "-30px";
+    formatarEstrelas() {
+        const comentarios = document.querySelectorAll("ion-item");
 
-            (estrelas[0] as HTMLIonIconElement).style.position = "absolute";
-            (estrelas[4] as HTMLIonIconElement).style.position = "absolute";
+        comentarios.forEach(comentario => {
+            const estrelas = comentario.querySelectorAll(".estrela");
 
-            (estrelas[0] as HTMLIonIconElement).style.marginLeft = "-45px";
-            (estrelas[4] as HTMLIonIconElement).style.marginRight = "-45px";
+            if (estrelas.length == 3) {
+                (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
+            }
+            else if (estrelas.length == 4) {
+                (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
+                (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
+            }
+            else if (estrelas.length == 5) {
 
-            (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
-        }
+                (estrelas[0] as HTMLIonIconElement).style.marginTop = "-30px";
+                (estrelas[4] as HTMLIonIconElement).style.marginTop = "-30px";
+
+                (estrelas[0] as HTMLIonIconElement).style.position = "absolute";
+                (estrelas[4] as HTMLIonIconElement).style.position = "absolute";
+
+                (estrelas[0] as HTMLIonIconElement).style.marginLeft = "-45px";
+                (estrelas[4] as HTMLIonIconElement).style.marginRight = "-45px";
+
+                (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
+            }
+        });
     }
 
-    carregarComentarioAnonimo()
-    {
+    carregarComentarioAnonimo() {
         let link = `http://localhost:57879/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
 
         this.http.get(link).subscribe(res => {
@@ -85,15 +86,14 @@ export class InicialPage implements OnInit {
     msgTrabalho: any = 'Deseja trabalhar agora?';
     situacao: any = '';
     resultado: any = '';
-    
+
     ionViewDidEnter() {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        this.http.post('http://localhost:57879/Trabalhador/VerificarSituacao', JSON.stringify(this.trabalhador.cpf), {responseType: 'text'}).subscribe(res => {
+        this.http.post('http://localhost:57879/Trabalhador/VerificarSituacao', JSON.stringify(this.trabalhador.cpf), { responseType: 'text' }).subscribe(res => {
 
-            if(res == "True")
-            {
+            if (res == "True") {
                 this.situacao = 'Disponível';
 
                 botaoSituacao?.classList.remove('btn_situacao_trabalhador');
@@ -104,8 +104,7 @@ export class InicialPage implements OnInit {
                     '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
                 );
             }
-            else
-            {
+            else {
                 botaoSituacao?.classList.add('btn_situacao_trabalhador');
                 botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
 
@@ -114,6 +113,18 @@ export class InicialPage implements OnInit {
                 this.situacao = 'Indisponível';
             }
         });
+
+        this.formatarEstrelas();
+    }
+
+    gerarArrayEstrelas(numEstrelas: any) {
+        let array = [];
+
+        for (let i = 0; i < numEstrelas; i++) {
+            array.push(0);
+        }
+
+        return array;
     }
 
     disponivel() {
@@ -152,7 +163,7 @@ export class InicialPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("Resultado", this.resultado!);
 
-        this.http.post(link, dadosForm, {responseType: 'text'}).subscribe(res => {
+        this.http.post(link, dadosForm, { responseType: 'text' }).subscribe(res => {
         })
     }
 }

@@ -1,146 +1,151 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Olá, <ion-text class="nm_titulo">{{Nome}}!</ion-text></ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Olá, <ion-text class="nm_titulo">{{Nome}}!</ion-text></ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="content">
+    <div class="content">
 
-    <ion-button id="abrir_modal_servico" class="btn_situacao_trabalhador">
-      <img class="img_btn_situacao" src="../../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg" alt="">
-      <p class="txtSituacao" style="margin: 15px;">{{ situacao }}</p>
-    </ion-button>
+        <ion-button id="abrir_modal_servico" class="btn_situacao_trabalhador">
+            <img class="img_btn_situacao" src="../../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg" alt="">
+            <p class="txtSituacao" style="margin: 15px;">{{ situacao }}</p>
+        </ion-button>
 
-    <div class="título_ultimos_pedidos">
-      <h3>Ultimos Pedidos</h3>
-      <p>Ver Todos</p>
-    </div>
-
-    <div class="local_ultimos_trabalhos">
-      <ion-card class="card_servico" *ngFor="let historico of historico">
-        <img draggable="false" class="img_pedido"
-              [src]="'http://localhost:57879/Imgs/ServicoRealizado/' + historico.CdSolicitacaoServico + '.png'"
-              [alt]="historico.Nome">
-        
-        <p class="nm_cliente_pedido">{{historico.Cliente.Nome}}</p>
-
-        <p class="ds_pedido">
-          {{ historico.DsServico.length > 60 ? (historico.DsServico | slice:0:60) + '...' : historico.DsServico }}
-        </p>
-      </ion-card>
-    </div>
-
-    <div class="título_ultimos_pedidos">
-      <h3>Publicidade</h3>
-    </div>
-
-    <div class="local_publicidade">
-      <ion-card>
-        <div class="publicidade_texto">
-          <p>Destaque seu perfil, e faça ele chegar para mais pessoas!</p>
-          <ion-button [routerLink]="['/comercial']" class="btn">Saiba mais</ion-button>
+        <div class="título_ultimos_pedidos">
+            <h3>Ultimos Pedidos</h3>
+            <p>Ver Todos</p>
         </div>
 
-        <div class="publicidade_img">
-          <img class="img_publicidade" src="../../../../assets/icon/Trabalhador/imagens/image 127.png" alt="">
-          <ion-icon class="icone_publicidade" src="../../../../assets/icon/Trabalhador/Icone inicial/icone_grafico.svg"></ion-icon>
+        <div class="local_ultimos_trabalhos">
+            <ion-card class="card_servico" *ngFor="let historico of historico">
+                <img draggable="false" class="img_pedido"
+                    [src]="'http://localhost:57879/Imgs/ServicoRealizado/' + historico.CdSolicitacaoServico + '.png'"
+                    [alt]="historico.Nome">
+
+                <p class="nm_cliente_pedido">{{historico.Cliente.Nome}}</p>
+
+                <p class="ds_pedido">
+                    {{ historico.DsServico.length > 60 ? (historico.DsServico | slice:0:60) + '...' :
+                    historico.DsServico }}
+                </p>
+            </ion-card>
         </div>
-      </ion-card>
+
+        <div class="título_ultimos_pedidos">
+            <h3>Publicidade</h3>
+        </div>
+
+        <div class="local_publicidade">
+            <ion-card>
+                <div class="publicidade_texto">
+                    <p>Destaque seu perfil, e faça ele chegar para mais pessoas!</p>
+                    <ion-button [routerLink]="['/comercial']" class="btn">Saiba mais</ion-button>
+                </div>
+
+                <div class="publicidade_img">
+                    <img class="img_publicidade" src="../../../../assets/icon/Trabalhador/imagens/image 127.png" alt="">
+                    <ion-icon class="icone_publicidade"
+                        src="../../../../assets/icon/Trabalhador/Icone inicial/icone_grafico.svg"></ion-icon>
+                </div>
+            </ion-card>
+        </div>
+
+        <div class="título_ultimos_pedidos">
+            <h3>Ultimas avaliações</h3>
+        </div>
+
+        <ion-list>
+            <ion-item lines="none" *ngFor="let Comentario of ComentarioAnonimo; let i = index"
+                class="area_comentario_anonimo">
+                <div class="div1" id="div_estrela">
+
+                    <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
+
+                    <div class="estrelas">
+                        <ion-icon class="estrela" *ngFor="let estrela of gerarArrayEstrelas(Comentario.QtEstrelasAvaliacaoServico)" name="star"></ion-icon>
+                    </div>
+
+                </div>
+                <div>
+                    <p class="txt_anonimo">Anônimo</p>
+                    <p class="txt_comentario_anonimo">{{Comentario.DsComentarioAvaliacaoServico}}</p>
+                </div>
+            </ion-item>
+        </ion-list>
+
     </div>
-
-    <div class="título_ultimos_pedidos">
-      <h3>Ultimas avaliações</h3>
-    </div>
-
-    <ion-list>
-      <ion-item lines="none" *ngFor="let Comentario of ComentarioAnonimo; let i = index" class="area_comentario_anonimo">
-        <div class="div1" id="div_estrela">
-
-          <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
-
-          <div class="estrelas" *ngIf="qlComentario(i)">
-            <ion-icon class="estrela" *ngFor="let estrelas of qtEstrelas" name="star"></ion-icon>
-          </div>
-
-        </div>
-        <div>
-          <p class="txt_anonimo">Anônimo</p>
-          <p class="txt_comentario_anonimo">{{Comentario.DsComentarioAvaliacaoServico}}</p>
-        </div>
-      </ion-item>
-    </ion-list>
-
-  </div>
 
 </ion-content>
 
 <ion-modal id="modal_servico" #modal_disponivel trigger="abrir_modal_servico">
-  <ng-template>
+    <ng-template>
 
-      <ion-card class="poupop">
+        <ion-card class="poupop">
 
-          <div class="area_vermelha">
-              <ion-icon (click)="modal_disponivel.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
-              <div class="circulo_branca">
-                  <ion-icon class="iconeInterrogacao"
-                      src="../../../../assets/icon/Trabalhador/Icone inicial/Icone_poupop.svg"></ion-icon>
-              </div>
-          </div>
+            <div class="area_vermelha">
+                <ion-icon (click)="modal_disponivel.dismiss();" class="iconeFechar2"
+                    name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <ion-icon class="iconeInterrogacao"
+                        src="../../../../assets/icon/Trabalhador/Icone inicial/Icone_poupop.svg"></ion-icon>
+                </div>
+            </div>
 
-          <div class="area_branca">
-              <h1 class="h1_denuncia">{{ msgTrabalho }}</h1>
-              <ion-button (click)="modal_disponivel.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
-          </div>
+            <div class="area_branca">
+                <h1 class="h1_denuncia">{{ msgTrabalho }}</h1>
+                <ion-button (click)="modal_disponivel.dismiss(); disponivel()" class="form__btn">Confirmar</ion-button>
+            </div>
 
-      </ion-card>
+        </ion-card>
 
-  </ng-template>
+    </ng-template>
 </ion-modal>
 
 <ion-modal id="modal_servico_solicitado" #modal_servico trigger="abrir_modal_servico_solicitado">
-  <ng-template>
+    <ng-template>
 
-      <ion-card class="poupop">
+        <ion-card class="poupop">
 
-          <div class="area_vermelha">
-              <ion-icon (click)="modal_servico.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
-              <div class="circulo_branca">
-                  <img class="iconeFoto" src="../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
-              </div>
-          </div>
+            <div class="area_vermelha">
+                <ion-icon (click)="modal_servico.dismiss();" class="iconeFechar2"
+                    name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <img class="iconeFoto" src="../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
+                </div>
+            </div>
 
-          <div class="area_branca">
-              <h1>Marina Oliveira</h1>
-              <h1 style="font-size: 22px;">Novo serviço solicitado!</h1>
-              <div>
-                <ion-button class="form__btn2">Analisar</ion-button>
-                <ion-button class="form__btn1">Ignorar</ion-button>
-              </div>
-          </div>
+            <div class="area_branca">
+                <h1>Marina Oliveira</h1>
+                <h1 style="font-size: 22px;">Novo serviço solicitado!</h1>
+                <div>
+                    <ion-button class="form__btn2">Analisar</ion-button>
+                    <ion-button class="form__btn1">Ignorar</ion-button>
+                </div>
+            </div>
 
-      </ion-card>
+        </ion-card>
 
-  </ng-template>
+    </ng-template>
 </ion-modal>
 
-<ion-footer class="footer" style="position: fixed;" >
-  <ion-tabs class="ion_tabs">
-    <ion-tab-bar class="ion_tab_bar" slot="bottom">
-  
-      <ion-tab-button>
-        <ion-icon class="imgFooter Clicado" name="home-outline"></ion-icon>
-      </ion-tab-button>
-  
-      <ion-tab-button [routerLink]="['/ultimos-pedidos']">
-        <ion-icon style="color: black;" class="imgFooter" name="time-outline"></ion-icon>
-      </ion-tab-button>
-  
-      <ion-tab-button [routerLink]="['/trabalhador/perfil']">
-        <ion-icon  class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
-        </ion-icon>
-      </ion-tab-button>
+<ion-footer class="footer" style="position: fixed;">
+    <ion-tabs class="ion_tabs">
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
 
-    </ion-tab-bar>
-  </ion-tabs>
+            <ion-tab-button>
+                <ion-icon class="imgFooter Clicado" name="home-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/ultimos-pedidos']">
+                <ion-icon style="color: black;" class="imgFooter" name="time-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/trabalhador/perfil']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
 </ion-footer>
