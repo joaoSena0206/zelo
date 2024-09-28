@@ -27,7 +27,7 @@ public class SolicitacaoServicoController : Controller
 
         if (tipo == "trabalhador")
         {
-            comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = '{cpf}'";
+            comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = '{cpf}' LIMIT 5";
         }
 
         MySqlDataReader dados = banco.Consultar(comando);
@@ -76,6 +76,52 @@ public class SolicitacaoServicoController : Controller
             dados.Close();
         }
         
+        banco.Desconectar();
+
+        return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
+    }
+
+    [HttpGet]
+    [Route("carregarcomentariosAnonimos")]
+    public string carregarcomentariosAnonimos()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string tipo = Request["t"];
+        string cpf = Request["c"];
+
+        string comando = "";
+
+        if (tipo == "trabalhador")
+        {
+            comando = $"select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = {cpf} ORDER BY RAND() LIMIT 5";
+        }
+
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
+        TrabalhadorController trabalhadorController = new TrabalhadorController();
+
+        if (dados != null)
+        {
+            while (dados.Read())
+            {
+                SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+
+                solicitacaoServico.DsComentarioAvaliacaoServico = dados.GetString(0);
+                solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetInt32(1);
+
+                listaHistorico.Add(solicitacaoServico);
+                
+            }
+        }
+
+        if (!dados.IsClosed)
+        {
+            dados.Close();
+        }
+
         banco.Desconectar();
 
         return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);

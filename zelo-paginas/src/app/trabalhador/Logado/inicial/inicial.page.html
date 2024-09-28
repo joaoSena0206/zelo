@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Olá, <ion-text class="nm_titulo">Marcos!</ion-text></ion-title>
+    <ion-title>Olá, <ion-text class="nm_titulo">{{Nome}}!</ion-text></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -54,93 +54,21 @@
     </div>
 
     <ion-list>
+      <ion-item lines="none" *ngFor="let Comentario of ComentarioAnonimo; let i = index" class="area_comentario_anonimo">
+        <div class="div1" id="div_estrela">
 
-      <ion-item lines="none" class="area_comentario_anonimo">
-        <div class="div1">
           <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
 
-          <div class="estrelas">
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
+          <div class="estrelas" *ngIf="qlComentario(i)">
+            <ion-icon class="estrela" *ngFor="let estrelas of qtEstrelas" name="star"></ion-icon>
           </div>
 
         </div>
         <div>
           <p class="txt_anonimo">Anônimo</p>
-          <p class="txt_comentario_anonimo">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
+          <p class="txt_comentario_anonimo">{{Comentario.DsComentarioAvaliacaoServico}}</p>
         </div>
       </ion-item>
-
-      <ion-item lines="none" class="area_comentario_anonimo">
-        <div class="div1">
-          <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
-
-          <div class="estrelas">
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-          </div>
-
-        </div>
-        <div>
-          <p class="txt_anonimo">Anônimo</p>
-          <p class="txt_comentario_anonimo">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
-        </div>
-      </ion-item>
-
-      <ion-item lines="none" class="area_comentario_anonimo">
-        <div class="div1">
-          <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
-
-          <div class="estrelas">
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-          </div>
-
-        </div>
-        <div>
-          <p class="txt_anonimo">Anônimo</p>
-          <p class="txt_comentario_anonimo">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
-        </div>
-      </ion-item>
-
-      <ion-item lines="none" class="area_comentario_anonimo">
-        <div class="div1">
-          <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
-
-          <div class="estrelas">
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-          </div>
-
-        </div>
-        <div>
-          <p class="txt_anonimo">Anônimo</p>
-          <p class="txt_comentario_anonimo">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
-        </div>
-      </ion-item>
-
-      <ion-item lines="none" class="area_comentario_anonimo">
-        <div class="div1">
-          <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
-
-          <div class="estrelas">
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-          </div>
-
-        </div>
-        <div>
-          <p class="txt_anonimo">Anônimo</p>
-          <p class="txt_comentario_anonimo">Gostaria de agradecer pelo exelente trabalho que voçê fez aqui!</p>
-        </div>
-      </ion-item>
-
     </ion-list>
 
   </div>
