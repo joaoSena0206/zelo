@@ -8,12 +8,15 @@ import { DescricaoServicoPageRoutingModule } from './descricao-servico-routing.m
 
 import { DescricaoServicoPage } from './descricao-servico.page';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DescricaoServicoPageRoutingModule
+    DescricaoServicoPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [DescricaoServicoPage]
 })
