@@ -31,7 +31,6 @@ Insert into servico_trabalhador values('56787654567', 2);
 Insert into servico_trabalhador values('56787654566', 7);
 Insert into servico_trabalhador values('50082480818', 3);
 
-INSERT INTO cliente VALUES('12345678909', 'João Silva', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
 INSERT INTO cliente VALUES
 (
 	'50082480818',
@@ -41,6 +40,17 @@ INSERT INTO cliente VALUES
 	md5('1234'),
 	true
 );
+INSERT INTO endereco VALUES
+(
+	1,
+	'11075540',
+	'Casa',
+	'50082480818',
+	'7',
+	'',
+	'Estádio Caldeira'
+);
+
 
 INSERT INTO solicitacao_servico VALUES
 (
@@ -55,3 +65,5 @@ INSERT INTO solicitacao_servico VALUES
 	'Ótimo serviço, mas faltou na educação',
 	4.0
 );
+
+SELECT * FROM endereco WHERE cd_cpf_cliente = '50082480818';
