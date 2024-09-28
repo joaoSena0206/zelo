@@ -97,12 +97,10 @@ export class InicialPage implements OnInit {
 
         let valor = input.value.toLowerCase();
 
-        if (valor == "")
-        {
+        if (valor == "") {
             this.mostrar = true;
         }
-        else
-        {
+        else {
             this.mostrar = false;
         }
 
@@ -116,6 +114,7 @@ export class InicialPage implements OnInit {
                 }
             }
             else {
+
                 if (cards[i].textContent?.toLowerCase().includes(valor)) {
                     cards[i].classList.remove("escondido");
                 }
