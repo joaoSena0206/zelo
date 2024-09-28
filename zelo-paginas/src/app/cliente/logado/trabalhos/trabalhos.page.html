@@ -10,11 +10,11 @@
 
         <div id="servicos_2">
             <div *ngFor="let categoria of categorias">
-                <div class="título_ultimos_pedidos">
+                <div class="título_ultimos_pedidos" *ngIf="mostrar">
                     <h3 class="titulo">{{ categoria.Nome }}</h3>
                 </div>
 
-                <div class="local_ultimos_trabalhos">
+                <div class="local_ultimos_trabalhos" [style]="!mostrar ? 'margin-top: 56.4px;' : ''">
                     <ng-container #ngContainer *ngFor="let servico of categoria.Servicos">
                         <ion-card button="true">
                             <div class="div_ion_card">

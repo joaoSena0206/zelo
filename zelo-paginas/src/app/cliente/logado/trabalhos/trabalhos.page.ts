@@ -12,6 +12,7 @@ export class TrabalhosPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     carregar: boolean = false;
     categorias: any;
+    mostrar: boolean = true;
 
     @ViewChildren("ngContainer") ngContainer: QueryList<ElementRef>;
 
@@ -72,6 +73,15 @@ export class TrabalhosPage implements OnInit {
     pesquisarServicos(input: any) {
         const cards = document.querySelectorAll("#servicos_2 .local_ultimos_trabalhos ion-card");
         let valor = input.value.toLowerCase();
+
+        if (valor == "")
+        {
+            this.mostrar = true;
+        }
+        else
+        {
+            this.mostrar = false;
+        }
 
         for (let i = 0; i < this.categorias.length; i++) {
             for (let j = 0; j < this.categorias[i].Servicos.length; j++) {
