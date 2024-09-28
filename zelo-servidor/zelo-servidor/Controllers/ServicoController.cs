@@ -43,4 +43,16 @@ public class ServicoController : Controller
 
         #endregion
     }
+
+    [HttpGet]
+    [Route("CarregarServico")]
+    public string CarregarServico()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        int codigo = int.Parse(Request["c"]);
+
+        return "a";
+    }
 }
