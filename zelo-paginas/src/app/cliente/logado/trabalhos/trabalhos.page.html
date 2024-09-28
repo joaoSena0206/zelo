@@ -17,12 +17,14 @@
                 <div class="local_ultimos_trabalhos">
                     <ng-container #ngContainer *ngFor="let servico of categoria.Servicos">
                         <ion-card button="true">
-                            <ion-ripple-effect></ion-ripple-effect>
-                            <img draggable="false" class="img_pedido"
-                                [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"
-                                [alt]="servico.Nome">
-                            <div class="div_pedido">
-                                <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
+                            <div class="div_ion_card">
+                                <ion-ripple-effect></ion-ripple-effect>
+                                <img draggable="false" class="img_pedido"
+                                    [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"
+                                    [alt]="servico.Nome">
+                                <div class="div_pedido">
+                                    <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
+                                </div>
                             </div>
                         </ion-card>
                     </ng-container>

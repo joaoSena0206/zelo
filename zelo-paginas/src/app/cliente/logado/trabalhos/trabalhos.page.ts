@@ -76,7 +76,7 @@ export class TrabalhosPage implements OnInit {
         for (let i = 0; i < this.categorias.length; i++) {
             for (let j = 0; j < this.categorias[i].Servicos.length; j++) {
                 if (this.categorias[i].Servicos[j].Nome.toLowerCase().includes(valor)) {
-                    (cards[j] as HTMLIonCardElement).style.display = "block";
+                    (cards[j] as HTMLIonCardElement).style.display = "flex";
                 }
                 else {
                     (cards[j] as HTMLIonCardElement).style.display = "none";
