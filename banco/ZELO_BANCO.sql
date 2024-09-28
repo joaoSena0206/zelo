@@ -46,12 +46,14 @@ Create Table trabalhador
 CREATE TABLE patrocinio
 (	
 	cd_cpf_trabalhador CHAR(11),
+	cd_servico INT,
 	qt_semanas_patrocinado INT,
 	vl_patrocinio DECIMAL,
 	dt_adesao_patrocinio DATE,
 
-	CONSTRAINT pk_patrocinio PRIMARY KEY (cd_cpf_trabalhador),
-	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
+	CONSTRAINT pk_patrocinio PRIMARY KEY (cd_cpf_trabalhador, cd_servico),
+	CONSTRAINT fk_patrocinio_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
+	CONSTRAINT fk_patrocinio_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
 
 
@@ -102,6 +104,7 @@ Create Table solicitacao_servico
 	cd_solicitacao_servico INT,
 	cd_cpf_trabalhador CHAR(11),
 	cd_cpf_cliente CHAR(11),
+	cd_servico INT,
 	dt_solicitacao_servico DATE,
 	ds_servico TEXT,
 	ds_comentario_avaliacao_servico TEXT,
@@ -111,7 +114,8 @@ Create Table solicitacao_servico
 
     CONSTRAINT pk_solicitacao_servico PRIMARY KEY (cd_solicitacao_servico),
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
-    CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
+    CONSTRAINT fk_solicitacao_servico_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
+	CONSTRAINT fk_solicitacao_servico_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
 
 
@@ -129,15 +133,4 @@ Create Table endereco
 
 	CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco, cd_cep_endereco),
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
-);
-
--- TABELA CERTIFICADO TRABALHADOR -- 
-Create table certificado
-(
-	cd_certificado INT,
-	cd_cpf_trabalhador CHAR(11),
-	nm_certificado VARCHAR(100),
-
-	CONSTRAINT pk_certificado PRIMARY KEY (cd_certificado),
-	CONSTRAINT fk_certificado_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
 );

@@ -18,10 +18,9 @@ public class PatrocinioController : Controller
 
         #region Carrega os patrocinados do banco
 
-        string comando = @"SELECT p.cd_cpf_trabalhador, nm_trabalhador, dt_cadastro_trabalhador, nm_servico FROM patrocinio p
+        string comando = @"SELECT p.cd_cpf_trabalhador, nm_trabalhador, dt_cadastro_trabalhador, nm_servico, p.cd_servico FROM patrocinio p
         JOIN trabalhador t ON (p.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
-        JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
-        JOIN servico s ON (st.cd_servico = s.cd_servico)
+        JOIN servico s ON (p.cd_servico = s.cd_servico)
         GROUP BY p.cd_cpf_trabalhador";
         MySqlDataReader dados = banco.Consultar(comando);
 
@@ -34,14 +33,18 @@ public class PatrocinioController : Controller
             {
                 Patrocinio patrocinio = new Patrocinio();
                 Trabalhador trabalhador = new Trabalhador();
+                Servico servico = new Servico();
 
                 trabalhador.Cpf = dados.GetString(0);
                 trabalhador.Nome = dados.GetString(1);
                 trabalhador.DataCadastro = dados.GetDateTime(2);
                 trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
 
+                servico.Codigo = dados.GetInt32(4);
+                servico.Nome = dados.GetString(3);
+
                 patrocinio.Trabalhador = trabalhador;
-                patrocinio.Servico = dados.GetString(3);
+                patrocinio.Servico = servico;
 
                 listaPatrocinio.Add(patrocinio);
             }

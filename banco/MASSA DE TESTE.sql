@@ -19,12 +19,12 @@ Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-0
 Insert into trabalhador value('53890618880', 'Marco', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), '50082480818', false, true, 25);
 
 INSERT INTO patrocinio VALUE(
-	'56787654567', 2, 200, '2024-09-21'
+	'56787654567', 2, 2, 200, '2024-09-21'
 );
 
 
 INSERT INTO patrocinio VALUE(
-	'56787654566', 1, 100, '2024-09-20'
+	'56787654566', 7, 1, 100, '2024-09-20'
 );
 
 Insert into servico_trabalhador values('535305697', 1);
@@ -32,10 +32,6 @@ Insert into servico_trabalhador values('56787654567', 2);
 Insert into servico_trabalhador values('56787654566', 7);
 Insert into servico_trabalhador values('50082480818', 3);
 
-INSERT INTO cliente VALUES('12345218909', 'Roberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
-INSERT INTO cliente VALUES('12345674322', 'Julio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
-INSERT INTO cliente VALUES('12345678909', 'Alberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
-INSERT INTO cliente VALUES('12345672469', 'Fabio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
 INSERT INTO cliente VALUES
 (
 	'50082480818',
@@ -45,12 +41,28 @@ INSERT INTO cliente VALUES
 	md5('1234'),
 	true
 );
+INSERT INTO endereco VALUES
+(
+	1,
+	'11075540',
+	'Casa',
+	'50082480818',
+	'7',
+	'',
+	'Estádio Caldeira'
+);
+
+INSERT INTO cliente VALUES('12345218909', 'Roberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
+INSERT INTO cliente VALUES('12345674322', 'Julio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
+INSERT INTO cliente VALUES('12345678909', 'Alberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
+INSERT INTO cliente VALUES('12345672469', 'Fabio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
 
 INSERT INTO solicitacao_servico VALUES
 (
 	1,
 	'53890618880',
 	'50082480818',
+	3,
 	'2024-09-24',
 	'Mangueira quebrou e nao sei o que fazer!',
 	'Otimo trabalho irei chamar mais vezes',
@@ -118,6 +130,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Rapaz muito educado e simpatico',
 	5.0
 );
+
+SELECT * FROM endereco WHERE cd_cpf_cliente = '50082480818';
 
 Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
 select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = 53890618880 ORDER BY RAND() LIMIT 5;

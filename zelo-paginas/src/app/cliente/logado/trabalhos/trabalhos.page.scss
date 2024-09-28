@@ -70,8 +70,11 @@
 }
 
 .local_ultimos_trabalhos {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, max-content));
+    grid-gap: 20px;
     flex-wrap: wrap;
+    justify-content: flex-start;
     padding-bottom: 10px;
     scrollbar-width: none;
     gap: 20px;
@@ -171,11 +174,28 @@ ion-title.md {
 
 
 .local_ultimos_trabalhos ion-card {
-    border-radius: 15px;
-    width: clamp(168px, 47%, 200px);
-    flex-grow: 1;
+    width: 170px;
+    flex-shrink: 0;
+    border-radius: 25px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    height: 209px;
+}
+
+.div_pedido {
+    padding: 15px 20px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.div_ion_card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .area_comentario_anonimo {
@@ -219,7 +239,6 @@ ion-title.md {
     font-size: 15px;
     font-weight: bold;
     color: black;
-    margin: 20px 0;
     text-align: center;
 }
 
@@ -408,4 +427,21 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-chil
 div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>p:nth-child(3) {
     height: fit-content;
     align-self: flex-end;
+}
+
+.Clicado {
+    background-color: #F66701;
+    color: white;
+}
+
+
+@media screen and (max-width: 403px) {
+    .local_ultimos_trabalhos {
+        justify-content: center;
+    }
+
+    .local_ultimos_trabalhos ion-card {
+        width: 100%;
+        height: 300px;
+    }
 }

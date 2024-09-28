@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
+[RoutePrefix("Endereco")]
 public class EnderecoController : Controller
 {
     public void AdicionarEndereco(Endereco endereco)
@@ -29,5 +31,35 @@ public class EnderecoController : Controller
         banco.Desconectar();
 
         #endregion 
+    }
+
+    [HttpGet]
+    [Route("CarregarEndereco")]
+    public string CarregarEndereco()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cpf = Request["cpf"];
+
+        string comando = $"SELECT * FROM endereco WHERE cd_cpf_cliente = '{cpf}'";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        Endereco endereco = new Endereco();
+
+        if (dados != null && dados.Read())
+        {
+            endereco.Codigo = dados.GetInt32(0);
+            endereco.Cep = dados.GetString(1);
+            endereco.Identificacao = dados.GetString(2);
+            endereco.Numero = dados.GetInt32(4);
+            endereco.Complemento = dados.GetString(5);
+            endereco.Referencia = dados.GetString(6);
+        }
+
+        dados.Close();
+        banco.Desconectar();
+
+        return JsonConvert.SerializeObject(endereco);
     }
 }

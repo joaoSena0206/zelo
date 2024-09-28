@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-inicial',
@@ -11,8 +13,10 @@ export class InicialPage implements OnInit {
     categorias: any;
     patrocinados: any;
     historico: any;
+    carregar: boolean = false;
+    mostrar: boolean = true;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private navCl: NavController) { }
 
     ngOnInit() {
     }
@@ -23,65 +27,108 @@ export class InicialPage implements OnInit {
         this.carregarHistorico();
     }
 
-    carregarPatrocinados() {
+    async carregarPatrocinados() {
         let link = "http://localhost:57879/Patrocinio/CarregarPatrocinados";
 
-        this.http.get(link).subscribe(res => {
-            this.patrocinados = res;
-        });
+        this.carregar = true;
+
+        let res = await firstValueFrom(this.http.get(link));
+
+        this.patrocinados = res;
     }
 
-    carregarHistorico() {
+    async carregarHistorico() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
         let link = `http://localhost:57879/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
 
-        this.http.get(link).subscribe(res => {
-            this.historico = res;
+        this.carregar = true;
 
-            console.log(this.historico);
-        });
+        let res = await firstValueFrom(this.http.get(link));
+
+        this.historico = res;
+
+        this.carregar = false;
     }
 
-    carregarCategorias() {
+    async carregarCategorias() {
         let link = "http://localhost:57879/CategoriaServico/CarregarCategoria";
 
-        this.http.get(link).subscribe(res => {
-            this.categorias = res;
+        this.carregar = true;
 
-            if (this.categorias != null) {
-                link = "http://localhost:57879/Servico/CarregarServicos";
+        let res = await firstValueFrom(this.http.get(link));
+        this.categorias = res;
 
-                this.http.get(link).subscribe(res2 => {
-                    let servicos: any = res2;
-                    servicos.sort((a: any, b: any) => {
-                        if (a.Nome < b.Nome) {
-                            return -1;
-                        }
-                        if (a.Nome > b.Nome) {
-                            return 1;
-                        }
-                        return 0;
-                    });
+        if (this.categorias != null) {
+            link = "http://localhost:57879/Servico/CarregarServicos";
 
-                    if (servicos != null) {
-                        for (let i = 0; i < this.categorias.length; i++) {
-                            this.categorias[i].Servicos = [];
+            let res2 = await firstValueFrom(this.http.get(link));
 
-                            for (let j = 0; j < servicos.length; j++) {
-                                if (j == 5) {
-                                    break;
-                                }
+            let servicos: any = res2;
+            servicos.sort((a: any, b: any) => {
+                if (a.Nome < b.Nome) {
+                    return -1;
+                }
+                if (a.Nome > b.Nome) {
+                    return 1;
+                }
+                return 0;
+            });
 
-                                if (this.categorias[i].Codigo == servicos[j].CodigoCategoria) {
-                                    this.categorias[i].Servicos.push(servicos[j]);
-                                }
-                            }
+            if (servicos != null) {
+                for (let i = 0; i < this.categorias.length; i++) {
+                    this.categorias[i].Servicos = [];
+
+                    for (let j = 0; j < servicos.length; j++) {
+                        if (this.categorias[i].Codigo == servicos[j].CodigoCategoria) {
+                            this.categorias[i].Servicos.push(servicos[j]);
                         }
                     }
-                });
+                }
             }
+        }
+    }
 
+    mostrarTrabalhos() {
+        this.navCl.navigateForward("/trabalhos");
+    }
 
-        });
+    pesquisarServicos(input: any) {
+        const cards = document.querySelectorAll(".local_ultimos_trabalhos ion-card");
+
+        let valor = input.value.toLowerCase();
+
+        if (valor == "") {
+            this.mostrar = true;
+        }
+        else {
+            this.mostrar = false;
+        }
+
+        for (let i = 0; i < cards.length; i++) {
+            if (valor == "") {
+                if (i < 5) {
+                    cards[i].classList.remove("escondido");
+                }
+                else {
+                    cards[i].classList.add("escondido");
+                }
+            }
+            else {
+
+                if (cards[i].textContent?.toLowerCase().includes(valor)) {
+                    cards[i].classList.remove("escondido");
+                }
+                else {
+                    cards[i].classList.add("escondido");
+                }
+            }
+        }
+    }
+
+    selecionarServico(servico: any)
+    {
+        localStorage.setItem("servico", JSON.stringify(servico));
+
+        this.navCl.navigateForward("/descricao-servico"); 
     }
 }

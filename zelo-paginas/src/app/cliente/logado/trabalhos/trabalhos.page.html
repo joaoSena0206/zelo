@@ -1,116 +1,37 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-title>Olá, <ion-text class="nm_titulo">Marcos!</ion-text></ion-title>
+        <ion-title>Olá, <ion-text class="nm_titulo">{{ cliente.Nome }}!</ion-text></ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
     <div class="content">
+        <ion-searchbar (ionInput)="pesquisarServicos($event.target)" placeholder="Procurar serviços"></ion-searchbar>
 
-        <ion-searchbar placeholder="Procurar serviços"></ion-searchbar>
-
-        <div class="título_ultimos_pedidos">
-            <h3 class="titulo">Reformas e reparos</h3>
-        </div>
-
-        <div class="local_ultimos_trabalhos">
-            <ion-card button="true">
-                <ion-ripple-effect></ion-ripple-effect>
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/limpeza.jpg" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Limpeza</p>
+        <div id="servicos_2">
+            <div *ngFor="let categoria of categorias">
+                <div class="título_ultimos_pedidos" *ngIf="mostrar">
+                    <h3 class="titulo">{{ categoria.Nome }}</h3>
                 </div>
-            </ion-card>
 
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/eletricista.png" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Eletricista</p>
+                <div class="local_ultimos_trabalhos" [style]="!mostrar ? 'margin-top: 56.4px;' : ''">
+                    <ng-container #ngContainer *ngFor="let servico of categoria.Servicos">
+                        <ion-card button="true">
+                            <div class="div_ion_card">
+                                <ion-ripple-effect></ion-ripple-effect>
+                                <img draggable="false" class="img_pedido"
+                                    [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"
+                                    [alt]="servico.Nome">
+                                <div class="div_pedido">
+                                    <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
+                                </div>
+                            </div>
+                        </ion-card>
+                    </ng-container>
                 </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/encanador.jpg" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Encanador</p>
-                </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/chaveiro.png" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Chaveiro</p>
-                </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/jardineiro.png" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Jardineiro</p>
-                </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/marceneiro.jpg" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Marceneiro</p>
-                </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/pintor.jpg" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Pintor</p>
-                </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido" src="../../../assets/icon/cliente/tecnico_ar_condicionado.png"
-                    alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">TEC em ar-condicionado</p>
-                </div>
-            </ion-card>
-
-            <ion-card button="true">
-                <img draggable="false" class="img_pedido"
-                    src="../../../assets/icon/cliente/manutencao_eletrodomesticos.jpg" alt="">
-                <div class="div_pedido">
-                    <p class="nm_cliente_pedido">Manutenção de eletrodomésticos</p>
-                </div>
-            </ion-card>
+            </div>
         </div>
     </div>
-
-
-    <ion-footer class="footer" style="position: fixed;">
-        <ion-tabs class="ion_tabs">
-            <ion-tab-bar class="ion_tab_bar" slot="bottom">
-
-                <ion-tab-button tab="">
-                    <ion-icon class="imgFooter Clicado" src="../../../assets/icon/cliente/Home.svg" alt="">
-                    </ion-icon>
-                </ion-tab-button>
-
-                <ion-tab-button tab="">
-                    <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Heart.svg" alt="">
-                    </ion-icon>
-                </ion-tab-button>
-
-                <ion-tab-button>
-                    <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Relogio.svg">
-                    </ion-icon>
-                </ion-tab-button>
-
-                <ion-tab-button>
-                    <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Perfil.svg">
-                    </ion-icon>
-                </ion-tab-button>
-
-            </ion-tab-bar>
-        </ion-tabs>
-    </ion-footer>
-
 </ion-content>
 
 <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
@@ -121,3 +42,29 @@
         </ion-card>
     </ng-template>
 </ion-modal>
+
+<ion-footer class="footer" style="position: fixed;">
+    <ion-tabs class="ion_tabs">
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
+
+            <ion-tab-button [routerLink]="['/inicial']">
+                <ion-icon class="imgFooter Clicado" name="home-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/favoritos']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/cliente/Heart.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/historico']">
+                <ion-icon style="color: black;" class="imgFooter" name="time-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/perfil']">
+                <ion-icon class="imgFooter" src="../../../assets/icon/Trabalhador/Icone inicial/IconePerfil.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
+</ion-footer>

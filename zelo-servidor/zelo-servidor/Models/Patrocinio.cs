@@ -38,9 +38,9 @@ public class Patrocinio
 		set { _dtAdesao = value; }
 	}
 
-	private string _servico;
+	private Servico _servico;
 
-	public string Servico
+	public Servico Servico
 	{
 		get { return _servico; }
 		set { _servico = value; }
@@ -53,7 +53,7 @@ public class Patrocinio
 
 	}
 
-	public Patrocinio(Trabalhador trabalhador, int semanas, string valor, DateTime dataAdesao, string servico)
+	public Patrocinio(Trabalhador trabalhador, int semanas, string valor, DateTime dataAdesao, Servico servico)
 	{
 		this.Trabalhador = trabalhador;
 		this.QtSemanas = semanas;

@@ -30,6 +30,15 @@ public class SolicitacaoServico
         set { _cliente = value; }
     }
 
+	private Servico _servico;
+
+	public Servico Servico
+	{
+		get { return _servico; }
+		set { _servico = value; }
+	}
+
+
 	private DateTime _dtSolicitacaoServico;
 
 	public DateTime DtSolicitacaoServico
@@ -78,16 +87,8 @@ public class SolicitacaoServico
         set { _qtEstrelasAvaliacaoCliente = value; }
     }
 
-	private string _servico;
 
-	public string Servico
-	{
-		get { return _servico; }
-		set { _servico = value; }
-	}
-
-
-	public SolicitacaoServico(int cdSolicitacaoServico, Trabalhador trabalhador, Cliente cliente, DateTime dtSolicitacaoServico, string dsServico, string dsComentarioAvaliacaoServico, int qtEstrelasAvaliacaoServico, string dsComentarioAvaliacaoCliente, int qtEstrelasAvaliacaoCliente, string servico)
+	public SolicitacaoServico(int cdSolicitacaoServico, Trabalhador trabalhador, Cliente cliente, DateTime dtSolicitacaoServico, string dsServico, string dsComentarioAvaliacaoServico, int qtEstrelasAvaliacaoServico, string dsComentarioAvaliacaoCliente, int qtEstrelasAvaliacaoCliente, Servico servico)
     {
         CdSolicitacaoServico = cdSolicitacaoServico;
         Trabalhador = trabalhador;

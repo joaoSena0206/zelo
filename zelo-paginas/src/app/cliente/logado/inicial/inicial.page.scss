@@ -65,6 +65,8 @@ ion-title {
     padding-bottom: 10px;
     scrollbar-width: none;
     margin-bottom: 30px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .info_trabalhador {
@@ -109,6 +111,10 @@ ion-title {
     padding: 0;
     margin-left: 8px;
     height: fit-content;
+}
+
+.escondido {
+    display: none !important;
 }
 
 .nome_trabalhador {
@@ -157,11 +163,30 @@ ion-title {
 
 
 .local_ultimos_trabalhos ion-card {
-    min-width: 180px;
-    border-radius: 15px;
+    width: 170px;
+    flex-shrink: 0;
+    border-radius: 25px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    height: 209px;
 }
+
+.div_pedido {
+    padding: 15px 20px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.div_ion_card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .area_comentario_anonimo div {
     margin: 10px;
@@ -180,7 +205,6 @@ ion-title {
     font-size: 15px;
     font-weight: bold;
     color: black;
-    margin: 20px 0;
     text-align: center;
 }
 
