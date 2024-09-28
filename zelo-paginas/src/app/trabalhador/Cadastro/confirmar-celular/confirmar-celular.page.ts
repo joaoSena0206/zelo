@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'app-confirmar-celular',
+    selector: 'app-confirmar-celular-trabalhador',
     templateUrl: './confirmar-celular.page.html',
     styleUrls: ['./confirmar-celular.page.scss'],
 })
