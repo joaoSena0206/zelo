@@ -133,6 +133,12 @@ ion-searchbar input {
     animation: spin 2s linear infinite;
 }
 
+ion-textarea.ion-invalid
+{
+    --border-color: none !important;
+    --highlight-color: none !important;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
