@@ -125,8 +125,10 @@ export class InicialPage implements OnInit {
         }
     }
 
-    selecionarServico(codigo: number)
+    selecionarServico(servico: any)
     {
-        this.navCl.navigateForward("/descricao-servico?c=" + codigo);
+        localStorage.setItem("servico", JSON.stringify(servico));
+
+        this.navCl.navigateForward("/descricao-servico"); 
     }
 }

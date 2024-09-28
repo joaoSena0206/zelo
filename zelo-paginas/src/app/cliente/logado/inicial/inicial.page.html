@@ -21,7 +21,7 @@
 
                 <div class="local_ultimos_trabalhos" [style]="!mostrar ? 'margin-top: 56.4px; flex-wrap: wrap;' : ''">
                     <ng-container *ngFor="let servico of categoria.Servicos; let i = index">
-                        <ion-card (click)="selecionarServico(servico.Codigo)" button="true"
+                        <ion-card (click)="selecionarServico(servico)" button="true"
                             [class]="i >= 5 ? 'escondido' : ''">
                             <div class="div_ion_card">
                                 <ion-ripple-effect></ion-ripple-effect>
