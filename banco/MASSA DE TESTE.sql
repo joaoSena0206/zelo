@@ -75,6 +75,7 @@ INSERT INTO solicitacao_servico VALUES
 	2,
 	'53890618880',
 	'50082480818',
+	3,
 	'2024-09-24',
 	'Mangueira quebrou e estou te chamando pois tenho um compromisso urgente!',
 	'Exelente profissional bem educado e simpatico',
@@ -87,6 +88,7 @@ INSERT INTO solicitacao_servico VALUES
 	3,
 	'53890618880',
 	'12345678909',
+	3,
 	'2024-09-24',
 	'nao sei o que aconteceu com o cano deve ter estourado!',
 	'Resolveu meu problema, demorou um pouco mas valeu',
@@ -99,6 +101,7 @@ INSERT INTO solicitacao_servico VALUES
 	4,
 	'53890618880',
 	'12345218909',
+	3,
 	'2024-09-24',
 	'nao sei o que aconteceu com o cano deve ter estourado!',
 	'Parabens',
@@ -111,6 +114,7 @@ INSERT INTO solicitacao_servico VALUES
 	5,
 	'53890618880',
 	'12345674322',
+	3,
 	'2024-09-24',
 	'O chuveiro não esta esqyentando por favor me ajuda!',
 	'Otimo servoço ficou do jeito esperado sem reclamações',
@@ -123,6 +127,7 @@ INSERT INTO solicitacao_servico VALUES
 	6,
 	'53890618880',
 	'12345672469',
+	3,
 	'2024-09-24',
 	'Hoje acordei e estava com a torneira vazando!',
 	'Otimo trabalhador sem duvidas parabens!',
@@ -130,8 +135,3 @@ INSERT INTO solicitacao_servico VALUES
 	'Rapaz muito educado e simpatico',
 	5.0
 );
-
-SELECT * FROM endereco WHERE cd_cpf_cliente = '50082480818';
-
-Insert into certificado values(1, '535305697', 'Certificado encanador ETECAF');
-select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = 53890618880 ORDER BY RAND() LIMIT 5;
