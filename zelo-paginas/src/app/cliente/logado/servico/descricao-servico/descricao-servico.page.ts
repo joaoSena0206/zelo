@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
     selector: 'app-descricao-servico',
@@ -23,6 +24,7 @@ export class DescricaoServicoPage implements OnInit {
     erro: any = {
         descServico: "Descrição é obrigatória"
     };
+    imgs: any = [];
 
     constructor(private http: HttpClient, private route: ActivatedRoute, private navCl: NavController) { }
 
@@ -130,6 +132,17 @@ export class DescricaoServicoPage implements OnInit {
         else {
             label.style.border = "none";
         }
+    }
+
+    async abrirFoto() {
+        const imgArquivo = await Camera.getPhoto({
+            quality: 90,
+            allowEditing: true,
+            resultType: CameraResultType.Uri
+        });
+
+
+        this.imgs.push(imgArquivo);
     }
 }
 

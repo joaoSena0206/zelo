@@ -25,8 +25,15 @@
                     erro.descServico }}</span>
 
                 <h2 style="margin-top: 20px;">Para melhorar o atendimento, envie uma foto do seu problema.</h2>
-                <div class="icon">
-                    <ion-icon name="camera-outline"></ion-icon>
+
+                <div class="divImgs">
+                    <figure *ngFor="let img of imgs">
+                        <img [src]="img.webPath" alt="" srcset="">
+                    </figure>
+
+                    <div class="icon" (click)="abrirFoto()">
+                        <ion-icon name="camera-outline"></ion-icon>
+                    </div>
                 </div>
 
                 <div class="divAlinhar">

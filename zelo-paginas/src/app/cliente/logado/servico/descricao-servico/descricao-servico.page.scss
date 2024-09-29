@@ -103,11 +103,9 @@ ion-icon {
 
 .icon {
     background-color: white;
-    margin-top: 10px;
-    margin-bottom: 65px;
     padding: 5px;
     border-radius: 56px;
-    width: fit-content;
+    width: 48px;
     height: 48px;
 }
 
@@ -124,4 +122,18 @@ ion-icon {
 
 .inputErro {
     border: solid 1px red;
+}
+
+.divImgs {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 65px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.divImgs figure img {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
 }
