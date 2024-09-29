@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Component({
     selector: 'app-descricao-servico',
@@ -141,8 +142,15 @@ export class DescricaoServicoPage implements OnInit {
             resultType: CameraResultType.Uri
         });
 
+        let resposta = await fetch(imgArquivo.webPath!);
+        let blob = await resposta.blob();
 
-        this.imgs.push(imgArquivo);
+        let arquivo = {
+            src: imgArquivo.webPath,
+            blob: blob
+        };
+
+        this.imgs.push(arquivo);
     }
 }
 
