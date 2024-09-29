@@ -17,7 +17,7 @@
                 <ion-input disabled placeholder="Casa"></ion-input>
 
                 <h2>Descreva o que você precisa</h2>
-                <ion-textarea formControlName="descServico" (ionInput)="validacaoInput(form.controls['descServico'])"
+                <ion-textarea formControlName="descServico" (ionBlur)="checarInput(form.controls['descServico'])" (ionInput)="validacaoInput(form.controls['descServico'])"
                     [counter]="true" maxlength="500"></ion-textarea>
                 <span
                     [ngClass]="form.controls['descServico'].invalid && (form.controls['descServico'].touched || form.controls['descServico'].dirty) ? 'erro' : 'escondido'">{{

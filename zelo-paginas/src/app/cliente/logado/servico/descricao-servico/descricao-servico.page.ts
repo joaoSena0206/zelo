@@ -32,9 +32,20 @@ export class DescricaoServicoPage implements OnInit {
 
     ngAfterViewInit() {
 
+
     }
 
     ionViewDidEnter() {
+        const label = document.querySelector("ion-textarea label") as HTMLLabelElement;
+
+        this.form.controls['descServico'].statusChanges.subscribe(status => {
+            if (status === "INVALID" && (this.form.controls['descServico'].touched || this.form.controls['descServico'].dirty)) {
+                label.style.border = "1px solid red";
+            }
+            else {
+                label.style.border = "none";
+            }
+        });
     }
 
     carregarServico() {
@@ -106,6 +117,17 @@ export class DescricaoServicoPage implements OnInit {
             }
         }
     }
+
+    checarInput(control: FormControl) {
+        const label = document.querySelector("ion-textarea label") as HTMLLabelElement;
+
+        if (control.invalid) {
+            label.style.border = "1px solid red";
+        }
+        else {
+            label.style.border = "none";
+        }
+    }
 }
 
 export function validadorTamanhoMinimo(): ValidatorFn {
@@ -122,6 +144,8 @@ export function validadorTamanhoMinimo(): ValidatorFn {
 
 export function validadorDescricao(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+        const textarea = document.querySelector("ion-textarea");
+
         let vl = control.value;
 
         if (vl == "") {
