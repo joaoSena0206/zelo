@@ -22,7 +22,7 @@ public class SolicitacaoServicoController : Controller
         string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador, ss.cd_servico FROM solicitacao_servico ss
         JOIN trabalhador t ON (ss.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
         JOIN servico s ON (ss.cd_servico = s.cd_servico)
-        WHERE ss.cd_cpf_trabalhador = '{cpf}'";
+        WHERE ss.cd_cpf_cliente = '{cpf}'";
 
         if (tipo == "trabalhador")
         {
