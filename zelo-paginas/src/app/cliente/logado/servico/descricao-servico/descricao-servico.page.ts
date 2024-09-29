@@ -16,7 +16,8 @@ export class DescricaoServicoPage implements OnInit {
     endereco: any;
 
     form = new FormGroup({
-        descServico: new FormControl("", validadorDescricao())
+        descServico: new FormControl("", validadorDescricao()),
+        endereco: new FormControl("")
     });
 
     erro: any = {
@@ -31,7 +32,6 @@ export class DescricaoServicoPage implements OnInit {
     }
 
     ngAfterViewInit() {
-
 
     }
 
@@ -72,6 +72,9 @@ export class DescricaoServicoPage implements OnInit {
             estado: resposta.estado,
             cidade: resposta.localidade
         };
+
+        this.form.controls['endereco'].disable();
+        this.form.controls['endereco'].setValue(`${this.endereco.Cep.rua}, ${this.endereco.Numero}, ${this.endereco.Complemento == "" ? "" : this.endereco.Complemento + ","} ${this.endereco.Cep.bairro}, ${this.endereco.Cep.cidade} - ${this.endereco.Cep.estado}, ${this.endereco.Cep.cep.substring(0, 5) + "-" + this.endereco.Cep.cep.substring(5)}`);
     }
 
     voltarPag() {
