@@ -67,12 +67,13 @@ export class CategoriaPage implements OnInit {
     async carregarServicos() {
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.get('http://localhost:57879/Servico/CarregarServicos', { responseType: 'text' }));
+        let res = await firstValueFrom(this.http.get('http://localhost:57879/Servico/CarregarServicos'));
 
         this.carregar = false;
 
         this.listaCategorias = res;
-        this.Nome = this.listaCategorias;
+
+        console.log(res)
     }
 
     enviar() {

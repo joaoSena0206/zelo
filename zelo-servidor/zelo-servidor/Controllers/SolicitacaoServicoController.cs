@@ -26,7 +26,7 @@ public class SolicitacaoServicoController : Controller
 
         if (tipo == "trabalhador")
         {
-            comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = '{cpf}' LIMIT 5";
+            comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = {cpf} ORDER BY dt_solicitacao_servico DESC LIMIT 5";
         }
 
         MySqlDataReader dados = banco.Consultar(comando);
