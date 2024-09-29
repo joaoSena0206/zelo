@@ -202,6 +202,7 @@
     <Compile Include="Models\CategoriaServico.cs" />
     <Compile Include="Models\Patrocinio.cs" />
     <Compile Include="Models\Servico.cs" />
+    <Compile Include="Models\ServicoTrabalhador.cs" />
     <Compile Include="Models\SolicitacaoServico.cs" />
     <Compile Include="Models\Trabalhador.cs" />
     <Compile Include="Controllers\TrabalhadorController.cs" />
