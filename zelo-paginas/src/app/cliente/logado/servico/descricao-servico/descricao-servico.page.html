@@ -17,13 +17,14 @@
                 <ion-input disabled placeholder="Casa"></ion-input>
 
                 <h2>Descreva o que você precisa</h2>
-                <ion-textarea formControlName="descServico" (ionBlur)="checarInput(form.controls['descServico'])" (ionInput)="validacaoInput(form.controls['descServico'])"
-                    [counter]="true" maxlength="500"></ion-textarea>
+                <ion-textarea formControlName="descServico" (ionBlur)="checarInput(form.controls['descServico'])"
+                    (ionInput)="validacaoInput(form.controls['descServico'])" [counter]="true" maxlength="500">
+                </ion-textarea>
                 <span
                     [ngClass]="form.controls['descServico'].invalid && (form.controls['descServico'].touched || form.controls['descServico'].dirty) ? 'erro' : 'escondido'">{{
                     erro.descServico }}</span>
 
-                <h2>Para melhorar o atendimento, envie uma foto do seu problema.</h2>
+                <h2 style="margin-top: 20px;">Para melhorar o atendimento, envie uma foto do seu problema.</h2>
                 <div class="icon">
                     <ion-icon name="camera-outline"></ion-icon>
                 </div>
