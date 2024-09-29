@@ -1,4 +1,8 @@
 <ion-content [fullscreen]="true">
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
+    </div>
+
     <div class="content">
         <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 
@@ -12,26 +16,28 @@
             </div>
 
             <div class="UltimosPedidosDiv">
-                <div class="areaUltimoPedido">
+                <div class="areaUltimoPedido" *ngFor="let trabalhador of trabalhadores">
                     <div class="divWrapper">
                         <div class="infoTrabalhorPedido">
                             <figure class="fotoTrabalhadorPedido">
-                                <img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
+                                <img draggable="false"
+                                    [src]="'http://localhost:57879/Imgs/Perfil/Trabalhador/' + trabalhador.Trabalhador.Cpf + '.jpg'">
                             </figure>
 
                             <div>
                                 <div>
-                                    <h3 class="titulo tituloPedido">Breno Santos</h3>
-                                    <h3 class="titulo tituloPedido">Eletricista</h3>
+                                    <h3 class="titulo tituloPedido">{{ trabalhador.Trabalhador.Nome }}</h3>
+                                    <h3 class="titulo tituloPedido">{{ trabalhador.Servico.Nome }}</h3>
 
                                     <div class="estrelaPreco">
                                         <ion-icon name="star"></ion-icon>
-                                        <p class="titulo">3.5</p>
+                                        <p class="titulo">{{ trabalhador.Trabalhador.Avaliacao.toFixed(1) }}</p>
                                     </div>
                                 </div>
 
                                 <div class="divCalendario">
-                                    <p class="titulo precoPedido">R$ 45,00</p>
+                                    <p class="titulo precoPedido">R$ {{
+                                        trabalhador.Trabalhador.ValorVisita.toFixed(2).replace(".", ",") }}</p>
                                 </div>
                             </div>
                         </div>
@@ -74,83 +80,6 @@
 
                                                 <div class="divBtns">
                                                     <ion-button (click)="modal1.dismiss();">Cancelar</ion-button>
-                                                    <ion-button>Confirmar</ion-button>
-                                                </div>
-                                            </div>
-
-                                            <p class="verPerfil">Ver perfil</p>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </ion-modal>
-                        </div>
-                    </div>
-
-                    <p class="verPerfil">Ver perfil</p>
-                </div>
-
-                <div class="areaUltimoPedido">
-                    <div class="divWrapper">
-                        <div class="infoTrabalhorPedido">
-                            <figure class="fotoTrabalhadorPedido">
-                                <img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
-                            </figure>
-
-                            <div>
-                                <div>
-                                    <h3 class="titulo tituloPedido">Sandro Oliveira</h3>
-                                    <h3 class="titulo tituloPedido">Encanador</h3>
-
-                                    <div class="estrelaPreco">
-                                        <ion-icon name="star"></ion-icon>
-                                        <p class="titulo">2.5</p>
-                                    </div>
-                                </div>
-
-                                <div class="divCalendario">
-                                    <p class="titulo precoPedido">R$ 35,00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <p class="distancia">Distância: 0,5 km</p>
-                            <ion-button class="btnContratar" id="contratar2">Contratar</ion-button>
-                            <ion-modal #modal2 trigger="contratar2">
-                                <ng-template>
-                                    <div class="divModalWrapper">
-                                        <div class="areaUltimoPedido">
-                                            <div class="divWrapper">
-                                                <div class="infoTrabalhorPedido">
-                                                    <figure class="fotoTrabalhadorPedido">
-                                                        <img draggable="false"
-                                                            src="../../../../assets/icon/cliente/trabalhador_sandro.png">
-                                                    </figure>
-
-                                                    <div>
-                                                        <div>
-                                                            <h3 class="titulo tituloPedido">Sandro Oliveira</h3>
-                                                            <h3 class="titulo tituloPedido">Encanador</h3>
-
-                                                            <div class="estrelaPreco">
-                                                                <ion-icon name="star"></ion-icon>
-                                                                <p class="titulo">2.5</p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="divCalendario">
-                                                            <p class="titulo precoPedido">R$ 35,00</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div style="margin-top: 10px;">
-                                                    <p class="distancia">Distância: 0,5 km</p>
-                                                </div>
-
-                                                <div class="divBtns">
-                                                    <ion-button (click)="modal2.dismiss();">Cancelar</ion-button>
                                                     <ion-button>Confirmar</ion-button>
                                                 </div>
                                             </div>
