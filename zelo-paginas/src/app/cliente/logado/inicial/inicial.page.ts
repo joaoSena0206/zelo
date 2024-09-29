@@ -19,9 +19,6 @@ export class InicialPage implements OnInit {
     constructor(private http: HttpClient, private navCl: NavController) { }
 
     ngOnInit() {
-    }
-
-    ngAfterViewInit() {
         this.carregarCategorias();
         this.carregarPatrocinados();
         this.carregarHistorico();
@@ -125,10 +122,9 @@ export class InicialPage implements OnInit {
         }
     }
 
-    selecionarServico(servico: any)
-    {
+    selecionarServico(servico: any) {
         localStorage.setItem("servico", JSON.stringify(servico));
 
-        this.navCl.navigateForward("/descricao-servico"); 
+        this.navCl.navigateForward("/descricao-servico");
     }
 }
