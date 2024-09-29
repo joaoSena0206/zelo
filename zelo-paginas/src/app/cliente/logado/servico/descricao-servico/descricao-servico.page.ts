@@ -152,6 +152,26 @@ export class DescricaoServicoPage implements OnInit {
 
         this.imgs.push(arquivo);
     }
+
+    async enviarImgs() {
+        let link = "http://localhost:57879/"
+
+        for (let i = 0; i < this.imgs.length; i++)
+        {
+
+        }
+    }
+
+    enviar() {
+        if (this.form.invalid) {
+            this.checarInput(this.form.controls['descServico']);
+
+            this.form.markAllAsTouched();
+        }
+        else {
+            this.enviarImgs();
+        }
+    }
 }
 
 export function validadorTamanhoMinimo(): ValidatorFn {
