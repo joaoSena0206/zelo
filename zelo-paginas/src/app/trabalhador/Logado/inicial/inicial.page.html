@@ -1,3 +1,7 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento--trabalhador"></div>
+</div>
+
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-title>Olá, <ion-text class="nm_titulo">{{Nome}}!</ion-text></ion-title>
@@ -63,7 +67,9 @@
                     <ion-icon class="iconeAnonimo" name="person-circle-outline"></ion-icon>
 
                     <div class="estrelas">
-                        <ion-icon class="estrela" *ngFor="let estrela of gerarArrayEstrelas(Comentario.QtEstrelasAvaliacaoServico)" name="star"></ion-icon>
+                        <ion-icon class="estrela"
+                            *ngFor="let estrela of gerarArrayEstrelas(Comentario.QtEstrelasAvaliacaoServico)"
+                            name="star"></ion-icon>
                     </div>
 
                 </div>

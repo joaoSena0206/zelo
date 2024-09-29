@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonList } from '@ionic/angular';
+import { Geolocation } from '@capacitor/geolocation';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-inicial',
@@ -8,12 +10,12 @@ import { IonList } from '@ionic/angular';
     styleUrls: ['./inicial.page.scss'],
 })
 export class InicialPage implements OnInit {
-
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     historico: any;
     Nome: any = this.trabalhador.Nome.trim();
     ComentarioAnonimo: any;
     qtEstrelas: any;
+    carregar: boolean = false;
 
     constructor(private http: HttpClient) { }
 
@@ -66,21 +68,24 @@ export class InicialPage implements OnInit {
         });
     }
 
-    carregarComentarioAnonimo() {
+    async carregarComentarioAnonimo() {
         let link = `http://localhost:57879/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
 
-        this.http.get(link).subscribe(res => {
-            this.ComentarioAnonimo = res;
-        });
+        this.carregar = true;
+        let res = await firstValueFrom(this.http.get(link));
+        this.carregar = false;
+
+        this.ComentarioAnonimo = res;
     }
 
-    carregarHistorico() {
+    async carregarHistorico() {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let link = `http://localhost:57879/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
 
-        this.http.get(link).subscribe(res => {
-            this.historico = res;
-        });
+        this.carregar = true;
+        let res = await firstValueFrom(this.http.get(link));
+
+        this.historico = res;
     }
 
     msgTrabalho: any = 'Deseja trabalhar agora?';
@@ -165,5 +170,11 @@ export class InicialPage implements OnInit {
 
         this.http.post(link, dadosForm, { responseType: 'text' }).subscribe(res => {
         })
+    }
+
+    async pegarLocalizacao() {
+        const coords = await Geolocation.getCurrentPosition();
+
+        console.log(coords);
     }
 }
