@@ -14,7 +14,7 @@
 
             <div class="div_fundo" [formGroup]="form">
                 <h2>Endereço</h2>
-                <ion-input disabled placeholder="Casa"></ion-input>
+                <ion-input formControlName="endereco" placeholder="Casa"></ion-input>
 
                 <h2>Descreva o que você precisa</h2>
                 <ion-textarea formControlName="descServico" (ionBlur)="checarInput(form.controls['descServico'])"
