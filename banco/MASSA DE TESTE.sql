@@ -76,7 +76,7 @@ INSERT INTO solicitacao_servico VALUES
 	'53890618880',
 	'50082480818',
 	3,
-	'2024-09-24',
+	'2024-09-22',
 	'Mangueira quebrou e estou te chamando pois tenho um compromisso urgente!',
 	'Exelente profissional bem educado e simpatico',
 	5.0,
