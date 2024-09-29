@@ -314,4 +314,58 @@ public class TrabalhadorController : Controller
 
         #endregion
     }
+
+    [HttpGet]
+    [Route("CarregarTrabalhadores")]
+    public string CarregarTrabalhadores()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        int codigo = int.Parse(Request["c"]);
+
+        #region Pega os trabalhadores no banco de acordo com o serviço
+
+        string comando = $@"
+            SELECT t.cd_cpf_trabalhador,
+                nm_trabalhador,
+                nm_servico,
+                vl_visita_trabalhador
+            FROM trabalhador t
+                JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
+                JOIN servico s ON (st.cd_servico = s.cd_servico)
+            WHERE st.cd_servico = {codigo}";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        List<ServicoTrabalhador> listaServicoTrabalhador = new List<ServicoTrabalhador>();
+
+        if (dados != null)
+        {
+            while (dados.Read())
+            {
+                ServicoTrabalhador servicoTrabalhador = new ServicoTrabalhador();
+                Trabalhador trabalhador = new Trabalhador();
+                Servico servico = new Servico();
+
+                trabalhador.Cpf = dados.GetString(0);
+                trabalhador.Nome = dados.GetString(1);
+                trabalhador.ValorVisita = dados.GetDecimal(3);
+                trabalhador.Avaliacao = PegarEstrelas(trabalhador.Cpf);
+
+                servico.Nome = dados.GetString(2);
+
+                servicoTrabalhador.Trabalhador = trabalhador;
+                servicoTrabalhador.Servico = servico;
+
+                listaServicoTrabalhador.Add(servicoTrabalhador);
+            }
+        }
+
+        dados.Close();
+        banco.Desconectar();
+
+        return JsonConvert.SerializeObject(listaServicoTrabalhador, Formatting.Indented);
+
+        #endregion
+    }
 }
