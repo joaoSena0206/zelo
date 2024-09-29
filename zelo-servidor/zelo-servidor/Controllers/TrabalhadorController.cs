@@ -1,4 +1,4 @@
-ï»¿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -73,7 +73,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Checa a existÃªncia do email e do cpf
+        #region Checa a existência do email e do cpf
 
         string cpf = Request["cpf"];
         string email = Request["email"];
@@ -189,7 +189,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Verifica SituaÃ§Ã£o do trabalhador
+        #region Verifica Situação do trabalhador
 
         bool situacao = false;
 
@@ -254,7 +254,7 @@ public class TrabalhadorController : Controller
 
         #endregion
 
-        #region LÃª o arquivo e grava na pasta do trabalhador
+        #region Lê o arquivo e grava na pasta do trabalhador
 
         for (int i = 0; i < Request.Files.Count; i++)
         {
@@ -294,7 +294,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Pega a mÃ©dia de avaliaÃ§Ã£o do trabalhador no banco
+        #region Pega a média de avaliação do trabalhador no banco
 
         string comando = $@"SELECT IFNULL(AVG(qt_estrelas_avaliacao_servico), 5) FROM solicitacao_servico
         WHERE cd_cpf_trabalhador = '{cpf}'";
@@ -324,7 +324,7 @@ public class TrabalhadorController : Controller
 
         int codigo = int.Parse(Request["c"]);
 
-        #region Pega os trabalhadores no banco de acordo com o serviÃ§o
+        #region Pega os trabalhadores no banco de acordo com o serviço
 
         string comando = $@"
             SELECT t.cd_cpf_trabalhador,

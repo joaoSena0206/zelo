@@ -10,14 +10,13 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FileChooser } from '@awesome-cordova-plugins/file-chooser';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, provideHttpClient()],
   bootstrap: [AppComponent],
 })
+
 
 
 export class AppModule {}

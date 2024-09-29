@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IonList } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { first, firstValueFrom } from 'rxjs';
+import { BackgroundRunner } from '@capacitor/background-runner';
 
 @Component({
     selector: 'app-inicial',
@@ -17,13 +18,37 @@ export class InicialPage implements OnInit {
     qtEstrelas: any;
     carregar: boolean = false;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+
+    }
 
     ngOnInit() { }
 
     ngAfterViewInit() {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
+        this.init();
+    }
+
+    async init() {
+        try {
+            const permissions = await BackgroundRunner.requestPermissions({
+                apis: ['geolocation'],
+            });
+            console.log('permissions', permissions);
+        } catch (err) {
+            console.log(`ERROR: ${err}`);
+        }
+    }
+
+    async pegarLoc() {
+        const resultado = await BackgroundRunner.dispatchEvent({
+            label: "io.ionic.starter.localizacao",
+            event: "pegarLoc",
+            details: {}
+        });
+
+        console.log(resultado);
     }
 
     qlComentario(Indice: number): boolean {

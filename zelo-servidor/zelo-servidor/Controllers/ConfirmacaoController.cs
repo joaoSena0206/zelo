@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,12 +21,12 @@ public class ConfirmacaoController : Controller
         string cpf = Request["cpf"];
         string tipo = Request["tipo"];
 
-        #region Gera o cÃ³digo aleatÃ³rio e insere no banco
+        #region Gera o código aleatório e insere no banco
 
         Random random = new Random();
         string codigo = random.Next(10000, 99999).ToString();
 
-        #region Checa a existÃªncia de um cÃ³digo aleatÃ³rio jÃ¡ criado na tabela
+        #region Checa a existência de um código aleatório já criado na tabela
 
         string comando = $"SELECT COUNT(cd_cpf_{tipo}) FROM confirmacao WHERE cd_cpf_{tipo} = '{cpf}'";
         MySqlDataReader dados = banco.Consultar(comando);
@@ -48,7 +48,7 @@ public class ConfirmacaoController : Controller
 
         #endregion
 
-        #region Pega o maior cÃ³digo disponÃ­vel da confirmaÃ§Ã£o
+        #region Pega o maior código disponível da confirmação
 
         comando = "SELECT IFNULL(MAX(cd_confirmacao) + 1, 1) FROM confirmacao";
         dados = banco.Consultar(comando);
@@ -139,12 +139,12 @@ public class ConfirmacaoController : Controller
         email.To.Add(emailUsuario);
         email.From = new MailAddress("zelo.ccontato@gmail.com", "Zelo", System.Text.Encoding.UTF8);
 
-        email.Subject = "ConfirmaÃ§Ã£o de email";
+        email.Subject = "Confirmação de email";
         email.SubjectEncoding = System.Text.Encoding.UTF8;
 
         email.Body = $@"
         <img style='margin-bottom: 20px; width: 200px;'' src='https://joaosena0206.github.io/zelo_imagens/imgs/Logo_preta.png'>
-        <p style='color: black'>OlÃ¡, digite o cÃ³digo abaixo no app para confirmar seu email</p>
+        <p style='color: black'>Olá, digite o código abaixo no app para confirmar seu email</p>
         <p style='font-weight: bold; font-size: 30px'>{confirmacao.CodigoConfirmacao}</p>";
         email.BodyEncoding = System.Text.Encoding.UTF8;
         email.IsBodyHtml = true;

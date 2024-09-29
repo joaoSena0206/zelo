@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public class EnderecoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Adiciona o endereço no banco
+        #region Adiciona o endere�o no banco
 
         string comando = $@"INSERT INTO endereco VALUES 
         (

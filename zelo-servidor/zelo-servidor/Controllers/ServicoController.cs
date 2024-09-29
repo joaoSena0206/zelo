@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ public class ServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Carrega os serviços do banco de acordo com a categoria
+        #region Carrega os servi�os do banco de acordo com a categoria
 
         string comando = $"SELECT * FROM servico";
         MySqlDataReader dados = banco.Consultar(comando);

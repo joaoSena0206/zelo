@@ -1,4 +1,4 @@
-ï»¿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 using Newtonsoft.Json;
 using System;
@@ -21,7 +21,7 @@ public class ClienteController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Adiciona o cliente e o endereÃ§o no banco
+        #region Adiciona o cliente e o endereço no banco
 
         Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
 
@@ -78,7 +78,7 @@ public class ClienteController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Checa a existÃªncia do email e do cpf
+        #region Checa a existência do email e do cpf
 
         string cpf = Request["cpf"];
         string email = Request["email"];

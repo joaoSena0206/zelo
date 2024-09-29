@@ -1,4 +1,4 @@
-Ôªøusing System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,7 +21,7 @@ public class Banco
         }
         else
         {
-            throw new Exception("Banco j√° conectado");
+            throw new Exception("Banco j· conectado");
         }
     }
 
@@ -33,7 +33,7 @@ public class Banco
         }
         else
         {
-            throw new Exception("Banco j√° desconectado");
+            throw new Exception("Banco j· desconectado");
         }
     }
 
