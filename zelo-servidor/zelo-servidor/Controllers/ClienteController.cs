@@ -21,18 +21,12 @@ public class ClienteController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Adiciona o cliente e o endereço no banco
+        #region Adiciona o cliente no banco
 
         Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
 
-        string enderecoJson = Request["endereco"].Replace("-", "");
-        Endereco endereco = JsonConvert.DeserializeObject<Endereco>(enderecoJson);
-
         string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false)";
         banco.Executar(comando);
-
-        EnderecoController enderecoController = new EnderecoController();
-        enderecoController.AdicionarEndereco(endereco);
 
         banco.Desconectar();
 
