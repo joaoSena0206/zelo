@@ -23,8 +23,8 @@ export class CategoriaPage implements OnInit {
 
     }
 
-    ngOnInit() {
-        this.carregarServicos();
+    async ngOnInit() {
+        await this.carregarServicos();
     }
 
     listaCategorias: any = []
