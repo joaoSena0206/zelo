@@ -30,12 +30,12 @@ export class InicialPage implements OnInit {
     }
 
     ngOnInit() {
-
+        this.carregarHistorico();
+        this.carregarComentarioAnonimo();
     }
 
     ngAfterViewInit() {
-        this.carregarHistorico();
-        this.carregarComentarioAnonimo();
+
     }
 
     ionViewDidEnter() {

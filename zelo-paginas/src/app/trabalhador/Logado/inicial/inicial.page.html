@@ -16,7 +16,7 @@
             <p class="txtSituacao" style="margin: 15px;">{{ situacao }}</p>
         </ion-button>
 
-        <div class="título_ultimos_pedidos">
+        <div class="título_ultimos_pedidos" *ngIf="historico ? historico.lenght > 0 : false">
             <h3>Ultimos Pedidos</h3>
             <p>Ver Todos</p>
         </div>
@@ -55,11 +55,11 @@
             </ion-card>
         </div>
 
-        <div class="título_ultimos_pedidos">
+        <div class="título_ultimos_pedidos" *ngIf="ComentarioAnonimo ? ComentarioAnonimo > 0 : false">
             <h3>Ultimas avaliações</h3>
         </div>
 
-        <ion-list>
+        <ion-list *ngIf="ComentarioAnonimo ? ComentarioAnonimo > 0 : false">
             <ion-item lines="none" *ngFor="let Comentario of ComentarioAnonimo; let i = index"
                 class="area_comentario_anonimo">
                 <div class="div1" id="div_estrela">
