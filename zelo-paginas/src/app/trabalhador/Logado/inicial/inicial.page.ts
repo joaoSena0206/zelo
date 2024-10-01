@@ -27,7 +27,6 @@ export class InicialPage implements OnInit {
     ngAfterViewInit() {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
-        this.init();
     }
 
     async init() {

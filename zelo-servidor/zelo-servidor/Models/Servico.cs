@@ -13,13 +13,14 @@ public class Servico
 		set { _codigo = value; }
 	}
 
-	private int _codigoCategoria;
+	private CategoriaServico _categoria;
 
-	public int CodigoCategoria
+	public CategoriaServico Categoria
 	{
-		get { return _codigoCategoria; }
-		set { _codigoCategoria = value; }
+		get { return _categoria; }
+		set { _categoria = value; }
 	}
+
 
 	private string _nome;
 
@@ -34,10 +35,10 @@ public class Servico
 
 	}
 
-	public Servico(int codigo, int codigoCategoria, string nome)
+	public Servico(int codigo, CategoriaServico categoria, string nome)
 	{
 		this.Codigo = codigo;
-		this.CodigoCategoria = codigoCategoria;
+		this.Categoria = categoria;
 		this.Nome = nome;
 	}
 }

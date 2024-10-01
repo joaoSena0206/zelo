@@ -289,6 +289,30 @@ public class TrabalhadorController : Controller
         banco.Desconectar();
     }
 
+    [HttpPost]
+    [Route("AdicionarCategoria")]
+    public void AdicionarCategoria()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cpf = Request["cpf"];
+        List<Servico> listaServico = JsonConvert.DeserializeObject<List<Servico>>(Request["categorias"]);
+
+        for (int i = 0; i < listaServico.Count; i++)
+        {
+            string comando = $@"INSERT INTO servico_trabalhador VALUES
+            (
+	            '{cpf}',
+	            {listaServico[i].Codigo}
+            );";
+
+            banco.Executar(comando);
+        }
+
+        banco.Desconectar();
+    }
+
     public decimal PegarEstrelas(string cpf)
     {
         Banco banco = new Banco();
