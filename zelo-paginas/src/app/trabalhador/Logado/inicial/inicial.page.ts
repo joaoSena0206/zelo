@@ -23,18 +23,56 @@ export class InicialPage implements OnInit {
     ComentarioAnonimo: any;
     qtEstrelas: any;
     carregar: boolean = false;
+    watcherId: any;
 
     constructor(private http: HttpClient) {
 
     }
 
     ngOnInit() {
-        this.checarPermissao();
+
     }
 
     ngAfterViewInit() {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
+    }
+
+    ionViewDidEnter() {
+        const botaoSituacao = document.querySelector('#abrir_modal_servico');
+        const img = document.querySelector('.img_btn_situacao');
+
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", this.trabalhador.Cpf);
+
+        this.http.post('https://chow-master-properly.ngrok-free.app/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
+
+            if (res == "True") {
+                this.situacao = 'Disponível';
+
+                botaoSituacao?.classList.remove('btn_situacao_trabalhador');
+                botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
+
+                img?.setAttribute(
+                    'src',
+                    '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
+                );
+
+                this.checarPermissao();
+            }
+            else {
+                botaoSituacao?.classList.add('btn_situacao_trabalhador');
+                botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
+
+                img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
+
+                this.situacao = 'Indisponível';
+
+                this.pararGeolocalizacao();
+            }
+        });
+
+        this.formatarEstrelas();
     }
 
     async checarPermissao() {
@@ -99,7 +137,17 @@ export class InicialPage implements OnInit {
 
                 return console.log(location);
             }
-        );
+        ).then(watcherId => {
+            this.watcherId = watcherId;
+        });
+    }
+
+    pararGeolocalizacao() {
+        if (this.watcherId) {
+            BackgroundGeolocation.removeWatcher({
+                id: this.watcherId
+            });
+        }
     }
 
     qlComentario(Indice: number): boolean {
@@ -168,39 +216,6 @@ export class InicialPage implements OnInit {
     situacao: any = '';
     resultado: any = '';
 
-    ionViewDidEnter() {
-        const botaoSituacao = document.querySelector('#abrir_modal_servico');
-        const img = document.querySelector('.img_btn_situacao');
-
-        let dadosForm = new FormData();
-        dadosForm.append("cpf", this.trabalhador.Cpf);
-
-        this.http.post('https://chow-master-properly.ngrok-free.app/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
-
-            if (res == "True") {
-                this.situacao = 'Disponível';
-
-                botaoSituacao?.classList.remove('btn_situacao_trabalhador');
-                botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
-
-                img?.setAttribute(
-                    'src',
-                    '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
-                );
-            }
-            else {
-                botaoSituacao?.classList.add('btn_situacao_trabalhador');
-                botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
-
-                img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
-
-                this.situacao = 'Indisponível';
-            }
-        });
-
-        this.formatarEstrelas();
-    }
-
     gerarArrayEstrelas(numEstrelas: any) {
         let array = [];
 
@@ -227,6 +242,8 @@ export class InicialPage implements OnInit {
 
             this.resultado = false;
 
+            this.pararGeolocalizacao();
+
         } else {
             botaoSituacao?.classList.remove('btn_situacao_trabalhador');
             botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
@@ -240,6 +257,8 @@ export class InicialPage implements OnInit {
             this.msgTrabalho = 'Deseja parar de trabalhar?';
 
             this.resultado = true;
+
+            this.checarPermissao();
         }
 
         let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AtualizarSituacao";
