@@ -65,10 +65,21 @@ export class CategoriaPage implements OnInit {
         this.carregarServicos();
     }
 
+    marcador(event: Event): void {
+        const BotatClicado = event.target as HTMLIonButtonElement;
+
+        if (BotatClicado.id == 'marcado') {
+            BotatClicado.id = 'desmarcado';
+        }
+        else {
+            BotatClicado.id = 'marcado';
+        }
+    }
+
     async carregarServicos() {
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.get('https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos', {headers:headerNgrok}));
+        let res = await firstValueFrom(this.http.get('https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos', { headers: headerNgrok }));
 
         this.carregar = false;
 
