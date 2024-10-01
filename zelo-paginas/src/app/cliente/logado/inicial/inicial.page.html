@@ -26,7 +26,7 @@
                             <div class="div_ion_card">
                                 <ion-ripple-effect></ion-ripple-effect>
                                 <img draggable="false" class="img_pedido"
-                                    [src]="'http://localhost:57879/Imgs/Servicos/' + servico.Codigo + '.png'"
+                                    [src]="'https://chow-master-properly.ngrok-free.app/Imgs/Servicos/' + servico.Codigo + '.png'"
                                     [alt]="servico.Nome">
                                 <div class="div_pedido">
                                     <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
@@ -43,7 +43,7 @@
                 <ion-card *ngFor="let patrocinado of patrocinados">
                     <figure>
                         <img draggable="false"
-                            [src]="'http://localhost:57879/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'"
+                            [src]="'https://chow-master-properly.ngrok-free.app/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'"
                             alt="">
                         <div class="info_trabalhador">
                             <div class="fundoLaranja"></div>
