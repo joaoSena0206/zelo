@@ -72,48 +72,53 @@ export class DocumentoPage implements OnInit {
     }
 
     async enviarArquivos() {
-        if (this.arquivos.length != 0) {
-            let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarSaque";
-            let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-            let dadosForm = new FormData();
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarSaque";
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", trabalhador.Cpf);
+        dadosForm.append("pix", trabalhador.pix);
+        dadosForm.append("valor", trabalhador.valor);
+
+        this.carregar = true;
+
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+        if (res == null) {
+            link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
+
+            dadosForm = new FormData();
             dadosForm.append("cpf", trabalhador.Cpf);
-            dadosForm.append("pix", trabalhador.pix);
-            dadosForm.append("valor", trabalhador.valor);
+            dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-            this.carregar = true;
+            res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
-
-            if (res == null) {
-                link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCertificado"
-
-                dadosForm = new FormData();
-                dadosForm.append("cpf", trabalhador.Cpf);
-
-                for (let i = 0; i < this.arquivos.length; i++) {
-                    dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
-                }
-
-                res = await firstValueFrom(this.http.post(link, dadosForm, {headers: headerNgrok}));
-
-                if (res == null) {
-                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
-
+            if (res == "") {
+                if (this.arquivos.length != 0) {
+                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCertificado"
                     dadosForm = new FormData();
                     dadosForm.append("cpf", trabalhador.Cpf);
-                    dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-                    res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
+                    for (let i = 0; i < this.arquivos.length; i++) {
+                        dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
+                    }
 
-                    if (res == "") {
+                    res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+                    if (res == null) {
                         localStorage.removeItem("trabalhador");
 
                         this.navCl.navigateRoot("/login-trabalhador");
                     }
-                }
 
-                this.carregar = false;
+                }
+                else {
+                    localStorage.removeItem("trabalhador");
+
+                    this.navCl.navigateRoot("/login-trabalhador");
+                }
             }
+
+            this.carregar = false;
         }
     }
 
