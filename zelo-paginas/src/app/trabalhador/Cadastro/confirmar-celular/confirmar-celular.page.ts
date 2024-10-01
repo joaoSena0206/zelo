@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-confirmar-celular-trabalhador',
@@ -93,14 +94,14 @@ export class ConfirmarCelularPage implements OnInit {
             }, 1000);
         }
 
-        let link = "http://localhost:57879/Confirmacao/GerarCodigo";
+        let link = "https://chow-master-properly.ngrok-free.app/Confirmacao/GerarCodigo";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("tipo", "trabalhador");
 
-        this.http.post(link, dadosForm).subscribe(res => {
+        this.http.post(link, dadosForm, {headers:headerNgrok}).subscribe(res => {
             let resposta: any = res;
 
             if (resposta.res == "ok") {
@@ -122,19 +123,19 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input5"].value;
 
             if (codigo == this.codigoAleatorio) {
-                let link = "http://localhost:57879/Trabalhador/ConfirmarEmail";
+                let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/ConfirmarEmail";
                 let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", trabalhador.Cpf);
 
                 this.carregar = true;
 
-                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers:headerNgrok }));
 
                 if (res == "ok") {
-                    link = "http://localhost:57879/Trabalhador/AdicionarFotoPerfil";
+                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarFotoPerfil";
 
-                    res = await firstValueFrom(this.http.post(link, dadosForm));
+                    res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 
                     if (res == null) {
                         this.navCl.navigateRoot("/tipo-saque");

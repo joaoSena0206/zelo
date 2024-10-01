@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-login-trabalhador',
@@ -105,7 +106,7 @@ export class LoginTrabalhadorPage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            let link = "http://localhost:57879/Trabalhador/Logar";
+            let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/Logar";
             let email = this.form.controls['email'].value;
             let senha = this.form.controls['senha'].value;
 
@@ -115,7 +116,7 @@ export class LoginTrabalhadorPage implements OnInit {
 
             this.carregar = true;
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm));
+            let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 
             this.carregar = false;
 

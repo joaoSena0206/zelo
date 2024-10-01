@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-documento',
@@ -72,7 +73,7 @@ export class DocumentoPage implements OnInit {
 
     async enviarArquivos() {
         if (this.arquivos.length != 0) {
-            let link = "http://localhost:57879/Trabalhador/AdicionarSaque";
+            let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarSaque";
             let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
             let dadosForm = new FormData();
             dadosForm.append("cpf", trabalhador.Cpf);
@@ -81,10 +82,10 @@ export class DocumentoPage implements OnInit {
 
             this.carregar = true;
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm));
+            let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 
             if (res == null) {
-                link = "http://localhost:57879/Trabalhador/AdicionarCertificado"
+                link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCertificado"
 
                 dadosForm = new FormData();
                 dadosForm.append("cpf", trabalhador.Cpf);
@@ -93,7 +94,7 @@ export class DocumentoPage implements OnInit {
                     dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
                 }
 
-                res = await firstValueFrom(this.http.post(link, dadosForm));
+                res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 
                 if (res == null) {
                     localStorage.removeItem("trabalhador");

@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { first, firstValueFrom } from 'rxjs';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -161,7 +162,7 @@ export class CadastroTrabalhadorPage implements OnInit {
     }
 
     async cadastrarBanco() {
-        let link = "http://localhost:57879/Trabalhador/Adicionar";
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/Adicionar";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
@@ -169,7 +170,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
         this.carregar = false;
 
@@ -179,7 +180,7 @@ export class CadastroTrabalhadorPage implements OnInit {
     }
 
     async checarCadastro(trabalhador: any, dado: string = "padrão") {
-        let link = "http://localhost:57879/Trabalhador/ChecarExistencia";
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.Cpf!);
         dadosForm.append("email", trabalhador.Email!);
@@ -190,7 +191,7 @@ export class CadastroTrabalhadorPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm));
+        let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 
         this.carregar = false;
 
