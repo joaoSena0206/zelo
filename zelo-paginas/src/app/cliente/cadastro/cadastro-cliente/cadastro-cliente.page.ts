@@ -55,23 +55,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     ionViewWillEnter() {
-        if (localStorage.getItem("cliente")) {
-            if (this.form.controls['cpf'].value == "") {
-                let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
-                this.form.controls['nome'].setValue(cliente.Nome);
-                this.form.controls['cpf'].setValue(cliente.Cpf);
-                this.form.controls['data'].setValue(cliente.DataNascimento);
-                this.form.controls['email'].setValue(cliente.Email);
-
-                if (cliente.Senha != null) {
-                    this.form.controls['senhas'].controls['senha'].setValue(cliente.Senha);
-                    this.form.controls['senhas'].controls['confirmarSenha'].setValue(cliente.Senha);
-                }
-
-                this.mostrarData();
-            }
-        }
     }
 
     pagAnterior() {
@@ -176,17 +160,22 @@ export class CadastroClientePage implements OnInit {
         }
 
         this.carregar = true;
-
         let resposta = await firstValueFrom(this.http.post(link, dadosForm));
-
-        this.carregar = false;
 
         let objRes = resposta as any;
 
         if (objRes.cadastrado.length == 0) {
-            localStorage.setItem("cliente", JSON.stringify(cliente));
+            link = "https://chow-master-properly.ngrok-free.app/Cliente/Adicionar";
+            dadosForm = new FormData();
+            dadosForm.append("cliente", JSON.stringify(cliente));
 
-            this.navCl.navigateForward("/endereco");
+            resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+            if (resposta == "ok") {
+                localStorage.setItem("cliente", JSON.stringify(cliente));
+
+                this.navCl.navigateRoot("/confirmar-celular", { animationDirection: "forward", animated: true });
+            }
         }
         else {
             objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
@@ -196,6 +185,8 @@ export class CadastroClientePage implements OnInit {
                 this.form.controls[cadastrado].markAsDirty();
             });
         }
+
+        this.carregar = false;
     }
 
     enviar() {
@@ -211,30 +202,7 @@ export class CadastroClientePage implements OnInit {
                 Senha: this.form.controls['senhas'].controls['senha'].value,
             };
 
-            if (localStorage.getItem("cliente")) {
-                let clienteStorage = JSON.parse(localStorage.getItem("cliente")!);
-
-                if (cliente.Cpf != clienteStorage.Cpf && cliente.Email != clienteStorage.Email) {
-                    this.checarCadastro(cliente);
-                }
-                else if (cliente.Cpf != clienteStorage.Cpf) {
-                    this.checarCadastro(cliente, "email");
-                }
-                else if (cliente.Email != clienteStorage.Email) {
-                    this.checarCadastro(cliente, "cpf");
-                }
-                else if (this.form.dirty) {
-                    localStorage.setItem("cliente", JSON.stringify(cliente));
-
-                    this.navCl.navigateForward("/endereco");
-                }
-                else {
-                    this.navCl.navigateForward("/endereco");
-                }
-            }
-            else {
-                this.checarCadastro(cliente);
-            }
+            this.checarCadastro(cliente);
         }
     }
 }
