@@ -56,18 +56,7 @@ export class CadastroTrabalhadorPage implements OnInit {
     }
 
     ionViewWillEnter() {
-        if (localStorage.getItem("trabalhador")) {
-            let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-
-            this.form.controls['nome'].setValue(trabalhador.Nome);
-            this.form.controls['cpf'].setValue(trabalhador.Cpf);
-            this.form.controls['data'].setValue(trabalhador.DataNascimento);
-            this.form.controls['email'].setValue(trabalhador.Email);
-            this.form.controls['senhas'].controls['senha'].setValue(trabalhador.Senha);
-            this.form.controls['senhas'].controls['confirmarSenha'].setValue(trabalhador.Senha);
-
-            this.mostrarData();
-        }
+        
     }
 
     pagAnterior() {
