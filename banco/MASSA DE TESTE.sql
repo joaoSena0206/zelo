@@ -12,11 +12,11 @@ Insert into servico values (7, 1, 'Pintor');
 Insert into servico values (8, 1, 'TEC em ar-condicionado');
 Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
 
-Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false, 25);
-INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true, 25.50);
-INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65);
-Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25);
-Insert into trabalhador value('53890618880', 'Marco', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), '50082480818', false, true, 25);
+Insert into trabalhador value('535305697', 'Breno Felix de Olivieira', '2006-06-24', '2024-09-20', 'brenofelixdeolivera@gmail.com', md5('1234'), 'brenofelixdeolivera@gmail.com', true, false, 25, null, null);
+INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true, 25.50, null, null);
+INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65, null, null);
+Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25, null, null);
+Insert into trabalhador value('53890618880', 'Marco', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), '50082480818', false, true, 25, null, null);
 
 INSERT INTO patrocinio VALUE(
 	'56787654567', 2, 2, 200, '2024-09-21'

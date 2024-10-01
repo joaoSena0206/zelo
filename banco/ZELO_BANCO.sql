@@ -37,6 +37,8 @@ Create Table trabalhador
 	ic_disponivel_trabalhador BOOL,
 	ic_email_confirmado_trabalhador BOOL,
 	vl_visita_trabalhador DECIMAL(5, 2),
+	cd_latitude_atual DECIMAL(10, 8),
+	cd_longitude_atual DECIMAL(11, 8),
 
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
