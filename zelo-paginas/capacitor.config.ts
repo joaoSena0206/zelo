@@ -5,15 +5,8 @@ const config: CapacitorConfig = {
     appId: 'io.ionic.starter',
     appName: 'zelo-paginas',
     webDir: 'www',
-    plugins: {
-        BackgroundRunner: {
-            label: 'io.ionic.starter.localizacao',
-            src: 'runners/runner.js',
-            event: 'pegarLoc',
-            repeat: true,
-            interval: 1,
-            autoStart: true
-        }
+    android: {
+        useLegacyBridge: true
     }
 };
 
