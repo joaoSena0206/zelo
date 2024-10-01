@@ -189,11 +189,13 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
+        string cpf = Request["cpf"];
+
         #region Verifica Situação do trabalhador
 
         bool situacao = false;
 
-        string comando = $"select ic_disponivel_trabalhador from trabalhador where cd_cpf_trabalhador = 535305697";
+        string comando = $"select ic_disponivel_trabalhador from trabalhador where cd_cpf_trabalhador = '{cpf}'";
         MySqlDataReader dados = banco.Consultar(comando);
 
         if (dados != null)
@@ -219,19 +221,10 @@ public class TrabalhadorController : Controller
 
         #region Atualizar banco
 
+        string cpf = Request["cpf"];
         string codigoResultado = Request["Resultado"].ToString();
 
-        if (Request["Resultado"] == null)
-        {
-
-        }
-
-        if (String.IsNullOrEmpty(Request["Resultado"]))
-        {
-
-        }
-
-        string comando = $@"UPDATE trabalhador SET ic_disponivel_trabalhador = {codigoResultado} WHERE cd_cpf_trabalhador = '535305697'";
+        string comando = $@"UPDATE trabalhador SET ic_disponivel_trabalhador = {codigoResultado} WHERE cd_cpf_trabalhador = '{cpf}'";
         banco.Executar(comando);
 
         #endregion

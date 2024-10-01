@@ -97,7 +97,7 @@ export class InicialPage implements OnInit {
         let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
-        let res = await firstValueFrom(this.http.get(link, {headers: headerNgrok}));
+        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
         this.carregar = false;
 
         this.ComentarioAnonimo = res;
@@ -108,7 +108,7 @@ export class InicialPage implements OnInit {
         let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
-        let res = await firstValueFrom(this.http.get(link, {headers: headerNgrok}));
+        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
         this.historico = res;
     }
@@ -121,7 +121,10 @@ export class InicialPage implements OnInit {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        this.http.post('https://chow-master-properly.ngrok-free.app/Trabalhador/VerificarSituacao', JSON.stringify(this.trabalhador.cpf), { responseType: 'text', headers: headerNgrok }).subscribe(res => {
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", this.trabalhador.Cpf);
+
+        this.http.post('https://chow-master-properly.ngrok-free.app/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
 
             if (res == "True") {
                 this.situacao = 'Disponível';
@@ -192,8 +195,10 @@ export class InicialPage implements OnInit {
 
         let dadosForm = new FormData();
         dadosForm.append("Resultado", this.resultado!);
+        dadosForm.append("cpf", this.trabalhador.Cpf);
 
         this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
+
         })
     }
 
