@@ -105,7 +105,7 @@ export class LoginClientePage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            let link = "http://localhost:57879/Cliente/Logar";
+            let link = "https://chow-master-properly.ngrok-free.app/Cliente/Logar";
             let email = this.form.controls['email'].value;
             let senha = this.form.controls['senha'].value;
 

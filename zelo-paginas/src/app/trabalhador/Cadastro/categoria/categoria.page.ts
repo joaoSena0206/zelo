@@ -52,7 +52,7 @@ export class CategoriaPage implements OnInit {
 
     async carregarServicos() {
         this.carregar = true;
-        let res = await firstValueFrom(this.http.get('http://localhost:57879/Servico/CarregarServicos'));
+        let res = await firstValueFrom(this.http.get('https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos'));
         this.carregar = false;
         this.listaCategorias = res;
     }
@@ -105,7 +105,7 @@ export class CategoriaPage implements OnInit {
     }
 
     async cadastrarBanco() {
-        let link = "http://localhost:57879/Trabalhador/AdicionarCategoria";
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();

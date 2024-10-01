@@ -25,7 +25,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarPatrocinados() {
-        let link = "http://localhost:57879/Patrocinio/CarregarPatrocinados";
+        let link = "https://chow-master-properly.ngrok-free.app/Patrocinio/CarregarPatrocinados";
 
         this.carregar = true;
 
@@ -36,7 +36,7 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = `http://localhost:57879/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
+        let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
 
         this.carregar = true;
 
@@ -48,7 +48,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarCategorias() {
-        let link = "http://localhost:57879/CategoriaServico/CarregarCategoria";
+        let link = "https://chow-master-properly.ngrok-free.app/CategoriaServico/CarregarCategoria";
 
         this.carregar = true;
 
@@ -56,7 +56,7 @@ export class InicialPage implements OnInit {
         this.categorias = res;
 
         if (this.categorias != null) {
-            link = "http://localhost:57879/Servico/CarregarServicos";
+            link = "https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos";
 
             let res2 = await firstValueFrom(this.http.get(link));
 

@@ -58,7 +58,7 @@ export class DescricaoServicoPage implements OnInit {
 
     async carregarEndereco() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = "http://localhost:57879/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
+        let link = "https://chow-master-properly.ngrok-free.app/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
 
         this.carregar = true;
         let resposta: any = await firstValueFrom(this.http.get(link));
@@ -154,7 +154,7 @@ export class DescricaoServicoPage implements OnInit {
     }
 
     async enviarImgs() {
-        let link = "http://localhost:57879/"
+        let link = "https://chow-master-properly.ngrok-free.app/"
 
         for (let i = 0; i < this.imgs.length; i++)
         {

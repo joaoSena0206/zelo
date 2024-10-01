@@ -31,7 +31,7 @@ export class TrabalhosPage implements OnInit {
     }
 
     async carregarCategorias() {
-        let link = "http://localhost:57879/CategoriaServico/CarregarCategoria";
+        let link = "https://chow-master-properly.ngrok-free.app/CategoriaServico/CarregarCategoria";
 
         this.carregar = true;
 
@@ -39,7 +39,7 @@ export class TrabalhosPage implements OnInit {
         this.categorias = res;
 
         if (this.categorias != null) {
-            link = "http://localhost:57879/Servico/CarregarServicos";
+            link = "https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos";
 
             let res2 = await firstValueFrom(this.http.get(link));
 

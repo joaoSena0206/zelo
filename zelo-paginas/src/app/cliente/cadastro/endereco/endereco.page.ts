@@ -112,7 +112,7 @@ export class EnderecoPage implements OnInit {
             this.endereco.markAllAsTouched();
         }
         else {
-            let link = "http://localhost:57879/Cliente/Adicionar";
+            let link = "https://chow-master-properly.ngrok-free.app/Cliente/Adicionar";
             let cliente = JSON.parse(localStorage.getItem("cliente")!);
             let endereco = {
                 CpfCliente: cliente.Cpf,

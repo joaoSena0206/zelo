@@ -72,7 +72,7 @@ export class DocumentoPage implements OnInit {
 
     async enviarArquivos() {
         if (this.arquivos.length != 0) {
-            let link = "http://localhost:57879/Trabalhador/AdicionarSaque";
+            let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarSaque";
             let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
             let dadosForm = new FormData();
             dadosForm.append("cpf", trabalhador.Cpf);
@@ -84,7 +84,7 @@ export class DocumentoPage implements OnInit {
             let res = await firstValueFrom(this.http.post(link, dadosForm));
 
             if (res == null) {
-                link = "http://localhost:57879/Trabalhador/AdicionarCertificado"
+                link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCertificado"
 
                 dadosForm = new FormData();
                 dadosForm.append("cpf", trabalhador.Cpf);
@@ -96,7 +96,7 @@ export class DocumentoPage implements OnInit {
                 res = await firstValueFrom(this.http.post(link, dadosForm));
 
                 if (res == null) {
-                    link = "http://localhost:57879/Trabalhador/AdicionarCategoria";
+                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
 
                     dadosForm = new FormData();
                     dadosForm.append("cpf", trabalhador.Cpf);
@@ -117,7 +117,7 @@ export class DocumentoPage implements OnInit {
     }
 
     async cadastrarCategoria() {
-        let link = "http://localhost:57879/Trabalhador/AdicionarCategoria";
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();

@@ -166,7 +166,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     async checarCadastro(cliente: any, dado: string = "padrão") {
-        let link = "http://localhost:57879/Cliente/ChecarExistencia";
+        let link = "https://chow-master-properly.ngrok-free.app/Cliente/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", cliente.Cpf!);
         dadosForm.append("email", cliente.Email!);

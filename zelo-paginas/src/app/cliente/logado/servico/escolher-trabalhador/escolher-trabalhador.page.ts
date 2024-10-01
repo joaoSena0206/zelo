@@ -24,7 +24,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     async carregarTrabalhadores(codigo: number) {
-        let link = "http://localhost:57879/Trabalhador/CarregarTrabalhadores?c=" + codigo;
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/CarregarTrabalhadores?c=" + codigo;
 
         this.carregar = true;
         let resposta = await firstValueFrom(this.http.get(link));

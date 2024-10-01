@@ -93,7 +93,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarComentarioAnonimo() {
-        let link = `http://localhost:57879/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
+        let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
         let res = await firstValueFrom(this.http.get(link));
@@ -104,7 +104,7 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-        let link = `http://localhost:57879/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
+        let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
         let res = await firstValueFrom(this.http.get(link));
@@ -120,7 +120,7 @@ export class InicialPage implements OnInit {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        this.http.post('http://localhost:57879/Trabalhador/VerificarSituacao', JSON.stringify(this.trabalhador.cpf), { responseType: 'text' }).subscribe(res => {
+        this.http.post('https://chow-master-properly.ngrok-free.app/Trabalhador/VerificarSituacao', JSON.stringify(this.trabalhador.cpf), { responseType: 'text' }).subscribe(res => {
 
             if (res == "True") {
                 this.situacao = 'Disponível';
@@ -187,7 +187,7 @@ export class InicialPage implements OnInit {
             this.resultado = true;
         }
 
-        let link = "http://localhost:57879/Trabalhador/AtualizarSituacao";
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AtualizarSituacao";
 
         let dadosForm = new FormData();
         dadosForm.append("Resultado", this.resultado!);

@@ -93,7 +93,7 @@ export class ConfirmarCelularPage implements OnInit {
             }, 1000);
         }
 
-        let link = "http://localhost:57879/Confirmacao/GerarCodigo";
+        let link = "https://chow-master-properly.ngrok-free.app/Confirmacao/GerarCodigo";
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
         let dadosForm = new FormData();
@@ -122,7 +122,7 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input5"].value;
 
             if (codigo == this.codigoAleatorio) {
-                let link = "http://localhost:57879/Cliente/ConfirmarEmail";
+                let link = "https://chow-master-properly.ngrok-free.app/Cliente/ConfirmarEmail";
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.Cpf);
@@ -132,7 +132,7 @@ export class ConfirmarCelularPage implements OnInit {
                 let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
                 if (res == "ok") {
-                    link = "http://localhost:57879/Trabalhador/AdicionarFotoPerfil";
+                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarFotoPerfil";
 
                     localStorage.removeItem("cliente");
                     localStorage.removeItem("opcao");
