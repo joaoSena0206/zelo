@@ -5,6 +5,11 @@ import { Geolocation } from '@capacitor/geolocation';
 import { first, firstValueFrom } from 'rxjs';
 import { BackgroundRunner } from '@capacitor/background-runner';
 import { headerNgrok } from 'src/app/gerais';
+import { BackgroundGeolocationPlugin } from "@capacitor-community/background-geolocation";
+import { registerPlugin } from '@capacitor/core';
+import { LocalNotifications } from '@capacitor/local-notifications';
+
+const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 
 @Component({
     selector: 'app-inicial',
@@ -23,32 +28,78 @@ export class InicialPage implements OnInit {
 
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.checarPermissao();
+    }
 
     ngAfterViewInit() {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
     }
 
-    async init() {
-        try {
-            const permissions = await BackgroundRunner.requestPermissions({
-                apis: ['geolocation'],
-            });
-            console.log('permissions', permissions);
-        } catch (err) {
-            console.log(`ERROR: ${err}`);
+    async checarPermissao() {
+        const statusPermissao = await LocalNotifications.checkPermissions();
+
+        if (statusPermissao.display === "granted") {
+            this.chamarBackgroundGeo();
+        }
+        else {
+            await LocalNotifications.requestPermissions();
         }
     }
 
-    async pegarLoc() {
-        const resultado = await BackgroundRunner.dispatchEvent({
-            label: "io.ionic.starter.localizacao",
-            event: "pegarLoc",
-            details: {}
-        });
+    chamarBackgroundGeo() {
+        BackgroundGeolocation.addWatcher(
+            {
+                // If the "backgroundMessage" option is defined, the watcher will
+                // provide location updates whether the app is in the background or the
+                // foreground. If it is not defined, location updates are only
+                // guaranteed in the foreground. This is true on both platforms.
 
-        console.log(resultado);
+                // On Android, a notification must be shown to continue receiving
+                // location updates in the background. This option specifies the text of
+                // that notification.
+                backgroundMessage: "Cancele para prevenir o dreno da bateria",
+
+                // The title of the notification mentioned above. Defaults to "Using
+                // your location".
+                backgroundTitle: "Rastreando",
+
+                // Whether permissions should be requested from the user automatically,
+                // if they are not already granted. Defaults to "true".
+                requestPermissions: true,
+
+                // If "true", stale locations may be delivered while the device
+                // obtains a GPS fix. You are responsible for checking the "time"
+                // property. If "false", locations are guaranteed to be up to date.
+                // Defaults to "false".
+                stale: false,
+
+                // The minimum number of metres between subsequent locations. Defaults
+                // to 0.
+                distanceFilter: 200
+            },
+            function callback(location, error) {
+                if (error) {
+                    if (error.code === "NOT_AUTHORIZED") {
+                        if (window.confirm(
+                            "Esse app precisa da sua localização, " +
+                            "mas não possui permissão.\n\n" +
+                            "Abrir as configuraçãoes agora?"
+                        )) {
+                            // It can be useful to direct the user to their device's
+                            // settings when location permissions have been denied. The
+                            // plugin provides the 'openSettings' method to do exactly
+                            // this.
+                            BackgroundGeolocation.openSettings();
+                        }
+                    }
+                    return console.error(error);
+                }
+
+                return console.log(location);
+            }
+        );
     }
 
     qlComentario(Indice: number): boolean {
