@@ -64,6 +64,7 @@ Create Table servico_trabalhador
 	cd_cpf_trabalhador CHAR(11),
 	cd_servico INT,
 
+	CONSTRAINT pk_servico_trabalhador PRIMARY KEY (cd_cpf_trabalhador, cd_servico),
 	CONSTRAINT fk_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
 	CONSTRAINT fk_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
