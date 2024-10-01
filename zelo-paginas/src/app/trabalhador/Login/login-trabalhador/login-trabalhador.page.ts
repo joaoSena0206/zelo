@@ -131,6 +131,7 @@ export class LoginTrabalhadorPage implements OnInit {
                     this.navCl.navigateRoot("/confirmar-celular");
                 }
 
+                localStorage.setItem("logado", "true");
                 localStorage.removeItem("opcao");
 
                 this.navCl.navigateRoot("/trabalhador/inicial");
