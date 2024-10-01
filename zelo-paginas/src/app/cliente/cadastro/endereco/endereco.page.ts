@@ -47,10 +47,6 @@ export class EnderecoPage implements OnInit {
     ngOnInit() {
     }
 
-    voltarPag() {
-        this.navCl.back();
-    }
-
     acharNomeControl(control: FormControl) {
         let controlName = "";
 
@@ -112,7 +108,7 @@ export class EnderecoPage implements OnInit {
             this.endereco.markAllAsTouched();
         }
         else {
-            let link = "https://chow-master-properly.ngrok-free.app/Cliente/Adicionar";
+            let link = "https://chow-master-properly.ngrok-free.app/Endereco/AdicionarEndereco";
             let cliente = JSON.parse(localStorage.getItem("cliente")!);
             let endereco = {
                 CpfCliente: cliente.Cpf,
@@ -124,17 +120,16 @@ export class EnderecoPage implements OnInit {
             };
 
             let dadosForm = new FormData();
-            dadosForm.append("cliente", JSON.stringify(cliente));
             dadosForm.append("endereco", JSON.stringify(endereco));
 
             this.carregar = true;
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            let res = await firstValueFrom(this.http.post(link, dadosForm));
 
-            this.carregar = false;  
+            this.carregar = false;
 
-            if (res == "ok") {
-                this.navCl.navigateForward("/confirmar-celular");
+            if (res == null) {
+                this.navCl.navigateRoot("/login-cliente", { animated: true, animationDirection: "forward" });
             }
         }
     }
