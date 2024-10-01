@@ -9,11 +9,10 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./categoria.page.scss'],
 })
 export class CategoriaPage implements OnInit {
+    
     carregar: boolean = false;
 
-    constructor(private navCl: NavController, private http: HttpClient) {
-
-    }
+    constructor(private navCl: NavController, private http: HttpClient) { }
 
     voltarPag() {
         this.navCl.back();
@@ -26,58 +25,48 @@ export class CategoriaPage implements OnInit {
             if (trabalhador.categorias) {
                 const btns = document.querySelectorAll("ion-button");
                 for (let i = 0; i < btns.length; i++) {
+
                     for (let j = 0; j < trabalhador.categorias.length; j++) {
                         if (btns[i].textContent == trabalhador.categorias[j]) {
+
                             btns[i].setAttribute("id", "marcado");
+
                         }
                     }
+
                 }
             }
         }
     }
 
-    ngOnInit() {
-        let listaBotao = document.querySelectorAll('.geralCard ion-card ion-button')
-
-        for (let i = 0; i < listaBotao.length; i++) {
-
-            listaBotao[i].addEventListener('click', marcado)
-
-            function marcado() {
-                let botao = listaBotao[i];
-                let texto = botao.textContent;
-
-                if (botao.id == 'marcado') {
-                    botao.id = 'desmarcado';
-                }
-                else {
-                    botao.id = 'marcado';
-                }
-            }
-        }
-    }
+    ngOnInit() { }
 
     listaCategorias: any = []
     Nome: any = []
 
-    ionViewDidEnter() {
-        this.carregarServicos();
+    async ionViewDidEnter(){
+        await this.carregarServicos();
     }
 
-    async carregarServicos() {
+    async carregarServicos(){
         this.carregar = true;
-
         let res = await firstValueFrom(this.http.get('http://localhost:57879/Servico/CarregarServicos'));
-
         this.carregar = false;
-
         this.listaCategorias = res;
+    }
 
-        console.log(res)
+    marcador(event: Event): void{
+        const BotatClicado = event.target as HTMLIonButtonElement;
+
+        if (BotatClicado.id == 'marcado') {
+            BotatClicado.id = 'desmarcado';
+        }
+        else {
+            BotatClicado.id = 'marcado';
+        }
     }
 
     enviar() {
-
         let listaBotao2 = document.querySelectorAll('.geralCard ion-card ion-button')
         let texto: any;
         let categorias: any = []
@@ -96,7 +85,6 @@ export class CategoriaPage implements OnInit {
         }
         else {
             if (localStorage.getItem("trabalhador")) {
-
                 let trabalhadorStorage = JSON.parse(localStorage.getItem("trabalhador")!);
                 trabalhadorStorage.categorias = categorias;
 
