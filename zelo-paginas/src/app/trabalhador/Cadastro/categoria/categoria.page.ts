@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./categoria.page.scss'],
 })
 export class CategoriaPage implements OnInit {
-    
+
     carregar: boolean = false;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
@@ -19,6 +19,17 @@ export class CategoriaPage implements OnInit {
     }
 
     ngAfterViewInit() {
+
+    }
+
+    ngOnInit() {
+        this.carregarServicos();
+    }
+
+    listaCategorias: any = []
+    Nome: any = []
+
+    ionViewDidEnter() {
         if (localStorage.getItem("trabalhador")) {
             let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
@@ -39,23 +50,14 @@ export class CategoriaPage implements OnInit {
         }
     }
 
-    ngOnInit() { }
-
-    listaCategorias: any = []
-    Nome: any = []
-
-    async ionViewDidEnter(){
-        await this.carregarServicos();
-    }
-
-    async carregarServicos(){
+    async carregarServicos() {
         this.carregar = true;
         let res = await firstValueFrom(this.http.get('http://localhost:57879/Servico/CarregarServicos'));
         this.carregar = false;
         this.listaCategorias = res;
     }
 
-    marcador(event: Event): void{
+    marcador(event: Event): void {
         const BotatClicado = event.target as HTMLIonButtonElement;
 
         if (BotatClicado.id == 'marcado') {
@@ -104,7 +106,9 @@ export class CategoriaPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("categoria", JSON.stringify(trabalhador.categoria));
 
-        this.carregar = true;
+        console.log(trabalhador.categorias);
+
+        /* this.carregar = true;
 
         let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
@@ -112,6 +116,6 @@ export class CategoriaPage implements OnInit {
 
         if (res == "ok") {
             this.navCl.navigateForward("/trabalhador/confirmar-celular");
-        }
+        } */
     }
 }
