@@ -14,7 +14,7 @@
 
             <div class="geralCard">
                 <ion-card *ngFor="let categoria of listaCategorias; let i = index">
-                    <img [src]="'../../../../assets/icon/Trabalhador/Icone categoria/' + categoria.Codigo + '.svg'" [alt]="categoria.Nome">
+                    <img [src]="'../../../../assets/icon/geral/servicos/' + categoria.Codigo + '.svg'" [alt]="categoria.Nome">
                     <ion-button (click)="marcador($event)">{{categoria.Nome}}</ion-button>
                 </ion-card>
             </div>
