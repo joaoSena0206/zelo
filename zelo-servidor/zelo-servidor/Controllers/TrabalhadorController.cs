@@ -255,7 +255,7 @@ public class TrabalhadorController : Controller
 
             if (file != null && file.ContentLength > 0)
             {
-                string caminho = Path.Combine(Server.MapPath("~/Imgs/Certificados/" + cpf), Path.GetFileName(file.FileName));
+                string caminho = Path.Combine(Server.MapPath("~/Imgs/Certificados/" + cpf), i + Path.GetExtension(file.FileName));
 
                 file.SaveAs(caminho);
             }
@@ -384,5 +384,18 @@ public class TrabalhadorController : Controller
         return JsonConvert.SerializeObject(listaServicoTrabalhador, Formatting.Indented);
 
         #endregion
+    }
+
+    [HttpPost]
+    [Route("AtualizarLoc")]
+    public void AtualizarLoc(string cpf, string lat, string log)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $@"UPDATE trabalhador SET cd_latitude_atual = {lat}, cd_longitude_atual = {log}
+        WHERE cd_cpf_trabalhador = '{cpf}'";
+        banco.Executar(comando);
+        banco.Desconectar();
     }
 }
