@@ -59,7 +59,7 @@
             <h3>Ultimas avaliações</h3>
         </div>
 
-        <ion-list *ngIf="ComentarioAnonimo ? ComentarioAnonimo > 0 : false">
+        <ion-list style="margin-top: 20px;" *ngIf="ComentarioAnonimo ? ComentarioAnonimo.length > 0 : false">
             <ion-item lines="none" *ngFor="let Comentario of ComentarioAnonimo; let i = index"
                 class="area_comentario_anonimo">
                 <div class="div1" id="div_estrela">

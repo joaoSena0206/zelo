@@ -8,6 +8,7 @@ import { headerNgrok } from 'src/app/gerais';
 import { BackgroundGeolocationPlugin } from "@capacitor-community/background-geolocation";
 import { registerPlugin } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { DOCUMENT } from '@angular/common';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 
@@ -30,12 +31,12 @@ export class InicialPage implements OnInit {
     }
 
     ngOnInit() {
-        this.carregarHistorico();
-        this.carregarComentarioAnonimo();
+
     }
 
     ngAfterViewInit() {
-
+        this.carregarHistorico();
+        this.carregarComentarioAnonimo();
     }
 
     ionViewDidEnter() {
@@ -71,8 +72,6 @@ export class InicialPage implements OnInit {
                 this.pararGeolocalizacao();
             }
         });
-
-        this.formatarEstrelas();
     }
 
     async checarPermissao() {
@@ -150,21 +149,10 @@ export class InicialPage implements OnInit {
         }
     }
 
-    qlComentario(Indice: number): boolean {
-
-        this.qtEstrelas = [];
-
-        for (let i = 0; i < this.ComentarioAnonimo[Indice]['QtEstrelasAvaliacaoServico']; i++) {
-            this.qtEstrelas.push(1);
-        }
-
-        this.formatarEstrelas();
-
-        return this.qtEstrelas;
-    }
-
     formatarEstrelas() {
         const comentarios = document.querySelectorAll("ion-item");
+
+        console.log(comentarios);
 
         comentarios.forEach(comentario => {
             const estrelas = comentario.querySelectorAll(".estrela");
@@ -200,6 +188,20 @@ export class InicialPage implements OnInit {
         this.carregar = false;
 
         this.ComentarioAnonimo = res;
+
+        const observer = new MutationObserver((mutations) => {
+            const comentarios = document.querySelectorAll("ion-item");
+
+            if (comentarios.length > 0) {
+                observer.disconnect();
+                this.formatarEstrelas();
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
     }
 
     async carregarHistorico() {
