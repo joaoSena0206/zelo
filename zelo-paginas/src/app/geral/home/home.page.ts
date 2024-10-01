@@ -11,7 +11,7 @@ export class HomePage {
 
     constructor(private router: Router, private navCl: NavController) { }
 
-    ngAfterViewInit() {
+    ngOnInit() {
         if (localStorage.getItem("logado") == "true") {
             if (localStorage.getItem("trabalhador")) {
                 this.navCl.navigateRoot("trabalhador/inicial");
@@ -26,5 +26,4 @@ export class HomePage {
         localStorage.setItem("opcao", opcao);
         this.router.navigateByUrl("/home/opcoes-de-cadastro");
     }
-
 }
