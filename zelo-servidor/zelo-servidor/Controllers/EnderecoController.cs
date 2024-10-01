@@ -9,10 +9,14 @@ using System.Web.Mvc;
 [RoutePrefix("Endereco")]
 public class EnderecoController : Controller
 {
-    public void AdicionarEndereco(Endereco endereco)
+    [HttpPost]
+    [Route("AdicionarEndereco")]
+    public void AdicionarEndereco()
     {
         Banco banco = new Banco();
         banco.Conectar();
+
+        Endereco endereco = JsonConvert.DeserializeObject<Endereco>(Request["endereco"]);
 
         #region Adiciona o endereço no banco
 
