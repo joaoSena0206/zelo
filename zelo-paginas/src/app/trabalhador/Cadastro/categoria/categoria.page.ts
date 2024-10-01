@@ -90,8 +90,28 @@ export class CategoriaPage implements OnInit {
 
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
 
+                this.cadastrarBanco();
+
                 this.navCl.navigateForward("/documento");
             }
+        }
+    }
+
+    async cadastrarBanco() {
+        let link = "http://localhost:57879/Trabalhador/AdicionarCategoria";
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+
+        let dadosForm = new FormData();
+        dadosForm.append("categoria", JSON.stringify(trabalhador.categoria));
+
+        this.carregar = true;
+
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+        this.carregar = false;
+
+        if (res == "ok") {
+            this.navCl.navigateForward("/trabalhador/confirmar-celular");
         }
     }
 }
