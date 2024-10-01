@@ -297,12 +297,18 @@ public class TrabalhadorController : Controller
         banco.Conectar();
 
         string cpf = Request["cpf"];
-        string categoria = Request["categoria"];
+        List<Servico> listaServico = JsonConvert.DeserializeObject<List<Servico>>(Request["categorias"]);
 
-        string comando = $@"INSERT INTO servico_trabalhador (cd_servico)
-                            VALUES (3) where cd_cpf_trabalhador = {cpf}";
+        for (int i = 0; i < listaServico.Count; i++)
+        {
+            string comando = $@"INSERT INTO servico_trabalhador VALUES
+            (
+	            '{cpf}',
+	            {listaServico[i].Codigo}
+            );";
 
-        banco.Executar(comando);
+            banco.Executar(comando);
+        }
 
         banco.Desconectar();
     }
