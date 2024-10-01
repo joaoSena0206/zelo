@@ -38,7 +38,7 @@ export class CategoriaPage implements OnInit {
                 for (let i = 0; i < btns.length; i++) {
 
                     for (let j = 0; j < trabalhador.categorias.length; j++) {
-                        if (btns[i].textContent == trabalhador.categorias[j]) {
+                        if (btns[i].textContent == trabalhador.categorias[j].Nome) {
 
                             btns[i].setAttribute("id", "marcado");
 
@@ -72,14 +72,21 @@ export class CategoriaPage implements OnInit {
         let listaBotao2 = document.querySelectorAll('.geralCard ion-card ion-button')
         let texto: any;
         let categorias: any = []
+        let codigo: any;
 
         for (let i = 0; i < listaBotao2.length; i++) {
 
             if (listaBotao2[i].id == 'marcado') {
                 texto = listaBotao2[i].textContent;
-                categorias.push(texto);
-            }
+                codigo = listaBotao2[i].parentElement?.id;
 
+                let categoria = {
+                    Codigo: codigo,
+                    Nome: texto
+                };
+
+                categorias.push(categoria);
+            }
         }
 
         if (categorias.length == 0) {
@@ -92,8 +99,6 @@ export class CategoriaPage implements OnInit {
 
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhadorStorage));
 
-                this.cadastrarBanco();
-
                 this.navCl.navigateForward("/documento");
             }
         }
@@ -104,11 +109,9 @@ export class CategoriaPage implements OnInit {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
-        dadosForm.append("categoria", JSON.stringify(trabalhador.categoria));
+        dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-        console.log(trabalhador.categorias);
-
-        /* this.carregar = true;
+        this.carregar = true;
 
         let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
@@ -116,6 +119,6 @@ export class CategoriaPage implements OnInit {
 
         if (res == "ok") {
             this.navCl.navigateForward("/trabalhador/confirmar-celular");
-        } */
+        }
     }
 }
