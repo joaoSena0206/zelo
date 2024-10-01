@@ -11,6 +11,8 @@ CREATE TABLE categoria_servico
 	CONSTRAINT pk_categoria_servico PRIMARY KEY (cd_categoria_servico)
 );
 
+INSERT INTO categoria_servico VALUES (1, 'Reformas e reparos');
+
 -- TABELA DO SERVIÇO --
 CREATE TABLE servico
 (
@@ -22,7 +24,15 @@ CREATE TABLE servico
 	CONSTRAINT fk_servico_categoria_servico FOREIGN KEY (cd_categoria_servico) REFERENCES categoria_servico(cd_categoria_servico)
 );
 
-
+Insert into servico values (1, 1, 'Limpeza');
+Insert into servico values (2, 1, 'Eletricista');
+Insert into servico values (3, 1, 'Encanador');
+Insert into servico values (4, 1, 'Chaveiro');
+Insert into servico values (5, 1, 'Jardineiro');
+Insert into servico values (6, 1, 'Marceneiro');
+Insert into servico values (7, 1, 'Pintor');
+Insert into servico values (8, 1, 'TEC em ar-condicionado');
+Insert into servico values (9, 1, 'Manutenção de eletrodomésticos');
 
 -- TABELA DO TRABALHADOR --
 Create Table trabalhador
