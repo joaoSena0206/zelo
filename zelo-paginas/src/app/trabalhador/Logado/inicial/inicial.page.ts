@@ -116,7 +116,7 @@ export class InicialPage implements OnInit {
                 // to 0.
                 distanceFilter: 200
             },
-            function callback(location, error) {
+            (location, error) => {
                 if (error) {
                     if (error.code === "NOT_AUTHORIZED") {
                         if (window.confirm(
@@ -134,11 +134,26 @@ export class InicialPage implements OnInit {
                     return console.error(error);
                 }
 
-                return console.log(location);
+                this.atualizarLocBanco(location);
             }
         ).then(watcherId => {
             this.watcherId = watcherId;
         });
+    }
+
+    async atualizarLocBanco(loc: any)
+    {
+        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AtualizarLoc";
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", this.trabalhador.Cpf);
+        dadosForm.append("lat", loc.latitude.toFixed(8));
+        dadosForm.append("log", loc.longitude.toFixed(8));
+
+        this.carregar = true;
+        let res = await firstValueFrom(this.http.post(link, dadosForm, {headers: headerNgrok}));
+        this.carregar = false;
+
+        console.log(res);
     }
 
     pararGeolocalizacao() {
