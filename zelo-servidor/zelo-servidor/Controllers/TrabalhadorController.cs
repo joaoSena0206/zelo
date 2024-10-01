@@ -289,6 +289,24 @@ public class TrabalhadorController : Controller
         banco.Desconectar();
     }
 
+    [HttpPost]
+    [Route("AdicionarCategoria")]
+    public void AdicionarCategoria()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cpf = Request["cpf"];
+        string categoria = Request["categoria"];
+
+        string comando = $@"INSERT INTO servico_trabalhador (cd_servico)
+                            VALUES (3) where cd_cpf_trabalhador = {cpf}";
+
+        banco.Executar(comando);
+
+        banco.Desconectar();
+    }
+
     public decimal PegarEstrelas(string cpf)
     {
         Banco banco = new Banco();
