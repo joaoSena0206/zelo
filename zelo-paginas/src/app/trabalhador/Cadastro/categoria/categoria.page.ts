@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { firstValueFrom, noop } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-categoria',
@@ -52,7 +53,7 @@ export class CategoriaPage implements OnInit {
 
     async carregarServicos() {
         this.carregar = true;
-        let res = await firstValueFrom(this.http.get('https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos'));
+        let res = await firstValueFrom(this.http.get('https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos', {headers: headerNgrok}));
         this.carregar = false;
         this.listaCategorias = res;
     }
@@ -113,7 +114,7 @@ export class CategoriaPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
         this.carregar = false;
 

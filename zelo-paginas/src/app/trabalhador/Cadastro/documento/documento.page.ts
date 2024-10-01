@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-documento',
@@ -81,7 +82,7 @@ export class DocumentoPage implements OnInit {
 
             this.carregar = true;
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm));
+            let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 
             if (res == null) {
                 link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCertificado"
@@ -93,7 +94,7 @@ export class DocumentoPage implements OnInit {
                     dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
                 }
 
-                res = await firstValueFrom(this.http.post(link, dadosForm));
+                res = await firstValueFrom(this.http.post(link, dadosForm, {headers: headerNgrok}));
 
                 if (res == null) {
                     link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
@@ -102,7 +103,7 @@ export class DocumentoPage implements OnInit {
                     dadosForm.append("cpf", trabalhador.Cpf);
                     dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-                    res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                    res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
                     if (res == "") {
                         localStorage.removeItem("trabalhador");
@@ -125,7 +126,7 @@ export class DocumentoPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
     }
 
     removerArquivo(event: any) {
