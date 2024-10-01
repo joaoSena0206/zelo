@@ -152,8 +152,6 @@ export class InicialPage implements OnInit {
     formatarEstrelas() {
         const comentarios = document.querySelectorAll("ion-item");
 
-        console.log(comentarios);
-
         comentarios.forEach(comentario => {
             const estrelas = comentario.querySelectorAll(".estrela");
 
