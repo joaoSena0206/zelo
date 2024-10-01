@@ -134,13 +134,10 @@ export class ConfirmarCelularPage implements OnInit {
                 if (res == "ok") {
                     link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarFotoPerfil";
 
-                    localStorage.removeItem("cliente");
-                    localStorage.removeItem("opcao");
-
                     res = await firstValueFrom(this.http.post(link, dadosForm));
 
                     if (res == null) {
-                        this.navCl.navigateRoot("/login-cliente");
+                        this.navCl.navigateRoot("/endereco", { animated: true, animationDirection: 'forward' });
                     }
                 }
 
