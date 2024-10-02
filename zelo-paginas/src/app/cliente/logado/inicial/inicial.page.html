@@ -26,7 +26,7 @@
                             <div class="div_ion_card">
                                 <ion-ripple-effect></ion-ripple-effect>
                                 <img draggable="false" class="img_pedido"
-                                    [src]="'https://chow-master-properly.ngrok-free.app/Imgs/Servicos/' + servico.Codigo + '.png'"
+                                    [src]="'../../../assets/icon/geral/servicos_inicial/' + servico.Codigo + '.png'"
                                     [alt]="servico.Nome">
                                 <div class="div_pedido">
                                     <p class="nm_cliente_pedido">{{ servico.Nome }}</p>
@@ -43,7 +43,7 @@
                 <ion-card *ngFor="let patrocinado of patrocinados">
                     <figure>
                         <img draggable="false"
-                            [src]="'https://chow-master-properly.ngrok-free.app/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'"
+                            [src]="patrocinado.img"
                             alt="">
                         <div class="info_trabalhador">
                             <div class="fundoLaranja"></div>
@@ -87,7 +87,7 @@
                     <div class="infoTrabalhorPedido">
                         <figure class="fotoTrabalhadorPedido">
                             <img style="border-radius: 100px;" draggable="false"
-                                [src]="'http://localhost:57879/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
+                                [src]="pedido.img">
                         </figure>
 
                         <div>
