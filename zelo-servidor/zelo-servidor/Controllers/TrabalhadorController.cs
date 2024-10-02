@@ -351,7 +351,7 @@ public class TrabalhadorController : Controller
             FROM trabalhador t
                 JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
                 JOIN servico s ON (st.cd_servico = s.cd_servico)
-            WHERE st.cd_servico = {codigo}";
+            WHERE st.cd_servico = {codigo} AND ic_disponivel_trabalhador = true";
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<ServicoTrabalhador> listaServicoTrabalhador = new List<ServicoTrabalhador>();
