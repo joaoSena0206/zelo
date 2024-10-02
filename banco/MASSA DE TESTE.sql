@@ -75,7 +75,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	3,
 	'53890618880',
-	'12345678909',
+	'50082480818',
 	3,
 	'2024-09-24',
 	'nao sei o que aconteceu com o cano deve ter estourado!',
@@ -88,7 +88,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	4,
 	'53890618880',
-	'12345218909',
+	'50082480818',
 	3,
 	'2024-09-24',
 	'nao sei o que aconteceu com o cano deve ter estourado!',
@@ -101,7 +101,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	5,
 	'53890618880',
-	'12345674322',
+	'50082480818',
 	3,
 	'2024-09-24',
 	'O chuveiro não esta esqyentando por favor me ajuda!',
@@ -114,7 +114,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	6,
 	'53890618880',
-	'12345672469',
+	'50082480818',
 	3,
 	'2024-09-24',
 	'Hoje acordei e estava com a torneira vazando!',
