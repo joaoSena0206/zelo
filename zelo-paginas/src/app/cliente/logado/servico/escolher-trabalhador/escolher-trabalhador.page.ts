@@ -25,8 +25,9 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     }
 
-    voltarPag()
-    {
+    voltarPag() {
+        localStorage.removeItem("servico");
+
         this.navCl.back();
     }
 
@@ -34,9 +35,21 @@ export class EscolherTrabalhadorPage implements OnInit {
         let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/CarregarTrabalhadores?c=" + codigo;
 
         this.carregar = true;
-        let resposta = await firstValueFrom(this.http.get(link, {headers: headerNgrok}));
+        let resposta = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
         this.carregar = false;
 
         this.trabalhadores = resposta;
+
+        for (let i = 0; i < this.trabalhadores.length; i++) {
+            this.carregarImgPerfil(this.trabalhadores[i].Trabalhador.Cpf, i);
+        }
+    }
+
+    async carregarImgPerfil(cpf: any, i: any) {
+        let link = `https://chow-master-properly.ngrok-free.app/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
+        let res: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+        let urlImg = URL.createObjectURL(res);
+
+        this.trabalhadores[i].Trabalhador.img = urlImg;
     }
 }
