@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
+import { headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-inicial',
@@ -29,9 +30,13 @@ export class InicialPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.get(link));
+        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
         this.patrocinados = res;
+
+        for (let i = 0; i < this.patrocinados.length; i++) {
+            this.carregarImgTrabalhador(this.patrocinados[i].Trabalhador.Cpf, i);
+        }
     }
 
     async carregarHistorico() {
@@ -40,11 +45,31 @@ export class InicialPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.get(link));
+        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
         this.historico = res;
 
         this.carregar = false;
+
+        for (let i = 0; i < this.historico.length; i++) {
+            this.carregarImgPerfil(this.historico[i].Trabalhador.Cpf, i);
+        }
+    }
+
+    async carregarImgPerfil(cpf: any, i: any) {
+        let link = `https://chow-master-properly.ngrok-free.app/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
+        let res: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+        let urlImg = URL.createObjectURL(res);
+
+        this.historico[i].img = urlImg;
+    }
+
+    async carregarImgTrabalhador(cpf: any, i: any) {
+        let link = `https://chow-master-properly.ngrok-free.app/Imgs/Trabalhadores/${cpf}.jpg`;
+        let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+        let urlImg = URL.createObjectURL(res);
+
+        this.patrocinados[i].img = urlImg;
     }
 
     async carregarCategorias() {
@@ -52,13 +77,13 @@ export class InicialPage implements OnInit {
 
         this.carregar = true;
 
-        let res = await firstValueFrom(this.http.get(link));
+        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
         this.categorias = res;
 
         if (this.categorias != null) {
             link = "https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos";
 
-            let res2 = await firstValueFrom(this.http.get(link));
+            let res2 = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
             let servicos: any = res2;
             servicos.sort((a: any, b: any) => {
@@ -76,7 +101,7 @@ export class InicialPage implements OnInit {
                     this.categorias[i].Servicos = [];
 
                     for (let j = 0; j < servicos.length; j++) {
-                        if (this.categorias[i].Codigo == servicos[j].CodigoCategoria) {
+                        if (this.categorias[i].Codigo == servicos[j].Categoria.Codigo) {
                             this.categorias[i].Servicos.push(servicos[j]);
                         }
                     }
@@ -87,6 +112,10 @@ export class InicialPage implements OnInit {
 
     mostrarTrabalhos() {
         this.navCl.navigateForward("/trabalhos");
+    }
+
+    trackByPedido(index: number, pedido: any): any {
+        return pedido.Trabalhador.Cpf;
     }
 
     pesquisarServicos(input: any) {
