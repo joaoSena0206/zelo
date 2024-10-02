@@ -42,9 +42,7 @@
             <div class="div_trabalhadores">
                 <ion-card *ngFor="let patrocinado of patrocinados">
                     <figure>
-                        <img draggable="false"
-                            [src]="patrocinado.img"
-                            alt="">
+                        <img draggable="false" [src]="patrocinado.img" alt="">
                         <div class="info_trabalhador">
                             <div class="fundoLaranja"></div>
                             <div class="divInfos">
@@ -86,8 +84,7 @@
                 <div class="areaUltimoPedido" *ngFor="let pedido of historico">
                     <div class="infoTrabalhorPedido">
                         <figure class="fotoTrabalhadorPedido">
-                            <img style="border-radius: 100px;" draggable="false"
-                                [src]="pedido.img">
+                            <img style="border-radius: 100px;" draggable="false" [src]="pedido.img">
                         </figure>
 
                         <div>
