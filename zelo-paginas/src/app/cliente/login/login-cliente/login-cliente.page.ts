@@ -131,6 +131,8 @@ export class LoginClientePage implements OnInit {
                 }
 
                 localStorage.removeItem("opcao");
+                localStorage.setItem("logado", "true");
+
                 this.navCl.navigateRoot("/inicial");
             }
             else {
