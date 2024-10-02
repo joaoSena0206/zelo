@@ -182,12 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Imgs\Servicos\2.png" />
-    <Content Include="Imgs\Servicos\4.png" />
-    <Content Include="Imgs\Servicos\5.png" />
-    <Content Include="Imgs\Servicos\8.png" />
-    <Content Include="Imgs\Trabalhadores\56787654567.jpg" />
-    <Content Include="Imgs\Trabalhadores\56787654566.jpg" />
+	<Content Include="Imgs\**\*.*" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
