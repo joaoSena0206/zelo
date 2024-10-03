@@ -53,7 +53,7 @@ export class CategoriaPage implements OnInit {
 
     async carregarServicos() {
         this.carregar = true;
-        let res = await firstValueFrom(this.http.get('https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos', {headers: headerNgrok}));
+        let res = await firstValueFrom(this.http.get(dominio + '/Servico/CarregarServicos', {headers: headerNgrok}));
         this.carregar = false;
         this.listaCategorias = res;
     }
