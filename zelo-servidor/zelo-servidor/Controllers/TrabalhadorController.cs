@@ -347,7 +347,9 @@ public class TrabalhadorController : Controller
             SELECT t.cd_cpf_trabalhador,
                 nm_trabalhador,
                 nm_servico,
-                vl_visita_trabalhador
+                vl_visita_trabalhador,
+                cd_latitude_atual_trabalhador,
+                cd_longitude_atual_trabalhador
             FROM trabalhador t
                 JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
                 JOIN servico s ON (st.cd_servico = s.cd_servico)
@@ -368,6 +370,8 @@ public class TrabalhadorController : Controller
                 trabalhador.Nome = dados.GetString(1);
                 trabalhador.ValorVisita = dados.GetDecimal(3);
                 trabalhador.Avaliacao = PegarEstrelas(trabalhador.Cpf);
+                trabalhador.LatitudeAtual = dados.GetDecimal(4);
+                trabalhador.LongitudeAtual = dados.GetDecimal(5);
 
                 servico.Nome = dados.GetString(2);
 
@@ -393,7 +397,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string comando = $@"UPDATE trabalhador SET cd_latitude_atual = {lat}, cd_longitude_atual = {log}
+        string comando = $@"UPDATE trabalhador SET cd_latitude_atual_trabalhador = {lat}, cd_longitude_atual_trabalhador = {log}
         WHERE cd_cpf_trabalhador = '{cpf}'";
         banco.Executar(comando);
         banco.Desconectar();
