@@ -116,6 +116,11 @@ export class EscolherTrabalhadorPage implements OnInit {
         this.carregar = false;
     }
 
+    dismissModal(cpf: any) {
+        const modal = document.querySelector("#modal_" + cpf) as HTMLIonModalElement;
+        modal.dismiss();
+    }
+
     async pegarPosicaoAtual() {
         let coordenadas = await Geolocation.getCurrentPosition();
         return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
