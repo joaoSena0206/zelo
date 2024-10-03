@@ -4,24 +4,26 @@
     </div>
 
     <div class="content">
-        <ion-icon (click)="voltarPag()" class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+        <ion-icon (click)="voltarPag()" class="titulo__voltar"
+            src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 
         <div class="areaPedidos">
             <div class="wrapper">
                 <div class="btns_filtro">
-                    <ion-button class="btn_filtro btn_filtro--ativado">Próximos</ion-button>
-                    <ion-button class="btn_filtro">Melhor avaliados</ion-button>
-                    <ion-button class="btn_filtro">Melhor preço</ion-button>
+                    <ion-button class="btn_filtro btn_filtro--ativado"
+                        (click)="mudarFiltro($event.target)">Próximos</ion-button>
+                    <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Melhor avaliados</ion-button>
+                    <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Melhor preço</ion-button>
                 </div>
             </div>
 
             <div class="UltimosPedidosDiv">
-                <div class="areaUltimoPedido" *ngFor="let trabalhador of trabalhadores" [id]="'t_' + trabalhador.Trabalhador.Cpf">
+                <div class="areaUltimoPedido" *ngFor="let trabalhador of trabalhadores"
+                    [id]="'t_' + trabalhador.Trabalhador.Cpf">
                     <div class="divWrapper">
                         <div class="infoTrabalhorPedido">
                             <figure class="fotoTrabalhadorPedido">
-                                <img draggable="false"
-                                    [src]="trabalhador.Trabalhador.img">
+                                <img draggable="false" [src]="trabalhador.Trabalhador.img">
                             </figure>
 
                             <div>
@@ -44,7 +46,8 @@
 
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <p class="distancia">Distância: {{ trabalhador.Trabalhador.Distancia.toFixed(1).replace(".", ",") }} km</p>
+                            <p class="distancia">Distância: {{ trabalhador.Trabalhador.Distancia.toFixed(1).replace(".",
+                                ",") }} km</p>
                             <ion-button class="btnContratar" id="contratar1">Contratar</ion-button>
                             <ion-modal #modal1 trigger="contratar1">
                                 <ng-template>
