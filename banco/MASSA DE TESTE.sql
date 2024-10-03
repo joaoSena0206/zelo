@@ -15,8 +15,8 @@ INSERT INTO patrocinio VALUE(
 );
 
 Insert into servico_trabalhador values('53890618880', 3);
-Insert into servico_trabalhador values('56787654567', 2);
-Insert into servico_trabalhador values('56787654566', 7);
+Insert into servico_trabalhador values('56787654567', 3);
+Insert into servico_trabalhador values('56787654566', 3);
 Insert into servico_trabalhador values('50082480818', 3);
 
 INSERT INTO cliente VALUES
