@@ -39,7 +39,7 @@
         </div>
 
         <ng-container *ngIf="mostrar">
-            <div class="div_trabalhadores">
+            <div class="div_trabalhadores" *ngIf="patrocinados ? patrocinados.length > 0 : false">
                 <ion-card *ngFor="let patrocinado of patrocinados">
                     <figure>
                         <img draggable="false" [src]="patrocinado.img" alt="">
@@ -76,11 +76,11 @@
             </div>
 
 
-            <div class="título_ultimos_pedidos">
+            <div class="título_ultimos_pedidos" *ngIf="historico ? historico.length > 0 : false">
                 <h3 *ngIf="historico" class="titulo">Últimos pedidos</h3>
             </div>
 
-            <div class="UltimosPedidosDiv">
+            <div class="UltimosPedidosDiv" *ngIf="historico ? historico.length > 0 : false">
                 <div class="areaUltimoPedido" *ngFor="let pedido of historico">
                     <div class="infoTrabalhorPedido">
                         <figure class="fotoTrabalhadorPedido">
