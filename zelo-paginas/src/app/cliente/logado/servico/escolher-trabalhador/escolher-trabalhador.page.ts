@@ -23,6 +23,22 @@ export class EscolherTrabalhadorPage implements OnInit {
         this.carregarTrabalhadores(servico.Codigo);
     }
 
+    ngAfterViewInit() {
+    }
+
+    mudarFiltro(btn: any) {
+        const btns = document.querySelectorAll(".btn_filtro");
+
+        for (let i = 0; i < btns.length; i++) {
+            if (btn !== btns[i]) {
+                if (btns[i].classList.contains("btn_filtro--ativado")) {
+                    btns[i].classList.remove("btn_filtro--ativado");
+                    btn.classList.add("btn_filtro--ativado");
+                }
+            }
+        }
+    }
+
     voltarPag() {
         localStorage.removeItem("servico");
 
@@ -34,15 +50,30 @@ export class EscolherTrabalhadorPage implements OnInit {
 
         this.carregar = true;
         let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+        let posicaoAtual = await this.pegarPosicaoAtual();
 
         for (let i = 0; i < resposta.length; i++) {
             let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
-            let posicaoAtual = await this.pegarPosicaoAtual();
-            let distancia = Math.round(latlng.distanceTo(posicaoAtual) / 1000);
+            let distancia = latlng.distanceTo(posicaoAtual) / 1000;
+
+            link = dominio + `/Imgs/Perfil/Trabalhador/${resposta[i].Trabalhador.Cpf}.jpg`;
+            let imgBlob: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+            let urlImg = URL.createObjectURL(imgBlob);
 
             resposta[i].Trabalhador.Distancia = distancia;
-            this.carregarImgPerfil(resposta[i].Trabalhador.Cpf, i);
+            resposta[i].Trabalhador.img = urlImg;
         }
+
+        resposta.sort((a: any, b: any) => {
+            if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
+                return -1;
+            }
+            else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
+                return 1;
+            }
+
+            return 0;
+        });
 
         this.trabalhadores = resposta;
         this.carregar = false;
@@ -54,10 +85,6 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     async carregarImgPerfil(cpf: any, i: any) {
-        let link = dominio + `/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
-        let res: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-        let urlImg = URL.createObjectURL(res);
 
-        this.trabalhadores[i].Trabalhador.img = urlImg;
     }
 }
