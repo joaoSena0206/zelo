@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-inicial',
@@ -26,7 +26,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarPatrocinados() {
-        let link = "https://chow-master-properly.ngrok-free.app/Patrocinio/CarregarPatrocinados";
+        let link = dominio + "/Patrocinio/CarregarPatrocinados";
 
         this.carregar = true;
 
@@ -41,7 +41,7 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
+        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
 
         this.carregar = true;
 
@@ -57,7 +57,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarImgPerfil(cpf: any, i: any) {
-        let link = `https://chow-master-properly.ngrok-free.app/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
+        let link = dominio + `/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
         let res: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
         let urlImg = URL.createObjectURL(res);
 
@@ -65,7 +65,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarImgTrabalhador(cpf: any, i: any) {
-        let link = `https://chow-master-properly.ngrok-free.app/Imgs/Trabalhadores/${cpf}.jpg`;
+        let link = dominio + `/Imgs/Trabalhadores/${cpf}.jpg`;
         let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
         let urlImg = URL.createObjectURL(res);
 
@@ -73,7 +73,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarCategorias() {
-        let link = "https://chow-master-properly.ngrok-free.app/CategoriaServico/CarregarCategoria";
+        let link = dominio + "/CategoriaServico/CarregarCategoria";
 
         this.carregar = true;
 
@@ -81,7 +81,7 @@ export class InicialPage implements OnInit {
         this.categorias = res;
 
         if (this.categorias != null) {
-            link = "https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos";
+            link = dominio + "/Servico/CarregarServicos";
 
             let res2 = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-login-cliente',
@@ -105,7 +106,7 @@ export class LoginClientePage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            let link = "https://chow-master-properly.ngrok-free.app/Cliente/Logar";
+            let link = dominio + "/Cliente/Logar";
             let email = this.form.controls['email'].value;
             let senha = this.form.controls['senha'].value;
 

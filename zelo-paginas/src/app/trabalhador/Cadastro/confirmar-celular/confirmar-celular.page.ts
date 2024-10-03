@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-confirmar-celular-trabalhador',
@@ -94,7 +94,7 @@ export class ConfirmarCelularPage implements OnInit {
             }, 1000);
         }
 
-        let link = "https://chow-master-properly.ngrok-free.app/Confirmacao/GerarCodigo";
+        let link = dominio + "/Confirmacao/GerarCodigo";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
@@ -123,7 +123,7 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input5"].value;
 
             if (codigo == this.codigoAleatorio) {
-                let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/ConfirmarEmail";
+                let link = dominio + "/Trabalhador/ConfirmarEmail";
                 let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", trabalhador.Cpf);
@@ -133,7 +133,7 @@ export class ConfirmarCelularPage implements OnInit {
                 let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers:headerNgrok }));
 
                 if (res == "ok") {
-                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarFotoPerfil";
+                    link = dominio + "/Trabalhador/AdicionarFotoPerfil";
 
                     res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
 

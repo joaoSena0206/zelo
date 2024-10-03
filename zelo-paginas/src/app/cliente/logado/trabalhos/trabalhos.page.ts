@@ -2,6 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ElementRef } from '@angular/core';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-trabalhos',
@@ -31,7 +32,7 @@ export class TrabalhosPage implements OnInit {
     }
 
     async carregarCategorias() {
-        let link = "https://chow-master-properly.ngrok-free.app/CategoriaServico/CarregarCategoria";
+        let link = dominio + "/CategoriaServico/CarregarCategoria";
 
         this.carregar = true;
 
@@ -39,7 +40,7 @@ export class TrabalhosPage implements OnInit {
         this.categorias = res;
 
         if (this.categorias != null) {
-            link = "https://chow-master-properly.ngrok-free.app/Servico/CarregarServicos";
+            link = dominio + "/Servico/CarregarServicos";
 
             let res2 = await firstValueFrom(this.http.get(link));
 

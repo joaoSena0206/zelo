@@ -123,7 +123,7 @@ export class ConfirmarCelularPage implements OnInit {
             codigo += this.form.controls["input5"].value;
 
             if (codigo == this.codigoAleatorio) {
-                let link = "https://chow-master-properly.ngrok-free.app/Cliente/ConfirmarEmail";
+                let link = dominio + "/Cliente/ConfirmarEmail";
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.Cpf);
@@ -133,7 +133,7 @@ export class ConfirmarCelularPage implements OnInit {
                 let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
                 if (res == "ok") {
-                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarFotoPerfil";
+                    link = dominio + "/Trabalhador/AdicionarFotoPerfil";
 
                     res = await firstValueFrom(this.http.post(link, dadosForm));
 

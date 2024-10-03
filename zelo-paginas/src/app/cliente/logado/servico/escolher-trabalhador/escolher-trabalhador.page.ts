@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -32,7 +32,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     async carregarTrabalhadores(codigo: number) {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/CarregarTrabalhadores?c=" + codigo;
+        let link = dominio + "/Trabalhador/CarregarTrabalhadores?c=" + codigo;
 
         this.carregar = true;
         let resposta = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
@@ -46,7 +46,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     async carregarImgPerfil(cpf: any, i: any) {
-        let link = `https://chow-master-properly.ngrok-free.app/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
+        let link = dominio + `/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
         let res: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
         let urlImg = URL.createObjectURL(res);
 

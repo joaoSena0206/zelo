@@ -4,7 +4,7 @@ import { IonList } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { first, firstValueFrom } from 'rxjs';
 import { BackgroundRunner } from '@capacitor/background-runner';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 import { BackgroundGeolocationPlugin } from "@capacitor-community/background-geolocation";
 import { registerPlugin } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
@@ -143,7 +143,7 @@ export class InicialPage implements OnInit {
 
     async atualizarLocBanco(loc: any)
     {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AtualizarLoc";
+        let link = dominio + "/Trabalhador/AtualizarLoc";
         let dadosForm = new FormData();
         dadosForm.append("cpf", this.trabalhador.Cpf);
         dadosForm.append("lat", loc.latitude.toFixed(8));
@@ -194,7 +194,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarComentarioAnonimo() {
-        let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
+        let link = dominio + `/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
         let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
@@ -219,7 +219,7 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-        let link = `https://chow-master-properly.ngrok-free.app/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
+        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
         let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
@@ -276,7 +276,7 @@ export class InicialPage implements OnInit {
             this.checarPermissao();
         }
 
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AtualizarSituacao";
+        let link = dominio + "/Trabalhador/AtualizarSituacao";
 
         let dadosForm = new FormData();
         dadosForm.append("Resultado", this.resultado!);

@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-descricao-servico',
@@ -58,7 +59,7 @@ export class DescricaoServicoPage implements OnInit {
 
     async carregarEndereco() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = "https://chow-master-properly.ngrok-free.app/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
+        let link = dominio + "/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
 
         this.carregar = true;
         let resposta: any = await firstValueFrom(this.http.get(link));

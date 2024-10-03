@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { firstValueFrom, noop } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-categoria',
@@ -106,7 +106,7 @@ export class CategoriaPage implements OnInit {
     }
 
     async cadastrarBanco() {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
+        let link = dominio + "/Trabalhador/AdicionarCategoria";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();

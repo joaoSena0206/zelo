@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-login-trabalhador',
@@ -106,7 +106,7 @@ export class LoginTrabalhadorPage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/Logar";
+            let link = dominio + "/Trabalhador/Logar";
             let email = this.form.controls['email'].value;
             let senha = this.form.controls['senha'].value;
 

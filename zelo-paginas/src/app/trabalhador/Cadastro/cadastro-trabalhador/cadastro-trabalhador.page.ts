@@ -7,7 +7,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { first, firstValueFrom } from 'rxjs';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-cadastro-trabalhador',
@@ -151,7 +151,7 @@ export class CadastroTrabalhadorPage implements OnInit {
     }
 
     async cadastrarBanco() {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/Adicionar";
+        let link = dominio + "/Trabalhador/Adicionar";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();
@@ -169,7 +169,7 @@ export class CadastroTrabalhadorPage implements OnInit {
     }
 
     async checarCadastro(trabalhador: any, dado: string = "padrão") {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/ChecarExistencia";
+        let link = dominio + "/Trabalhador/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.Cpf!);
         dadosForm.append("email", trabalhador.Email!);

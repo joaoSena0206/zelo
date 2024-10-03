@@ -5,7 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { headerNgrok } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-documento',
@@ -72,7 +72,7 @@ export class DocumentoPage implements OnInit {
     }
 
     async enviarArquivos() {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarSaque";
+        let link = dominio + "/Trabalhador/AdicionarSaque";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.Cpf);
@@ -84,7 +84,7 @@ export class DocumentoPage implements OnInit {
         let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
         if (res == null) {
-            link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
+            link = dominio + "/Trabalhador/AdicionarCategoria";
 
             dadosForm = new FormData();
             dadosForm.append("cpf", trabalhador.Cpf);
@@ -94,7 +94,7 @@ export class DocumentoPage implements OnInit {
 
             if (res == "") {
                 if (this.arquivos.length != 0) {
-                    link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCertificado"
+                    link = dominio + "/Trabalhador/AdicionarCertificado"
                     dadosForm = new FormData();
                     dadosForm.append("cpf", trabalhador.Cpf);
 
@@ -123,7 +123,7 @@ export class DocumentoPage implements OnInit {
     }
 
     async cadastrarCategoria() {
-        let link = "https://chow-master-properly.ngrok-free.app/Trabalhador/AdicionarCategoria";
+        let link = dominio + "/Trabalhador/AdicionarCategoria";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
 
         let dadosForm = new FormData();

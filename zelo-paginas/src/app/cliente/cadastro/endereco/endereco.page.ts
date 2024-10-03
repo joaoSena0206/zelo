@@ -4,6 +4,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 import { MaskitoOptions, MaskitoElementPredicate } from '@maskito/core';
 import { NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-endereco',
@@ -108,7 +109,7 @@ export class EnderecoPage implements OnInit {
             this.endereco.markAllAsTouched();
         }
         else {
-            let link = "https://chow-master-properly.ngrok-free.app/Endereco/AdicionarEndereco";
+            let link = dominio + "/Endereco/AdicionarEndereco";
             let cliente = JSON.parse(localStorage.getItem("cliente")!);
             let endereco = {
                 CpfCliente: cliente.Cpf,
