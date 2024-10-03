@@ -35,6 +35,43 @@ export class EscolherTrabalhadorPage implements OnInit {
                     btns[i].classList.remove("btn_filtro--ativado");
                     btn.classList.add("btn_filtro--ativado");
                 }
+
+                if (btn.textContent == "Próximos") {
+                    this.trabalhadores.sort((a: any, b: any) => {
+                        if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
+                            return -1;
+                        }
+                        else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
+                }
+                else if (btn.textContent == "Melhor avaliados") {
+                    this.trabalhadores.sort((a: any, b: any) => {
+                        if (a.Trabalhador.Avaliacao > b.Trabalhador.Avaliacao) {
+                            return -1;
+                        }
+                        else if (a.Trabalhador.Avaliacao < b.Trabalhador.Avaliacao) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
+                }
+                else {
+                    this.trabalhadores.sort((a: any, b: any) => {
+                        if (a.Trabalhador.ValorVisita < b.Trabalhador.ValorVisita) {
+                            return -1;
+                        }
+                        else if (a.Trabalhador.ValorVisita > b.Trabalhador.ValorVisita) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
+                }
             }
         }
     }
