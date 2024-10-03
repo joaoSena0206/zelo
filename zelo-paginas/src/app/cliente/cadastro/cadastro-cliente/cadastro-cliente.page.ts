@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { firstValueFrom } from 'rxjs';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-cadastro-cliente',
@@ -150,7 +151,7 @@ export class CadastroClientePage implements OnInit {
     }
 
     async checarCadastro(cliente: any, dado: string = "padrão") {
-        let link = "https://chow-master-properly.ngrok-free.app/Cliente/ChecarExistencia";
+        let link = dominio + "/Cliente/ChecarExistencia";
         let dadosForm = new FormData();
         dadosForm.append("cpf", cliente.Cpf!);
         dadosForm.append("email", cliente.Email!);
@@ -165,7 +166,7 @@ export class CadastroClientePage implements OnInit {
         let objRes = resposta as any;
 
         if (objRes.cadastrado.length == 0) {
-            link = "https://chow-master-properly.ngrok-free.app/Cliente/Adicionar";
+            link = dominio + "/Cliente/Adicionar";
             dadosForm = new FormData();
             dadosForm.append("cliente", JSON.stringify(cliente));
 

@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { first, firstValueFrom } from 'rxjs';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -93,7 +94,7 @@ export class ConfirmarCelularPage implements OnInit {
             }, 1000);
         }
 
-        let link = "https://chow-master-properly.ngrok-free.app/Confirmacao/GerarCodigo";
+        let link = dominio + "/Confirmacao/GerarCodigo";
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
         let dadosForm = new FormData();
