@@ -16,7 +16,7 @@
             </div>
 
             <div class="UltimosPedidosDiv">
-                <div class="areaUltimoPedido" *ngFor="let trabalhador of trabalhadores">
+                <div class="areaUltimoPedido" *ngFor="let trabalhador of trabalhadores" [id]="'t_' + trabalhador.Trabalhador.Cpf">
                     <div class="divWrapper">
                         <div class="infoTrabalhorPedido">
                             <figure class="fotoTrabalhadorPedido">
@@ -44,7 +44,7 @@
 
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <p class="distancia">Distância: 1,0 km</p>
+                            <p class="distancia">Distância: {{ trabalhador.Trabalhador.Distancia.toFixed(1).replace(".", ",") }} km</p>
                             <ion-button class="btnContratar" id="contratar1">Contratar</ion-button>
                             <ion-modal #modal1 trigger="contratar1">
                                 <ng-template>
