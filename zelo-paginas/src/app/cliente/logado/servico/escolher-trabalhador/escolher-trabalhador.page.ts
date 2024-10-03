@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { NavController } from '@ionic/angular';
+import * as L from 'leaflet';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
     selector: 'app-escolher-trabalhador',
@@ -21,10 +23,6 @@ export class EscolherTrabalhadorPage implements OnInit {
         this.carregarTrabalhadores(servico.Codigo);
     }
 
-    ionViewDidEnter() {
-
-    }
-
     voltarPag() {
         localStorage.removeItem("servico");
 
@@ -35,14 +33,24 @@ export class EscolherTrabalhadorPage implements OnInit {
         let link = dominio + "/Trabalhador/CarregarTrabalhadores?c=" + codigo;
 
         this.carregar = true;
-        let resposta = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-        this.carregar = false;
+        let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
+        for (let i = 0; i < resposta.length; i++) {
+            let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
+            let posicaoAtual = await this.pegarPosicaoAtual();
+            let distancia = Math.round(latlng.distanceTo(posicaoAtual) / 1000);
+
+            resposta[i].Trabalhador.Distancia = distancia;
+            this.carregarImgPerfil(resposta[i].Trabalhador.Cpf, i);
+        }
 
         this.trabalhadores = resposta;
+        this.carregar = false;
+    }
 
-        for (let i = 0; i < this.trabalhadores.length; i++) {
-            this.carregarImgPerfil(this.trabalhadores[i].Trabalhador.Cpf, i);
-        }
+    async pegarPosicaoAtual() {
+        let coordenadas = await Geolocation.getCurrentPosition();
+        return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
     }
 
     async carregarImgPerfil(cpf: any, i: any) {
