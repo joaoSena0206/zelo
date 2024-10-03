@@ -94,7 +94,21 @@ public class Trabalhador
         set { _valorVisita = value; }
     }
 
+    private decimal _latitudeAtual;
 
+    public decimal LatitudeAtual
+    {
+        get { return _latitudeAtual; }
+        set { _latitudeAtual = value; }
+    }
+
+    private decimal _longitudeAtual;
+
+    public decimal LongitudeAtual
+    {
+        get { return _longitudeAtual; }
+        set { _longitudeAtual = value; }
+    }
 
 
     public Trabalhador()
@@ -102,7 +116,7 @@ public class Trabalhador
 
     }
 
-    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita)
+    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita, decimal lat, decimal longitude)
     {
         this.Cpf = cpf;
         this.Nome = nome;
@@ -114,5 +128,7 @@ public class Trabalhador
         this.Disponivel = disponivel;
         this.Avaliacao = avaliacao;
         this.ValorVisita = valorVisita;
+        this.LatitudeAtual = lat;
+        this.LongitudeAtual = longitude;
     }
 }
