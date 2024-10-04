@@ -49,6 +49,11 @@ export class EscolherTrabalhadorPage implements OnInit {
     ngAfterViewInit() {
     }
 
+    contratarTrabalhador(trabalhador: any)
+    {
+        console.log(trabalhador);
+    }
+
     mudarFiltro(btn: any) {
         const btns = document.querySelectorAll(".btn_filtro");
 
@@ -114,7 +119,7 @@ export class EscolherTrabalhadorPage implements OnInit {
 
         for (let i = 0; i < resposta.length; i++) {
             let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
-            let distancia = latlng.distanceTo(posicaoAtual) / 1000;
+            let distancia = latlng.distanceTo(posicaoAtual!) / 1000;
 
             link = dominio + `/Imgs/Perfil/Trabalhador/${resposta[i].Trabalhador.Cpf}.jpg`;
             let imgBlob: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
@@ -145,8 +150,28 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     async pegarPosicaoAtual() {
-        let coordenadas = await Geolocation.getCurrentPosition();
-        return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
+        const permissoes = await Geolocation.checkPermissions();
+
+        let coordenadas: any;
+
+        if (permissoes.location === "denied") {
+            const requestPermissao = await Geolocation.requestPermissions();
+
+            if (requestPermissao.location === "granted" || requestPermissao.location === "prompt") {
+                coordenadas = await Geolocation.getCurrentPosition();
+
+                return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
+            }
+        }
+        else if (permissoes.location === "granted" || permissoes.location === "prompt") {
+            coordenadas = await Geolocation.getCurrentPosition();
+
+            return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
+        }
+
+        console.error("Necessário permissão");
+
+        return;
     }
 
     async carregarImgPerfil(cpf: any, i: any) {
