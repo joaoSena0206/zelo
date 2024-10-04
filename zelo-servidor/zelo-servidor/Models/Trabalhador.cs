@@ -110,13 +110,22 @@ public class Trabalhador
         set { _longitudeAtual = value; }
     }
 
+    private string _tokenFCM;
+
+    public string TokenFCM
+    {
+        get { return _tokenFCM; }
+        set { _tokenFCM = value; }
+    }
+
+
 
     public Trabalhador()
     {
 
     }
 
-    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita, decimal lat, decimal longitude)
+    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita, decimal lat, decimal longitude, string token)
     {
         this.Cpf = cpf;
         this.Nome = nome;
@@ -130,5 +139,6 @@ public class Trabalhador
         this.ValorVisita = valorVisita;
         this.LatitudeAtual = lat;
         this.LongitudeAtual = longitude;
+        this.TokenFCM = token;
     }
 }

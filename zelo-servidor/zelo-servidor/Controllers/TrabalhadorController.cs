@@ -1,3 +1,4 @@
+using FirebaseAdmin.Messaging;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
@@ -349,7 +350,8 @@ public class TrabalhadorController : Controller
                 nm_servico,
                 vl_visita_trabalhador,
                 cd_latitude_atual_trabalhador,
-                cd_longitude_atual_trabalhador
+                cd_longitude_atual_trabalhador,
+                nm_token_fcm
             FROM trabalhador t
                 JOIN servico_trabalhador st ON (t.cd_cpf_trabalhador = st.cd_cpf_trabalhador)
                 JOIN servico s ON (st.cd_servico = s.cd_servico)
@@ -372,6 +374,7 @@ public class TrabalhadorController : Controller
                 trabalhador.Avaliacao = PegarEstrelas(trabalhador.Cpf);
                 trabalhador.LatitudeAtual = dados.GetDecimal(4);
                 trabalhador.LongitudeAtual = dados.GetDecimal(5);
+                trabalhador.TokenFCM = dados.GetString(6);
 
                 servico.Nome = dados.GetString(2);
 
@@ -398,6 +401,19 @@ public class TrabalhadorController : Controller
         banco.Conectar();
 
         string comando = $@"UPDATE trabalhador SET cd_latitude_atual_trabalhador = {lat}, cd_longitude_atual_trabalhador = {log}
+        WHERE cd_cpf_trabalhador = '{cpf}'";
+        banco.Executar(comando);
+        banco.Desconectar();
+    }
+
+    [HttpPost]
+    [Route("AdicionarTokenFCM")]
+    public void AdicionarTokenFCM(string cpf, string token)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $@"UPDATE trabalhador SET nm_token_fcm = '{token}'
         WHERE cd_cpf_trabalhador = '{cpf}'";
         banco.Executar(comando);
         banco.Desconectar();
