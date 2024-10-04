@@ -1,9 +1,18 @@
 USE Zelo;
 
-INSERT INTO trabalhador VALUE('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', true, true, 25.50, -23.9560, -46.3305);
-INSERT INTO trabalhador VALUE('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', true, true, 32.65, -23.9336, -46.3221);
-Insert into trabalhador value('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', false, true, 25, -23.9738, -46.3437);
-Insert into trabalhador value('53890618880', 'Marco', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), '50082480818', true, true, 25, -23.9524, -46.3603);
+INSERT INTO trabalhador VALUES
+('12345678901', 'Ana Silva', '1990-05-15', '2023-01-01', 'ana.silva@example.com', md5('senha123'), 'pix-ana', TRUE, TRUE, 50.00, -23.550520, -46.633308),
+('23456789012', 'Bruno Santos', '1985-08-22', '2023-02-10', 'bruno.santos@example.com', md5('senha456'), 'pix-bruno', TRUE, FALSE, 75.00, -22.906847, -43.172896),
+('34567890123', 'Carla Oliveira', '1992-12-30', '2023-03-15', 'carla.oliveira@example.com', md5('senha789'), 'pix-carla', FALSE, TRUE, 60.00, -30.034647, -51.217658),
+('45678901234', 'David Pereira', '1988-04-10', '2023-04-20', 'david.pereira@example.com', md5('senha012'), 'pix-david', TRUE, TRUE, 45.00, -15.780148, -47.929220),
+('56789012345', 'Eliana Costa', '1995-11-05', '2023-05-30', 'eliana.costa@example.com', md5('senha345'), 'pix-eliana', FALSE, FALSE, 30.00, -12.971399, -38.501305),
+('67890123456', 'Fernando Lima', '1980-03-25', '2023-06-10', 'fernando.lima@example.com', md5('senha678'), 'pix-fernando', TRUE, TRUE, 90.00, -23.550520, -46.633308),
+('78901234567', 'Gabriela Rocha', '1997-07-14', '2023-07-25', 'gabriela.rocha@example.com', md5('senha901'), 'pix-gabi', TRUE, FALSE, 80.00, -3.71722, -38.5433),
+('53890618880', 'Marco', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), '50082480818', TRUE, TRUE, 25, -23.9524, -46.3603),
+('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', FALSE, TRUE, 25, -23.9738, -46.3437),
+('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', TRUE, TRUE, 32.65, -23.9336, -46.3221),
+('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', TRUE, TRUE, 25.50, -23.9560, -46.3305);
+
 
 INSERT INTO patrocinio VALUE(
 	'56787654567', 2, 2, 200, '2024-09-21'
@@ -14,10 +23,19 @@ INSERT INTO patrocinio VALUE(
 	'56787654566', 7, 1, 100, '2024-09-20'
 );
 
-Insert into servico_trabalhador values('53890618880', 3);
-Insert into servico_trabalhador values('56787654567', 3);
-Insert into servico_trabalhador values('56787654566', 3);
-Insert into servico_trabalhador values('50082480818', 3);
+INSERT INTO servico_trabalhador (cd_cpf_trabalhador, cd_servico) VALUES
+('12345678901', 1),
+('23456789012', 2),
+('34567890123', 3),
+('45678901234', 4),
+('56789012345', 5),
+('67890123456', 6),
+('78901234567', 7),
+('53890618880', 3),
+('56787654567', 3),
+('56787654566', 3),
+('50082480818', 3);
+
 
 INSERT INTO cliente VALUES
 (
@@ -51,74 +69,69 @@ INSERT INTO solicitacao_servico VALUES
 	'50082480818',
 	3,
 	'2024-09-24',
-	'Mangueira quebrou e nao sei o que fazer!',
-	'Otimo trabalho irei chamar mais vezes',
+	'Preciso de ajuda com um vazamento na cozinha.',
+	'Serviço excelente, voltarei a chamar!',
 	3.0,
-	'Ótimo serviço, mas faltou na educação',
+	'Bom trabalho, mas a comunicação pode melhorar.',
 	4.0
-);
-INSERT INTO solicitacao_servico VALUES
+),
 (
 	2,
 	'53890618880',
 	'50082480818',
 	3,
 	'2024-09-22',
-	'Mangueira quebrou e estou te chamando pois tenho um compromisso urgente!',
-	'Exelente profissional bem educado e simpatico',
+	'Meu chuveiro está com problemas, não está aquecendo!',
+	'Profissional muito atencioso e competente.',
 	5.0,
-	'Ótimo serviço, mas faltou na educação',
+	'Ótimo trabalho, muito satisfeito!',
 	4.0
-);
-INSERT INTO solicitacao_servico VALUES
+),
 (
 	3,
 	'53890618880',
 	'50082480818',
 	3,
-	'2024-09-24',
-	'nao sei o que aconteceu com o cano deve ter estourado!',
-	'Resolveu meu problema, demorou um pouco mas valeu',
+	'2024-09-25',
+	'O encanamento está fazendo barulho, pode vir olhar?',
+	'Resolveu o problema rapidamente, recomendo!',
 	4.0,
-	'Ótimo serviço, mas faltou na educação',
+	'Serviço bom, mas poderia ser mais rápido.',
 	3.0
-);
-INSERT INTO solicitacao_servico VALUES
+),
 (
 	4,
 	'53890618880',
 	'50082480818',
 	3,
-	'2024-09-24',
-	'nao sei o que aconteceu com o cano deve ter estourado!',
-	'Parabens',
+	'2024-09-26',
+	'A torneira da sala está pingando, preciso de ajuda.',
+	'Ótimo trabalho, muito satisfeito!',
 	1.0,
-	'Ótimo serviço, mas faltou na educação',
+	'Ótimo serviço, recomendo!',
 	4.0
-);
-INSERT INTO solicitacao_servico VALUES
+),
 (
 	5,
 	'53890618880',
 	'50082480818',
 	3,
-	'2024-09-24',
-	'O chuveiro não esta esqyentando por favor me ajuda!',
-	'Otimo servoço ficou do jeito esperado sem reclamações',
+	'2024-09-27',
+	'Estou com problemas na fossa, urgente!',
+	'Trabalho realizado com excelência, sem reclamações.',
 	5.0,
-	'Ótimo serviço, nota dez para o rapaz',
+	'Sem problemas, nota dez para o profissional.',
 	4.0
-);
-INSERT INTO solicitacao_servico VALUES
+),
 (
 	6,
 	'53890618880',
 	'50082480818',
 	3,
-	'2024-09-24',
-	'Hoje acordei e estava com a torneira vazando!',
-	'Otimo trabalhador sem duvidas parabens!',
+	'2024-09-28',
+	'A água da pia não está saindo, preciso de ajuda!',
+	'Ótimo trabalhador, muito eficiente!',
 	2.0,
-	'Rapaz muito educado e simpatico',
+	'Profissional educado e simpático, gostei muito.',
 	5.0
 );
