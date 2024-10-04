@@ -10,6 +10,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FirebaseAdmin.Messaging;
 
 [RoutePrefix("Cliente")]
 public class ClienteController : Controller
@@ -178,5 +179,27 @@ public class ClienteController : Controller
         return JsonConvert.SerializeObject(cliente);
 
         #endregion
+    }
+
+    [HttpPost]
+    [Route("EnviarSolicitacao")]
+    public async Task<string> EnviarSolicitacao()
+    {
+        string token = Request["token"];
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
+
+        var msg = new Message()
+        {
+            Notification = new Notification()
+            {
+                Title = "Solicitação de serviço",
+                Body = $"Enviada por {cliente.Nome}"
+            },
+            Token = token
+        };
+
+        string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+        return resposta;
     }
 }
