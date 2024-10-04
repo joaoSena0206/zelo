@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "http://localhost:57879";
+export const dominio = "https://chow-master-properly.ngrok-free.app";
