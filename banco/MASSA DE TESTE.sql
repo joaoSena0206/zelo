@@ -78,7 +78,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	2,
 	'53890618880',
-	'50082480818',
+	'12345218909',
 	3,
 	'2024-09-22',
 	'Meu chuveiro está com problemas, não está aquecendo!',
@@ -90,7 +90,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	3,
 	'53890618880',
-	'50082480818',
+	'12345674322',
 	3,
 	'2024-09-25',
 	'O encanamento está fazendo barulho, pode vir olhar?',
@@ -102,7 +102,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	4,
 	'53890618880',
-	'50082480818',
+	'12345678909',
 	3,
 	'2024-09-26',
 	'A torneira da sala está pingando, preciso de ajuda.',
@@ -114,7 +114,7 @@ INSERT INTO solicitacao_servico VALUES
 (
 	5,
 	'53890618880',
-	'50082480818',
+	'12345672469',
 	3,
 	'2024-09-27',
 	'Estou com problemas na fossa, urgente!',
