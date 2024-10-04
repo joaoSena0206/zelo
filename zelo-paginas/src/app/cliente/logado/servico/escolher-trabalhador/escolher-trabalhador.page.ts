@@ -27,31 +27,20 @@ export class EscolherTrabalhadorPage implements OnInit {
         let servico = JSON.parse(localStorage.getItem("servico")!);
 
         this.carregarTrabalhadores(servico.Codigo);
-
-        PushNotifications.requestPermissions().then(result => {
-            if (result.receive === "granted") {
-                PushNotifications.register();
-            }
-            else {
-                console.error("Necessário notificação");
-            }
-        });
-
-        PushNotifications.addListener("registration", (token: Token) => {
-            alert("Sucesso: " + token.value);
-        });
-
-        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            console.log(JSON.stringify(notification));
-        });
     }
 
     ngAfterViewInit() {
     }
 
-    contratarTrabalhador(trabalhador: any)
-    {
-        console.log(trabalhador);
+    async contratarTrabalhador(trabalhador: any) {
+        let dadosForm = new FormData();
+        dadosForm.append("token", trabalhador.TokenFCM);
+        dadosForm.append("cliente", localStorage.getItem("cliente")!);
+
+        let link = dominio + "/Cliente/EnviarSolicitacao";
+        let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
+        console.log(resposta);
     }
 
     mudarFiltro(btn: any) {
