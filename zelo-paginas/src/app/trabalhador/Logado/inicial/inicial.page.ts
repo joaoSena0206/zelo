@@ -46,7 +46,7 @@ export class InicialPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("cpf", this.trabalhador.Cpf);
 
-        this.http.post('https://chow-master-properly.ngrok-free.app/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
+        this.http.post( dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
 
             if (res == "True") {
                 this.situacao = 'Disponível';
@@ -174,8 +174,8 @@ export class InicialPage implements OnInit {
                 (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
             }
             else if (estrelas.length == 4) {
-                (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
-                (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
+                (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-15px";
+                (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-15px";
             }
             else if (estrelas.length == 5) {
 

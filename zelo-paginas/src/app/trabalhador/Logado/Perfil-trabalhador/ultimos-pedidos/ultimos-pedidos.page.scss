@@ -68,8 +68,8 @@
 
 .area_img img{
     width: 100%;
-    height: 127px;
-    border-radius: 25px;
+    height: 150px;
+    border-radius: 15px;
     margin: 15px 0;
     object-fit: cover;
 }
@@ -87,36 +87,42 @@
 }
 
 .Clicado{
-    background-color: #CB2316;
-    padding: 10px;
-    border-radius: 10px;
-    height: 40px;
-    width: 40px;
-    box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
     color: white;
 }
 
-.footer{
-    display: flex;
-    padding: 20px;
-    justify-content: space-around;
-    align-items: center;
-    bottom: 0;
-    height: 85px;
-    background-color: white;
-}
+/*--------------------Filtro-----------------------*/
 
-.ion_tabs{
+.wrapper {
     display: flex;
     justify-content: center;
-    height: 100%;
+    margin-bottom: 20px;
 }
 
-.ion_tab_bar{
-    height: 100%;
+.btns_filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.imgFooter{
-    height: 40px;
-    width: 40px;
+.btn_filtro {
+    --background: white;
+    --border-radius: 15px;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --padding-start: 28px;
+    --padding-end: 28px;
+
+    text-transform: none;
+    font-size: 15px;
+    color: #CB2316;
+    border: solid 1px #CB2316;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn_filtro--ativado {
+    --background: #CB2316;
+    border: none;
+
+    color: white;
 }
