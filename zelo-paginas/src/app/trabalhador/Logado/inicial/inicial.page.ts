@@ -9,6 +9,12 @@ import { BackgroundGeolocationPlugin } from "@capacitor-community/background-geo
 import { registerPlugin } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { DOCUMENT } from '@angular/common';
+import {
+    ActionPerformed,
+    PushNotificationSchema,
+    PushNotifications,
+    Token,
+} from '@capacitor/push-notifications';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 
@@ -31,7 +37,18 @@ export class InicialPage implements OnInit {
     }
 
     ngOnInit() {
+        PushNotifications.requestPermissions().then(result => {
+            if (result.receive === "granted") {
+                PushNotifications.register();
+            }
+            else {
+                console.error("Necessário notificação");
+            }
+        });
 
+        PushNotifications.addListener("registration", (token: Token) => {
+            this.enviarToken(token.value);
+        });
     }
 
     ngAfterViewInit() {
@@ -46,7 +63,7 @@ export class InicialPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("cpf", this.trabalhador.Cpf);
 
-        this.http.post( dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
+        this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
 
             if (res == "True") {
                 this.situacao = 'Disponível';
@@ -72,6 +89,19 @@ export class InicialPage implements OnInit {
                 this.pararGeolocalizacao();
             }
         });
+    }
+
+    async enviarToken(token: any)
+    {
+        let link = dominio + "/Trabalhador/AdicionarTokenFCM";
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", trabalhador.Cpf);
+        dadosForm.append("token", token);
+
+        let resposta = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
+
+        console.log(resposta);
     }
 
     async checarPermissao() {
@@ -141,8 +171,7 @@ export class InicialPage implements OnInit {
         });
     }
 
-    async atualizarLocBanco(loc: any)
-    {
+    async atualizarLocBanco(loc: any) {
         let link = dominio + "/Trabalhador/AtualizarLoc";
         let dadosForm = new FormData();
         dadosForm.append("cpf", this.trabalhador.Cpf);
@@ -150,7 +179,7 @@ export class InicialPage implements OnInit {
         dadosForm.append("log", loc.longitude.toFixed(8));
 
         this.carregar = true;
-        let res = await firstValueFrom(this.http.post(link, dadosForm, {headers: headerNgrok}));
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
         this.carregar = false;
 
         console.log(res);
