@@ -64,39 +64,38 @@ export class InicialPage implements OnInit {
         this.carregarComentarioAnonimo();
     }
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
         let dadosForm = new FormData();
         dadosForm.append("cpf", this.trabalhador.Cpf);
 
-        this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
+        let res = await firstValueFrom(this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }));
 
-            if (res == "True") {
-                this.situacao = 'Disponível';
+        if (res == "True") {
+            this.situacao = 'Disponível';
 
-                botaoSituacao?.classList.remove('btn_situacao_trabalhador');
-                botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
+            botaoSituacao?.classList.remove('btn_situacao_trabalhador');
+            botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
 
-                img?.setAttribute(
-                    'src',
-                    '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
-                );
+            img?.setAttribute(
+                'src',
+                '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
+            );
 
-                this.checarPermissao();
-            }
-            else {
-                botaoSituacao?.classList.add('btn_situacao_trabalhador');
-                botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
+            this.checarPermissao();
+        }
+        else {
+            botaoSituacao?.classList.add('btn_situacao_trabalhador');
+            botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
 
-                img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
+            img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
 
-                this.situacao = 'Indisponível';
+            this.situacao = 'Indisponível';
 
-                this.pararGeolocalizacao();
-            }
-        });
+            this.pararGeolocalizacao();
+        }
     }
 
 
@@ -116,7 +115,7 @@ export class InicialPage implements OnInit {
     async checarPermissao() {
         const statusPermissao = await LocalNotifications.checkPermissions();
 
-        if (statusPermissao.display === "granted") {
+        if (statusPermissao.display === "granted" || statusPermissao.display === "prompt") {
             this.chamarBackgroundGeo();
         }
         else {
@@ -341,11 +340,5 @@ export class InicialPage implements OnInit {
         this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
 
         })
-    }
-
-    async pegarLocalizacao() {
-        const coords = await Geolocation.getCurrentPosition();
-
-        console.log(coords);
     }
 }
