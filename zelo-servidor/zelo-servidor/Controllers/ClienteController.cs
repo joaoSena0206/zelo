@@ -26,7 +26,7 @@ public class ClienteController : Controller
 
         Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
 
-        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false)";
+        string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
         banco.Executar(comando);
 
         banco.Desconectar();
@@ -183,7 +183,7 @@ public class ClienteController : Controller
 
     [HttpPost]
     [Route("EnviarSolicitacao")]
-    public async Task<string> EnviarSolicitacao()
+    public async Task<int> EnviarSolicitacao()
     {
         string token = Request["token"];
         string endereco = Request["endereco"];
@@ -208,6 +208,19 @@ public class ClienteController : Controller
 
         string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
 
-        return resposta;
+        return 0;
+    }
+
+    [HttpPost]
+    [Route("AdicionarTokenFCM")]
+    public void AdicionarTokenFCM(string cpf, string token)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $@"UPDATE cliente SET nm_token_fcm = '{token}'
+        WHERE cd_cpf_cliente = '{cpf}'";
+        banco.Executar(comando);
+        banco.Desconectar();
     }
 }
