@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FirebaseAdmin.Messaging;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
@@ -140,11 +142,26 @@ public class SolicitacaoServicoController : Controller
         string cpf = Request["cpf"];
         string cdServico = Request["codigoServico"];
         string desc = Request["desc"];
+        int codigoSolicitacao = 0;
         DateTime dataAtual = DateTime.Now;
 
         #region Adiciona a solicitação no banco
 
-        string comando = $@"INSERT INTO solicitacao_servico 
+        #region Pega o maior cd
+
+        string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        if (dados != null && dados.Read())
+        {
+            codigoSolicitacao = dados.GetInt32(0);
+        }
+
+        dados.Close();
+
+        #endregion
+
+        comando = $@"INSERT INTO solicitacao_servico 
         (
 	        cd_solicitacao_servico,
 	        cd_cpf_cliente,
@@ -154,7 +171,7 @@ public class SolicitacaoServicoController : Controller
         )
         VALUES
         (
-	        (SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM (SELECT * FROM solicitacao_servico) AS temp),
+	        {codigoSolicitacao},
 	        '{cpf}',
 	        {cdServico},
 	        '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
@@ -162,6 +179,29 @@ public class SolicitacaoServicoController : Controller
         )";
         banco.Executar(comando);
         banco.Desconectar();
+
+        #endregion
+
+        #region Adiciona as imgs da solicitação no servidor
+
+        string caminhoPasta = Server.MapPath($"~/Imgs/Solicitacao/{codigoSolicitacao}");
+
+        if (!Directory.Exists(caminhoPasta))
+        {
+            Directory.CreateDirectory(caminhoPasta);
+        }
+
+        for (int i = 0; i < Request.Files.Count; i++)
+        {
+            HttpPostedFileBase file = Request.Files[i];
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string caminho = Path.Combine(caminhoPasta, i + Path.GetExtension(file.FileName));
+
+                file.SaveAs(caminho);
+            }
+        }
 
         #endregion
     }

@@ -6,7 +6,7 @@ import { NavController } from '@ionic/angular';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { dominio } from 'src/app/gerais';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-descricao-servico',
@@ -62,7 +62,7 @@ export class DescricaoServicoPage implements OnInit {
         let link = dominio + "/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
 
         this.carregar = true;
-        let resposta: any = await firstValueFrom(this.http.get(link));
+        let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
         this.endereco = resposta;
 
         link = `https://viacep.com.br/ws/${this.endereco.Cep}/json/`;
@@ -154,23 +154,35 @@ export class DescricaoServicoPage implements OnInit {
         this.imgs.push(arquivo);
     }
 
-    async enviarImgs() {
-        let link = "https://chow-master-properly.ngrok-free.app/"
-
-        for (let i = 0; i < this.imgs.length; i++)
-        {
-
-        }
-    }
-
-    enviar() {
+    async enviar() {
         if (this.form.invalid) {
             this.checarInput(this.form.controls['descServico']);
 
             this.form.markAllAsTouched();
         }
         else {
-            this.enviarImgs();
+            let link = dominio + "/SolicitacaoServico/AdicionarSolicitacao";
+            let cliente = JSON.parse(localStorage.getItem("cliente")!);
+            let servico = JSON.parse(localStorage.getItem("servico")!);
+            let dadosForm = new FormData();
+            dadosForm.append("cpf", cliente.Cpf);
+            dadosForm.append("desc", this.form.controls["descServico"].value!);
+            dadosForm.append("codigoServico", servico.Codigo);
+
+            if (this.imgs.length > 0) {
+                for (let i = 0; i < this.imgs.length; i++) {
+                    dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                }
+
+                this.carregar = true;
+                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                this.carregar = false;
+
+                if (res == null)
+                {
+                    this.navCl.navigateForward("/escolher-trabalhador");
+                }
+            }
         }
     }
 }
