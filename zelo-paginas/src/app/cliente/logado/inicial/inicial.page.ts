@@ -154,6 +154,6 @@ export class InicialPage implements OnInit {
     selecionarServico(servico: any) {
         localStorage.setItem("servico", JSON.stringify(servico));
 
-        this.navCl.navigateForward("/escolher-trabalhador");
+        this.navCl.navigateForward("/descricao-servico");
     }
 }
