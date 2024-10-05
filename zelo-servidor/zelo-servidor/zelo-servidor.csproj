@@ -222,10 +222,12 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ConfirmacaoController.cs" />
     <Compile Include="Controllers\EnderecoController.cs" />
+    <Compile Include="Controllers\ImgSolicitacaoController.cs" />
     <Compile Include="Controllers\PatrocinioController.cs" />
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\SolicitacaoServicoController.cs" />
     <Compile Include="Models\CategoriaServico.cs" />
+    <Compile Include="Models\ImgSolicitacao.cs" />
     <Compile Include="Models\Patrocinio.cs" />
     <Compile Include="Models\Servico.cs" />
     <Compile Include="Models\ServicoTrabalhador.cs" />
