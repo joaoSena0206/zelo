@@ -114,12 +114,14 @@ export class InicialPage implements OnInit {
 
     async checarPermissao() {
         const statusPermissao = await LocalNotifications.checkPermissions();
+        const statusLoc = await Geolocation.checkPermissions();
 
-        if (statusPermissao.display === "granted" || statusPermissao.display === "prompt") {
+        if ((statusPermissao.display === "granted" || statusPermissao.display === "prompt") && (statusLoc.location === "granted" || statusLoc.location === "prompt")) {
             this.chamarBackgroundGeo();
         }
         else {
             await LocalNotifications.requestPermissions();
+            await Geolocation.requestPermissions();
         }
     }
 
@@ -142,7 +144,7 @@ export class InicialPage implements OnInit {
 
                 // Whether permissions should be requested from the user automatically,
                 // if they are not already granted. Defaults to "true".
-                requestPermissions: true,
+                requestPermissions: false,
 
                 // If "true", stale locations may be delivered while the device
                 // obtains a GPS fix. You are responsible for checking the "time"
@@ -156,19 +158,6 @@ export class InicialPage implements OnInit {
             },
             (location, error) => {
                 if (error) {
-                    if (error.code === "NOT_AUTHORIZED") {
-                        if (window.confirm(
-                            "Esse app precisa da sua localização, " +
-                            "mas não possui permissão.\n\n" +
-                            "Abrir as configuraçãoes agora?"
-                        )) {
-                            // It can be useful to direct the user to their device's
-                            // settings when location permissions have been denied. The
-                            // plugin provides the 'openSettings' method to do exactly
-                            // this.
-                            BackgroundGeolocation.openSettings();
-                        }
-                    }
                     return console.error(error);
                 }
 
