@@ -1,14 +1,12 @@
 <ion-content [fullscreen]="true">
     <div class="wrapper">
-        <ion-icon class="content__seta" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
-
         <h1 style="text-align: center; ">Espere a confirmação do trabalhador</h1>
 
         <div class="content">
 
-            <div class="divCarregamento">
+            <div class="divCarregamento2">
                 <div class="carregar"></div>
-                <p class="tempo">10:00</p>
+                <p class="tempo">{{ tempo.min + ':' + tempo.seg }}</p>
             </div>
 
             <div class="divBtn">
