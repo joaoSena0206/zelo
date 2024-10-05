@@ -129,4 +129,40 @@ public class SolicitacaoServicoController : Controller
 
         return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
     }
+
+    [HttpPost]
+    [Route("AdicionarSolicitacao")]
+    public void AdicionarSolicitacao()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cpf = Request["cpf"];
+        string cdServico = Request["codigoServico"];
+        string desc = Request["desc"];
+        DateTime dataAtual = DateTime.Now;
+
+        #region Adiciona a solicitação no banco
+
+        string comando = $@"INSERT INTO solicitacao_servico 
+        (
+	        cd_solicitacao_servico,
+	        cd_cpf_cliente,
+	        cd_servico,
+	        dt_solicitacao_servico,
+	        ds_servico
+        )
+        VALUES
+        (
+	        (SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM (SELECT * FROM solicitacao_servico) AS temp),
+	        '{cpf}',
+	        {cdServico},
+	        '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
+	        '{desc}'
+        )";
+        banco.Executar(comando);
+        banco.Desconectar();
+
+        #endregion
+    }
 }
