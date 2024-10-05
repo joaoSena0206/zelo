@@ -32,8 +32,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     ngAfterViewInit() {
     }
 
-    async pegarSolicitacao()
-    {
+    async pegarSolicitacao() {
 
     }
 
@@ -46,6 +45,23 @@ export class EscolherTrabalhadorPage implements OnInit {
 
         let link = dominio + "/Cliente/EnviarSolicitacao";
         let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
+        if (resposta == "0") {
+            let confirmacao = {
+                min: 0,
+                seg: 10
+            }
+
+            localStorage.setItem("confirmacao", JSON.stringify(confirmacao));
+
+            const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
+            modal.dismiss();
+            const data = await modal.onDidDismiss();
+
+            if (data) {
+                this.navCl.navigateRoot("/confirmacao-trabalhador");
+            }
+        }
     }
 
     mudarFiltro(btn: any) {
