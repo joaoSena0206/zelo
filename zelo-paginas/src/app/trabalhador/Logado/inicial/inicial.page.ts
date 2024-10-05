@@ -144,7 +144,7 @@ export class InicialPage implements OnInit {
 
                 // Whether permissions should be requested from the user automatically,
                 // if they are not already granted. Defaults to "true".
-                requestPermissions: false,
+                requestPermissions: true,
 
                 // If "true", stale locations may be delivered while the device
                 // obtains a GPS fix. You are responsible for checking the "time"
