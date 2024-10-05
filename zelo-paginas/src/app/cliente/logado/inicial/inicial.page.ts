@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { dominio, headerNgrok } from 'src/app/gerais';
+import {
+    ActionPerformed,
+    PushNotificationSchema,
+    PushNotifications,
+    Token,
+} from '@capacitor/push-notifications';
 
 @Component({
     selector: 'app-inicial',
@@ -23,6 +29,31 @@ export class InicialPage implements OnInit {
         this.carregarCategorias();
         this.carregarPatrocinados();
         this.carregarHistorico();
+
+        PushNotifications.requestPermissions().then(result => {
+            if (result.receive === "granted") {
+                PushNotifications.register();
+            }
+            else {
+                console.error("Necessário notificação");
+            }
+        });
+
+        PushNotifications.addListener("registration", (token: Token) => {
+            this.enviarToken(token.value);
+        });
+    }
+
+    async enviarToken(token: any) {
+        let link = dominio + "/Cliente/AdicionarTokenFCM";
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cliente.Cpf);
+        dadosForm.append("token", token);
+
+        let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+        console.log(resposta);
     }
 
     async carregarPatrocinados() {
