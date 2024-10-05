@@ -195,11 +195,13 @@ public class SolicitacaoServicoController : Controller
 
         #endregion
 
-        #region Adiciona as imgs da solicitação no servidor
+        #region Adiciona as imgs da solicitação no servidor e no banco
 
         if (Request.Files.Count > 0)
         {
             string caminhoPasta = Server.MapPath($"~/Imgs/Solicitacao/{codigoSolicitacao}");
+
+            ImgSolicitacaoController imgSolicitacaoController = new ImgSolicitacaoController();
 
             if (!Directory.Exists(caminhoPasta))
             {
@@ -212,7 +214,8 @@ public class SolicitacaoServicoController : Controller
 
                 if (file != null && file.ContentLength > 0)
                 {
-                    string caminho = Path.Combine(caminhoPasta, i + Path.GetExtension(file.FileName));
+                    string caminho = Path.Combine(caminhoPasta, (i + 1) + Path.GetExtension(file.FileName));
+                    imgSolicitacaoController.AdicionarImgs(i + 1, codigoSolicitacao, Path.GetExtension(file.FileName));
 
                     file.SaveAs(caminho);
                 }
