@@ -178,8 +178,9 @@ export class DescricaoServicoPage implements OnInit {
                 let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
                 this.carregar = false;
 
-                if (res == null)
-                {
+                if (res) {
+                    localStorage.setItem("solicitacao", JSON.stringify(res));
+
                     this.navCl.navigateForward("/escolher-trabalhador");
                 }
             }
