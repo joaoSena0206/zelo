@@ -32,15 +32,20 @@ export class EscolherTrabalhadorPage implements OnInit {
     ngAfterViewInit() {
     }
 
+    async pegarSolicitacao()
+    {
+
+    }
+
     async contratarTrabalhador(trabalhador: any) {
         let dadosForm = new FormData();
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
+        dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
+        dadosForm.append("endereco", localStorage.getItem("endereco")!);
 
         let link = dominio + "/Cliente/EnviarSolicitacao";
         let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
-
-        console.log(resposta);
     }
 
     mudarFiltro(btn: any) {
@@ -95,6 +100,7 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     voltarPag() {
         localStorage.removeItem("servico");
+        localStorage.removeItem("solicitacao");
 
         this.navCl.back();
     }
@@ -161,9 +167,5 @@ export class EscolherTrabalhadorPage implements OnInit {
         console.error("Necessário permissão");
 
         return;
-    }
-
-    async carregarImgPerfil(cpf: any, i: any) {
-
     }
 }
