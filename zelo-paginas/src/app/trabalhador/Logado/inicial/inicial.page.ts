@@ -49,6 +49,14 @@ export class InicialPage implements OnInit {
         PushNotifications.addListener("registration", (token: Token) => {
             this.enviarToken(token.value);
         });
+
+        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            console.log(notification);
+        });
+
+        PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
+            console.log(notification);
+        });
     }
 
     ngAfterViewInit() {
@@ -91,15 +99,14 @@ export class InicialPage implements OnInit {
         });
     }
 
-    async enviarToken(token: any)
-    {
+    async enviarToken(token: any) {
         let link = dominio + "/Trabalhador/AdicionarTokenFCM";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("token", token);
 
-        let resposta = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
+        let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
         console.log(resposta);
     }
