@@ -99,6 +99,8 @@ export class InicialPage implements OnInit {
         });
     }
 
+
+
     async enviarToken(token: any) {
         let link = dominio + "/Trabalhador/AdicionarTokenFCM";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
@@ -258,9 +260,27 @@ export class InicialPage implements OnInit {
         let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
 
         this.carregar = true;
-        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+        let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
+        for (let i = 0; i < res.length; i++) {
+            res[i].img = await this.carregarImgServico(res[i].CdSolicitacaoServico);
+        }
 
         this.historico = res;
+    }
+
+    async carregarImgServico(cdSolicitacao: any) {
+        this.carregar = true;
+        let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${cdSolicitacao}&q=1`;
+        let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
+        link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+        res = await firstValueFrom(this.http.get(link, { headers: headerNgrok, responseType: "blob" }));
+
+        const urlImg = URL.createObjectURL(res);
+        this.carregar = false;
+
+        return urlImg;
     }
 
     msgTrabalho: any = 'Deseja trabalhar agora?';
