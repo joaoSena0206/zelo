@@ -30,14 +30,22 @@ public class ImgSolicitacaoController : Controller
 
     [HttpGet]
     [Route("CarregarImgs")]
-    public string CarregarImgs(int cdSolicitacao)
+    public string CarregarImgs()
     {
         Banco banco = new Banco();
         banco.Conectar();
 
+        int cdSolicitacao = int.Parse(Request["c"]);
+
         #region Carrega as imgs do banco e envia
 
-        string comando = $"SELECT * FROM img_solicitacao";
+        string comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao}";
+
+        if (!String.IsNullOrEmpty(Request["q"]))
+        {
+            comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao} LIMIT {Request["q"]}";
+        }
+
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<ImgSolicitacao> lista = new List<ImgSolicitacao>();
