@@ -44,7 +44,8 @@ INSERT INTO cliente VALUES
 	'2006-06-02',
 	'joaosena0206@gmail.com',
 	md5('1234'),
-	true
+	true,
+	""
 );
 INSERT INTO endereco VALUES
 (
@@ -57,10 +58,10 @@ INSERT INTO endereco VALUES
 	'Estádio Caldeira'
 );
 
-INSERT INTO cliente VALUES('12345218909', 'Roberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
-INSERT INTO cliente VALUES('12345674322', 'Julio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
-INSERT INTO cliente VALUES('12345678909', 'Alberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
-INSERT INTO cliente VALUES('12345672469', 'Fabio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1);
+INSERT INTO cliente VALUES('12345218909', 'Roberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
+INSERT INTO cliente VALUES('12345674322', 'Julio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
+INSERT INTO cliente VALUES('12345678909', 'Alberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
+INSERT INTO cliente VALUES('12345672469', 'Fabio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
 
 INSERT INTO solicitacao_servico VALUES
 (
