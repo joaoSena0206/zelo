@@ -134,16 +134,20 @@ public class SolicitacaoServicoController : Controller
 
     [HttpPost]
     [Route("AdicionarSolicitacao")]
-    public void AdicionarSolicitacao()
+    public string AdicionarSolicitacao()
     {
         Banco banco = new Banco();
         banco.Conectar();
 
         string cpf = Request["cpf"];
-        string cdServico = Request["codigoServico"];
+        int cdServico = int.Parse(Request["codigoServico"]);
         string desc = Request["desc"];
         int codigoSolicitacao = 0;
+
         DateTime dataAtual = DateTime.Now;
+        SolicitacaoServico solicitacao = new SolicitacaoServico();
+        Cliente cliente = new Cliente();
+        Servico servico = new Servico();
 
         #region Adiciona a solicitação no banco
 
@@ -160,6 +164,15 @@ public class SolicitacaoServicoController : Controller
         dados.Close();
 
         #endregion
+
+        cliente.Cpf = cpf;
+        servico.Codigo = cdServico;
+
+        solicitacao.CdSolicitacaoServico = codigoSolicitacao;
+        solicitacao.Cliente = cliente;
+        solicitacao.Servico = servico;
+        solicitacao.DtSolicitacaoServico = dataAtual;
+        solicitacao.DsServico = desc;
 
         comando = $@"INSERT INTO solicitacao_servico 
         (
@@ -204,5 +217,7 @@ public class SolicitacaoServicoController : Controller
         }
 
         #endregion
+
+        return JsonConvert.SerializeObject(solicitacao);
     }
 }
