@@ -132,7 +132,15 @@ Create Table solicitacao_servico
 	CONSTRAINT fk_solicitacao_servico_servico FOREIGN KEY (cd_servico) REFERENCES servico(cd_servico)
 );
 
+CREATE TABLE imagem_solicitacao
+(
+	cd_imagem_solicitacao INT,
+	cd_solicitacao_servico INT,
+	nm_tipo_imagem_solicitacao VARCHAR(20),
 
+	CONSTRAINT pk_imagem_solicitacao PRIMARY KEY (cd_imagem_solicitacao, cd_solicitacao_servico),
+	CONSTRAINT fk_imagem_solicitacao_solicitacao_servico FOREIGN KEY (cd_solicitacao_servico) REFERENCES solicitacao_servico(cd_solicitacao_servico)
+);
 
 -- TABELA ENDERECO CLIENTE --
 Create Table endereco
