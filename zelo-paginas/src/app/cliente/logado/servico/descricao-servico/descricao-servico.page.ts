@@ -79,6 +79,7 @@ export class DescricaoServicoPage implements OnInit {
 
         this.form.controls['endereco'].disable();
         this.form.controls['endereco'].setValue(`${this.endereco.Cep.rua}, ${this.endereco.Numero}, ${this.endereco.Complemento == "" ? "" : this.endereco.Complemento + ","} ${this.endereco.Cep.bairro}, ${this.endereco.Cep.cidade} - ${this.endereco.Cep.estado}, ${this.endereco.Cep.cep.substring(0, 5) + "-" + this.endereco.Cep.cep.substring(5)}`);
+        localStorage.setItem("endereco", this.form.controls['endereco'].value!);
     }
 
     voltarPag() {
@@ -173,16 +174,16 @@ export class DescricaoServicoPage implements OnInit {
                 for (let i = 0; i < this.imgs.length; i++) {
                     dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
                 }
+            }
 
-                this.carregar = true;
-                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-                this.carregar = false;
+            this.carregar = true;
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+            this.carregar = false;
 
-                if (res) {
-                    localStorage.setItem("solicitacao", JSON.stringify(res));
+            if (res) {
+                localStorage.setItem("solicitacao", JSON.stringify(res));
 
-                    this.navCl.navigateForward("/escolher-trabalhador");
-                }
+                this.navCl.navigateForward("/escolher-trabalhador");
             }
         }
     }
