@@ -201,8 +201,7 @@ public class ClienteController : Controller
             {
                 {"cliente", JsonConvert.SerializeObject(cliente)},
                 {"endereco", endereco},
-                {"solicitacao", solicitacao }
-
+                {"solicitacao", solicitacao}
             },
             Token = token
         };
