@@ -197,22 +197,25 @@ public class SolicitacaoServicoController : Controller
 
         #region Adiciona as imgs da solicitação no servidor
 
-        string caminhoPasta = Server.MapPath($"~/Imgs/Solicitacao/{codigoSolicitacao}");
-
-        if (!Directory.Exists(caminhoPasta))
+        if (Request.Files.Count > 0)
         {
-            Directory.CreateDirectory(caminhoPasta);
-        }
+            string caminhoPasta = Server.MapPath($"~/Imgs/Solicitacao/{codigoSolicitacao}");
 
-        for (int i = 0; i < Request.Files.Count; i++)
-        {
-            HttpPostedFileBase file = Request.Files[i];
-
-            if (file != null && file.ContentLength > 0)
+            if (!Directory.Exists(caminhoPasta))
             {
-                string caminho = Path.Combine(caminhoPasta, i + Path.GetExtension(file.FileName));
+                Directory.CreateDirectory(caminhoPasta);
+            }
 
-                file.SaveAs(caminho);
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                HttpPostedFileBase file = Request.Files[i];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    string caminho = Path.Combine(caminhoPasta, i + Path.GetExtension(file.FileName));
+
+                    file.SaveAs(caminho);
+                }
             }
         }
 
