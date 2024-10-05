@@ -135,3 +135,43 @@ INSERT INTO solicitacao_servico VALUES
 	'Profissional educado e simpático, gostei muito.',
 	5.0
 );
+
+INSERT INTO img_solicitacao VALUES
+(
+	1,
+	1,
+	'.png'
+);
+INSERT INTO img_solicitacao VALUES
+(
+	1,
+	2,
+	'.png'
+);
+INSERT INTO img_solicitacao VALUES
+(
+	1,
+	3,
+	'.png'
+);
+
+INSERT INTO img_solicitacao VALUES
+(
+	1,
+	4,
+	'.png'
+);
+
+INSERT INTO img_solicitacao VALUES
+(
+	1,
+	5,
+	'.png'
+);
+
+INSERT INTO img_solicitacao VALUES
+(
+	1,
+	6,
+	'.png'
+);
