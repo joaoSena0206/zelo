@@ -186,7 +186,9 @@ public class ClienteController : Controller
     public async Task<string> EnviarSolicitacao()
     {
         string token = Request["token"];
+        string endereco = Request["endereco"];
         Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
+        string solicitacao = Request["solicitacao"];
 
         var msg = new Message()
         {
@@ -194,6 +196,13 @@ public class ClienteController : Controller
             {
                 Title = "Solicitação de serviço",
                 Body = $"Enviada por {cliente.Nome}"
+            },
+            Data = new Dictionary<string, string>()
+            {
+                {"cliente", JsonConvert.SerializeObject(cliente)},
+                {"endereco", endereco},
+                {"solicitacao", solicitacao }
+
             },
             Token = token
         };
