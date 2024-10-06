@@ -16,7 +16,7 @@ import { firstValueFrom } from 'rxjs';
     styleUrls: ['./confirmacao-trabalhador.page.scss'],
 })
 export class ConfirmacaoTrabalhadorPage implements OnInit {
-    tempo: any = JSON.parse(localStorage.getItem("confirmacao")!);
+    tempo: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -27,6 +27,19 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
             this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
         });
+
+        if (!localStorage.getItem("confirmacao")) {
+            let confirmacao = {
+                min: 10,
+                seg: 0
+            };
+
+            this.tempo = confirmacao;
+            localStorage.setItem("confirmacao", JSON.stringify(confirmacao));
+        }
+        else {
+            this.tempo = JSON.parse(localStorage.getItem("confirmacao")!);
+        }
 
         if (this.tempo.min.toString().length == 1) {
             this.tempo.min = "0" + this.tempo.min.toString();
@@ -55,8 +68,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             localStorage.setItem("confirmacao", JSON.stringify(this.tempo));
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
-                localStorage.removeItem("confirmacao");
-                this.navCl.navigateBack("/escolher-trabalhador");
+                this.cancelar();
 
                 clearInterval(id);
             }
@@ -72,7 +84,17 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
         if (res == null) {
+            let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+            solicitacao.Trabalhador.Cpf = cpf;
+
+            localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
+
             this.navCl.navigateForward("/pagamento");
         }
+    }
+
+    cancelar() {
+        localStorage.removeItem("confirmacao");
+        this.navCl.navigateBack("/escolher-trabalhador");
     }
 }
