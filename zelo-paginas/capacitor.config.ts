@@ -7,10 +7,6 @@ const config: CapacitorConfig = {
     webDir: 'www',
     android: {
         useLegacyBridge: true
-    },
-    server: {
-        url: "192.168.0.242:8100",
-        cleartext: true
     }
 };
 
