@@ -30,8 +30,8 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
-                min: 10,
-                seg: 0
+                min: 0,
+                seg: 2
             };
 
             this.tempo = confirmacao;
@@ -89,7 +89,9 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
         if (res == null) {
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
-            solicitacao.Trabalhador.Cpf = cpf;
+            solicitacao.Trabalhador = {
+                Cpf: cpf
+            };
 
             localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
 
