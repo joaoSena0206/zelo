@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IonList } from '@ionic/angular';
+import { IonList, ModalController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { first, firstValueFrom } from 'rxjs';
 import { BackgroundRunner } from '@capacitor/background-runner';
 import { dominio, headerNgrok } from 'src/app/gerais';
+import { NavController } from '@ionic/angular';
 import { BackgroundGeolocationPlugin } from "@capacitor-community/background-geolocation";
 import { registerPlugin } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
@@ -31,8 +32,11 @@ export class InicialPage implements OnInit {
     qtEstrelas: any;
     carregar: boolean = false;
     watcherId: any;
+    result: any;
+    dados: any;
+    modal: any;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private navCl: NavController) {
 
     }
 
@@ -52,6 +56,11 @@ export class InicialPage implements OnInit {
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             console.log(notification);
+
+            this.result = notification;
+            this.dados = JSON.parse(this.result.data.cliente)
+            this.modal.present();
+
         });
 
         PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
@@ -59,9 +68,18 @@ export class InicialPage implements OnInit {
         });
     }
 
+    analisarServico(){
+        this.navCl.navigateForward("/analisa-servico");
+        this.modal.dismiss();
+
+        localStorage.setItem("servico", JSON.stringify(this.dados));
+        let joaogay = JSON.parse(localStorage.getItem('servico')!);
+    }
+
     ngAfterViewInit() {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
+        this.modal = document.querySelector('#modal_servico_solicitado') as HTMLIonModalElement;
     }
 
     async ionViewDidEnter() {

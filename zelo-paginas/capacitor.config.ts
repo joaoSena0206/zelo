@@ -8,10 +8,6 @@ const config: CapacitorConfig = {
     android: {
         useLegacyBridge: true
     },
-    server: {
-        url: "192.168.0.242:8100",
-        cleartext: true
-    }
 };
 
 export default config;

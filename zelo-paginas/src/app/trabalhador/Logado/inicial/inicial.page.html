@@ -113,17 +113,18 @@
 
             <div class="area_vermelha">
                 <ion-icon (click)="modal_servico.dismiss();" class="iconeFechar2"
-                    name="close-circle-outline"></ion-icon>
+                    name="close-circle-outline">
+                </ion-icon>
                 <div class="circulo_branca">
                     <img class="iconeFoto" src="../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
                 </div>
             </div>
 
             <div class="area_branca">
-                <h1>Marina Oliveira</h1>
+                <h1>{{dados.Nome}}</h1>
                 <h1 style="font-size: 22px;">Novo serviço solicitado!</h1>
                 <div>
-                    <ion-button class="form__btn2">Analisar</ion-button>
+                    <ion-button class="form__btn2" (click)="analisarServico();">Analisar</ion-button>
                     <ion-button class="form__btn1">Ignorar</ion-button>
                 </div>
             </div>
