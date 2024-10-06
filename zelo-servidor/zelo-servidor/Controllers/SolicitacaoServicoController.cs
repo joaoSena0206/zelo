@@ -226,4 +226,20 @@ public class SolicitacaoServicoController : Controller
 
         return JsonConvert.SerializeObject(solicitacao);
     }
+
+    [HttpPost]
+    [Route("AdicionarTrabalhador")]
+    public void AdicionarTrabalhador()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cdSolicitacao = Request["cd"];
+        string cpf = Request["cpf"];
+
+        string comando = $@"UPDATE solicitacao_servico SET cd_cpf_trabalhador = '{cpf}' 
+        WHERE cd_solicitacao_servico = {cdSolicitacao}";
+        banco.Executar(comando);
+        banco.Desconectar();
+    }
 }
