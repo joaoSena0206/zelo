@@ -1,4 +1,8 @@
 <ion-content [fullscreen]="true">
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
+    </div>
+
     <div class="wrapper">
         <div class="divMin">
             <ion-icon class="content__seta"
@@ -17,12 +21,11 @@
 
                 <div class="divQr">
                     <p>Pedido realizado com sucesso!</p>
-                    <img src="../../../../../assets/icon/cliente/qrcode.png">
+                    <img [src]="qrCode">
                 </div>
 
                 <div class="divCodPix">
-                    <ion-input disabled
-                        value="00020126360014BR.GOV.BCB.PIX011403125435235520400005303986540410.005802BR5914Nome do Beneficiário6008BRASILIA62160512Pagamento1234566304B5A8"></ion-input>
+                    <ion-input disabled [value]="copiaCola"></ion-input>
 
                     <ion-button>
                         <ion-icon name="document-text-outline"></ion-icon>
@@ -36,7 +39,8 @@
 
                 <p style="margin-bottom: 10px;">Este código tem validade de 15 minutos.</p>
 
-                <p style="margin-bottom: 10px;">Assim que realizar o pagamento, o pedido será aprovado e você receberá um e-mail de confirmação.</p>
+                <p style="margin-bottom: 10px;">Assim que realizar o pagamento, o pedido será aprovado e você receberá
+                    um e-mail de confirmação.</p>
 
                 <p style="font-weight: bold;">O serviço será pago a parte para o trabalhador!</p>
             </div>

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FirebaseAdmin.Messaging;
+using System.Text;
 
 [RoutePrefix("Cliente")]
 public class ClienteController : Controller
@@ -222,5 +223,33 @@ public class ClienteController : Controller
         WHERE cd_cpf_cliente = '{cpf}'";
         banco.Executar(comando);
         banco.Desconectar();
+    }
+
+    [HttpPost]
+    [Route("GerarPagamento")]
+    public async Task<string> GerarPagamento()
+    {
+        decimal valorVisita = decimal.Parse(Request["valor"]);
+        string email = Request["email"];
+        string cpf = Request["cpf"];
+        int cdSolicitacao = int.Parse(Request["c"]);
+        string expiracao = Request["expiracao"];
+
+        string json = @"{'transaction_amount': " + valorVisita + ", 'date_of_expiration': '" + expiracao + "','payment_method_id': 'pix', 'payer': {'email': '" + email + "', 'identification': {'type': 'CPF', 'number': '" + cpf + "'}}}";
+        json = json.Replace("'", "\"");
+
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri("https://api.mercadopago.com");
+            client.DefaultRequestHeaders.Add("accept", "application/json");
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer TEST-3082013782228827-100609-813b0e848cd83a53e8ab00c777834bd7-2021112151");
+            client.DefaultRequestHeaders.Add("X-Idempotency-Key", cdSolicitacao.ToString());
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = await client.PostAsync("/v1/payments", content);
+            var res = await result.Content.ReadAsStringAsync();
+
+            return res;
+        }
     }
 }
