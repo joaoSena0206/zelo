@@ -26,6 +26,10 @@ export class PagamentoPage implements OnInit {
             this.tempo = JSON.parse(localStorage.getItem("tempoPagamento")!);
         }
 
+        this.temporizador();
+    }
+
+    temporizador() {
         if (this.tempo.min.toString().length == 1) {
             this.tempo.min = "0" + this.tempo.min.toString();
         }
