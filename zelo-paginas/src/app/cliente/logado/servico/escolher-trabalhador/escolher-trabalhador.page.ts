@@ -47,13 +47,6 @@ export class EscolherTrabalhadorPage implements OnInit {
         let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
         if (resposta == "0") {
-            let confirmacao = {
-                min: 10,
-                seg: 0
-            }
-
-            localStorage.setItem("confirmacao", JSON.stringify(confirmacao));
-
             const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
             modal.dismiss();
             const data = await modal.onDidDismiss();
