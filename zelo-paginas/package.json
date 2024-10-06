@@ -43,6 +43,7 @@
     "@ionic/pwa-elements": "^3.3.0",
     "@maskito/angular": "^3.0.0",
     "@maskito/core": "^3.0.0",
+    "@mercadopago/sdk-js": "^0.0.3",
     "cpf-cnpj-validator": "^1.0.3",
     "ionicons": "^7.0.0",
     "leaflet": "^1.9.4",
