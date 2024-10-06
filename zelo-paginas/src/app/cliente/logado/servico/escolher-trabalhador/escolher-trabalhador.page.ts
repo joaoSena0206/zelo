@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, LOCALE_ID, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { dominio, headerNgrok } from 'src/app/gerais';
@@ -52,6 +52,8 @@ export class EscolherTrabalhadorPage implements OnInit {
             const data = await modal.onDidDismiss();
 
             if (data) {
+                localStorage.setItem("trabalhadorEscolhido", JSON.stringify(trabalhador));
+
                 this.navCl.navigateRoot("/confirmacao-trabalhador");
             }
         }
