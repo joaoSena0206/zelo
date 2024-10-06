@@ -48,8 +48,8 @@ export class EscolherTrabalhadorPage implements OnInit {
 
         if (resposta == "0") {
             let confirmacao = {
-                min: 0,
-                seg: 10
+                min: 10,
+                seg: 0
             }
 
             localStorage.setItem("confirmacao", JSON.stringify(confirmacao));
