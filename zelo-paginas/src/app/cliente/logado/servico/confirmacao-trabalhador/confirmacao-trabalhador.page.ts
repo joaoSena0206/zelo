@@ -6,6 +6,9 @@ import {
     Token,
 } from '@capacitor/push-notifications';
 import { NavController } from '@ionic/angular';
+import { dominio, headerNgrok } from 'src/app/gerais';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-confirmacao-trabalhador',
@@ -15,11 +18,14 @@ import { NavController } from '@ionic/angular';
 export class ConfirmacaoTrabalhadorPage implements OnInit {
     tempo: any = JSON.parse(localStorage.getItem("confirmacao")!);
 
-    constructor(private navCl: NavController) { }
+    constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            this.navCl.navigateForward("/pagamento");
+            let cpf = "53890618880";
+            let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+
+            this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
         });
 
         if (this.tempo.min.toString().length == 1) {
@@ -49,11 +55,24 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             localStorage.setItem("confirmacao", JSON.stringify(this.tempo));
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
-                this.navCl.navigateRoot("/pagamento");
                 localStorage.removeItem("confirmacao");
+                this.navCl.navigateBack("/escolher-trabalhador");
 
                 clearInterval(id);
             }
         }, 1000);
+    }
+
+    async adicionarTrabalhadorSolicitacao(cpf: any, cdSolicitacao: any) {
+        let link = dominio + `/SolicitacaoServico/AdicionarTrabalhador`;
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cpf);
+        dadosForm.append("cd", cdSolicitacao);
+
+        let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+        if (res == null) {
+            this.navCl.navigateForward("/pagamento");
+        }
     }
 }
