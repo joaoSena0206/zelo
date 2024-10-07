@@ -412,23 +412,20 @@ public class TrabalhadorController : Controller
     {
         string token = Request["token"];
         string situacaoServico = Request["situacao"];
+        Trabalhador trababalhador = JsonConvert.DeserializeObject<Trabalhador>(Request["trabalhador"]);
 
-        string endereco = Request["endereco"];
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
         string solicitacao = Request["solicitacao"];
 
         var msg = new Message()
         {
             Notification = new Notification()
             {
-                Title = "Solicitação de serviço",
-                Body = $"Enviada por {cliente.Nome}"
+                Title = "Situação do serviço",
+                Body = $"Enviada por {trababalhador.Nome}"
             },
             Data = new Dictionary<string, string>()
             {
-                {"cliente", JsonConvert.SerializeObject(cliente)},
-                {"endereco", endereco},
-                {"solicitacao", solicitacao}
+                {"situacaoServico", situacaoServico}
             },
             Token = token
         };
