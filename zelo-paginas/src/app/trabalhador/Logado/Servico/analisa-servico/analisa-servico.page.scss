@@ -51,13 +51,13 @@
 
 h3{
     font-size: 22px;
-    margin-bottom: 10px;
 }
 
 .txt_endereco{
     display: flex;
     align-items: center;
     font-weight: bold;
+    margin: 20px 0px;
 }
 
 .img_servico{
@@ -65,12 +65,12 @@ h3{
     border-radius: 20px;
     height: 200px;
     object-fit: cover;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
 .descricao_pedido{
     font-size: 15px;
-    margin-top: 20px;
+    margin: 20px 0px;
 }
 
 .area_btn{
@@ -187,4 +187,9 @@ h3{
     justify-content: center;
     position: absolute;
     bottom: -20px;
+}
+
+.iconeLocalizacao{
+    flex-shrink: 0;
+    font-size: 22px;
 }
