@@ -252,4 +252,20 @@ public class ClienteController : Controller
             return res;
         }
     }
+
+    [HttpPost]
+    [Route("ReceberPagamento")]
+    public string ReceberPagamento()
+    {
+        string json;
+        using (Stream receiveStream = Request.InputStream)
+        {
+            using (StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8))
+            {
+                json = reader.ReadToEnd();
+            }
+        }
+
+        return json;
+    }
 }
