@@ -54,13 +54,22 @@ public class Cliente
         set { _confirmado = value; }
     }
 
+    private string _tokenFCM;
+
+    public string TokenFCM
+    {
+        get { return _tokenFCM; }
+        set { _tokenFCM = value; }
+    }
+
+
 
     public Cliente()
 	{
 
 	}
 
-	public Cliente(string cpf, string nome, DateTime dataNascimento,string email, string senha, bool confirmado)
+	public Cliente(string cpf, string nome, DateTime dataNascimento,string email, string senha, bool confirmado, string token)
 	{
 		this.Cpf = cpf;
 		this.Nome = nome;
@@ -68,5 +77,6 @@ public class Cliente
 		this.Email = email;
 		this.Senha = senha;
 		this.Confirmado = confirmado;
-	}
+        this.TokenFCM = token;
+    }
 }

@@ -268,4 +268,27 @@ public class ClienteController : Controller
 
         return json;
     }
+
+    [HttpPost]
+    [Route("PegarTokenFCM")]
+    public string PegarTokenFCM()
+    {
+        string cpf = Request["cpf"];
+
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $@"select nm_token_fcm from cliente where cd_cpf_cliente = {cpf};";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        Cliente cliente = new Cliente();
+
+        if (dados != null && dados.Read())
+        {
+            cliente.TokenFCM = dados.GetString(0);
+        }
+
+        return cliente.TokenFCM;
+    }
+
 }
