@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://chow-master-properly.ngrok-free.app";
+export const dominio = "https://they-camera-meditation-designated.trycloudflare.com";
