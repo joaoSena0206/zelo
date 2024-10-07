@@ -20,12 +20,12 @@ import {
 export class EscolherTrabalhadorPage implements OnInit {
     carregar: boolean = false;
     trabalhadores: any;
+    tokenCliente: any;
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
     ngOnInit() {
         let servico = JSON.parse(localStorage.getItem("servico")!);
-
         this.carregarTrabalhadores(servico.Codigo);
     }
 

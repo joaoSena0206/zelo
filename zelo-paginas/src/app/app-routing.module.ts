@@ -167,6 +167,11 @@ const routes: Routes = [
         path: 'comercial',
         loadChildren: () => import('./trabalhador/Logado/comercial/comercial.module').then(m => m.ComercialPageModule)
     },
+  {
+    path: 'confirmacao-cliente',
+    loadChildren: () => import('./trabalhador/Logado/Servico/confirmacao-cliente/confirmacao-cliente.module').then( m => m.ConfirmacaoClientePageModule)
+  },
+
 ];
 
 @NgModule({

@@ -16,8 +16,8 @@ export class AnalisaServicoPage implements OnInit {
   imagens: any;
   carregar: boolean = false;
   cdSolicitacao: any;
-  /* trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
-  Nome: any = this.trabalhador.Nome.trim(); */
+  trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
+  tokenCliente: any;
 
   constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -26,54 +26,61 @@ export class AnalisaServicoPage implements OnInit {
     this.enderecoServico = JSON.parse(localStorage.getItem('endereco')!);
     this.solicitacaoServico = JSON.parse(localStorage.getItem('solicitacao')!);
     this.cdSolicitacao = this.solicitacaoServico.CdSolicitacaoServico;
+    this.carregarServicos();
+    this.pegarTokenCliente();
 
-    console.log(this.solicitacaoServico);
-
-    this.carregarImgs();
+    console.log(this.clienteServico)
   }
 
-  async carregarImgs() {
-    console.log(this.cdSolicitacao);
+  async pegarTokenCliente()
+    {
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", cliente.Cpf);
+        let link = dominio + "/Cliente/PegarTokenFCM";
+        this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+    }
 
+  async carregarServicos() {
     let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${1}`;
-
     this.carregar = true;
-
     let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-
     this.imagens = res;
 
-    console.log(this.imagens);
-
     for (let i = 0; i < this.imagens.length; i++) {
-        this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
+      this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
     }
   }
 
   async carregarImgServico(cdServico: any, cdimg: any, nmTipoImg: any, i: any) {
+    let link = dominio + `/Imgs/Solicitacao/${cdServico}/${cdimg}${nmTipoImg}`;
 
-    console.log(this.imagens[i].Solicitacao.CdSolicitacaoServico);
-    let link = dominio + `/Imgs/Solicitacao/${cdServico}/${cdimg}.${nmTipoImg}`;
     let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+
     let urlImg = URL.createObjectURL(res);
 
     this.imagens[i].img = urlImg;
   }
 
-  ngAfterViewInit(){
-    
+  ngAfterViewInit() {
+
   }
 
-  async aceitarServico(/* trabalhador: any */){
-    /* let dadosForm = new FormData();
-    dadosForm.append("token", trabalhador.TokenFCM);
+  async aceitarServico() {
+    let dadosForm = new FormData();
+    dadosForm.append("token", this.tokenCliente);
+    dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
     dadosForm.append("situacao", "true");
 
     let link = dominio + "/Trabalhador/EnviarServicoAceito";
-    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" })); */
+    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
+    if (resposta == "0") {
+      this.navCl.navigateRoot("/confirmacao-cliente");
+    }
   }
 
-  ignorarServico(){
+  ignorarServico() {
 
   }
 

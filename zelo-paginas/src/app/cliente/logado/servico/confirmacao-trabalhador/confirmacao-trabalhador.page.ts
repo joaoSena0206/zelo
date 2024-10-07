@@ -22,12 +22,14 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            let cpf = "53890618880";
+            /* let cpf = "53890618880";
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
 
-            this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
-        });
+            this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico); */
 
+            console.log(notification);
+        });
+        
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
                 min: 0,
@@ -103,4 +105,6 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         localStorage.removeItem("confirmacao");
         this.navCl.navigateBack("/escolher-trabalhador");
     }
+
+    
 }
