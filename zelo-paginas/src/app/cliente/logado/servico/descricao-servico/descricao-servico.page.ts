@@ -182,7 +182,6 @@ export class DescricaoServicoPage implements OnInit {
 
             if (res) {
                 localStorage.setItem("solicitacao", JSON.stringify(res));
-
                 this.navCl.navigateForward("/escolher-trabalhador");
             }
         }

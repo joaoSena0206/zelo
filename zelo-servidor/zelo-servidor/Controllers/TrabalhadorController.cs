@@ -407,6 +407,38 @@ public class TrabalhadorController : Controller
     }
 
     [HttpPost]
+    [Route("EnviarServicoAceito")]
+    public async Task<int> EnviarSolicitacao()
+    {
+        string token = Request["token"];
+        string situacaoServico = Request["situacao"];
+
+        string endereco = Request["endereco"];
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
+        string solicitacao = Request["solicitacao"];
+
+        var msg = new Message()
+        {
+            Notification = new Notification()
+            {
+                Title = "Solicitação de serviço",
+                Body = $"Enviada por {cliente.Nome}"
+            },
+            Data = new Dictionary<string, string>()
+            {
+                {"cliente", JsonConvert.SerializeObject(cliente)},
+                {"endereco", endereco},
+                {"solicitacao", solicitacao}
+            },
+            Token = token
+        };
+
+        string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+        return 0;
+    }
+
+    [HttpPost]
     [Route("AdicionarTokenFCM")]
     public void AdicionarTokenFCM(string cpf, string token)
     {

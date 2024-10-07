@@ -33,7 +33,9 @@ export class InicialPage implements OnInit {
     carregar: boolean = false;
     watcherId: any;
     result: any;
-    dados: any;
+    clienteServico: any;
+    solicitacaoServico: any;
+    enderecoServico: any;
     modal: any;
 
     constructor(private http: HttpClient, private navCl: NavController) {
@@ -58,9 +60,12 @@ export class InicialPage implements OnInit {
             console.log(notification);
 
             this.result = notification;
-            this.dados = JSON.parse(this.result.data.cliente)
-            this.modal.present();
 
+            this.clienteServico = JSON.parse(this.result.data.cliente);
+            this.enderecoServico = this.result.data.endereco;
+            this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
+
+            this.modal.present();
         });
 
         PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
@@ -69,11 +74,12 @@ export class InicialPage implements OnInit {
     }
 
     analisarServico(){
+        localStorage.setItem("cliente", JSON.stringify(this.clienteServico));
+        localStorage.setItem("endereco", JSON.stringify(this.enderecoServico));
+        localStorage.setItem("solicitacao", JSON.stringify(this.solicitacaoServico));
+
         this.navCl.navigateForward("/analisa-servico");
         this.modal.dismiss();
-
-        localStorage.setItem("servico", JSON.stringify(this.dados));
-        let joaogay = JSON.parse(localStorage.getItem('servico')!);
     }
 
     ngAfterViewInit() {
@@ -115,8 +121,6 @@ export class InicialPage implements OnInit {
             this.pararGeolocalizacao();
         }
     }
-
-
 
     async enviarToken(token: any) {
         let link = dominio + "/Trabalhador/AdicionarTokenFCM";
