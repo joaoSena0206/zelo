@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://they-camera-meditation-designated.trycloudflare.com";
+export const dominio = "http://zelo-server.com.br";
