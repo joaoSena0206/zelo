@@ -23,10 +23,10 @@ export class ConfirmacaoClientePage implements OnInit {
   ngOnInit() {
     PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
 
-      let situacao = notification.data.situacaoServico;
+      let situacao = notification.data.pago;
 
       if (situacao == "true") {
-        this.navCl.navigateRoot("/trabalhador-caminho");
+        this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
       }
       else {
         this.cancelar();
