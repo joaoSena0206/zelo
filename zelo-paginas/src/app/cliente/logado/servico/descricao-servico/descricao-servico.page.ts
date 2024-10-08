@@ -146,10 +146,11 @@ export class DescricaoServicoPage implements OnInit {
 
         let resposta = await fetch(imgArquivo.webPath!);
         let blob = await resposta.blob();
+        let file = new File([blob], "img." + blob.type.substring(blob.type.indexOf("/") + 1), { type: blob.type });
 
         let arquivo = {
             src: imgArquivo.webPath,
-            blob: blob
+            blob: file
         };
 
         this.imgs.push(arquivo);
