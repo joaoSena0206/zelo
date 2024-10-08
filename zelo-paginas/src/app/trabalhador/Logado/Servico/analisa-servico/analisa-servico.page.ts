@@ -3,6 +3,7 @@ import { dominio, headerNgrok } from 'src/app/gerais';
 import { NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { cpf } from 'cpf-cnpj-validator';
 
 @Component({
   selector: 'app-analisa-servico',
@@ -28,21 +29,19 @@ export class AnalisaServicoPage implements OnInit {
     this.cdSolicitacao = this.solicitacaoServico.CdSolicitacaoServico;
     this.carregarServicos();
     this.pegarTokenCliente();
-
-    console.log(this.clienteServico)
+    this.carregarImgPerfilCliente();
   }
 
-  async pegarTokenCliente()
-    {
-        let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let dadosForm = new FormData();
-        dadosForm.append("cpf", cliente.Cpf);
-        let link = dominio + "/Cliente/PegarTokenFCM";
-        this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
-    }
+  async pegarTokenCliente() {
+    let cliente = JSON.parse(localStorage.getItem("cliente")!);
+    let dadosForm = new FormData();
+    dadosForm.append("cpf", cliente.Cpf);
+    let link = dominio + "/Cliente/PegarTokenFCM";
+    this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+  }
 
   async carregarServicos() {
-    let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${1}`;
+    let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${this.cdSolicitacao}`;
     this.carregar = true;
     let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
     this.imagens = res;
@@ -54,24 +53,18 @@ export class AnalisaServicoPage implements OnInit {
 
   async carregarImgServico(cdServico: any, cdimg: any, nmTipoImg: any, i: any) {
     let link = dominio + `/Imgs/Solicitacao/${cdServico}/${cdimg}${nmTipoImg}`;
-
     let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-
     let urlImg = URL.createObjectURL(res);
-
     this.imagens[i].img = urlImg;
   }
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() { }
 
   async aceitarServico() {
     let dadosForm = new FormData();
     dadosForm.append("token", this.tokenCliente);
     dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
     dadosForm.append("situacao", "true");
-
     let link = dominio + "/Trabalhador/EnviarServicoAceito";
     let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
@@ -80,8 +73,19 @@ export class AnalisaServicoPage implements OnInit {
     }
   }
 
-  ignorarServico() {
+  async ignorarServico() {
+    let dadosForm = new FormData();
+    dadosForm.append("token", this.tokenCliente);
+    dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
+    dadosForm.append("situacao", "false");
+    let link = dominio + "/Trabalhador/EnviarServicoAceito";
+    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
+    if (resposta == "0") {
+      this.navCl.navigateRoot("/trabalhador/inicial");
+    }
   }
+
+  async carregarImgPerfilCliente(){}
 
 }

@@ -73,7 +73,7 @@ export class InicialPage implements OnInit {
         });
     }
 
-    analisarServico(){
+    analisarServico() {
         localStorage.setItem("cliente", JSON.stringify(this.clienteServico));
         localStorage.setItem("endereco", JSON.stringify(this.enderecoServico));
         localStorage.setItem("solicitacao", JSON.stringify(this.solicitacaoServico));

@@ -1,0 +1,93 @@
+* {
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 31px 31px;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 600px;
+    position: relative;
+}
+
+.content__seta {
+    font-size: 30px;
+    flex-shrink: 0;
+    position: absolute;
+    top: 31px;
+    left: 31px;
+}
+
+.carregar {
+    border: 6px solid transparent;
+    border-top: 6px solid #FF720E;
+    border-radius: 50%;
+    width: 50vw;
+    height: 50vw;
+    animation: spin 1.5s linear infinite;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.tempo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(10px, 12vw, 60px);
+}
+
+.divCarregamento2 {
+    position: relative;
+    width: fit-content;
+    margin-bottom: 50px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+ion-button {
+    --background: #CB2316;
+    --border-radius: 20px;
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-start: 66px;
+    --padding-end: 66px;
+
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: none;
+}
+
+.divBtn {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

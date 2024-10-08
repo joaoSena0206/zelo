@@ -22,18 +22,25 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            /* let cpf = "53890618880";
+            let cpf = "53890618880";
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
 
-            this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico); */
+            let situacao = notification.data.situacaoServico;
 
-            console.log(notification);
+            if(situacao == "true")
+            {
+                this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
+            }
+            else
+            {
+                this.cancelar();
+            }
         });
         
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
-                min: 0,
-                seg: 2
+                min: 10,
+                seg: 0
             };
 
             this.tempo = confirmacao;
