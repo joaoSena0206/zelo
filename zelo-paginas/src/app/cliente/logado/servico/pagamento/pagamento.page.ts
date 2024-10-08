@@ -62,7 +62,9 @@ export class PagamentoPage implements OnInit {
             this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
         }
 
-        this.temporizador();
+        console.log(res);
+
+        /* this.temporizador(); */
     }
 
     temporizador() {
