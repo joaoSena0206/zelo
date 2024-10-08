@@ -242,7 +242,7 @@ public class ClienteController : Controller
         {
             client.BaseAddress = new Uri("https://api.mercadopago.com");
             client.DefaultRequestHeaders.Add("accept", "application/json");
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer TEST-3082013782228827-100609-813b0e848cd83a53e8ab00c777834bd7-2021112151");
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
             client.DefaultRequestHeaders.Add("X-Idempotency-Key", cdSolicitacao.ToString());
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -253,20 +253,50 @@ public class ClienteController : Controller
         }
     }
 
-    [HttpPost]
-    [Route("ReceberPagamento")]
-    public string ReceberPagamento()
+    [HttpGet]
+    [Route("ChecarPagamento")]
+    public async Task<string> ChecarPagamento()
     {
-        string json;
-        using (Stream receiveStream = Request.InputStream)
-        {
-            using (StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8))
-            {
-                json = reader.ReadToEnd();
-            }
-        }
+        string id = Request["id"];
 
-        return json;
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri($"https://api.mercadopago.com");
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
+
+            var result = await client.GetAsync($"/v1/payments/{id}");
+            var res = await result.Content.ReadAsStringAsync();
+
+            return res;
+        }
+    }
+
+    [HttpPost]
+    [Route("EnviarConfirmacao")]
+    public async Task<int> EnviarConfirmacao()
+    {
+        string token = Request["token"];
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request["cliente"]);
+        string solicitacao = Request["solicitacao"];
+
+        var msg = new Message()
+        {
+            Notification = new Notification()
+            {
+                Title = "Pagamento confirmado",
+                Body = $"Pago por {cliente.Nome}"
+            },
+            Data = new Dictionary<string, string>()
+            {
+                {"pago", "true"},
+                {"solicitacao", solicitacao}
+            },
+            Token = token
+        };
+
+        string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+        return 0;
     }
 
     [HttpPost]
@@ -290,5 +320,4 @@ public class ClienteController : Controller
 
         return cliente.TokenFCM;
     }
-
 }
