@@ -19,6 +19,7 @@ export class AnalisaServicoPage implements OnInit {
   cdSolicitacao: any;
   trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
   tokenCliente: any;
+  cliente: any = JSON.parse(localStorage.getItem("cliente")!);
 
   constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -33,9 +34,8 @@ export class AnalisaServicoPage implements OnInit {
   }
 
   async pegarTokenCliente() {
-    let cliente = JSON.parse(localStorage.getItem("cliente")!);
     let dadosForm = new FormData();
-    dadosForm.append("cpf", cliente.Cpf);
+    dadosForm.append("cpf", this.cliente.Cpf);
     let link = dominio + "/Cliente/PegarTokenFCM";
     this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
   }
@@ -86,6 +86,12 @@ export class AnalisaServicoPage implements OnInit {
     }
   }
 
-  async carregarImgPerfilCliente(){}
+  urlImg: any;
+
+  async carregarImgPerfilCliente() {
+    let link = dominio + `/Imgs/Perfil/Cliente/${this.cliente.Cpf}.jpg`;
+    let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+    this.urlImg = URL.createObjectURL(res);
+  }
 
 }

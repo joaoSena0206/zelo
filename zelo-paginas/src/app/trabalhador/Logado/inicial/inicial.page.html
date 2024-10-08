@@ -16,7 +16,7 @@
             <p class="txtSituacao" style="margin: 15px;">{{ situacao }}</p>
         </ion-button>
 
-        <div class="título_ultimos_pedidos" *ngIf="historico ? historico.lenght > 0 : false">
+        <div class="título_ultimos_pedidos" *ngIf="historico?.length > 0">
             <h3>Ultimos Pedidos</h3>
             <p>Ver Todos</p>
         </div>
@@ -53,7 +53,7 @@
             </ion-card>
         </div>
 
-        <div class="título_ultimos_pedidos" *ngIf="ComentarioAnonimo ? ComentarioAnonimo.lenght > 0 : false">
+        <div class="título_ultimos_pedidos" *ngIf="ComentarioAnonimo ? ComentarioAnonimo.length > 0 : false">
             <h3>Ultimas avaliações</h3>
         </div>
 
