@@ -39,7 +39,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
-                min: 10,
+                min: 5,
                 seg: 0
             };
 
@@ -94,7 +94,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         dadosForm.append("cpf", cpf);
         dadosForm.append("cd", cdSolicitacao);
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+        let res: any = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
         if (res == null) {
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
@@ -103,6 +103,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             };
 
             localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
+            localStorage.removeItem("confirmacao");
 
             this.navCl.navigateForward("/pagamento");
         }
