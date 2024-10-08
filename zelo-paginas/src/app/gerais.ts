@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://comparisons-adjustable-commodity-loaded.trycloudflare.com";
+export const dominio = "https://prison-real-bones-aruba.trycloudflare.com";
