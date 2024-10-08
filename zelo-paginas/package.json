@@ -29,6 +29,7 @@
     "@capacitor/app": "6.0.1",
     "@capacitor/background-runner": "^1.0.6-dev-20240906T161151.0",
     "@capacitor/camera": "^6.0.2",
+    "@capacitor/clipboard": "^6.0.1",
     "@capacitor/core": "^6.1.2",
     "@capacitor/filesystem": "^6.0.1",
     "@capacitor/geolocation": "^6.0.1",

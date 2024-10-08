@@ -5,6 +5,7 @@ import { loadMercadoPago } from '@mercadopago/sdk-js'
 import { firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Clipboard } from '@capacitor/clipboard';
 
 @Component({
     selector: 'app-pagamento',
@@ -17,14 +18,15 @@ export class PagamentoPage implements OnInit {
     copiaCola: any;
     qrCode: any;
     carregar: boolean = false;
+    inputPix: any;
 
     constructor(private navCl: NavController, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     async ngOnInit() {
         if (!localStorage.getItem("tempoPagamento")) {
             let tempo = {
-                min: 0,
-                seg: 10
+                min: 10,
+                seg: 0
             }
 
             this.tempo = tempo;
@@ -60,11 +62,36 @@ export class PagamentoPage implements OnInit {
         if (res) {
             this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
             this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
+            localStorage.setItem("idPagamento", res.id);
         }
 
-        console.log(res);
+        this.temporizador();
+    }
 
-        /* this.temporizador(); */
+    async checarPagamento() {
+        let id = localStorage.getItem("idPagamento");
+        let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+        let res: any = await firstValueFrom(this.http.get(link));
+
+        if (res.status == "approved") {
+            link = dominio + "/Cliente/EnviarConfirmacao";
+
+            let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+            let dadosForm = new FormData();
+            dadosForm.append("token", trabalhador.TokenFCM);
+            dadosForm.append("cliente", localStorage.getItem("cliente")!);
+            dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
+
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+            this.navCl.navigateRoot("trabalhador-caminho");
+        }
+    }
+
+    async copiarPix() {
+        await Clipboard.write({
+            string: this.copiaCola
+        });
     }
 
     temporizador() {
@@ -77,6 +104,8 @@ export class PagamentoPage implements OnInit {
         }
 
         let id = setInterval(() => {
+            this.checarPagamento();
+
             if (Number(this.tempo.seg) == 0) {
                 this.tempo.seg = 60;
                 this.tempo.min -= 1;
@@ -95,6 +124,7 @@ export class PagamentoPage implements OnInit {
             localStorage.setItem("tempoPagamento", JSON.stringify(this.tempo));
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
+                clearInterval(id);
                 let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
                 if (solicitacao.Trabalhador != null) {
                     solicitacao.Trabalhador.Cpf = null;
@@ -102,8 +132,6 @@ export class PagamentoPage implements OnInit {
 
                 localStorage.removeItem("tempoPagamento");
                 this.navCl.navigateBack("/escolher-trabalhador");
-
-                clearInterval(id);
             }
         }, 1000);
     }
