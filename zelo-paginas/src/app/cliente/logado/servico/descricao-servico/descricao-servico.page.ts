@@ -140,7 +140,7 @@ export class DescricaoServicoPage implements OnInit {
     async abrirFoto() {
         const imgArquivo = await Camera.getPhoto({
             quality: 90,
-            allowEditing: true,
+            allowEditing: false,
             resultType: CameraResultType.Uri
         });
 

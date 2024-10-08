@@ -100,7 +100,7 @@ public class SolicitacaoServicoController : Controller
 
         if (tipo == "trabalhador")
         {
-            comando = $"select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = {cpf} ORDER BY RAND() LIMIT 5";
+            comando = $"select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = {cpf} AND ds_comentario_avaliacao_servico IS NOT NULL ORDER BY RAND() LIMIT 5";
         }
 
         MySqlDataReader dados = banco.Consultar(comando);

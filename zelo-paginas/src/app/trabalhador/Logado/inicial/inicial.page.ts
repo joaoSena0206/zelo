@@ -73,7 +73,7 @@ export class InicialPage implements OnInit {
         });
     }
 
-    analisarServico(){
+    analisarServico() {
         localStorage.setItem("cliente", JSON.stringify(this.clienteServico));
         localStorage.setItem("endereco", JSON.stringify(this.enderecoServico));
         localStorage.setItem("solicitacao", JSON.stringify(this.solicitacaoServico));
@@ -292,10 +292,17 @@ export class InicialPage implements OnInit {
 
     async carregarImgServico(cdSolicitacao: any) {
         this.carregar = true;
+
         let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${cdSolicitacao}&q=1`;
         let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
-        link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+        if (res.length > 0) {
+            link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+        }
+        else {
+            link = "../../../../assets/icon/geral/sem-foto.jpg";
+        }
+
         res = await firstValueFrom(this.http.get(link, { headers: headerNgrok, responseType: "blob" }));
 
         const urlImg = URL.createObjectURL(res);
