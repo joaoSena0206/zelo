@@ -110,9 +110,6 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     voltarPag() {
-        localStorage.removeItem("servico");
-        localStorage.removeItem("solicitacao");
-
         this.navCl.back();
     }
 
