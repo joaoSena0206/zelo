@@ -36,6 +36,7 @@ export class DescricaoServicoPage implements OnInit {
     }
 
     ngAfterViewInit() {
+        
 
     }
 
@@ -84,6 +85,7 @@ export class DescricaoServicoPage implements OnInit {
 
     voltarPag() {
         localStorage.removeItem("servico");
+        localStorage.removeItem("endereco");
 
         this.navCl.back();
     }
