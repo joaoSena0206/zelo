@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -9,7 +10,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?';
     msg: any = "Informe o motivo da denúncia";
 
-    constructor() { }
+    constructor(private navCl: NavController) { }
 
     ngOnInit() {
     }
@@ -70,5 +71,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
         btn.addEventListener("click", function() {
             modal.dismiss();
         });
+    }
+
+    voltarPag()
+    {
+        this.navCl.navigateRoot("/inicial");
     }
 }
