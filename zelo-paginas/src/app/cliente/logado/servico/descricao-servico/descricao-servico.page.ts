@@ -36,7 +36,7 @@ export class DescricaoServicoPage implements OnInit {
     }
 
     ngAfterViewInit() {
-        
+
 
     }
 
@@ -51,6 +51,14 @@ export class DescricaoServicoPage implements OnInit {
                 label.style.border = "none";
             }
         });
+
+        if (localStorage.getItem("solicitacao")) {
+            let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+            let endereco = localStorage.getItem("endereco");
+
+            this.form.controls['endereco'].setValue(endereco);
+            this.form.controls['descServico'].setValue(solicitacao.DsServico);
+        }
     }
 
     carregarServico() {
