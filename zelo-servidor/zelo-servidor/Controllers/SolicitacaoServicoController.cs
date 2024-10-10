@@ -107,6 +107,17 @@ public class SolicitacaoServicoController : Controller
         return existe;
     }
 
+    public void AtualizarSolicitacao(SolicitacaoServico solicitacaoServico)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
+        WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
+        banco.Executar(comando);
+        banco.Desconectar();
+    }
+
     [HttpGet]
     [Route("carregarcomentariosAnonimos")]
     public string carregarcomentariosAnonimos()
