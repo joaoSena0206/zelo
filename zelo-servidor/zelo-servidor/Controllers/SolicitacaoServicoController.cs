@@ -86,6 +86,27 @@ public class SolicitacaoServicoController : Controller
         return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
     }
 
+    public bool ChecarExistencia(int cdSolicitacao)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $"SELECT COUNT(cd_solicitacao_servico) FROM solicitacao_servico WHERE cd_solicitacao_servico = {cdSolicitacao}";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        bool existe = false;
+
+        if (dados != null && dados.Read())
+        {
+            existe = dados.GetBoolean(0);
+        }
+
+        dados.Close();
+        banco.Desconectar();
+
+        return existe;
+    }
+
     [HttpGet]
     [Route("carregarcomentariosAnonimos")]
     public string carregarcomentariosAnonimos()
