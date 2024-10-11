@@ -28,6 +28,16 @@ public class ImgSolicitacaoController : Controller
         #endregion
     }
 
+    public void DeletarImgs(int cdSolicitacao)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string comando = $@"DELETE FROM img_solicitacao
+        WHERE cd_solicitacao = {cdSolicitacao}";
+        banco.Executar(comando);
+    }
+
     [HttpGet]
     [Route("CarregarImgs")]
     public string CarregarImgs()
