@@ -165,10 +165,9 @@ public class SolicitacaoServicoController : Controller
             imgSolicitacaoController.DeletarImgs(cdSolicitacao);
             Directory.Delete(caminhoPasta, true);
         }
-        else
-        {
-            Directory.CreateDirectory(caminhoPasta);
-        }
+        
+        Directory.CreateDirectory(caminhoPasta);
+        
 
         if (Request.Files.Count > 0)
         {
@@ -187,15 +186,21 @@ public class SolicitacaoServicoController : Controller
         }
     }
 
-    public void AtualizarSolicitacao(SolicitacaoServico solicitacaoServico)
+    [HttpPost]
+    [Route("AtualizarSituacao")]
+    public void AtualizarSolicitacao()
     {
         Banco banco = new Banco();
         banco.Conectar();
+
+        SolicitacaoServico solicitacaoServico = JsonConvert.DeserializeObject<SolicitacaoServico>(Request["solicitacao"]);
 
         string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
         WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
         banco.Executar(comando);
         banco.Desconectar();
+
+        AdicionarImgs(solicitacaoServico.CdSolicitacaoServico, Request.Files);
     }
 
     [HttpGet]
