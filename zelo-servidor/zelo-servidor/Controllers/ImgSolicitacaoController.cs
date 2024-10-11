@@ -34,7 +34,7 @@ public class ImgSolicitacaoController : Controller
         banco.Conectar();
 
         string comando = $@"DELETE FROM img_solicitacao
-        WHERE cd_solicitacao = {cdSolicitacao}";
+        WHERE cd_solicitacao_servico = {cdSolicitacao}";
         banco.Executar(comando);
     }
 
