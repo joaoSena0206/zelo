@@ -86,10 +86,115 @@ public class SolicitacaoServicoController : Controller
         return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
     }
 
-    public bool ChecarExistencia(int cdSolicitacao)
+    [HttpPost]
+    [Route("AdicionarSolicitacao")]
+    public string AdicionarSolicitacao()
     {
         Banco banco = new Banco();
         banco.Conectar();
+
+        string cpf = Request["cpf"];
+        int cdServico = int.Parse(Request["codigoServico"]);
+        string desc = Request["desc"];
+        int codigoSolicitacao = 0;
+
+        DateTime dataAtual = DateTime.Now;
+        SolicitacaoServico solicitacao = new SolicitacaoServico();
+        Cliente cliente = new Cliente();
+        Servico servico = new Servico();
+
+        #region Adiciona a solicitação no banco e no servidor
+
+        #region Pega o maior cd
+
+        string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        if (dados != null && dados.Read())
+        {
+            codigoSolicitacao = dados.GetInt32(0);
+        }
+
+        dados.Close();
+
+        #endregion
+
+        cliente.Cpf = cpf;
+        servico.Codigo = cdServico;
+
+        solicitacao.CdSolicitacaoServico = codigoSolicitacao;
+        solicitacao.Cliente = cliente;
+        solicitacao.Servico = servico;
+        solicitacao.DtSolicitacaoServico = dataAtual;
+        solicitacao.DsServico = desc;
+
+        comando = $@"INSERT INTO solicitacao_servico 
+        (
+	        cd_solicitacao_servico,
+	        cd_cpf_cliente,
+	        cd_servico,
+	        dt_solicitacao_servico,
+	        ds_servico
+        )
+        VALUES
+        (
+	        {codigoSolicitacao},
+	        '{cpf}',
+	        {cdServico},
+	        '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
+	        '{desc}'
+        )";
+        banco.Executar(comando);
+        banco.Desconectar();
+
+        AdicionarImgs(codigoSolicitacao, Request.Files);
+
+        #endregion
+
+        return JsonConvert.SerializeObject(solicitacao);
+    }
+
+    public void AdicionarImgs(int cdSolicitacao, HttpFileCollectionBase files)
+    {
+        ImgSolicitacaoController imgSolicitacaoController = new ImgSolicitacaoController();
+
+        string caminhoPasta = Server.MapPath("~/Imgs/Solicitacao/" + cdSolicitacao);
+
+        if (Directory.Exists(caminhoPasta))
+        {
+            imgSolicitacaoController.DeletarImgs(cdSolicitacao);
+            Directory.Delete(caminhoPasta, true);
+        }
+        else
+        {
+            Directory.CreateDirectory(caminhoPasta);
+        }
+
+        if (Request.Files.Count > 0)
+        {
+            for(int i = 0; i < files.Count; i++)
+            {
+                HttpPostedFileBase file = files[i];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    string caminho = Path.Combine(caminhoPasta, (i + 1) + Path.GetExtension(file.FileName));
+                    imgSolicitacaoController.AdicionarImgs(i + 1, cdSolicitacao, Path.GetExtension(file.FileName));
+
+                    file.SaveAs(caminho);
+                }
+            }
+        }
+    }
+
+    [HttpGet]
+    [Route("ChecarExistencia")]
+    public bool ChecarExistencia()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        int cdSolicitacao = int.Parse(Request["c"]);
 
         string comando = $"SELECT COUNT(cd_solicitacao_servico) FROM solicitacao_servico WHERE cd_solicitacao_servico = {cdSolicitacao}";
         MySqlDataReader dados = banco.Consultar(comando);
@@ -162,101 +267,6 @@ public class SolicitacaoServicoController : Controller
         banco.Desconectar();
 
         return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
-    }
-
-    [HttpPost]
-    [Route("AdicionarSolicitacao")]
-    public string AdicionarSolicitacao()
-    {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        string cpf = Request["cpf"];
-        int cdServico = int.Parse(Request["codigoServico"]);
-        string desc = Request["desc"];
-        int codigoSolicitacao = 0;
-
-        DateTime dataAtual = DateTime.Now;
-        SolicitacaoServico solicitacao = new SolicitacaoServico();
-        Cliente cliente = new Cliente();
-        Servico servico = new Servico();
-
-        #region Adiciona a solicitação no banco
-
-        #region Pega o maior cd
-
-        string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        if (dados != null && dados.Read())
-        {
-            codigoSolicitacao = dados.GetInt32(0);
-        }
-
-        dados.Close();
-
-        #endregion
-
-        cliente.Cpf = cpf;
-        servico.Codigo = cdServico;
-
-        solicitacao.CdSolicitacaoServico = codigoSolicitacao;
-        solicitacao.Cliente = cliente;
-        solicitacao.Servico = servico;
-        solicitacao.DtSolicitacaoServico = dataAtual;
-        solicitacao.DsServico = desc;
-
-        comando = $@"INSERT INTO solicitacao_servico 
-        (
-	        cd_solicitacao_servico,
-	        cd_cpf_cliente,
-	        cd_servico,
-	        dt_solicitacao_servico,
-	        ds_servico
-        )
-        VALUES
-        (
-	        {codigoSolicitacao},
-	        '{cpf}',
-	        {cdServico},
-	        '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
-	        '{desc}'
-        )";
-        banco.Executar(comando);
-        banco.Desconectar();
-
-        #endregion
-
-        #region Adiciona as imgs da solicitação no servidor e no banco
-
-        if (Request.Files.Count > 0)
-        {
-            string caminhoPasta = Server.MapPath($"~/Imgs/Solicitacao/{codigoSolicitacao}");
-
-            ImgSolicitacaoController imgSolicitacaoController = new ImgSolicitacaoController();
-
-            if (!Directory.Exists(caminhoPasta))
-            {
-                Directory.CreateDirectory(caminhoPasta);
-            }
-
-            for (int i = 0; i < Request.Files.Count; i++)
-            {
-                HttpPostedFileBase file = Request.Files[i];
-
-                if (file != null && file.ContentLength > 0)
-                {
-                    string caminho = Path.Combine(caminhoPasta, (i + 1) + Path.GetExtension(file.FileName));
-                    imgSolicitacaoController.AdicionarImgs(i + 1, codigoSolicitacao, Path.GetExtension(file.FileName));
-
-                    file.SaveAs(caminho);
-                }
-            }
-        }
-
-        #endregion
-
-        return JsonConvert.SerializeObject(solicitacao);
     }
 
     [HttpPost]
