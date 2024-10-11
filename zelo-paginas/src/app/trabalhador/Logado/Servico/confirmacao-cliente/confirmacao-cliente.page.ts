@@ -88,6 +88,7 @@ export class ConfirmacaoClientePage implements OnInit {
   cancelar() {
     localStorage.removeItem("confirmacao");
     this.navCl.navigateBack("/trabalhador/inicial");
+    console.log(this.tempo);
   }
 
 }
