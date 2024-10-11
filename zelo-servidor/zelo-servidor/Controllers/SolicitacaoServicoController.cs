@@ -187,31 +187,6 @@ public class SolicitacaoServicoController : Controller
         }
     }
 
-    [HttpGet]
-    [Route("ChecarExistencia")]
-    public bool ChecarExistencia()
-    {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        int cdSolicitacao = int.Parse(Request["c"]);
-
-        string comando = $"SELECT COUNT(cd_solicitacao_servico) FROM solicitacao_servico WHERE cd_solicitacao_servico = {cdSolicitacao}";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        bool existe = false;
-
-        if (dados != null && dados.Read())
-        {
-            existe = dados.GetBoolean(0);
-        }
-
-        dados.Close();
-        banco.Desconectar();
-
-        return existe;
-    }
-
     public void AtualizarSolicitacao(SolicitacaoServico solicitacaoServico)
     {
         Banco banco = new Banco();
