@@ -32,7 +32,10 @@ export class DescricaoServicoPage implements OnInit {
 
     ngOnInit() {
         this.carregarServico();
-        this.carregarEndereco();
+
+        if (!localStorage.getItem("solicitacao")) {
+            this.carregarEndereco();
+        }
     }
 
     ngAfterViewInit() {
@@ -57,6 +60,7 @@ export class DescricaoServicoPage implements OnInit {
             let endereco = localStorage.getItem("endereco");
 
             this.form.controls['endereco'].setValue(endereco);
+            this.form.controls['endereco'].disable();
             this.form.controls['descServico'].setValue(solicitacao.DsServico);
         }
     }
@@ -173,27 +177,52 @@ export class DescricaoServicoPage implements OnInit {
             this.form.markAllAsTouched();
         }
         else {
-            let link = dominio + "/SolicitacaoServico/AdicionarSolicitacao";
-            let cliente = JSON.parse(localStorage.getItem("cliente")!);
-            let servico = JSON.parse(localStorage.getItem("servico")!);
-            let dadosForm = new FormData();
-            dadosForm.append("cpf", cliente.Cpf);
-            dadosForm.append("desc", this.form.controls["descServico"].value!);
-            dadosForm.append("codigoServico", servico.Codigo);
+            if (!localStorage.getItem("solicitacao")) {
+                let link = dominio + "/SolicitacaoServico/AdicionarSolicitacao";
+                let cliente = JSON.parse(localStorage.getItem("cliente")!);
+                let servico = JSON.parse(localStorage.getItem("servico")!);
+                let dadosForm = new FormData();
+                dadosForm.append("cpf", cliente.Cpf);
+                dadosForm.append("desc", this.form.controls["descServico"].value!);
+                dadosForm.append("codigoServico", servico.Codigo);
 
-            if (this.imgs.length > 0) {
-                for (let i = 0; i < this.imgs.length; i++) {
-                    dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                if (this.imgs.length > 0) {
+                    for (let i = 0; i < this.imgs.length; i++) {
+                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                    }
+                }
+
+                this.carregar = true;
+                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                this.carregar = false;
+
+                if (res) {
+                    localStorage.setItem("solicitacao", JSON.stringify(res));
+                    this.navCl.navigateForward("/escolher-trabalhador");
                 }
             }
+            else {
+                let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+                solicitacao.DsServico = this.form.controls['descServico'].value;
 
-            this.carregar = true;
-            let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-            this.carregar = false;
+                let link = dominio + "/SolicitacaoServico/AtualizarSituacao";
+                let dadosForm = new FormData();
+                dadosForm.append("solicitacao", JSON.stringify(solicitacao));
 
-            if (res) {
-                localStorage.setItem("solicitacao", JSON.stringify(res));
-                this.navCl.navigateForward("/escolher-trabalhador");
+                if (this.imgs.length > 0) {
+                    for (let i = 0; i < this.imgs.length; i++) {
+                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                    }
+                }
+
+                this.carregar = true;
+                let res = await firstValueFrom(this.http.post(link, dadosForm));
+                this.carregar = false;
+
+                if (res == null) {
+                    localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
+                    this.navCl.navigateForward("/escolher-trabalhador");
+                }
             }
         }
     }
