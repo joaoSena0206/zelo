@@ -14,7 +14,7 @@ public class Banco
     {
         if (conexao == null)
         {
-            string linhaConexao = "SERVER=localhost; UID=root; PASSWORD=root; DATABASE=zelo";
+            string linhaConexao = "SERVER=autorack.proxy.rlwy.net; PORT=41395; UID=root; PASSWORD=root; DATABASE=Zelo";
             conexao = new MySqlConnection(linhaConexao);
 
             conexao.Open();
