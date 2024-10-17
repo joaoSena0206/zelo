@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { loadMercadoPago } from '@mercadopago/sdk-js'
 import { firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { DomSanitizer } from '@angular/platform-browser';

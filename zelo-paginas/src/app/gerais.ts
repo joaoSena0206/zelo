@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://zelo-server.com.br";
+export const dominio = "https://raid-application-trading-collaborative.trycloudflare.com/";

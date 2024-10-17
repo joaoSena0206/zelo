@@ -98,6 +98,7 @@ export class DescricaoServicoPage implements OnInit {
     voltarPag() {
         localStorage.removeItem("servico");
         localStorage.removeItem("endereco");
+        localStorage.removeItem("solicitacao");
 
         this.navCl.back();
     }

@@ -57,8 +57,6 @@ export class InicialPage implements OnInit {
         });
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            console.log(notification);
-
             this.result = notification;
 
             this.clienteServico = JSON.parse(this.result.data.cliente);
@@ -70,6 +68,13 @@ export class InicialPage implements OnInit {
 
         PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
             console.log(notification);
+            /* this.result = notification;
+
+            this.clienteServico = JSON.parse(this.result.data.cliente);
+            this.enderecoServico = this.result.data.endereco;
+            this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
+
+            this.modal.present(); */
         });
     }
 

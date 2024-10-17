@@ -234,6 +234,15 @@ public class ClienteController : Controller
         string cpf = Request["cpf"];
         int cdSolicitacao = int.Parse(Request["c"]);
         string expiracao = Request["expiracao"];
+        Random random = new Random();
+        string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+        string codigoAleatorio = "";
+
+        for (int i = 0; i < 5; i++)
+        {
+            codigoAleatorio += letras[random.Next(letras.Length)];
+        }
+
 
         string json = @"{'transaction_amount': " + valorVisita + ", 'date_of_expiration': '" + expiracao + "','payment_method_id': 'pix', 'payer': {'email': '" + email + "', 'identification': {'type': 'CPF', 'number': '" + cpf + "'}}}";
         json = json.Replace("'", "\"");
@@ -243,7 +252,7 @@ public class ClienteController : Controller
             client.BaseAddress = new Uri("https://api.mercadopago.com");
             client.DefaultRequestHeaders.Add("accept", "application/json");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
-            client.DefaultRequestHeaders.Add("X-Idempotency-Key", cdSolicitacao.ToString());
+            client.DefaultRequestHeaders.Add("X-Idempotency-Key", codigoAleatorio);
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var result = await client.PostAsync("/v1/payments", content);
