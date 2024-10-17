@@ -178,7 +178,7 @@ export class InicialPage implements OnInit {
 
                 // The minimum number of metres between subsequent locations. Defaults
                 // to 0.
-                distanceFilter: 200
+                distanceFilter: 5
             },
             (location, error) => {
                 if (error) {
@@ -198,6 +198,7 @@ export class InicialPage implements OnInit {
                     return console.error(error);
                 }
 
+                console.log(location);
                 this.atualizarLocBanco(location);
             }
         ).then(watcherId => {

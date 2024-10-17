@@ -46,7 +46,7 @@
 
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <p class="distancia">Distância: {{ trabalhador.Trabalhador.Distancia.toFixed(1).replace(".",
+                            <p class="distancia">Distância: {{ trabalhador.Trabalhador.Distancia.toFixed(2).replace(".",
                                 ",") }} km</p>
                             <ion-button class="btnContratar"
                                 [id]="'contratar_' + trabalhador.Trabalhador.Cpf">Contratar</ion-button>

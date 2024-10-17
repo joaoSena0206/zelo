@@ -161,7 +161,12 @@ export class EscolherTrabalhadorPage implements OnInit {
             const requestPermissao = await Geolocation.requestPermissions();
 
             if (requestPermissao.location === "granted" || requestPermissao.location === "prompt") {
-                coordenadas = await Geolocation.getCurrentPosition();
+                const options: PositionOptions = {
+                    enableHighAccuracy: true
+                }
+
+                coordenadas = await Geolocation.getCurrentPosition(options);
+                console.log(coordenadas);
 
                 return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
             }
