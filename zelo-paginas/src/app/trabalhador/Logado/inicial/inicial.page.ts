@@ -66,15 +66,14 @@ export class InicialPage implements OnInit {
             this.modal.present();
         });
 
-        PushNotifications.addListener("pushNotificationActionPerformed", (notification: ActionPerformed) => {
-            console.log(notification);
-            /* this.result = notification;
+        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
+            this.result = res.notification;
 
             this.clienteServico = JSON.parse(this.result.data.cliente);
             this.enderecoServico = this.result.data.endereco;
             this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
 
-            this.modal.present(); */
+            this.modal.present();
         });
     }
 
