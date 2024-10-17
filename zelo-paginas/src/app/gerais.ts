@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://using-liked-grip-information.trycloudflare.com";
+export const dominio = "https://means-strikes-own-alto.trycloudflare.com";
