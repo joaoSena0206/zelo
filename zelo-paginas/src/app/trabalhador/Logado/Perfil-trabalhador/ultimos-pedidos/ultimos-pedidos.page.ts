@@ -48,7 +48,7 @@ export class UltimosPedidosPage implements OnInit {
 
   async carregarHistorico() {
     let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-    let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
+    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?c=${trabalhador.Cpf}&t=trabalhador`;
 
     this.carregar = true;
     let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
@@ -58,6 +58,8 @@ export class UltimosPedidosPage implements OnInit {
     }
 
     this.historico = res;
+
+    console.log(this.historico)
 }
 
   async carregarImgServico(cdSolicitacao: any) {
@@ -80,5 +82,9 @@ export class UltimosPedidosPage implements OnInit {
 
       return urlImg;
   }
+
+  ngAfterViewInit() {
+    this.carregarHistorico();
+}
 
 }
