@@ -288,7 +288,7 @@ public class SolicitacaoServicoController : Controller
                         JOIN 
                             solicitacao_servico
                         ON 
-                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where cliente.cd_cpf_cliente = '{cpf}'";
+                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where solicitacao_servico.cd_cpf_trabalhador = '{cpf}'";
 
         MySqlDataReader dados = banco.Consultar(comando);
 
