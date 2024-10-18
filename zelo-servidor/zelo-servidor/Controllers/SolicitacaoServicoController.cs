@@ -267,10 +267,8 @@ public class SolicitacaoServicoController : Controller
         banco.Desconectar();
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("CarregarHistoricoTrabalhador")]
-
-
     public string CarregarHisotricoTrabalhador()
     {
         List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
@@ -278,7 +276,7 @@ public class SolicitacaoServicoController : Controller
         banco.Conectar();
 
         string cdSolicitacao = Request["cd"];
-        string cpf = Request["cpf"];
+        string cpf = Request["c"];
 
         string comando = $@"SELECT 
                             cliente.nm_cliente,
@@ -290,7 +288,7 @@ public class SolicitacaoServicoController : Controller
                         JOIN 
                             solicitacao_servico
                         ON 
-                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where cliente.cd_cpf_cliente = '{cpf}'";
+                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where solicitacao_servico.cd_cpf_trabalhador = '{cpf}'";
 
         MySqlDataReader dados = banco.Consultar(comando);
 
@@ -298,7 +296,6 @@ public class SolicitacaoServicoController : Controller
         {
             while (dados.Read())
             {
-                listahistoricotrabalhador = null;
                 SolicitacaoServico solicitacaoServico= new SolicitacaoServico();
                 Cliente cliente = new Cliente();
 
@@ -308,7 +305,7 @@ public class SolicitacaoServicoController : Controller
                 solicitacaoServico.Cliente = cliente;
                 solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
                 solicitacaoServico.DsServico = dados.GetString("ds_servico");
-                solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetInt16("qt_estrelas_avaliacao_servico");
+                solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
 
                 listahistoricotrabalhador.Add(solicitacaoServico);
             }

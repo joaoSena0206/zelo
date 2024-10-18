@@ -63,9 +63,9 @@ public class SolicitacaoServico
 		set { _dsComentarioAvaliacaoServico = value; }
 	}
 
-	private int _qtEstrelasAvaliacaoServico;
+	private decimal _qtEstrelasAvaliacaoServico;
 
-	public int QtEstrelasAvaliacaoServico
+	public decimal QtEstrelasAvaliacaoServico
 	{
 		get { return _qtEstrelasAvaliacaoServico; }
 		set { _qtEstrelasAvaliacaoServico = value; }
@@ -79,9 +79,9 @@ public class SolicitacaoServico
 		set { _dsComentarioAvaliacaoCliente = value; }
 	}
 
-    private int _qtEstrelasAvaliacaoCliente;
+    private decimal _qtEstrelasAvaliacaoCliente;
 
-    public int QtEstrelasAvaliacaoCliente
+    public decimal QtEstrelasAvaliacaoCliente
     {
         get { return _qtEstrelasAvaliacaoCliente; }
         set { _qtEstrelasAvaliacaoCliente = value; }
