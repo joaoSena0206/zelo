@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using FirebaseAdmin.Messaging;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using Newtonsoft.Json;
 
 [RoutePrefix("SolicitacaoServico")]
@@ -264,4 +266,65 @@ public class SolicitacaoServicoController : Controller
         banco.Executar(comando);
         banco.Desconectar();
     }
+
+    [HttpPost]
+    [Route("CarregarHistoricoTrabalhador")]
+
+
+    public string CarregarHisotricoTrabalhador()
+    {
+        List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        string cdSolicitacao = Request["cd"];
+        string cpf = Request["cpf"];
+
+        string comando = $@"SELECT 
+                            cliente.nm_cliente,
+                            solicitacao_servico.dt_solicitacao_servico,
+                            solicitacao_servico.ds_servico,
+                            solicitacao_servico.qt_estrelas_avaliacao_servico
+                        FROM 
+                            cliente
+                        JOIN 
+                            solicitacao_servico
+                        ON 
+                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where cliente.cd_cpf_cliente = '{cpf}'";
+
+        MySqlDataReader dados = banco.Consultar(comando);
+
+        if (dados != null)
+        {
+            while (dados.Read())
+            {
+                listahistoricotrabalhador = null;
+                SolicitacaoServico solicitacaoServico= new SolicitacaoServico();
+                Cliente cliente = new Cliente();
+
+                
+
+                cliente.Nome = dados.GetString("nm_cliente");
+                solicitacaoServico.Cliente = cliente;
+                solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
+                solicitacaoServico.DsServico = dados.GetString("ds_servico");
+                solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetInt16("qt_estrelas_avaliacao_servico");
+
+                listahistoricotrabalhador.Add(solicitacaoServico);
+            }
+        }
+
+        if (!dados.IsClosed)
+        {
+            dados.Close();
+        }
+
+        banco.Desconectar();
+
+        return JsonConvert.SerializeObject(listahistoricotrabalhador, Formatting.Indented);
+    }
+
+
 }
+
+
