@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivacidadePage implements OnInit {
 
+  trabalhador: any;
+
   constructor() { }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit(){
+    this.pegarDados();
+  }
+
+  pegarDados(){
+    this.trabalhador = JSON.parse(localStorage.getItem("trabalhador")!)
+    let cpf = this.trabalhador.Cpf
+    console.log(this.trabalhador)
   }
 
 }
