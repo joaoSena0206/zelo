@@ -198,26 +198,24 @@ export class InicialPage implements OnInit {
                     return console.error(error);
                 }
 
-                this.atualizarLocBanco(location);
+                let link = dominio + "/Trabalhador/AtualizarLoc";
+                let dadosForm = new FormData();
+                if (location) {
+                    dadosForm.append("cpf", this.trabalhador.Cpf);
+                    dadosForm.append("lat", location.latitude.toFixed(8));
+                    dadosForm.append("log", location.longitude.toFixed(8));
+                }
+
+                this.carregar = true;
+                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                this.carregar = false;
+
+                console.log(res);
             }
+
         ).then(watcherId => {
             this.watcherId = watcherId;
         });
-    }
-
-    async atualizarLocBanco(loc: any) {
-        let link = dominio + "/Trabalhador/AtualizarLoc";
-        let dadosForm = new FormData();
-        dadosForm.append("cpf", this.trabalhador.Cpf);
-        dadosForm.append("lat", loc.latitude.toFixed(8));
-        dadosForm.append("log", loc.longitude.toFixed(8));
-
-
-        /* this.carregar = true;
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-        this.carregar = false;
-
-        console.log(res); */
     }
 
     pararGeolocalizacao() {
