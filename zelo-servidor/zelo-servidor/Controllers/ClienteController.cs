@@ -336,4 +336,11 @@ public class ClienteController : Controller
     {
         return "Bom dia!";
     }
+
+    [HttpGet]
+    [Route("RetornaTexto2")]
+    public string RetornaTexto2()
+    {
+        return "Boa Noite!";
+    }
 }
