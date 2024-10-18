@@ -180,7 +180,7 @@ export class InicialPage implements OnInit {
                 // to 0.
                 distanceFilter: 10
             },
-            (location, error) => {
+            async (location, error) => {
                 if (error) {
                     if (error.code === "NOT_AUTHORIZED") {
                         if (window.confirm(
@@ -198,7 +198,6 @@ export class InicialPage implements OnInit {
                     return console.error(error);
                 }
 
-                console.log(location);
                 this.atualizarLocBanco(location);
             }
         ).then(watcherId => {
@@ -213,11 +212,12 @@ export class InicialPage implements OnInit {
         dadosForm.append("lat", loc.latitude.toFixed(8));
         dadosForm.append("log", loc.longitude.toFixed(8));
 
-        this.carregar = true;
+
+        /* this.carregar = true;
         let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
         this.carregar = false;
 
-        console.log(res);
+        console.log(res); */
     }
 
     pararGeolocalizacao() {
