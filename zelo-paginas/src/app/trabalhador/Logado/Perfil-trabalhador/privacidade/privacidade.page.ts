@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-privacidade',
@@ -7,22 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivacidadePage implements OnInit {
 
-  trabalhador: any;
+  trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
+  novoTexto: any;
 
   constructor() { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.pegarDados();
   }
 
-  pegarDados(){
-    this.trabalhador = JSON.parse(localStorage.getItem("trabalhador")!)
-    let cpf = this.trabalhador.Cpf
-    console.log(this.trabalhador)
+  pegarDados() {
+    const indicePonto = this.trabalhador.DataNascimento.indexOf("T");
+    this.novoTexto = this.trabalhador.DataNascimento.substring(0, indicePonto);
   }
 
 }
