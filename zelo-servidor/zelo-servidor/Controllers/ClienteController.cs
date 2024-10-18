@@ -329,4 +329,11 @@ public class ClienteController : Controller
 
         return cliente.TokenFCM;
     }
+
+    [HttpGet]
+    [Route("RetornaTexto")]
+    public string RetornaTexto()
+    {
+        return "Bom dia!";
+    }
 }
