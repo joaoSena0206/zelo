@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>zelo_core</RootNamespace>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;8600;8604;8602;8603;8601</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;8600;8604;8602;8603;8601</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="MySql.Data" Version="9.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Imgs\Certificados\teste2\53890618880\" />
+    <Folder Include="wwwroot\Imgs\ServicoRealizado\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Imgs\Certificados\50082480818\Captura de tela 2024-09-22 193058.png" />
+    <None Include="wwwroot\Imgs\Certificados\53890618880\Captura de tela 2024-08-20 182104.png" />
+    <None Include="wwwroot\Imgs\Certificados\53890618880\Captura de tela 2024-09-22 193058.png" />
+    <None Include="wwwroot\Imgs\Certificados\53890618880\Captura de tela 2024-09-22 193144.png" />
+    <None Include="wwwroot\Imgs\Certificados\53890618880\PDF_file_icon.svg.png" />
+    <None Include="wwwroot\Imgs\Certificados\53890618880\teste.pdf" />
+    <None Include="wwwroot\Imgs\Perfil\Cliente\50082480818.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\23456789012.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\43588086897.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\50082480818.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\51350222879.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\53890618880.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\56787654566.jpg" />
+    <None Include="wwwroot\Imgs\Perfil\Trabalhador\56787654567.jpg" />
+    <None Include="wwwroot\Imgs\Servicos\1.png" />
+    <None Include="wwwroot\Imgs\Servicos\2.png" />
+    <None Include="wwwroot\Imgs\Servicos\3.png" />
+    <None Include="wwwroot\Imgs\Servicos\4.png" />
+    <None Include="wwwroot\Imgs\Servicos\5.png" />
+    <None Include="wwwroot\Imgs\Servicos\6.png" />
+    <None Include="wwwroot\Imgs\Servicos\7.png" />
+    <None Include="wwwroot\Imgs\Servicos\8.png" />
+    <None Include="wwwroot\Imgs\Servicos\9.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\1\1.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\2\1.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\3\1.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\4\1.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\5\1.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\6\1.png" />
+    <None Include="wwwroot\Imgs\Solicitacao\9\1.jpeg" />
+    <None Include="wwwroot\Imgs\Trabalhadores\56787654566.jpg" />
+    <None Include="wwwroot\Imgs\Trabalhadores\56787654567.jpg" />
+  </ItemGroup>
+
+</Project>
