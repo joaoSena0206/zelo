@@ -42,7 +42,7 @@
             <div class="div_trabalhadores" *ngIf="patrocinados ? patrocinados.length > 0 : false">
                 <ion-card *ngFor="let patrocinado of patrocinados">
                     <figure>
-                        <img draggable="false" [src]="patrocinado.img" alt="">
+                        <img draggable="false" [src]="'http://localhost:32768/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'" alt="">
                         <div class="info_trabalhador">
                             <div class="fundoLaranja"></div>
                             <div class="divInfos">
@@ -85,7 +85,7 @@
                     <div class="areaUltimoPedido" [class]="i >= 5 ? 'escondido' : ''">
                         <div class="infoTrabalhorPedido">
                             <figure class="fotoTrabalhadorPedido">
-                                <img style="border-radius: 100px;" draggable="false" [src]="pedido.img">
+                                <img style="border-radius: 100px;" draggable="false" [src]="'http://localhost:32768/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
                             </figure>
 
                             <div>
