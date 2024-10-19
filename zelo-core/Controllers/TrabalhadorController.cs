@@ -15,7 +15,7 @@ public class TrabalhadorController : Controller
 
         #region Adiciona o trabalhador no banco
 
-        Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(Request.Query["trabalhador"]);
+        Trabalhador trabalhador = JsonConvert.DeserializeObject<Trabalhador>(Request.Form["trabalhador"]);
 
         string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0, null, null, '')";
         banco.Executar(comando);
@@ -31,7 +31,7 @@ public class TrabalhadorController : Controller
     [HttpPost("AdicionarFotoPerfil")]
     public async Task AdicionarFotoPerfil(string cpf, IFormFile file)
     {
-        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "Imgs/Perfil/Trabalhador/");
+        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Perfil/Trabalhador/");
 
         #region Grava a foto de perfil, e caso nula, pega o svg da web e grava no lugar
 
@@ -66,8 +66,8 @@ public class TrabalhadorController : Controller
 
         #region Checa a existência do email e do cpf
 
-        string cpf = Request.Query["cpf"];
-        string email = Request.Query["email"];
+        string cpf = Request.Form["cpf"];
+        string email = Request.Form["email"];
         string json = "{'cadastrado': [ ";
 
         string comando = $"SELECT COUNT(cd_cpf_trabalhador) FROM trabalhador WHERE cd_cpf_trabalhador = '{cpf}'";
@@ -119,7 +119,7 @@ public class TrabalhadorController : Controller
 
         #region Confirma o email no banco
 
-        string cpf = Request.Query["cpf"];
+        string cpf = Request.Form["cpf"];
 
         string comando = $"UPDATE trabalhador SET ic_email_confirmado_trabalhador = true WHERE cd_cpf_trabalhador = '{cpf}'";
         banco.Executar(comando);
@@ -137,8 +137,8 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string email = Request.Query["email"];
-        string senha = Request.Query["senha"];
+        string email = Request.Form["email"];
+        string senha = Request.Form["senha"];
 
         #region Pega os dados do trabalhador no banco, caso existam
 
@@ -177,7 +177,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Query["cpf"];
+        string cpf = Request.Form["cpf"];
 
         #region Verifica Situação do trabalhador
 
@@ -208,8 +208,8 @@ public class TrabalhadorController : Controller
 
         #region Atualizar banco
 
-        string cpf = Request.Query["cpf"];
-        string codigoResultado = Request.Query["Resultado"].ToString();
+        string cpf = Request.Form["cpf"];
+        string codigoResultado = Request.Form["Resultado"].ToString();
 
         string comando = $@"UPDATE trabalhador SET ic_disponivel_trabalhador = {codigoResultado} WHERE cd_cpf_trabalhador = '{cpf}'";
         banco.Executar(comando);
@@ -220,7 +220,7 @@ public class TrabalhadorController : Controller
     [HttpPost("AdicionarCertificado")]
     public void AdicionarCertificado()
     {
-        string cpf = Request.Query["cpf"];
+        string cpf = Request.Form["cpf"];
 
         #region Cria uma pasta com o cpf do trabalhador
 
@@ -241,7 +241,7 @@ public class TrabalhadorController : Controller
 
             if (file != null && file.Length > 0)
             {
-                string caminho = Path.Combine(Directory.GetCurrentDirectory(), "Imgs/Certificados", cpf, i + Path.GetExtension(file.FileName));
+                string caminho = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Certificados", cpf, i + Path.GetExtension(file.FileName));
 
                 using var stream = new FileStream(caminho, FileMode.Create);
                 file.CopyToAsync(stream);
@@ -257,9 +257,9 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Query["cpf"];
-        string pix = Request.Query["pix"];
-        string valorVisita = Request.Query["valor"];
+        string cpf = Request.Form["cpf"];
+        string pix = Request.Form["pix"];
+        string valorVisita = Request.Form["valor"];
 
         string comando = $@"UPDATE trabalhador SET nm_pix_trabalhador = '{pix}', vl_visita_trabalhador = {valorVisita}
         WHERE cd_cpf_trabalhador = '{cpf}'";
@@ -274,8 +274,8 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Query["cpf"];
-        List<Servico> listaServico = JsonConvert.DeserializeObject<List<Servico>>(Request.Query["categorias"]);
+        string cpf = Request.Form["cpf"];
+        List<Servico> listaServico = JsonConvert.DeserializeObject<List<Servico>>(Request.Form["categorias"]);
 
         for (int i = 0; i < listaServico.Count; i++)
         {
@@ -323,7 +323,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        int codigo = int.Parse(Request.Query["c"]);
+        int codigo = int.Parse(Request.Form["c"]);
 
         #region Pega os trabalhadores no banco de acordo com o serviço
 
@@ -391,11 +391,11 @@ public class TrabalhadorController : Controller
     [HttpPost("EnviarServicoAceito")]
     public async Task<int> EnviarSolicitacao()
     {
-        string token = Request.Query["token"];
-        string situacaoServico = Request.Query["situacao"];
-        Trabalhador trababalhador = JsonConvert.DeserializeObject<Trabalhador>(Request.Query["trabalhador"]);
+        string token = Request.Form["token"];
+        string situacaoServico = Request.Form["situacao"];
+        Trabalhador trababalhador = JsonConvert.DeserializeObject<Trabalhador>(Request.Form["trabalhador"]);
 
-        string solicitacao = Request.Query["solicitacao"];
+        string solicitacao = Request.Form["solicitacao"];
 
         var msg = new Message()
         {

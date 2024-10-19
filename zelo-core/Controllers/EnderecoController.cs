@@ -11,7 +11,7 @@ public class EnderecoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        Endereco endereco = JsonConvert.DeserializeObject<Endereco>(Request.Query["endereco"]);
+        Endereco endereco = JsonConvert.DeserializeObject<Endereco>(Request.Form["endereco"]);
 
         #region Adiciona o endereço no banco
 
@@ -38,7 +38,7 @@ public class EnderecoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Query["cpf"];
+        string cpf = Request.Form["cpf"];
 
         string comando = $"SELECT * FROM endereco WHERE cd_cpf_cliente = '{cpf}'";
         MySqlDataReader dados = banco.Consultar(comando);

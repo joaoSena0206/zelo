@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,15 +40,15 @@ public class ImgSolicitacaoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        int cdSolicitacao = int.Parse(Request.Query["c"]);
+        int cdSolicitacao = int.Parse(Request.Form["c"]);
 
         #region Carrega as imgs do banco e envia
 
         string comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao}";
 
-        if (!String.IsNullOrEmpty(Request.Query["q"]))
+        if (!String.IsNullOrEmpty(Request.Form["q"]))
         {
-            comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao} LIMIT {Request.Query["q"]}";
+            comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao} LIMIT {Request.Form["q"]}";
         }
 
         MySqlDataReader dados = banco.Consultar(comando);

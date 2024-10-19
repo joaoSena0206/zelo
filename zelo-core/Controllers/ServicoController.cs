@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
@@ -11,7 +11,7 @@ public class ServicoController: Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        #region Carrega os serviços do banco de acordo com a categoria
+        #region Carrega os servi�os do banco de acordo com a categoria
 
         string comando = $"SELECT * FROM servico ORDER BY nm_servico";
         MySqlDataReader dados = banco.Consultar(comando);

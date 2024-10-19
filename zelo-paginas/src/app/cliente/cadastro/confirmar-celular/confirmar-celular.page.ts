@@ -133,7 +133,7 @@ export class ConfirmarCelularPage implements OnInit {
                 let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
                 if (res == "ok") {
-                    link = dominio + "/Trabalhador/AdicionarFotoPerfil";
+                    link = dominio + "/Cliente/AdicionarFotoPerfil";
 
                     res = await firstValueFrom(this.http.post(link, dadosForm));
 

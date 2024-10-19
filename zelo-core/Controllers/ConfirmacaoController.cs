@@ -12,8 +12,8 @@ public class ConfirmacaoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Query["cpf"];
-        string tipo = Request.Query["tipo"];
+        string cpf = Request.Form["cpf"];
+        string tipo = Request.Form["tipo"];
 
         #region Gera o código aleatório e insere no banco
 

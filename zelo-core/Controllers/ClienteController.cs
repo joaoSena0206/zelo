@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 [Route("Cliente")]
 public class ClienteController : Controller
 {
-
     [HttpPost("Adicionar")]
     public string Adicionar()
     {
@@ -16,7 +15,7 @@ public class ClienteController : Controller
 
         #region Adiciona o cliente no banco
 
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Query["cliente"]);
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Form["cliente"]);
 
         if (cliente != null)
         {
@@ -36,9 +35,9 @@ public class ClienteController : Controller
     }
 
     [HttpPost("AdicionarFotoPerfil")]
-    public async Task<string> AdicionarFotoPerfil(string cpf, IFormFile file)
+    public async Task AdicionarFotoPerfil(string cpf, IFormFile file)
     {
-        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "Imgs/Perfil/Cliente");
+        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Perfil/Cliente");
 
         #region Grava a foto de perfil, e caso nula, pega o svg da web e grava no lugar
 
@@ -62,8 +61,6 @@ public class ClienteController : Controller
             
         }
 
-        return "ok";
-
         #endregion
     }
 
@@ -75,8 +72,8 @@ public class ClienteController : Controller
 
         #region Checa a existência do email e do cpf
 
-        string cpf = Request.Query["cpf"];
-        string email = Request.Query["email"];
+        string cpf = Request.Form["cpf"];
+        string email = Request.Form["email"];
         string json = "{'cadastrado': [ ";
 
         string comando = $"SELECT COUNT(cd_cpf_cliente) FROM cliente WHERE cd_cpf_cliente = '{cpf}'";
@@ -128,7 +125,7 @@ public class ClienteController : Controller
 
         #region Confirma o email no banco
 
-        string cpf = Request.Query["cpf"];
+        string cpf = Request.Form["cpf"];
 
         string comando = $"UPDATE cliente SET ic_email_confirmado_cliente = true WHERE cd_cpf_cliente = '{cpf}'";
         banco.Executar(comando);
@@ -146,8 +143,8 @@ public class ClienteController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string email = Request.Query["email"];
-        string senha = Request.Query["senha"];
+        string email = Request.Form["email"];
+        string senha = Request.Form["senha"];
 
         #region Pega os dados do cliente no banco, caso existam
 
@@ -182,10 +179,10 @@ public class ClienteController : Controller
     [HttpPost("EnviarSolicitacao")]
     public async Task<int> EnviarSolicitacao()
     {
-        string token = Request.Query["token"];
-        string endereco = Request.Query["endereco"];
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Query["cliente"]);
-        string solicitacao = Request.Query["solicitacao"];
+        string token = Request.Form["token"];
+        string endereco = Request.Form["endereco"];
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Form["cliente"]);
+        string solicitacao = Request.Form["solicitacao"];
       
         var msg = new Message()
         {
@@ -223,11 +220,11 @@ public class ClienteController : Controller
     [HttpPost("GerarPagamento")]
     public async Task<string> GerarPagamento()
     {
-        decimal valorVisita = decimal.Parse(Request.Query["valor"]);
-        string email = Request.Query["email"];
-        string cpf = Request.Query["cpf"];
-        int cdSolicitacao = int.Parse(Request.Query["c"]);
-        string expiracao = Request.Query["expiracao"];
+        decimal valorVisita = decimal.Parse(Request.Form["valor"]);
+        string email = Request.Form["email"];
+        string cpf = Request.Form["cpf"];
+        int cdSolicitacao = int.Parse(Request.Form["c"]);
+        string expiracao = Request.Form["expiracao"];
         Random random = new Random();
         string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
         string codigoAleatorio = "";
@@ -258,7 +255,7 @@ public class ClienteController : Controller
     [HttpGet("ChecarPagamento")]
     public async Task<string> ChecarPagamento()
     {
-        string id = Request.Query["id"];
+        string id = Request.Form["id"];
 
         using (var client = new HttpClient())
         {
@@ -275,9 +272,9 @@ public class ClienteController : Controller
     [HttpPost("EnviarConfirmacao")]
     public async Task<int> EnviarConfirmacao()
     {
-        string token = Request.Query["token"];
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Query["cliente"]);
-        string solicitacao = Request.Query["solicitacao"];
+        string token = Request.Form["token"];
+        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Form["cliente"]);
+        string solicitacao = Request.Form["solicitacao"];
 
         var msg = new Message()
         {
@@ -302,7 +299,7 @@ public class ClienteController : Controller
     [HttpPost("PegarTokenFCM")]
     public string PegarTokenFCM()
     {
-        string cpf = Request.Query["cpf"];
+        string cpf = Request.Form["cpf"];
 
         Banco banco = new Banco();
         banco.Conectar();

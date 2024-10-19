@@ -85,9 +85,9 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Query["cpf"];
-        int cdServico = int.Parse(Request.Query["codigoServico"]);
-        string desc = Request.Query["desc"];
+        string cpf = Request.Form["cpf"];
+        int cdServico = int.Parse(Request.Form["codigoServico"]);
+        string desc = Request.Form["desc"];
         int codigoSolicitacao = 0;
 
         DateTime dataAtual = DateTime.Now;
@@ -150,7 +150,7 @@ public class SolicitacaoServicoController : Controller
     {
         ImgSolicitacaoController imgSolicitacaoController = new ImgSolicitacaoController();
 
-        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "Imgs/Solicitacao", cdSolicitacao.ToString());
+        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Solicitacao", cdSolicitacao.ToString());
 
         if (Directory.Exists(caminhoPasta))
         {
@@ -185,7 +185,7 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        SolicitacaoServico solicitacaoServico = JsonConvert.DeserializeObject<SolicitacaoServico>(Request.Query["solicitacao"]);
+        SolicitacaoServico solicitacaoServico = JsonConvert.DeserializeObject<SolicitacaoServico>(Request.Form["solicitacao"]);
 
         string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
         WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
@@ -201,8 +201,8 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string tipo = Request.Query["t"];
-        string cpf = Request.Query["c"];
+        string tipo = Request.Form["t"];
+        string cpf = Request.Form["c"];
 
         string comando = "";
 
@@ -246,8 +246,8 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cdSolicitacao = Request.Query["cd"];
-        string cpf = Request.Query["cpf"];
+        string cdSolicitacao = Request.Form["cd"];
+        string cpf = Request.Form["cpf"];
 
         string comando = $@"UPDATE solicitacao_servico SET cd_cpf_trabalhador = '{cpf}' 
         WHERE cd_solicitacao_servico = {cdSolicitacao}";
@@ -262,8 +262,8 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cdSolicitacao = Request.Query["cd"];
-        string cpf = Request.Query["c"];
+        string cdSolicitacao = Request.Form["cd"];
+        string cpf = Request.Form["c"];
 
         string comando = $@"SELECT 
                             cliente.nm_cliente,
