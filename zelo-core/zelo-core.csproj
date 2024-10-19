@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Imgs\Certificados\teste2\53890618880\" />
+    <Folder Include="wwwroot\Imgs\Perfil\Cliente\" />
     <Folder Include="wwwroot\Imgs\ServicoRealizado\" />
   </ItemGroup>
 
@@ -36,7 +37,6 @@
     <None Include="wwwroot\Imgs\Certificados\53890618880\Captura de tela 2024-09-22 193144.png" />
     <None Include="wwwroot\Imgs\Certificados\53890618880\PDF_file_icon.svg.png" />
     <None Include="wwwroot\Imgs\Certificados\53890618880\teste.pdf" />
-    <None Include="wwwroot\Imgs\Perfil\Cliente\50082480818.jpg" />
     <None Include="wwwroot\Imgs\Perfil\Trabalhador\23456789012.jpg" />
     <None Include="wwwroot\Imgs\Perfil\Trabalhador\43588086897.jpg" />
     <None Include="wwwroot\Imgs\Perfil\Trabalhador\50082480818.jpg" />
