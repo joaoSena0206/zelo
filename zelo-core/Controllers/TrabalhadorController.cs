@@ -1,7 +1,7 @@
 using FirebaseAdmin.Messaging;
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 
 [ApiController]
@@ -9,13 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 public class TrabalhadorController : ControllerBase
 {
     [HttpPost("Adicionar")]
-    public IActionResult Adicionar([FromForm] Trabalhador trabalhador)
+    public IActionResult Adicionar()
     {
         Banco banco = new Banco();
         banco.Conectar();
 
         try
         {
+            Trabalhador trabalhador = JsonSerializer.Deserialize<Trabalhador>(Request.Form["trabalhador"]);
+
             #region Adiciona o trabalhador no banco
 
             string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0, null, null, '')";
@@ -342,13 +344,15 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("AdicionarCategoria")]
-    public IActionResult AdicionarCategoria([FromForm] string cpf, [FromForm] List<Servico> listaServico)
+    public IActionResult AdicionarCategoria([FromForm] string cpf)
     {
         Banco banco = new Banco();
         banco.Conectar();
 
         try
         {
+            List<Servico> listaServico = JsonSerializer.Deserialize<List<Servico>>(Request.Form["listaServico"]);
+
             for (int i = 0; i < listaServico.Count; i++)
             {
                 string comando = $@"INSERT INTO servico_trabalhador VALUES
@@ -500,10 +504,12 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("EnviarServicoAceito")]
-    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string situacaoServico, [FromForm] Trabalhador trababalhador, [FromForm] string solicitacao)
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string situacaoServico, [FromForm] string solicitacao)
     {
         try
         {
+            Trabalhador trababalhador = JsonSerializer.Deserialize<Trabalhador>(Request.Form["Trabalhador"]);
+
             var msg = new Message()
             {
                 Notification = new Notification()

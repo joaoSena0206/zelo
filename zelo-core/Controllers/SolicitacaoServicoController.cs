@@ -1,6 +1,6 @@
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 [ApiController]
 [Route("SolicitacaoServico")]
@@ -205,12 +205,13 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpPost("AtualizarSituacao")]
-    public IActionResult AtualizarSolicitacao([FromForm]SolicitacaoServico solicitacaoServico)
+    public IActionResult AtualizarSolicitacao()
     {
         Banco banco = new Banco();
         banco.Conectar();
         try
         {
+            SolicitacaoServico solicitacaoServico = JsonSerializer.Deserialize<SolicitacaoServico>(Request.Form["solicitacaoServico"]);
             string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
             WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
             banco.Executar(comando);
