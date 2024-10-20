@@ -1,0 +1,40 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n
+    ports:
+      - 5678:5678
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - zelo-network
+  server:
+    build: zelo-core
+    container_name: server
+    restart: always
+    ports:
+      - 81:8080
+    networks:
+      - zelo-network
+  banco:
+    image: mysql:5.5
+    container_name: banco
+    restart: always
+    environment:
+      - MYSQL_DATABASE=Zelo
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 33061:3306
+    volumes:
+      - zelo-data:/var/lib/mysql
+      - C:\Users\Joao\Documents\Projetos\zelo\banco\init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - zelo-network
+    
+volumes:
+  zelo-data:
+  n8n_data:
+
+networks:
+  zelo-network:
+    driver: bridge

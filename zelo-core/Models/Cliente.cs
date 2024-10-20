@@ -1,6 +1,6 @@
 public class Cliente
 {
-	public string? Cpf
+    public string? Cpf
 	{
 		get;
 		set;

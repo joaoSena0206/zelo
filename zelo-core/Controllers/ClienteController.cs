@@ -14,6 +14,8 @@ public class ClienteController : ControllerBase
         Banco banco = new Banco();
         banco.Conectar();
 
+        return Ok(cliente);
+
         try
         {  
             #region Adiciona o cliente no banco

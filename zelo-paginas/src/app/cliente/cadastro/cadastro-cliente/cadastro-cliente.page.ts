@@ -161,18 +161,20 @@ export class CadastroClientePage implements OnInit {
         }
 
         this.carregar = true;
-        let resposta = await firstValueFrom(this.http.post(link, dadosForm));
+        let resposta: any = await firstValueFrom(this.http.post(link, dadosForm));
 
         let objRes = resposta as any;
 
         if (objRes.cadastrado.length == 0) {
             link = dominio + "/Cliente/Adicionar";
             dadosForm = new FormData();
-            dadosForm.append("cliente", JSON.stringify(cliente));
+            dadosForm.append("Cliente", cliente);
 
             resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-            if (resposta == "ok") {
+            console.log(resposta);
+
+            if (resposta.status == 200) {
                 localStorage.setItem("cliente", JSON.stringify(cliente));
 
                 this.navCl.navigateRoot("/confirmar-celular", { animationDirection: "forward", animated: true });
