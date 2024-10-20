@@ -10,8 +10,7 @@ builder.Services.AddCors(options => {
         });
 });
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -27,8 +26,6 @@ app.UseRouting();
 app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
-
-app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",

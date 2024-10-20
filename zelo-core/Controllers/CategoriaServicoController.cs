@@ -1,40 +1,47 @@
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 
+[ApiController]
 [Route("CategoriaServico")]
-public class CategoriaServicoController : Controller
+public class CategoriaServicoController : ControllerBase
 {
     [HttpGet("CarregarCategoria")]
-    public string CarregarCategoria()
+    public IActionResult CarregarCategoria()
     {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        #region Carrega as categorias do banco
-
-        string comando = "SELECT * FROM categoria_servico ORDER BY nm_categoria_servico";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        List<CategoriaServico> listaCategoria = new List<CategoriaServico>();
-
-        if (dados != null)
+        try
         {
-            while (dados.Read())
+            Banco banco = new Banco();
+            banco.Conectar();
+
+            #region Carrega as categorias do banco
+
+            string comando = "SELECT * FROM categoria_servico ORDER BY nm_categoria_servico";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            List<CategoriaServico> listaCategoria = new List<CategoriaServico>();
+
+            if (dados != null)
             {
-                CategoriaServico categoria = new CategoriaServico();
-                categoria.Codigo = dados.GetInt32(0);
-                categoria.Nome = dados.GetString(1);
+                while (dados.Read())
+                {
+                    CategoriaServico categoria = new CategoriaServico();
+                    categoria.Codigo = dados.GetInt32(0);
+                    categoria.Nome = dados.GetString(1);
 
-                listaCategoria.Add(categoria);
+                    listaCategoria.Add(categoria);
+                }
             }
+
+            dados.Close();
+            banco.Desconectar();
+
+            return Ok(listaCategoria);
+
+            #endregion
         }
-
-        dados.Close();
-        banco.Desconectar();
-
-        return JsonConvert.SerializeObject(listaCategoria, Formatting.Indented);
-
-        #endregion
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 }

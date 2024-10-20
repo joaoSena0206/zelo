@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 
+[ApiController]
 [Route("Servico")]
-public class ServicoController: Controller
+public class ServicoController: ControllerBase
 {
     [HttpGet("CarregarServicos")]
-    public string CarregarServicos()
+    public List<Servico> CarregarServicos()
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -38,7 +38,7 @@ public class ServicoController: Controller
         dados.Close();
         banco.Desconectar();
 
-        return JsonConvert.SerializeObject(listaServico);
+        return listaServico;
 
         #endregion
     }

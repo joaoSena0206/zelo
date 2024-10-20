@@ -1,319 +1,367 @@
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 using FirebaseAdmin.Messaging;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
+[ApiController]
 [Route("Cliente")]
-public class ClienteController : Controller
+public class ClienteController : ControllerBase
 {
     [HttpPost("Adicionar")]
-    public string Adicionar()
+    public IActionResult Adicionar(Cliente cliente)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        #region Adiciona o cliente no banco
-
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Form["cliente"]);
-
-        if (cliente != null)
+        try
         {
+            Banco banco = new Banco();
+            banco.Conectar();
+
+            #region Adiciona o cliente no banco
+
             string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
             banco.Executar(comando);
 
             banco.Desconectar();
 
-            return "ok";
+            return Ok();
+
+            #endregion
         }
-
-        banco.Desconectar();
-
-        throw new Exception("Cliente nulo");
-
-        #endregion
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 
     [HttpPost("AdicionarFotoPerfil")]
-    public async Task AdicionarFotoPerfil(string cpf, IFormFile file)
+    public async Task<IActionResult> AdicionarFotoPerfil(string cpf, IFormFile file)
     {
-        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Perfil/Cliente");
-
-        #region Grava a foto de perfil, e caso nula, pega o svg da web e grava no lugar
-
-        if (file != null && file.Length > 0)
+        try
         {
-            string caminho = Path.Combine(caminhoPasta, $"{cpf}.jpg");
+            string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Perfil/Cliente");
 
-            using var stream = new FileStream(caminho, FileMode.Create);
-            await file.CopyToAsync(stream);
+            #region Grava a foto de perfil, e caso nula, pega o svg da web e grava no lugar
+
+            if (file != null && file.Length > 0)
+            {
+                string caminho = Path.Combine(caminhoPasta, $"{cpf}.jpg");
+
+                using var stream = new FileStream(caminho, FileMode.Create);
+                await file.CopyToAsync(stream);
+            }
+            else
+            {
+                string avatar = "https://joaosena0206.github.io/zelo_imagens/imgs/avatar.jpg";
+                string caminhoArquivo = Path.Combine(caminhoPasta, cpf + ".jpg");
+
+                using HttpClient client = new HttpClient();
+
+                byte[] avatarBytes = await client.GetByteArrayAsync(avatar);
+
+                System.IO.File.WriteAllBytes(caminhoArquivo, avatarBytes);
+
+            }
+
+            return Ok();
+
+            #endregion
         }
-        else
+        catch (Exception erro)
         {
-            string avatar = "https://joaosena0206.github.io/zelo_imagens/imgs/avatar.jpg";
-            string caminhoArquivo = Path.Combine(caminhoPasta, cpf + ".jpg");
-
-            using HttpClient client = new HttpClient();
-         
-            byte[] avatarBytes = await client.GetByteArrayAsync(avatar);
-
-            System.IO.File.WriteAllBytes(caminhoArquivo, avatarBytes);
-            
+            return BadRequest(erro.Message);
         }
-
-        #endregion
     }
 
     [HttpPost("ChecarExistencia")]
-    public string ChecarExistencia()
+    public IActionResult ChecarExistencia(string cpf, string email)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        #region Checa a existência do email e do cpf
-
-        string cpf = Request.Form["cpf"];
-        string email = Request.Form["email"];
-        string json = "{'cadastrado': [ ";
-
-        string comando = $"SELECT COUNT(cd_cpf_cliente) FROM cliente WHERE cd_cpf_cliente = '{cpf}'";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        if (dados != null)
+        try
         {
-            if (dados.Read())
+            Banco banco = new Banco();
+            banco.Conectar();
+
+            #region Checa a existência do email e do cpf
+
+            string json = "{'cadastrado': [ ";
+
+            string comando = $"SELECT COUNT(cd_cpf_cliente) FROM cliente WHERE cd_cpf_cliente = '{cpf}'";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            if (dados != null)
             {
-                if (dados.GetBoolean(0) == true)
+                if (dados.Read())
                 {
-                    json += "'cpf',";
+                    if (dados.GetBoolean(0) == true)
+                    {
+                        json += "'cpf',";
+                    }
                 }
             }
-        }
 
-        dados.Close();
+            dados.Close();
 
-        comando = $"SELECT COUNT(nm_email_cliente) FROM cliente WHERE nm_email_cliente = '{email}'";
-        dados = banco.Consultar(comando);
+            comando = $"SELECT COUNT(nm_email_cliente) FROM cliente WHERE nm_email_cliente = '{email}'";
+            dados = banco.Consultar(comando);
 
-        if (dados != null)
-        {
-            if (dados.Read())
+            if (dados != null)
             {
-                if (dados.GetBoolean(0))
+                if (dados.Read())
                 {
-                    json += "'email',";
+                    if (dados.GetBoolean(0))
+                    {
+                        json += "'email',";
+                    }
                 }
             }
+
+            dados.Close();
+            banco.Desconectar();
+
+            json = json.Substring(0, json.Length - 1) + "]}";
+            json = json.Replace("'", "\"");
+
+            return Ok(json);
+
+            #endregion
         }
-
-        dados.Close();
-        banco.Desconectar();
-
-        json = json.Substring(0, json.Length - 1) + "]}";
-        json = json.Replace("'", "\"");
-
-        return json;
-
-        #endregion
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 
     [HttpPost("ConfirmarEmail")]
-    public string ConfirmarEmail()
+    public IActionResult ConfirmarEmail(string cpf)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
+        try
+        {
+            Banco banco = new Banco();
+            banco.Conectar();
 
-        #region Confirma o email no banco
+            #region Confirma o email no banco
 
-        string cpf = Request.Form["cpf"];
+            string comando = $"UPDATE cliente SET ic_email_confirmado_cliente = true WHERE cd_cpf_cliente = '{cpf}'";
+            banco.Executar(comando);
 
-        string comando = $"UPDATE cliente SET ic_email_confirmado_cliente = true WHERE cd_cpf_cliente = '{cpf}'";
-        banco.Executar(comando);
+            banco.Desconectar();
 
-        banco.Desconectar();
+            return Ok();
 
-        return "ok";
-
-        #endregion
+            #endregion
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 
     [HttpPost("Logar")]
-    public string Logar()
+    public IActionResult Logar(string email, string senha)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        string email = Request.Form["email"];
-        string senha = Request.Form["senha"];
-
-        #region Pega os dados do cliente no banco, caso existam
-
-        string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
-        WHERE nm_email_cliente = '{email}' AND nm_senha_cliente = md5('{senha}');";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        Cliente cliente = new Cliente();
-
-        if (dados != null && dados.Read())
+        try
         {
-            cliente.Cpf = dados.GetString(0);
-            cliente.Nome = dados.GetString(1);
-            cliente.DataNascimento = dados.GetDateTime(2);
-            cliente.Email = email;
-            cliente.Confirmado = dados.GetBoolean(3);
-        }
+            Banco banco = new Banco();
+            banco.Conectar();
 
-        if (String.IsNullOrEmpty(cliente.Cpf))
+            #region Pega os dados do cliente no banco, caso existam
+
+            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
+            WHERE nm_email_cliente = '{email}' AND nm_senha_cliente = md5('{senha}');";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            Cliente cliente = new Cliente();
+
+            if (dados != null && dados.Read())
+            {
+                cliente.Cpf = dados.GetString(0);
+                cliente.Nome = dados.GetString(1);
+                cliente.DataNascimento = dados.GetDateTime(2);
+                cliente.Email = email;
+                cliente.Confirmado = dados.GetBoolean(3);
+            }
+
+            if (String.IsNullOrEmpty(cliente.Cpf))
+            {
+                string json = "{'erro': true}";
+                json = json.Replace("'", "\"");
+
+                return Ok(json);
+            }
+
+            return Ok(cliente);
+
+            #endregion
+        }
+        catch (Exception erro)
         {
-            string json = "{'erro': true}";
-            json = json.Replace("'", "\"");
-
-            return json;
+            return BadRequest(erro.Message);
         }
-
-        return JsonConvert.SerializeObject(cliente);
-
-        #endregion
     }
 
     [HttpPost("EnviarSolicitacao")]
-    public async Task<int> EnviarSolicitacao()
-    {
-        string token = Request.Form["token"];
-        string endereco = Request.Form["endereco"];
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Form["cliente"]);
-        string solicitacao = Request.Form["solicitacao"];
-      
-        var msg = new Message()
+    public async Task<IActionResult> EnviarSolicitacao(string token, string endereco, Cliente cliente, string solicitacao)
+    {      
+        try
         {
-            Notification = new Notification()
+            var msg = new Message()
             {
-                Title = "Solicitação de serviço",
-                Body = $"Enviada por {cliente.Nome}"
-            },
-            Data = new Dictionary<string, string>()
+                Notification = new Notification()
+                {
+                    Title = "Solicitação de serviço",
+                    Body = $"Enviada por {cliente.Nome}"
+                },
+                Data = new Dictionary<string, string>()
+                {
+                    {"cliente", JsonSerializer.Serialize(cliente)},
+                    {"endereco", endereco},
+                    {"solicitacao", solicitacao}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
         {
-            {"cliente", JsonConvert.SerializeObject(cliente)},
-            {"endereco", endereco},
-            {"solicitacao", solicitacao}
-        },
-            Token = token
-        };
-
-        string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
-
-        return 0;
+            return BadRequest(erro.Message);
+        }
     }
 
     [HttpPost("AdicionarTokenFCM")]
-    public void AdicionarTokenFCM(string cpf, string token)
+    public IActionResult AdicionarTokenFCM(string cpf, string token)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
+        try
+        {
+            Banco banco = new Banco();
+            banco.Conectar();
 
-        string comando = $@"UPDATE cliente SET nm_token_fcm = '{token}'
-        WHERE cd_cpf_cliente = '{cpf}'";
-        banco.Executar(comando);
-        banco.Desconectar();
+            string comando = $@"UPDATE cliente SET nm_token_fcm = '{token}'
+            WHERE cd_cpf_cliente = '{cpf}'";
+            banco.Executar(comando);
+            banco.Desconectar();
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 
     [HttpPost("GerarPagamento")]
-    public async Task<string> GerarPagamento()
+    public async Task<IActionResult> GerarPagamento(decimal valorVisita, string email, string cpf, int cdSolicitacao, string expiracao)
     {
-        decimal valorVisita = decimal.Parse(Request.Form["valor"]);
-        string email = Request.Form["email"];
-        string cpf = Request.Form["cpf"];
-        int cdSolicitacao = int.Parse(Request.Form["c"]);
-        string expiracao = Request.Form["expiracao"];
-        Random random = new Random();
-        string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-        string codigoAleatorio = "";
-
-        for (int i = 0; i < 5; i++)
+        try
         {
-            codigoAleatorio += letras[random.Next(letras.Length)];
+            Random random = new Random();
+            string letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+            string codigoAleatorio = "";
+
+            for (int i = 0; i < 5; i++)
+            {
+                codigoAleatorio += letras[random.Next(letras.Length)];
+            }
+
+            string json = @"{'transaction_amount': " + valorVisita + ", 'date_of_expiration': '" + expiracao + "','payment_method_id': 'pix', 'payer': {'email': '" + email + "', 'identification': {'type': 'CPF', 'number': '" + cpf + "'}}}";
+            json = json.Replace("'", "\"");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.mercadopago.com");
+                client.DefaultRequestHeaders.Add("accept", "application/json");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
+                client.DefaultRequestHeaders.Add("X-Idempotency-Key", codigoAleatorio);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var result = await client.PostAsync("/v1/payments", content);
+                var res = await result.Content.ReadAsStringAsync();
+
+                return Ok(res);
+            }
         }
-
-        string json = @"{'transaction_amount': " + valorVisita + ", 'date_of_expiration': '" + expiracao + "','payment_method_id': 'pix', 'payer': {'email': '" + email + "', 'identification': {'type': 'CPF', 'number': '" + cpf + "'}}}";
-        json = json.Replace("'", "\"");
-
-        using (var client = new HttpClient())
+        catch (Exception erro)
         {
-            client.BaseAddress = new Uri("https://api.mercadopago.com");
-            client.DefaultRequestHeaders.Add("accept", "application/json");
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
-            client.DefaultRequestHeaders.Add("X-Idempotency-Key", codigoAleatorio);
-
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var result = await client.PostAsync("/v1/payments", content);
-            var res = await result.Content.ReadAsStringAsync();
-
-            return res;
+            return BadRequest(erro.Message);
         }
     }
 
     [HttpGet("ChecarPagamento")]
-    public async Task<string> ChecarPagamento()
+    public async Task<IActionResult> ChecarPagamento(string id)
     {
-        string id = Request.Query["id"];
-
-        using (var client = new HttpClient())
+        try
         {
-            client.BaseAddress = new Uri($"https://api.mercadopago.com");
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"https://api.mercadopago.com");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer APP_USR-3082013782228827-100609-cc86dc20c3f8c6503eaec74da331b475-2021112151");
 
-            var result = await client.GetAsync($"/v1/payments/{id}");
-            var res = await result.Content.ReadAsStringAsync();
+                var result = await client.GetAsync($"/v1/payments/{id}");
+                var res = await result.Content.ReadAsStringAsync();
 
-            return res;
+                return Ok(res);
+            }
         }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        } 
     }
 
     [HttpPost("EnviarConfirmacao")]
-    public async Task<int> EnviarConfirmacao()
+    public async Task<IActionResult> EnviarConfirmacao(string token, Cliente cliente, string solicitacao)
     {
-        string token = Request.Form["token"];
-        Cliente cliente = JsonConvert.DeserializeObject<Cliente>(Request.Form["cliente"]);
-        string solicitacao = Request.Form["solicitacao"];
-
-        var msg = new Message()
+        try
         {
-            Notification = new Notification()
+            var msg = new Message()
             {
-                Title = "Pagamento confirmado",
-                Body = $"Pago por {cliente.Nome}"
-            },
-            Data = new Dictionary<string, string>()
+                Notification = new Notification()
+                {
+                    Title = "Pagamento confirmado",
+                    Body = $"Pago por {cliente.Nome}"
+                },
+                Data = new Dictionary<string, string>()
             {
                 {"pago", "true"},
                 {"solicitacao", solicitacao}
             },
-            Token = token
-        };
+                Token = token
+            };
 
-        string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
 
-        return 0;
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 
     [HttpPost("PegarTokenFCM")]
-    public string PegarTokenFCM()
+    public IActionResult PegarTokenFCM(string cpf)
     {
-        string cpf = Request.Form["cpf"];
-
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        string comando = $@"select nm_token_fcm from cliente where cd_cpf_cliente = {cpf};";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        Cliente cliente = new Cliente();
-
-        if (dados != null && dados.Read())
+        try
         {
-            cliente.TokenFCM = dados.GetString(0);
-        }
+            Banco banco = new Banco();
+            banco.Conectar();
 
-        return cliente.TokenFCM;
+            string comando = $@"select nm_token_fcm from cliente where cd_cpf_cliente = {cpf};";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            Cliente cliente = new Cliente();
+
+            if (dados != null && dados.Read())
+            {
+                cliente.TokenFCM = dados.GetString(0);
+            }
+
+            return Ok(cliente.TokenFCM);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
     }
 }
