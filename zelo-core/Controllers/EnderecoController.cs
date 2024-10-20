@@ -9,11 +9,10 @@ public class EnderecoController : ControllerBase
     [HttpPost("AdicionarEndereco")]
     public IActionResult AdicionarEndereco([FromForm]Endereco endereco)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Adiciona o endereço no banco
 
             string comando = $@"INSERT INTO endereco VALUES 
@@ -28,8 +27,6 @@ public class EnderecoController : ControllerBase
             );";
             banco.Executar(comando);
 
-            banco.Desconectar();
-
             return Ok();
             #endregion
         }
@@ -37,16 +34,20 @@ public class EnderecoController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
-        
+        finally
+        {
+            banco.Desconectar();
+        }
+
     }
 
     [HttpGet("CarregarEndereco")]
     public IActionResult CarregarEndereco([FromQuery]string cpf)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
 
             string comando = $"SELECT * FROM endereco WHERE cd_cpf_cliente = '{cpf}'";
             MySqlDataReader dados = banco.Consultar(comando);
@@ -64,7 +65,6 @@ public class EnderecoController : ControllerBase
             }
 
             dados.Close();
-            banco.Desconectar();
 
             return Ok(endereco);
         }
@@ -72,6 +72,10 @@ public class EnderecoController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
-        
+        finally
+        {
+            banco.Desconectar();
+        }
+
     }
 }
