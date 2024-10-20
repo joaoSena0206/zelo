@@ -38,7 +38,7 @@ public class EnderecoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cpf = Request.Form["cpf"];
+        string cpf = Request.Query["cpf"];
 
         string comando = $"SELECT * FROM endereco WHERE cd_cpf_cliente = '{cpf}'";
         MySqlDataReader dados = banco.Consultar(comando);

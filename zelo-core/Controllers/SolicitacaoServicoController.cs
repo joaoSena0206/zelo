@@ -201,8 +201,8 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string tipo = Request.Form["t"];
-        string cpf = Request.Form["c"];
+        string tipo = Request.Query["t"];
+        string cpf = Request.Query["c"];
 
         string comando = "";
 
@@ -262,8 +262,8 @@ public class SolicitacaoServicoController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cdSolicitacao = Request.Form["cd"];
-        string cpf = Request.Form["c"];
+        string cdSolicitacao = Request.Query["cd"];
+        string cpf = Request.Query["c"];
 
         string comando = $@"SELECT 
                             cliente.nm_cliente,

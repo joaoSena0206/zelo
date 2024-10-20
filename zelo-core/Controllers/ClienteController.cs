@@ -255,7 +255,7 @@ public class ClienteController : Controller
     [HttpGet("ChecarPagamento")]
     public async Task<string> ChecarPagamento()
     {
-        string id = Request.Form["id"];
+        string id = Request.Query["id"];
 
         using (var client = new HttpClient())
         {

@@ -16,7 +16,7 @@ public class PatrocinioController : Controller
         string comando = @"SELECT p.cd_cpf_trabalhador, nm_trabalhador, dt_cadastro_trabalhador, nm_servico, p.cd_servico FROM patrocinio p
         JOIN trabalhador t ON (p.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
         JOIN servico s ON (p.cd_servico = s.cd_servico)
-        GROUP BY p.cd_cpf_trabalhador";
+        GROUP BY p.cd_cpf_trabalhador LIMIT 5";
         MySqlDataReader dados = banco.Consultar(comando);
 
         List<Patrocinio> listaPatrocinio = new List<Patrocinio>();

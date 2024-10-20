@@ -323,7 +323,7 @@ public class TrabalhadorController : Controller
         Banco banco = new Banco();
         banco.Conectar();
 
-        int codigo = int.Parse(Request.Form["c"]);
+        int codigo = int.Parse(Request.Query["c"]);
 
         #region Pega os trabalhadores no banco de acordo com o serviço
 
