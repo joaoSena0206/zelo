@@ -9,19 +9,17 @@ using System.Text.Json;
 public class ClienteController : ControllerBase
 {
     [HttpPost("Adicionar")]
-    public IActionResult Adicionar(Cliente cliente)
+    public IActionResult Adicionar([FromForm] Cliente cliente)
     {
-        try
-        {
-            Banco banco = new Banco();
-            banco.Conectar();
+        Banco banco = new Banco();
+        banco.Conectar();
 
+        try
+        {  
             #region Adiciona o cliente no banco
 
             string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
             banco.Executar(comando);
-
-            banco.Desconectar();
 
             return Ok();
 
@@ -31,10 +29,14 @@ public class ClienteController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpPost("AdicionarFotoPerfil")]
-    public async Task<IActionResult> AdicionarFotoPerfil(string cpf, IFormFile file)
+    public async Task<IActionResult> AdicionarFotoPerfil([FromForm] string cpf, [FromForm] IFormFile file)
     {
         try
         {
@@ -73,13 +75,13 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("ChecarExistencia")]
-    public IActionResult ChecarExistencia(string cpf, string email)
+    public IActionResult ChecarExistencia([FromForm] string cpf, [FromForm] string email)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Checa a existência do email e do cpf
 
             string json = "{'cadastrado': [ ";
@@ -115,8 +117,7 @@ public class ClienteController : ControllerBase
             }
 
             dados.Close();
-            banco.Desconectar();
-
+            
             json = json.Substring(0, json.Length - 1) + "]}";
             json = json.Replace("'", "\"");
 
@@ -128,22 +129,24 @@ public class ClienteController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpPost("ConfirmarEmail")]
-    public IActionResult ConfirmarEmail(string cpf)
+    public IActionResult ConfirmarEmail([FromForm] string cpf)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Confirma o email no banco
 
             string comando = $"UPDATE cliente SET ic_email_confirmado_cliente = true WHERE cd_cpf_cliente = '{cpf}'";
             banco.Executar(comando);
-
-            banco.Desconectar();
 
             return Ok();
 
@@ -153,16 +156,20 @@ public class ClienteController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpPost("Logar")]
-    public IActionResult Logar(string email, string senha)
+    public IActionResult Logar([FromForm] string email, [FromForm] string senha)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Pega os dados do cliente no banco, caso existam
 
             string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
@@ -196,10 +203,14 @@ public class ClienteController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpPost("EnviarSolicitacao")]
-    public async Task<IActionResult> EnviarSolicitacao(string token, string endereco, Cliente cliente, string solicitacao)
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] Cliente cliente, [FromForm] string solicitacao)
     {      
         try
         {
@@ -230,28 +241,31 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("AdicionarTokenFCM")]
-    public IActionResult AdicionarTokenFCM(string cpf, string token)
+    public IActionResult AdicionarTokenFCM([FromForm] string cpf, [FromForm] string token)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             string comando = $@"UPDATE cliente SET nm_token_fcm = '{token}'
             WHERE cd_cpf_cliente = '{cpf}'";
             banco.Executar(comando);
-            banco.Desconectar();
-
+            
             return Ok();
         }
         catch (Exception erro)
         {
             return BadRequest(erro.Message);
         }
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpPost("GerarPagamento")]
-    public async Task<IActionResult> GerarPagamento(decimal valorVisita, string email, string cpf, int cdSolicitacao, string expiracao)
+    public async Task<IActionResult> GerarPagamento([FromForm] decimal valorVisita, [FromForm] string email, [FromForm] string cpf, [FromForm] int cdSolicitacao, [FromForm] string expiracao)
     {
         try
         {
@@ -288,7 +302,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpGet("ChecarPagamento")]
-    public async Task<IActionResult> ChecarPagamento(string id)
+    public async Task<IActionResult> ChecarPagamento([FromQuery] string id)
     {
         try
         {
@@ -310,7 +324,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("EnviarConfirmacao")]
-    public async Task<IActionResult> EnviarConfirmacao(string token, Cliente cliente, string solicitacao)
+    public async Task<IActionResult> EnviarConfirmacao([FromForm] string token, [FromForm] Cliente cliente, [FromForm] string solicitacao)
     {
         try
         {
@@ -340,13 +354,13 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("PegarTokenFCM")]
-    public IActionResult PegarTokenFCM(string cpf)
+    public IActionResult PegarTokenFCM([FromForm] string cpf)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             string comando = $@"select nm_token_fcm from cliente where cd_cpf_cliente = {cpf};";
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -362,6 +376,10 @@ public class ClienteController : ControllerBase
         catch (Exception erro)
         {
             return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
     }
 }
