@@ -10,11 +10,11 @@ public class ConfirmacaoController : ControllerBase
     [HttpPost("GerarCodigo")]
     public IActionResult GerarCodigo([FromForm]string cpf, [FromForm] string tipo)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Gera o código aleatório e insere no banco
 
             Random random = new Random();
@@ -98,16 +98,19 @@ public class ConfirmacaoController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
-        
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     public void EnviarEmail(Confirmacao confirmacao)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Pega o email do cliente no banco
 
             string comando = $"SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '{confirmacao.CpfCliente}';";
@@ -160,6 +163,10 @@ public class ConfirmacaoController : ControllerBase
         catch (Exception erro)
         {
             throw new Exception(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
     }
 }
