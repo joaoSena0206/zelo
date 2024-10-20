@@ -160,36 +160,40 @@ export class CadastroClientePage implements OnInit {
             dadosForm.set(dado, "null");
         }
 
-        this.carregar = true;
-        let resposta: any = await firstValueFrom(this.http.post(link, dadosForm));
+        try {
+            this.carregar = true;
+            let resposta: any = await firstValueFrom(this.http.post(link, dadosForm));
 
-        let objRes = resposta as any;
+            let objRes = resposta as any;
 
-        if (objRes.cadastrado.length == 0) {
-            link = dominio + "/Cliente/Adicionar";
-            dadosForm = new FormData();
-            dadosForm.append("cliente", JSON.stringify(cliente));
+            if (objRes.cadastrado.length == 0) {
+                link = dominio + "/Cliente/Adicionar";
+                dadosForm = new FormData();
+                dadosForm.append("cliente", JSON.stringify(cliente));
 
-            resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-            console.log(resposta);
-
-            if (resposta.status == 200) {
                 localStorage.setItem("cliente", JSON.stringify(cliente));
 
                 this.navCl.navigateRoot("/confirmar-celular", { animationDirection: "forward", animated: true });
             }
-        }
-        else {
-            objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
-                this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
+            else {
+                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
 
-                this.form.controls[cadastrado].setErrors({ existe: true });
-                this.form.controls[cadastrado].markAsDirty();
-            });
+                    this.form.controls[cadastrado].setErrors({ existe: true });
+                    this.form.controls[cadastrado].markAsDirty();
+                });
+            }
         }
-
-        this.carregar = false;
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     enviar() {
