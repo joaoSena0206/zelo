@@ -9,11 +9,10 @@ public class PatrocinioController : ControllerBase
     [HttpGet("CarregarPatrocinados")]
     public IActionResult CarregarPatrocinados()
     {
+        Banco banco = new Banco();
+        banco.Conectar();
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Carrega os patrocinados do banco
 
             string comando = @"SELECT p.cd_cpf_trabalhador, nm_trabalhador, dt_cadastro_trabalhador, nm_servico, p.cd_servico FROM patrocinio p
@@ -49,7 +48,6 @@ public class PatrocinioController : ControllerBase
             }
 
             dados.Close();
-            banco.Desconectar();
 
             return Ok(listaPatrocinio);
 
@@ -58,6 +56,10 @@ public class PatrocinioController : ControllerBase
         catch (Exception erro)
         {
             return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
 
 

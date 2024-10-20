@@ -8,10 +8,10 @@ public class ServicoController: ControllerBase
     [HttpGet("CarregarServicos")]
     public IActionResult CarregarServicos()
     {
+        Banco banco = new Banco();
+        banco.Conectar();
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
 
             #region Carrega os serviços do banco de acordo com a categoria
 
@@ -38,7 +38,6 @@ public class ServicoController: ControllerBase
             }
 
             dados.Close();
-            banco.Desconectar();
 
             return Ok(listaServico);
 
@@ -47,6 +46,10 @@ public class ServicoController: ControllerBase
         catch (Exception erro)
         {
             return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
 
     }
