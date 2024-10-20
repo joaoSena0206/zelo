@@ -168,7 +168,7 @@ export class CadastroClientePage implements OnInit {
         if (objRes.cadastrado.length == 0) {
             link = dominio + "/Cliente/Adicionar";
             dadosForm = new FormData();
-            dadosForm.append("Cliente", cliente);
+            dadosForm.append("cliente", JSON.stringify(cliente));
 
             resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
