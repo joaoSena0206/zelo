@@ -2,62 +2,76 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 
+[ApiController]
 [Route("Endereco")]
-public class EnderecoController : Controller
+public class EnderecoController : ControllerBase
 {
     [HttpPost("AdicionarEndereco")]
-    public void AdicionarEndereco()
+    public IActionResult AdicionarEndereco([FromForm]Endereco endereco)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
+        try
+        {
+            Banco banco = new Banco();
+            banco.Conectar();
 
-        Endereco endereco = JsonConvert.DeserializeObject<Endereco>(Request.Form["endereco"]);
+            #region Adiciona o endereço no banco
 
-        #region Adiciona o endereço no banco
+            string comando = $@"INSERT INTO endereco VALUES 
+            (
+	            (SELECT IFNULL(MAX(cd_endereco) + 1, 1) FROM (SELECT cd_endereco FROM endereco) AS temp),
+	            '{endereco.Cep}',
+	            '{endereco.Identificacao}',
+	            '{endereco.CpfCliente}',
+	            {endereco.Numero},
+	            '{endereco.Complemento}',
+	            '{endereco.Referencia}'
+            );";
+            banco.Executar(comando);
 
-        string comando = $@"INSERT INTO endereco VALUES 
-        (
-	        (SELECT IFNULL(MAX(cd_endereco) + 1, 1) FROM (SELECT cd_endereco FROM endereco) AS temp),
-	        '{endereco.Cep}',
-	        '{endereco.Identificacao}',
-	        '{endereco.CpfCliente}',
-	        {endereco.Numero},
-	        '{endereco.Complemento}',
-	        '{endereco.Referencia}'
-        );";
-        banco.Executar(comando);
+            banco.Desconectar();
 
-        banco.Desconectar();
-
-        #endregion 
+            return Ok();
+            #endregion
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        
     }
 
     [HttpGet("CarregarEndereco")]
-    public string CarregarEndereco()
+    public IActionResult CarregarEndereco([FromQuery]string cpf)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        string cpf = Request.Query["cpf"];
-
-        string comando = $"SELECT * FROM endereco WHERE cd_cpf_cliente = '{cpf}'";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        Endereco endereco = new Endereco();
-
-        if (dados != null && dados.Read())
+        try
         {
-            endereco.Codigo = dados.GetInt32(0);
-            endereco.Cep = dados.GetString(1);
-            endereco.Identificacao = dados.GetString(2);
-            endereco.Numero = dados.GetInt32(4);
-            endereco.Complemento = dados.GetString(5);
-            endereco.Referencia = dados.GetString(6);
+            Banco banco = new Banco();
+            banco.Conectar();
+
+            string comando = $"SELECT * FROM endereco WHERE cd_cpf_cliente = '{cpf}'";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            Endereco endereco = new Endereco();
+
+            if (dados != null && dados.Read())
+            {
+                endereco.Codigo = dados.GetInt32(0);
+                endereco.Cep = dados.GetString(1);
+                endereco.Identificacao = dados.GetString(2);
+                endereco.Numero = dados.GetInt32(4);
+                endereco.Complemento = dados.GetString(5);
+                endereco.Referencia = dados.GetString(6);
+            }
+
+            dados.Close();
+            banco.Desconectar();
+
+            return Ok(endereco);
         }
-
-        dados.Close();
-        banco.Desconectar();
-
-        return JsonConvert.SerializeObject(endereco);
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        
     }
 }

@@ -2,270 +2,320 @@ using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
+[ApiController]
 [Route("SolicitacaoServico")]
-public class SolicitacaoServicoController : Controller
+public class SolicitacaoServicoController : ControllerBase
 {
     [HttpGet("CarregarUltimosPedidos")]
-    public string carregarUltimosPedidos()
+    public IActionResult carregarUltimosPedidos([FromQuery]string tipo, [FromQuery]string cpf)
     {
         Banco banco = new Banco();
         banco.Conectar();
-
-        string tipo = Request.Query["t"];
-        string cpf = Request.Query["c"];
-
-        string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador, ss.cd_servico FROM solicitacao_servico ss
-        JOIN trabalhador t ON (ss.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
-        JOIN servico s ON (ss.cd_servico = s.cd_servico)
-        WHERE ss.cd_cpf_cliente = '{cpf}' ORDER BY dt_solicitacao_servico DESC";
-
-        if (tipo == "trabalhador")
+        try
         {
-            comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = {cpf} ORDER BY dt_solicitacao_servico DESC LIMIT 5";
-        }
 
-        MySqlDataReader dados = banco.Consultar(comando);
+            string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador, ss.cd_servico FROM solicitacao_servico ss
+            JOIN trabalhador t ON (ss.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
+            JOIN servico s ON (ss.cd_servico = s.cd_servico)
+            WHERE ss.cd_cpf_cliente = '{cpf}' ORDER BY dt_solicitacao_servico DESC";
 
-        List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
-        TrabalhadorController trabalhadorController = new TrabalhadorController();
-
-        if (dados != null)
-        {
-            while (dados.Read())
+            if (tipo == "trabalhador")
             {
-                if (tipo == "cliente")
+                comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = {cpf} ORDER BY dt_solicitacao_servico DESC LIMIT 5";
+            }
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
+            TrabalhadorController trabalhadorController = new TrabalhadorController();
+
+            if (dados != null)
+            {
+                while (dados.Read())
                 {
-                    SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
-                    Trabalhador trabalhador = new Trabalhador();
-                    Servico servico = new Servico();
+                    if (tipo == "cliente")
+                    {
+                        SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+                        Trabalhador trabalhador = new Trabalhador();
+                        Servico servico = new Servico();
 
-                    trabalhador.Cpf = dados.GetString(4);
-                    trabalhador.Nome = dados.GetString(0);
-                    trabalhador.ValorVisita = dados.GetDecimal(3);
-                    trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
+                        trabalhador.Cpf = dados.GetString(4);
+                        trabalhador.Nome = dados.GetString(0);
+                        trabalhador.ValorVisita = dados.GetDecimal(3);
+                        trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
 
-                    servico.Codigo = dados.GetInt32(5);
-                    servico.Nome = dados.GetString(1);
+                        servico.Codigo = dados.GetInt32(5);
+                        servico.Nome = dados.GetString(1);
 
-                    solicitacaoServico.Trabalhador = trabalhador;
-                    solicitacaoServico.Servico = servico;
-                    solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime(2);
+                        solicitacaoServico.Trabalhador = trabalhador;
+                        solicitacaoServico.Servico = servico;
+                        solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime(2);
 
-                    listaHistorico.Add(solicitacaoServico);
-                }
-                else
-                {
-                    Cliente cliente = new Cliente();
-                    SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+                        listaHistorico.Add(solicitacaoServico);
+                    }
+                    else
+                    {
+                        Cliente cliente = new Cliente();
+                        SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
 
-                    cliente.Nome = dados.GetString(1);
+                        cliente.Nome = dados.GetString(1);
 
-                    solicitacaoServico.DsServico = dados.GetString(0);
-                    solicitacaoServico.CdSolicitacaoServico = dados.GetInt32(2);
-                    solicitacaoServico.Cliente = cliente;
+                        solicitacaoServico.DsServico = dados.GetString(0);
+                        solicitacaoServico.CdSolicitacaoServico = dados.GetInt32(2);
+                        solicitacaoServico.Cliente = cliente;
 
-                    listaHistorico.Add(solicitacaoServico);
+                        listaHistorico.Add(solicitacaoServico);
+                    }
                 }
             }
-        }
 
-        if (!dados.IsClosed)
+            if (!dados.IsClosed)
+            {
+                dados.Close();
+            }
+
+            return Ok(listaHistorico);
+        }
+        catch (Exception erro)
         {
-            dados.Close();
+            return BadRequest(erro.Message);
         }
-        
-        banco.Desconectar();
+        finally
+        {
+            banco.Desconectar();
+        }
 
-        return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
     }
 
     [HttpPost("AdicionarSolicitacao")]
-    public string AdicionarSolicitacao()
+    public IActionResult AdicionarSolicitacao([FromForm]string cpf, [FromForm] int codigoServico, [FromForm]string desc)
     {
         Banco banco = new Banco();
         banco.Conectar();
-
-        string cpf = Request.Form["cpf"];
-        int cdServico = int.Parse(Request.Form["codigoServico"]);
-        string desc = Request.Form["desc"];
-        int codigoSolicitacao = 0;
-
-        DateTime dataAtual = DateTime.Now;
-        SolicitacaoServico solicitacao = new SolicitacaoServico();
-        Cliente cliente = new Cliente();
-        Servico servico = new Servico();
-
-        #region Adiciona a solicitação no banco e no servidor
-
-        #region Pega o maior cd
-
-        string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        if (dados != null && dados.Read())
+        try
         {
-            codigoSolicitacao = dados.GetInt32(0);
+
+            int codigoSolicitacao = 0;
+
+            DateTime dataAtual = DateTime.Now;
+            SolicitacaoServico solicitacao = new SolicitacaoServico();
+            Cliente cliente = new Cliente();
+            Servico servico = new Servico();
+
+            #region Adiciona a solicitação no banco e no servidor
+
+            #region Pega o maior cd
+
+            string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            if (dados != null && dados.Read())
+            {
+                codigoSolicitacao = dados.GetInt32(0);
+            }
+
+            dados.Close();
+
+            #endregion
+
+            cliente.Cpf = cpf;
+            servico.Codigo = codigoServico;
+
+            solicitacao.CdSolicitacaoServico = codigoSolicitacao;
+            solicitacao.Cliente = cliente;
+            solicitacao.Servico = servico;
+            solicitacao.DtSolicitacaoServico = dataAtual;
+            solicitacao.DsServico = desc;
+
+            comando = $@"INSERT INTO solicitacao_servico 
+            (
+	            cd_solicitacao_servico,
+	            cd_cpf_cliente,
+	            cd_servico,
+	            dt_solicitacao_servico,
+	            ds_servico
+            )
+            VALUES
+            (
+	            {codigoSolicitacao},
+	            '{cpf}',
+	            {codigoServico},
+	            '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
+	            '{desc}'
+            )";
+            banco.Executar(comando);
+            banco.Desconectar();
+
+            AdicionarImgs(codigoSolicitacao, Request.Form.Files);
+
+            #endregion
+
+            return Ok(solicitacao);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
 
-        dados.Close();
-
-        #endregion
-
-        cliente.Cpf = cpf;
-        servico.Codigo = cdServico;
-
-        solicitacao.CdSolicitacaoServico = codigoSolicitacao;
-        solicitacao.Cliente = cliente;
-        solicitacao.Servico = servico;
-        solicitacao.DtSolicitacaoServico = dataAtual;
-        solicitacao.DsServico = desc;
-
-        comando = $@"INSERT INTO solicitacao_servico 
-        (
-	        cd_solicitacao_servico,
-	        cd_cpf_cliente,
-	        cd_servico,
-	        dt_solicitacao_servico,
-	        ds_servico
-        )
-        VALUES
-        (
-	        {codigoSolicitacao},
-	        '{cpf}',
-	        {cdServico},
-	        '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
-	        '{desc}'
-        )";
-        banco.Executar(comando);
-        banco.Desconectar();
-
-        AdicionarImgs(codigoSolicitacao, Request.Form.Files);
-
-        #endregion
-
-        return JsonConvert.SerializeObject(solicitacao);
     }
 
     public void AdicionarImgs(int cdSolicitacao, IFormFileCollection files)
     {
-        ImgSolicitacaoController imgSolicitacaoController = new ImgSolicitacaoController();
-
-        string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Solicitacao", cdSolicitacao.ToString());
-
-        if (Directory.Exists(caminhoPasta))
+        try
         {
-            imgSolicitacaoController.DeletarImgs(cdSolicitacao);
-            Directory.Delete(caminhoPasta, true);
-        }
-        
-        Directory.CreateDirectory(caminhoPasta);
-        
+            ImgSolicitacaoController imgSolicitacaoController = new ImgSolicitacaoController();
 
-        if (Request.Form.Files.Count > 0)
-        {
-            for(int i = 0; i < files.Count; i++)
+            string caminhoPasta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imgs/Solicitacao", cdSolicitacao.ToString());
+
+            if (Directory.Exists(caminhoPasta))
             {
-                IFormFile file = files[i];
+                imgSolicitacaoController.DeletarImgs(cdSolicitacao);
+                Directory.Delete(caminhoPasta, true);
+            }
 
-                if (file != null && file.Length > 0)
+            Directory.CreateDirectory(caminhoPasta);
+
+
+            if (Request.Form.Files.Count > 0)
+            {
+                for (int i = 0; i < files.Count; i++)
                 {
-                    string caminho = Path.Combine(caminhoPasta, (i + 1) + Path.GetExtension(file.FileName));
-                    imgSolicitacaoController.AdicionarImgs(i + 1, cdSolicitacao, Path.GetExtension(file.FileName));
+                    IFormFile file = files[i];
 
-                    using var stream = new FileStream(caminho, FileMode.Create);
-                    file.CopyToAsync(stream);
+                    if (file != null && file.Length > 0)
+                    {
+                        string caminho = Path.Combine(caminhoPasta, (i + 1) + Path.GetExtension(file.FileName));
+                        imgSolicitacaoController.AdicionarImgs(i + 1, cdSolicitacao, Path.GetExtension(file.FileName));
+
+                        using var stream = new FileStream(caminho, FileMode.Create);
+                        file.CopyToAsync(stream);
+                    }
                 }
             }
         }
+        catch (Exception erro)
+        {
+            throw new Exception(erro.Message);
+        }
+        
     }
 
     [HttpPost("AtualizarSituacao")]
-    public void AtualizarSolicitacao()
+    public IActionResult AtualizarSolicitacao([FromForm]SolicitacaoServico solicitacaoServico)
     {
         Banco banco = new Banco();
         banco.Conectar();
+        try
+        {
+            string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
+            WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
+            banco.Executar(comando);
 
-        SolicitacaoServico solicitacaoServico = JsonConvert.DeserializeObject<SolicitacaoServico>(Request.Form["solicitacao"]);
+            AdicionarImgs(solicitacaoServico.CdSolicitacaoServico, Request.Form.Files);
 
-        string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
-        WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
-        banco.Executar(comando);
-        banco.Desconectar();
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
 
-        AdicionarImgs(solicitacaoServico.CdSolicitacaoServico, Request.Form.Files);
     }
 
     [HttpGet("carregarcomentariosAnonimos")]
-    public string carregarcomentariosAnonimos()
+    public IActionResult carregarcomentariosAnonimos([FromQuery]string tipo, [FromQuery] string cpf)
     {
         Banco banco = new Banco();
         banco.Conectar();
 
-        string tipo = Request.Query["t"];
-        string cpf = Request.Query["c"];
-
-        string comando = "";
-
-        if (tipo == "trabalhador")
+        try
         {
-            comando = $"select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = {cpf} AND ds_comentario_avaliacao_servico IS NOT NULL ORDER BY RAND() LIMIT 5";
-        }
+            string comando = "";
 
-        MySqlDataReader dados = banco.Consultar(comando);
-
-        List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
-        TrabalhadorController trabalhadorController = new TrabalhadorController();
-
-        if (dados != null)
-        {
-            while (dados.Read())
+            if (tipo == "trabalhador")
             {
-                SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
-
-                solicitacaoServico.DsComentarioAvaliacaoServico = dados.GetString(0);
-                solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetInt32(1);
-
-                listaHistorico.Add(solicitacaoServico);
-                
+                comando = $"select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = {cpf} AND ds_comentario_avaliacao_servico IS NOT NULL ORDER BY RAND() LIMIT 5";
             }
-        }
 
-        if (!dados.IsClosed)
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
+            TrabalhadorController trabalhadorController = new TrabalhadorController();
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+
+                    solicitacaoServico.DsComentarioAvaliacaoServico = dados.GetString(0);
+                    solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetInt32(1);
+
+                    listaHistorico.Add(solicitacaoServico);
+
+                }
+            }
+
+            if (!dados.IsClosed)
+            {
+                dados.Close();
+            }
+
+            return Ok(listaHistorico);
+        }
+        catch (Exception erro)
         {
-            dados.Close();
+            return BadRequest(erro.Message);
         }
-
-        banco.Desconectar();
-
-        return JsonConvert.SerializeObject(listaHistorico, Formatting.Indented);
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpPost("AdicionarTrabalhador")]
-    public void AdicionarTrabalhador()
+    public IActionResult AdicionarTrabalhador([FromForm]string cdSolicitacao, [FromForm]string cpf)
     {
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cdSolicitacao = Request.Form["cd"];
-        string cpf = Request.Form["cpf"];
-
-        string comando = $@"UPDATE solicitacao_servico SET cd_cpf_trabalhador = '{cpf}' 
-        WHERE cd_solicitacao_servico = {cdSolicitacao}";
-        banco.Executar(comando);
-        banco.Desconectar();
+        try
+        {
+            string comando = $@"UPDATE solicitacao_servico SET cd_cpf_trabalhador = '{cpf}' 
+            WHERE cd_solicitacao_servico = {cdSolicitacao}";
+            banco.Executar(comando);
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+        
     }
 
     [HttpGet("CarregarHistoricoTrabalhador")]
-    public string CarregarHisotricoTrabalhador()
+    public IActionResult CarregarHisotricoTrabalhador([FromQuery]string cdSolicitacao, [FromQuery] string cpf)
     {
-        List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
         Banco banco = new Banco();
         banco.Conectar();
 
-        string cdSolicitacao = Request.Query["cd"];
-        string cpf = Request.Query["c"];
+        try
+        {
+            List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
 
-        string comando = $@"SELECT 
+            string comando = $@"SELECT 
                             cliente.nm_cliente,
                             solicitacao_servico.dt_solicitacao_servico,
                             solicitacao_servico.ds_servico,
@@ -277,32 +327,40 @@ public class SolicitacaoServicoController : Controller
                         ON 
                             cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where solicitacao_servico.cd_cpf_trabalhador = '{cpf}'";
 
-        MySqlDataReader dados = banco.Consultar(comando);
+            MySqlDataReader dados = banco.Consultar(comando);
 
-        if (dados != null)
-        {
-            while (dados.Read())
+            if (dados != null)
             {
-                SolicitacaoServico solicitacaoServico= new SolicitacaoServico();
-                Cliente cliente = new Cliente();
+                while (dados.Read())
+                {
+                    SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+                    Cliente cliente = new Cliente();
 
-                cliente.Nome = dados.GetString("nm_cliente");
-                solicitacaoServico.Cliente = cliente;
-                solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
-                solicitacaoServico.DsServico = dados.GetString("ds_servico");
-                solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
+                    cliente.Nome = dados.GetString("nm_cliente");
+                    solicitacaoServico.Cliente = cliente;
+                    solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
+                    solicitacaoServico.DsServico = dados.GetString("ds_servico");
+                    solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
 
-                listahistoricotrabalhador.Add(solicitacaoServico);
+                    listahistoricotrabalhador.Add(solicitacaoServico);
+                }
             }
-        }
 
-        if (!dados.IsClosed)
+            if (!dados.IsClosed)
+            {
+                dados.Close();
+            }
+
+            return Ok(listahistoricotrabalhador);
+        }
+        catch (Exception erro)
         {
-            dados.Close();
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
 
-        banco.Desconectar();
-
-        return JsonConvert.SerializeObject(listahistoricotrabalhador, Formatting.Indented);
     }
 }
