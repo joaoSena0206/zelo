@@ -99,7 +99,16 @@ export class InicialPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("cpf", this.trabalhador.Cpf);
 
-        let res = await firstValueFrom(this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }));
+        let res;
+
+        try {
+            res = await firstValueFrom(this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }));
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
 
         if (res == "True") {
             this.situacao = 'Disponível';
@@ -133,9 +142,14 @@ export class InicialPage implements OnInit {
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("token", token);
 
-        let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-
-        console.log(resposta);
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     async checarPermissao() {
@@ -206,11 +220,19 @@ export class InicialPage implements OnInit {
                     dadosForm.append("log", location.longitude.toFixed(8));
                 }
 
-                this.carregar = true;
-                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-                this.carregar = false;
+                try {
+                    this.carregar = true;
+                    let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                }
+                catch (erro: any) {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
+                }
 
-                console.log(res);
             }
 
         ).then(watcherId => {
@@ -256,13 +278,23 @@ export class InicialPage implements OnInit {
     }
 
     async carregarComentarioAnonimo() {
-        let link = dominio + `/SolicitacaoServico/carregarcomentariosAnonimos?c=${this.trabalhador.Cpf}&t=trabalhador`;
+        let link = dominio + `/SolicitacaoServico/carregarcomentariosAnonimos?cpf=${this.trabalhador.Cpf}&tipo=trabalhador`;
 
-        this.carregar = true;
-        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-        this.carregar = false;
+        let res;
 
-        this.ComentarioAnonimo = res;
+        try {
+            this.carregar = true;
+            res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+            this.ComentarioAnonimo = res;
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
 
         const observer = new MutationObserver((mutations) => {
             const comentarios = document.querySelectorAll("ion-item");
@@ -281,10 +313,22 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?c=${trabalhador.Cpf}&t=trabalhador`;
+        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
 
-        this.carregar = true;
-        let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+        let res: any;
+
+        try {
+            this.carregar = true;
+            res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
 
         for (let i = 0; i < res.length; i++) {
             res[i].img = await this.carregarImgServico(res[i].CdSolicitacaoServico);
@@ -294,22 +338,34 @@ export class InicialPage implements OnInit {
     }
 
     async carregarImgServico(cdSolicitacao: any) {
-        this.carregar = true;
 
-        let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${cdSolicitacao}&q=1`;
-        let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+        let urlImg = null;
 
-        if (res.length > 0) {
-            link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+        try {
+            this.carregar = true;
+
+            let link = dominio + `/ImgSolicitacao/CarregarImgs?cdSolicitacao=${cdSolicitacao}&quantidade=1`;
+            let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
+            if (res.length > 0) {
+                link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+            }
+            else {
+                link = "../../../../assets/icon/geral/sem-foto.jpg";
+            }
+
+            res = await firstValueFrom(this.http.get(link, { headers: headerNgrok, responseType: "blob" }));
+
+            urlImg = URL.createObjectURL(res);
         }
-        else {
-            link = "../../../../assets/icon/geral/sem-foto.jpg";
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
-
-        res = await firstValueFrom(this.http.get(link, { headers: headerNgrok, responseType: "blob" }));
-
-        const urlImg = URL.createObjectURL(res);
-        this.carregar = false;
+        finally {
+            this.carregar = false;
+        }
 
         return urlImg;
     }
@@ -366,11 +422,17 @@ export class InicialPage implements OnInit {
         let link = dominio + "/Trabalhador/AtualizarSituacao";
 
         let dadosForm = new FormData();
-        dadosForm.append("Resultado", this.resultado!);
+        dadosForm.append("codigoResultado", this.resultado!);
         dadosForm.append("cpf", this.trabalhador.Cpf);
 
-        this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {
-
-        })
+        try
+        {
+            this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {})
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 }

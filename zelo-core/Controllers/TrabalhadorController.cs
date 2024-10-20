@@ -319,7 +319,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("AdicionarSaque")]
-    public IActionResult AdicionarSaque([FromForm] string cpf, [FromForm] string pix, [FromForm] string valorVisita)
+    public IActionResult AdicionarSaque([FromForm] string cpf, [FromForm] string pix, [FromForm] string valor)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -327,7 +327,7 @@ public class TrabalhadorController : ControllerBase
 
         try
         {
-            string comando = $@"UPDATE trabalhador SET nm_pix_trabalhador = '{pix}', vl_visita_trabalhador = {valorVisita}
+            string comando = $@"UPDATE trabalhador SET nm_pix_trabalhador = '{pix}', vl_visita_trabalhador = {valor}
             WHERE cd_cpf_trabalhador = '{cpf}'";
             banco.Executar(comando);
 
@@ -351,7 +351,7 @@ public class TrabalhadorController : ControllerBase
 
         try
         {
-            List<Servico> listaServico = JsonSerializer.Deserialize<List<Servico>>(Request.Form["listaServico"]);
+            List<Servico> listaServico = JsonSerializer.Deserialize<List<Servico>>(Request.Form["categorias"]);
 
             for (int i = 0; i < listaServico.Count; i++)
             {

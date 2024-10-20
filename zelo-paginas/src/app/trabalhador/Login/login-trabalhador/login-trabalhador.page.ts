@@ -114,11 +114,21 @@ export class LoginTrabalhadorPage implements OnInit {
             dadosForm.append("email", email!);
             dadosForm.append("senha", senha!);
 
-            this.carregar = true;
-
-            let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
-
-            this.carregar = false;
+            let res = null;
+            
+            try
+            {
+                this.carregar = true;
+                let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
+            }
+            catch (erro: any) {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+            finally {
+                this.carregar = false;
+            }
 
             let obj: any = res;
 

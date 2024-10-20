@@ -7,7 +7,7 @@ using System.Text.Json;
 public class SolicitacaoServicoController : ControllerBase
 {
     [HttpGet("CarregarUltimosPedidos")]
-    public IActionResult carregarUltimosPedidos([FromQuery]string tipo, [FromQuery]string cpf)
+    public IActionResult carregarUltimosPedidos([FromQuery] string cpf, [FromQuery]string tipo)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -232,7 +232,7 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpGet("carregarcomentariosAnonimos")]
-    public IActionResult carregarcomentariosAnonimos([FromQuery]string tipo, [FromQuery] string cpf)
+    public IActionResult carregarcomentariosAnonimos([FromQuery] string cpf, [FromQuery] string tipo)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -307,7 +307,7 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpGet("CarregarHistoricoTrabalhador")]
-    public IActionResult CarregarHisotricoTrabalhador([FromQuery]string cdSolicitacao, [FromQuery] string cpf)
+    public IActionResult CarregarHisotricoTrabalhador([FromQuery] string cpf, [FromQuery]string tipo)
     {
         Banco banco = new Banco();
         banco.Conectar();

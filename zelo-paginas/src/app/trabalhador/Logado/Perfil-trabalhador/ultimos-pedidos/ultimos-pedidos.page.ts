@@ -11,10 +11,10 @@ import { registerPlugin } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { DOCUMENT } from '@angular/common';
 import {
-    ActionPerformed,
-    PushNotificationSchema,
-    PushNotifications,
-    Token,
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
 } from '@capacitor/push-notifications';
 
 @Component({
@@ -30,61 +30,84 @@ export class UltimosPedidosPage implements OnInit {
   }
 
   voltarPag() {
-      this.navCl.back();
+    this.navCl.back();
   }
 
-    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
-    historico: any;
-    Nome: any = this.trabalhador.Nome.trim();
-    ComentarioAnonimo: any;
-    qtEstrelas: any;
-    carregar: boolean = false;
-    watcherId: any;
-    result: any;
-    clienteServico: any;
-    solicitacaoServico: any;
-    enderecoServico: any;
-    modal: any;
+  trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
+  historico: any;
+  Nome: any = this.trabalhador.Nome.trim();
+  ComentarioAnonimo: any;
+  qtEstrelas: any;
+  carregar: boolean = false;
+  watcherId: any;
+  result: any;
+  clienteServico: any;
+  solicitacaoServico: any;
+  enderecoServico: any;
+  modal: any;
 
   async carregarHistorico() {
     let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?c=${trabalhador.Cpf}&t=trabalhador`;
+    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
 
-    this.carregar = true;
-    let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+    try {
 
-    for (let i = 0; i < res.length; i++) {
+      this.carregar = true;
+      let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
+      for (let i = 0; i < res.length; i++) {
         res[i].img = await this.carregarImgServico(res[i].CdSolicitacaoServico);
+      }
+
+      this.historico = res;
+
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
+    }
+    finally {
+      this.carregar = false;
     }
 
-    this.historico = res;
-
     console.log(this.historico)
-}
+  }
 
   async carregarImgServico(cdSolicitacao: any) {
+    try {
       this.carregar = true;
 
-      let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${cdSolicitacao}&q=1`;
+      let link = dominio + `/ImgSolicitacao/CarregarImgs?cdSolicitacao=${cdSolicitacao}&quantidade=1`;
       let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
       if (res.length > 0) {
-          link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+        link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
       }
       else {
-          link = "../../../../assets/icon/geral/sem-foto.jpg";
+        link = "../../../../assets/icon/geral/sem-foto.jpg";
       }
 
       res = await firstValueFrom(this.http.get(link, { headers: headerNgrok, responseType: "blob" }));
 
       const urlImg = URL.createObjectURL(res);
-      this.carregar = false;
 
       return urlImg;
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
+    }
+    finally {
+      this.carregar = false;
+    }
+
+    return null;
   }
 
   ngAfterViewInit() {
     this.carregarHistorico();
-}
+  }
 
 }

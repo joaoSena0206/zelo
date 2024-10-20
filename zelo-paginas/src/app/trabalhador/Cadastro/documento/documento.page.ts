@@ -79,47 +79,56 @@ export class DocumentoPage implements OnInit {
         dadosForm.append("pix", trabalhador.pix);
         dadosForm.append("valor", trabalhador.valor);
 
-        this.carregar = true;
+        try {
+            this.carregar = true;
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-        if (res == null) {
-            link = dominio + "/Trabalhador/AdicionarCategoria";
+            if (res == null) {
+                link = dominio + "/Trabalhador/AdicionarCategoria";
 
-            dadosForm = new FormData();
-            dadosForm.append("cpf", trabalhador.Cpf);
-            dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
+                dadosForm = new FormData();
+                dadosForm.append("cpf", trabalhador.Cpf);
+                dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-            res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
+                res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
-            if (res == "") {
-                if (this.arquivos.length != 0) {
-                    link = dominio + "/Trabalhador/AdicionarCertificado"
-                    dadosForm = new FormData();
-                    dadosForm.append("cpf", trabalhador.Cpf);
+                if (res == "") {
+                    if (this.arquivos.length != 0) {
+                        link = dominio + "/Trabalhador/AdicionarCertificado"
+                        dadosForm = new FormData();
+                        dadosForm.append("cpf", trabalhador.Cpf);
 
-                    for (let i = 0; i < this.arquivos.length; i++) {
-                        dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
+                        for (let i = 0; i < this.arquivos.length; i++) {
+                            dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
+                        }
+
+                        res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+                        if (res == null) {
+                            localStorage.removeItem("trabalhador");
+
+                            this.navCl.navigateRoot("/login-trabalhador");
+                        }
+
                     }
-
-                    res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-
-                    if (res == null) {
+                    else {
                         localStorage.removeItem("trabalhador");
 
                         this.navCl.navigateRoot("/login-trabalhador");
                     }
-
-                }
-                else {
-                    localStorage.removeItem("trabalhador");
-
-                    this.navCl.navigateRoot("/login-trabalhador");
                 }
             }
-
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
             this.carregar = false;
         }
+
     }
 
     async cadastrarCategoria() {
@@ -129,9 +138,19 @@ export class DocumentoPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-        this.carregar = true;
-
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
+        try
+        {
+            this.carregar = true;
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     removerArquivo(event: any) {
