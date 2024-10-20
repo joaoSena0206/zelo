@@ -56,7 +56,7 @@ export class CadastroTrabalhadorPage implements OnInit {
     }
 
     ionViewWillEnter() {
-        
+
     }
 
     pagAnterior() {
@@ -157,15 +157,23 @@ export class CadastroTrabalhadorPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("trabalhador", JSON.stringify(trabalhador));
 
-        this.carregar = true;
+        try
+        {
+            this.carregar = true;
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
-
-        this.carregar = false;
-
-        if (res == "ok") {
-            this.navCl.navigateForward("/trabalhador/confirmar-celular");
+            if (res == "ok") {
+                this.navCl.navigateForward("/trabalhador/confirmar-celular");
+            }
         }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }    
     }
 
     async checarCadastro(trabalhador: any, dado: string = "padrão") {
@@ -178,27 +186,39 @@ export class CadastroTrabalhadorPage implements OnInit {
             dadosForm.set(dado, "null");
         }
 
-        this.carregar = true;
+        try {
+            this.carregar = true;
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-        this.carregar = false;
+            this.carregar = false;
 
-        let objRes = res as any;
+            let objRes = res as any;
 
-        if (objRes.cadastrado.length == 0) {
-            localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+            if (objRes.cadastrado.length == 0) {
+                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+                this.cadastrarBanco();
+            }
+            else {
+                objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
+                    this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
 
-            this.cadastrarBanco();
+                    this.form.controls[cadastrado].setErrors({ existe: true });
+                    this.form.controls[cadastrado].markAsDirty();
+                });
+            }
         }
-        else {
-            objRes.cadastrado.forEach((cadastrado: keyof typeof this.form.controls = 'nome') => {
-                this.erro[cadastrado] = cadastrado[0].toUpperCase() + cadastrado.replace(cadastrado[0], "") + " já cadastrado!";
-
-                this.form.controls[cadastrado].setErrors({ existe: true });
-                this.form.controls[cadastrado].markAsDirty();
-            });
+        catch 
+        {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
+        finally 
+        {
+            this.carregar = false;
+        }
+
     }
 
     voltarPag() {

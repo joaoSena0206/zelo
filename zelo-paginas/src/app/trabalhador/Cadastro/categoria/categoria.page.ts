@@ -52,10 +52,20 @@ export class CategoriaPage implements OnInit {
     }
 
     async carregarServicos() {
-        this.carregar = true;
-        let res = await firstValueFrom(this.http.get(dominio + '/Servico/CarregarServicos', {headers: headerNgrok}));
-        this.carregar = false;
-        this.listaCategorias = res;
+        try
+        {
+            this.carregar = true;
+            let res = await firstValueFrom(this.http.get(dominio + '/Servico/CarregarServicos', {headers: headerNgrok}));
+            this.listaCategorias = res;
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     marcador(event: Event): void {
@@ -112,14 +122,22 @@ export class CategoriaPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-        this.carregar = true;
+        try
+        {
+            this.carregar = true;
+            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
-
-        this.carregar = false;
-
-        if (res == "ok") {
-            this.navCl.navigateForward("/trabalhador/confirmar-celular");
+            if (res == "ok") {
+                this.navCl.navigateForward("/trabalhador/confirmar-celular");
+            }
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
         }
     }
 }
