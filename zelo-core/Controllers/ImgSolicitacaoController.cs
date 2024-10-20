@@ -8,11 +8,11 @@ public class ImgSolicitacaoController : ControllerBase
 {
     public void AdicionarImgs(int codigoImg, int codigoSolicitacao, string tipoArquivo)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Insere as imgs no banco
 
             string comando = $@"INSERT INTO img_solicitacao VALUES
@@ -22,24 +22,26 @@ public class ImgSolicitacaoController : ControllerBase
 	            '{tipoArquivo}'
             )";
             banco.Executar(comando);
-            banco.Desconectar();
-
+            
             #endregion
         }
         catch (Exception erro)
         {
             throw new Exception(erro.Message);
         }
-
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     public void DeletarImgs(int cdSolicitacao)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             string comando = $@"DELETE FROM img_solicitacao
             WHERE cd_solicitacao_servico = {cdSolicitacao}";
             banco.Executar(comando);
@@ -48,17 +50,20 @@ public class ImgSolicitacaoController : ControllerBase
         {
             throw new Exception(erro.Message);
         }
-        
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 
     [HttpGet("CarregarImgs")]
     public IActionResult CarregarImgs([FromQuery]int cdSolicitacao, [FromQuery]string quantidade)
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Carrega as imgs do banco e envia
 
             string comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao}";
@@ -90,8 +95,7 @@ public class ImgSolicitacaoController : ControllerBase
             }
 
             dados.Close();
-            banco.Desconectar();
-
+           
             return Ok(lista);
 
             #endregion
@@ -100,6 +104,9 @@ public class ImgSolicitacaoController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
-
+        finally
+        {
+            banco.Desconectar();
+        }
     }
 }
