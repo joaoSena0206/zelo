@@ -9,15 +9,15 @@ using System.Text.Json;
 public class ClienteController : ControllerBase
 {
     [HttpPost("Adicionar")]
-    public IActionResult Adicionar([FromForm] Cliente cliente)
+    public IActionResult Adicionar()
     {
         Banco banco = new Banco();
         banco.Conectar();
 
-        return Ok(cliente);
-
         try
-        {  
+        {
+            Cliente cliente = JsonSerializer.Deserialize<Cliente>(Request.Form["cliente"]);
+
             #region Adiciona o cliente no banco
 
             string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
@@ -212,10 +212,12 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("EnviarSolicitacao")]
-    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] Cliente cliente, [FromForm] string solicitacao)
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao)
     {      
         try
         {
+            Cliente cliente = JsonSerializer.Deserialize<Cliente>(Request.Form["cliente"]);
+
             var msg = new Message()
             {
                 Notification = new Notification()
@@ -326,10 +328,12 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("EnviarConfirmacao")]
-    public async Task<IActionResult> EnviarConfirmacao([FromForm] string token, [FromForm] Cliente cliente, [FromForm] string solicitacao)
+    public async Task<IActionResult> EnviarConfirmacao([FromForm] string token, [FromForm] string solicitacao)
     {
         try
         {
+            Cliente cliente = JsonSerializer.Deserialize<Cliente>(Request.Form["cliente"]);
+
             var msg = new Message()
             {
                 Notification = new Notification()

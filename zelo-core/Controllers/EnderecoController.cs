@@ -1,18 +1,21 @@
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 [ApiController]
 [Route("Endereco")]
 public class EnderecoController : ControllerBase
 {
     [HttpPost("AdicionarEndereco")]
-    public IActionResult AdicionarEndereco([FromForm]Endereco endereco)
+    public IActionResult AdicionarEndereco()
     {
         Banco banco = new Banco();
         banco.Conectar();
+
         try
         {
+            Endereco endereco = JsonSerializer.Deserialize<Endereco>(Request.Form["endereco"]);
+
             #region Adiciona o endereço no banco
 
             string comando = $@"INSERT INTO endereco VALUES 
