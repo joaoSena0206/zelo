@@ -8,11 +8,11 @@ public class CategoriaServicoController : ControllerBase
     [HttpGet("CarregarCategoria")]
     public IActionResult CarregarCategoria()
     {
+        Banco banco = new Banco();
+        banco.Conectar();
+
         try
         {
-            Banco banco = new Banco();
-            banco.Conectar();
-
             #region Carrega as categorias do banco
 
             string comando = "SELECT * FROM categoria_servico ORDER BY nm_categoria_servico";
@@ -33,7 +33,6 @@ public class CategoriaServicoController : ControllerBase
             }
 
             dados.Close();
-            banco.Desconectar();
 
             return Ok(listaCategoria);
 
@@ -42,6 +41,10 @@ public class CategoriaServicoController : ControllerBase
         catch (Exception erro)
         {
             return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
     }
 }
