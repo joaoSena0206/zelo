@@ -27,16 +27,14 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
             let situacao = notification.data.situacaoServico;
 
-            if(situacao == "true")
-            {
+            if (situacao == "true") {
                 this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
             }
-            else
-            {
+            else {
                 this.cancelar();
             }
         });
-        
+
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
                 min: 5,
@@ -92,11 +90,11 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         let link = dominio + `/SolicitacaoServico/AdicionarTrabalhador`;
         let dadosForm = new FormData();
         dadosForm.append("cpf", cpf);
-        dadosForm.append("cd", cdSolicitacao);
+        dadosForm.append("cdSolicitacao", cdSolicitacao);
 
-        let res: any = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+        try {
+            let res: any = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-        if (res == null) {
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
             solicitacao.Trabalhador = {
                 Cpf: cpf
@@ -107,12 +105,15 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
             this.navCl.navigateForward("/pagamento");
         }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     cancelar() {
         localStorage.removeItem("confirmacao");
         this.navCl.navigateBack("/escolher-trabalhador");
     }
-
-    
 }

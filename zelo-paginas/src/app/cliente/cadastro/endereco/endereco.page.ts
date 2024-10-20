@@ -87,20 +87,27 @@ export class EnderecoPage implements OnInit {
         if (cep.length == 9) {
             const link = `https://viacep.com.br/ws/${cep.replace("-", "")}/json/`;
 
-            this.http.get(link).subscribe(res => {
-                let dados: any = res;
+            try {
+                this.http.get(link).subscribe(res => {
+                    let dados: any = res;
 
-                if (dados.erro == "true") {
-                    this.endereco.controls['cep'].setErrors({ invalido: { msg: "Cep inválido" } });
+                    if (dados.erro == "true") {
+                        this.endereco.controls['cep'].setErrors({ invalido: { msg: "Cep inválido" } });
 
-                    this.validarControl(this.endereco.controls['cep']);
-                }
+                        this.validarControl(this.endereco.controls['cep']);
+                    }
 
-                this.endereco.controls['estado'].setValue(dados.uf);
-                this.endereco.controls['cidade'].setValue(dados.localidade);
-                this.endereco.controls['bairro'].setValue(dados.bairro);
-                this.endereco.controls['rua'].setValue(dados.logradouro);
-            });
+                    this.endereco.controls['estado'].setValue(dados.uf);
+                    this.endereco.controls['cidade'].setValue(dados.localidade);
+                    this.endereco.controls['bairro'].setValue(dados.bairro);
+                    this.endereco.controls['rua'].setValue(dados.logradouro);
+                });
+            }
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao puxar os dados do CEP";
+                alert.present();
+            }
         }
     }
 
@@ -123,14 +130,22 @@ export class EnderecoPage implements OnInit {
             let dadosForm = new FormData();
             dadosForm.append("endereco", JSON.stringify(endereco));
 
-            this.carregar = true;
+            try {
+                this.carregar = true;
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm));
+                let res = await firstValueFrom(this.http.post(link, dadosForm));
 
-            this.carregar = false;
+                this.carregar = false;
 
-            if (res == null) {
                 this.navCl.navigateRoot("/login-cliente", { animated: true, animationDirection: "forward" });
+            }
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+            finally {
+                this.carregar = false;
             }
         }
     }

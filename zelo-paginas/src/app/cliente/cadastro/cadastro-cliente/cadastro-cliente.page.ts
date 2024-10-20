@@ -186,7 +186,7 @@ export class CadastroClientePage implements OnInit {
                 });
             }
         }
-        catch (erro: any) {
+        catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();

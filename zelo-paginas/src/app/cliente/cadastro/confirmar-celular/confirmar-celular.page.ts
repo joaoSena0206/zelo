@@ -101,12 +101,19 @@ export class ConfirmarCelularPage implements OnInit {
         dadosForm.append("cpf", cliente.Cpf);
         dadosForm.append("tipo", "cliente");
 
-        let res = await firstValueFrom(this.http.post(link, dadosForm));
+        try {
+            let res = await firstValueFrom(this.http.post(link, dadosForm));
 
-        let resposta: any = res;
+            let resposta: any = res;
 
-        if (resposta.res == "ok") {
-            this.codigoAleatorio = resposta.codigo;
+            if (resposta.res == "ok") {
+                this.codigoAleatorio = resposta.codigo;
+            }
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
     }
 
@@ -128,21 +135,25 @@ export class ConfirmarCelularPage implements OnInit {
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", cliente.Cpf);
 
-                this.carregar = true;
+                try {
+                    this.carregar = true;
 
-                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                    let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-                if (res == "ok") {
                     link = dominio + "/Cliente/AdicionarFotoPerfil";
 
                     res = await firstValueFrom(this.http.post(link, dadosForm));
 
-                    if (res == null) {
-                        this.navCl.navigateRoot("/endereco", { animated: true, animationDirection: 'forward' });
-                    }
+                    this.navCl.navigateRoot("/endereco", { animated: true, animationDirection: 'forward' });
                 }
-
-                this.carregar = false;
+                catch {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
+                }
             }
         }
     }

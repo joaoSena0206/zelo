@@ -51,93 +51,90 @@ export class InicialPage implements OnInit {
         dadosForm.append("cpf", cliente.Cpf);
         dadosForm.append("token", token);
 
-        let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-
-        console.log(resposta);
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     async carregarPatrocinados() {
         let link = dominio + "/Patrocinio/CarregarPatrocinados";
 
-        this.carregar = true;
+        try {
+            let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
-        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-
-        this.patrocinados = res;
-
-        for (let i = 0; i < this.patrocinados.length; i++) {
-            this.carregarImgTrabalhador(this.patrocinados[i].Trabalhador.Cpf, i);
+            this.patrocinados = res;
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
     }
 
     async carregarHistorico() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?c=${cliente.Cpf}&t=cliente`;
+        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${cliente.Cpf}&tipo=cliente`;
 
-        this.carregar = true;
+        try {
+            let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
-        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-
-        this.historico = res;
-
-        this.carregar = false;
-
-        for (let i = 0; i < this.historico.length; i++) {
-            this.carregarImgPerfil(this.historico[i].Trabalhador.Cpf, i);
+            this.historico = res;
         }
-    }
-
-    async carregarImgPerfil(cpf: any, i: any) {
-        let link = dominio + `/Imgs/Perfil/Trabalhador/${cpf}.jpg`;
-        let res: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-        let urlImg = URL.createObjectURL(res);
-
-        this.historico[i].img = urlImg;
-    }
-
-    async carregarImgTrabalhador(cpf: any, i: any) {
-        let link = dominio + `/Imgs/Trabalhadores/${cpf}.jpg`;
-        let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-        let urlImg = URL.createObjectURL(res);
-
-        this.patrocinados[i].img = urlImg;
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     async carregarCategorias() {
         let link = dominio + "/CategoriaServico/CarregarCategoria";
 
-        this.carregar = true;
+        try {
+            let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+            this.categorias = res;
 
-        let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-        this.categorias = res;
+            if (this.categorias != null) {
+                link = dominio + "/Servico/CarregarServicos";
 
-        if (this.categorias != null) {
-            link = dominio + "/Servico/CarregarServicos";
+                let res2 = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
-            let res2 = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+                let servicos: any = res2;
+                servicos.sort((a: any, b: any) => {
+                    if (a.Nome < b.Nome) {
+                        return -1;
+                    }
+                    if (a.Nome > b.Nome) {
+                        return 1;
+                    }
+                    return 0;
+                });
 
-            let servicos: any = res2;
-            servicos.sort((a: any, b: any) => {
-                if (a.Nome < b.Nome) {
-                    return -1;
-                }
-                if (a.Nome > b.Nome) {
-                    return 1;
-                }
-                return 0;
-            });
+                if (servicos != null) {
+                    for (let i = 0; i < this.categorias.length; i++) {
+                        this.categorias[i].Servicos = [];
 
-            if (servicos != null) {
-                for (let i = 0; i < this.categorias.length; i++) {
-                    this.categorias[i].Servicos = [];
-
-                    for (let j = 0; j < servicos.length; j++) {
-                        if (this.categorias[i].Codigo == servicos[j].Categoria.Codigo) {
-                            this.categorias[i].Servicos.push(servicos[j]);
+                        for (let j = 0; j < servicos.length; j++) {
+                            if (this.categorias[i].Codigo == servicos[j].Categoria.Codigo) {
+                                this.categorias[i].Servicos.push(servicos[j]);
+                            }
                         }
                     }
                 }
             }
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
     }
 

@@ -114,35 +114,44 @@ export class LoginClientePage implements OnInit {
             dadosForm.append("email", email!);
             dadosForm.append("senha", senha!);
 
-            this.carregar = true;
+            try {
+                this.carregar = true;
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm));
+                let res = await firstValueFrom(this.http.post(link, dadosForm));
 
-            this.carregar = false;
+                this.carregar = false;
 
-            let obj: any = res;
+                let obj: any = res;
 
-            if (obj.erro != true) {
-                let cliente = obj;
+                if (obj.erro != true) {
+                    let cliente = obj;
 
-                localStorage.setItem("cliente", JSON.stringify(cliente));
+                    localStorage.setItem("cliente", JSON.stringify(cliente));
 
-                if (!cliente.Confirmado) {
-                    this.navCl.navigateRoot("/confirmar-celular");
+                    if (!cliente.Confirmado) {
+                        this.navCl.navigateRoot("/confirmar-celular");
+                    }
+
+                    localStorage.removeItem("opcao");
+                    localStorage.setItem("logado", "true");
+
+                    this.navCl.navigateRoot("/inicial");
                 }
+                else {
+                    this.erro.form = "Email ou senha incorreto(s)";
 
-                localStorage.removeItem("opcao");
-                localStorage.setItem("logado", "true");
-
-                this.navCl.navigateRoot("/inicial");
+                    this.form.controls["email"].setErrors({ invalido: true });
+                    this.form.controls["senha"].setErrors({ invalido: true });
+                }
             }
-            else {
-                this.erro.form = "Email ou senha incorreto(s)";
-
-                this.form.controls["email"].setErrors({ invalido: true });
-                this.form.controls["senha"].setErrors({ invalido: true });
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
             }
-
+            finally {
+                this.carregar = false;
+            }
         }
     }
 
