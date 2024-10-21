@@ -212,6 +212,7 @@ public class SolicitacaoServicoController : ControllerBase
         try
         {
             SolicitacaoServico solicitacaoServico = JsonSerializer.Deserialize<SolicitacaoServico>(Request.Form["solicitacaoServico"]);
+
             string comando = $@"UPDATE solicitacao_servico SET ds_servico = '{solicitacaoServico.DsServico}'
             WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
             banco.Executar(comando);

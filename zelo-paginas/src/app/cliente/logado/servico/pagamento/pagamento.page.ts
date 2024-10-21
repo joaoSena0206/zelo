@@ -48,42 +48,57 @@ export class PagamentoPage implements OnInit {
 
         let link = dominio + "/Cliente/GerarPagamento";
         let dadosForm = new FormData();
-        dadosForm.append("valor", trabalhador.ValorVisita);
+        dadosForm.append("valorVisita", trabalhador.ValorVisita);
         dadosForm.append("email", cliente.Email);
         dadosForm.append("cpf", cliente.Cpf);
-        dadosForm.append("c", solicitacao.CdSolicitacaoServico);
+        dadosForm.append("cdSolicitacao", solicitacao.CdSolicitacaoServico);
         dadosForm.append("expiracao", dataExpiracao.toISOString());
 
-        this.carregar = true;
-        let res: any = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-        this.carregar = false;
+        try {
+            this.carregar = true;
+            let res: any = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-        if (res) {
             this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
             this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
             localStorage.setItem("idPagamento", res.id);
-        }
 
-        this.temporizador();
+            this.temporizador();
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     async checarPagamento() {
         let id = localStorage.getItem("idPagamento");
         let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
-        let res: any = await firstValueFrom(this.http.get(link));
 
-        if (res.status == "approved") {
-            link = dominio + "/Cliente/EnviarConfirmacao";
+        try {
+            let res: any = await firstValueFrom(this.http.get(link));
 
-            let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
-            let dadosForm = new FormData();
-            dadosForm.append("token", trabalhador.TokenFCM);
-            dadosForm.append("cliente", localStorage.getItem("cliente")!);
-            dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
+            if (res.status == "approved") {
+                link = dominio + "/Cliente/EnviarConfirmacao";
 
-            let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+                let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+                let dadosForm = new FormData();
+                dadosForm.append("token", trabalhador.TokenFCM);
+                dadosForm.append("cliente", localStorage.getItem("cliente")!);
+                dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
 
-            this.navCl.navigateRoot("trabalhador-caminho");
+                let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+                this.navCl.navigateRoot("trabalhador-caminho");
+            }
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
     }
 

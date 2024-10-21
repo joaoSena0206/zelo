@@ -44,9 +44,10 @@ export class EscolherTrabalhadorPage implements OnInit {
         dadosForm.append("endereco", localStorage.getItem("endereco")!);
 
         let link = dominio + "/Cliente/EnviarSolicitacao";
-        let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
-        if (resposta == "0") {
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
             const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
             modal.dismiss();
             const data = await modal.onDidDismiss();
@@ -56,6 +57,12 @@ export class EscolherTrabalhadorPage implements OnInit {
 
                 this.navCl.navigateRoot("/confirmacao-trabalhador");
             }
+
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
     }
 
@@ -114,37 +121,41 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     async carregarTrabalhadores(codigo: number) {
-        let link = dominio + "/Trabalhador/CarregarTrabalhadores?c=" + codigo;
+        let link = dominio + "/Trabalhador/CarregarTrabalhadores?codigo=" + codigo;
 
-        this.carregar = true;
-        let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-        let posicaoAtual = await this.pegarPosicaoAtual();
+        try {
+            this.carregar = true;
+            let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+            let posicaoAtual = await this.pegarPosicaoAtual();
 
-        for (let i = 0; i < resposta.length; i++) {
-            let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
-            let distancia = latlng.distanceTo(posicaoAtual!) / 1000;
+            for (let i = 0; i < resposta.length; i++) {
+                let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
+                let distancia = latlng.distanceTo(posicaoAtual!) / 1000;
 
-            link = dominio + `/Imgs/Perfil/Trabalhador/${resposta[i].Trabalhador.Cpf}.jpg`;
-            let imgBlob: any = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-            let urlImg = URL.createObjectURL(imgBlob);
+                resposta[i].Trabalhador.Distancia = distancia;
+            }
 
-            resposta[i].Trabalhador.Distancia = distancia;
-            resposta[i].Trabalhador.img = urlImg;
+            resposta.sort((a: any, b: any) => {
+                if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
+                    return -1;
+                }
+                else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
+                    return 1;
+                }
+
+                return 0;
+            });
+
+            this.trabalhadores = resposta;
         }
-
-        resposta.sort((a: any, b: any) => {
-            if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
-                return -1;
-            }
-            else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
-                return 1;
-            }
-
-            return 0;
-        });
-
-        this.trabalhadores = resposta;
-        this.carregar = false;
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     dismissModal(cpf: any) {

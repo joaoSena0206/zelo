@@ -74,25 +74,34 @@ export class DescricaoServicoPage implements OnInit {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
         let link = dominio + "/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
 
-        this.carregar = true;
-        let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-        this.endereco = resposta;
+        try {
+            this.carregar = true;
+            let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+            this.endereco = resposta;
 
-        link = `https://viacep.com.br/ws/${this.endereco.Cep}/json/`;
-        resposta = await firstValueFrom(this.http.get(link));
-        this.carregar = false;
+            link = `https://viacep.com.br/ws/${this.endereco.Cep}/json/`;
+            resposta = await firstValueFrom(this.http.get(link));
 
-        this.endereco.Cep = {
-            cep: this.endereco.Cep,
-            bairro: resposta.bairro,
-            rua: resposta.logradouro,
-            estado: resposta.estado,
-            cidade: resposta.localidade
-        };
+            this.endereco.Cep = {
+                cep: this.endereco.Cep,
+                bairro: resposta.bairro,
+                rua: resposta.logradouro,
+                estado: resposta.estado,
+                cidade: resposta.localidade
+            };
 
-        this.form.controls['endereco'].disable();
-        this.form.controls['endereco'].setValue(`${this.endereco.Cep.rua}, ${this.endereco.Numero}, ${this.endereco.Complemento == "" ? "" : this.endereco.Complemento + ","} ${this.endereco.Cep.bairro}, ${this.endereco.Cep.cidade} - ${this.endereco.Cep.estado}, ${this.endereco.Cep.cep.substring(0, 5) + "-" + this.endereco.Cep.cep.substring(5)}`);
-        localStorage.setItem("endereco", this.form.controls['endereco'].value!);
+            this.form.controls['endereco'].disable();
+            this.form.controls['endereco'].setValue(`${this.endereco.Cep.rua}, ${this.endereco.Numero}, ${this.endereco.Complemento == "" ? "" : this.endereco.Complemento + ","} ${this.endereco.Cep.bairro}, ${this.endereco.Cep.cidade} - ${this.endereco.Cep.estado}, ${this.endereco.Cep.cep.substring(0, 5) + "-" + this.endereco.Cep.cep.substring(5)}`);
+            localStorage.setItem("endereco", this.form.controls['endereco'].value!);
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 
     voltarPag() {
@@ -193,13 +202,20 @@ export class DescricaoServicoPage implements OnInit {
                     }
                 }
 
-                this.carregar = true;
-                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-                this.carregar = false;
+                try {
+                    this.carregar = true;
+                    let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-                if (res) {
                     localStorage.setItem("solicitacao", JSON.stringify(res));
                     this.navCl.navigateForward("/escolher-trabalhador");
+                }
+                catch {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
                 }
             }
             else {
@@ -208,7 +224,7 @@ export class DescricaoServicoPage implements OnInit {
 
                 let link = dominio + "/SolicitacaoServico/AtualizarSituacao";
                 let dadosForm = new FormData();
-                dadosForm.append("solicitacao", JSON.stringify(solicitacao));
+                dadosForm.append("solicitacaoServico", JSON.stringify(solicitacao));
 
                 if (this.imgs.length > 0) {
                     for (let i = 0; i < this.imgs.length; i++) {
@@ -216,13 +232,21 @@ export class DescricaoServicoPage implements OnInit {
                     }
                 }
 
-                this.carregar = true;
-                let res = await firstValueFrom(this.http.post(link, dadosForm));
-                this.carregar = false;
+                try {
+                    this.carregar = true;
+                    let res = await firstValueFrom(this.http.post(link, dadosForm));
+                    this.carregar = false;
 
-                if (res == null) {
                     localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
                     this.navCl.navigateForward("/escolher-trabalhador");
+                }
+                catch {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
                 }
             }
         }

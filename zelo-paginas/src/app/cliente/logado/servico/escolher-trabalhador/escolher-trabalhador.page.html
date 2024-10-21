@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true">
+    <ion-alert header="Erro" [buttons]="['Ok']"></ion-alert>
     <div *ngIf="carregar" class="divCarregamento">
         <div class="carregamento"></div>
     </div>
@@ -50,7 +51,8 @@
                                 ",") }} km</p>
                             <ion-button class="btnContratar"
                                 [id]="'contratar_' + trabalhador.Trabalhador.Cpf">Contratar</ion-button>
-                            <ion-modal [id]="'modal_' + trabalhador.Trabalhador.Cpf" [trigger]="'contratar_' + trabalhador.Trabalhador.Cpf">
+                            <ion-modal [id]="'modal_' + trabalhador.Trabalhador.Cpf"
+                                [trigger]="'contratar_' + trabalhador.Trabalhador.Cpf">
                                 <ng-template>
                                     <div class="divModalWrapper">
                                         <div class="areaUltimoPedido">
@@ -89,8 +91,10 @@
                                                 </div>
 
                                                 <div class="divBtns">
-                                                    <ion-button (click)="dismissModal(trabalhador.Trabalhador.Cpf)">Cancelar</ion-button>
-                                                    <ion-button (click)="contratarTrabalhador(trabalhador.Trabalhador)">Confirmar</ion-button>
+                                                    <ion-button
+                                                        (click)="dismissModal(trabalhador.Trabalhador.Cpf)">Cancelar</ion-button>
+                                                    <ion-button
+                                                        (click)="contratarTrabalhador(trabalhador.Trabalhador)">Confirmar</ion-button>
                                                 </div>
                                             </div>
 
