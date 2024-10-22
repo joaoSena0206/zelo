@@ -16,7 +16,8 @@ RUN dotnet restore
 COPY . .
 
 # Publica diretamente (sem build separado)
-RUN dotnet publish zelo-core.csproj -c Release -o /app/publish
+RUN dotnet publish zelo-core.csproj -c Release -o app/publish --verbosity detailed
+
 
 # Etapa 3: Configuração da imagem final
 FROM base AS final
