@@ -6,9 +6,6 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar certificados (temporário)
-COPY certificados /app/certificados
-
 # Copia o arquivo de projeto e restaura as dependências (aproveitamento do cache)
 COPY zelo-core.csproj ./
 RUN dotnet restore
