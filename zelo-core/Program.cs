@@ -1,14 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(80);
-    options.ListenAnyIP(443, listenOptions =>
-    {
-        listenOptions.UseHttps("/app/certificados/fullchain.pem", "/app/certificados/privkey.pem");
-    });
-});
-
 builder.Services.AddCors(options =>
 {
 
