@@ -28,7 +28,6 @@ services:
       - 33061:3306
     volumes:
       - zelo-data:/var/lib/mysql
-      - C:\Users\Joao\Documents\Projetos\zelo\banco\init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - zelo-network
     
