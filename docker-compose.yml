@@ -11,6 +11,7 @@ services:
       - zelo-network
   server:
     build: zelo-core
+    user: "0"
     container_name: server
     restart: always
     environment:
