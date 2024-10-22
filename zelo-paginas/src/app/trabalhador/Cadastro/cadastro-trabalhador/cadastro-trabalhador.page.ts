@@ -162,9 +162,7 @@ export class CadastroTrabalhadorPage implements OnInit {
             this.carregar = true;
             let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
-            if (res == "ok") {
-                this.navCl.navigateForward("/trabalhador/confirmar-celular");
-            }
+            this.navCl.navigateForward("/trabalhador/confirmar-celular");
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
