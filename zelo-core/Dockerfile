@@ -2,6 +2,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
+RUN mkdir -p /app/publish && chmod -R 777 /app
+
 # Etapa 2: Restaura as dependências e publica a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
