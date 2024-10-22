@@ -143,15 +143,11 @@ export class ConfirmarCelularPage implements OnInit {
 
                     let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
 
-                    if (res == "ok") {
-                        link = dominio + "/Trabalhador/AdicionarFotoPerfil";
+                    link = dominio + "/Trabalhador/AdicionarFotoPerfil";
 
-                        res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                    res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-                        if (res == null) {
-                            this.navCl.navigateRoot("/tipo-saque");
-                        }
-                    }
+                    this.navCl.navigateRoot("/tipo-saque");
                 }
                 catch (erro: any) {
                     const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
