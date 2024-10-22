@@ -13,8 +13,10 @@ services:
     build: zelo-core
     container_name: server
     restart: always
+    environment:
+      - ASPNETCORE_HTTPS_PORTS=443
     ports:
-      - 8080:8080
+      - 443:443
     networks:
       - zelo-network
   banco:
