@@ -11,6 +11,8 @@
 <ion-content [fullscreen]="true">
     <div class="content">
 
+        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
+
         <ion-button id="abrir_modal_servico" class="btn_situacao_trabalhador">
             <img class="img_btn_situacao" src="../../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg" alt="">
             <p class="txtSituacao" style="margin: 15px;">{{ situacao }}</p>
