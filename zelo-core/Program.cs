@@ -5,7 +5,7 @@ builder.WebHost.ConfigureKestrel(options =>
     options.ListenAnyIP(80);
     options.ListenAnyIP(443, listenOptions =>
     {
-        listenOptions.UseHttps("/etc/letsencrypt/live/zelo-server.com.br/fullchain.pem", "/etc/letsencrypt/live/zelo-server.com.br/privkey.pem");
+        listenOptions.UseHttps("/app/certificados/fullchain.pem", "/app/certificados/privkey.pem");
     });
 });
 
