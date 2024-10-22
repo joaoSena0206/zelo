@@ -10,6 +10,7 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
       - /home/admin/Documents/zelo:/zelo-git
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - zelo-network
   server:
