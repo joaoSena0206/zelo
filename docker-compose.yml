@@ -25,7 +25,7 @@ services:
       - MYSQL_DATABASE=Zelo
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - 33061:3306
+      - 3306:3306
     volumes:
       - zelo-data:/var/lib/mysql
     networks:
