@@ -37,25 +37,51 @@ export class AnalisaServicoPage implements OnInit {
     let dadosForm = new FormData();
     dadosForm.append("cpf", this.cliente.Cpf);
     let link = dominio + "/Cliente/PegarTokenFCM";
-    this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
+    try{
+      this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
+    }
+
   }
 
   async carregarServicos() {
     let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${this.cdSolicitacao}`;
-    this.carregar = true;
-    let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-    this.imagens = res;
 
-    for (let i = 0; i < this.imagens.length; i++) {
-      this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
+    try{
+      this.carregar = true;
+      let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+      this.imagens = res;
+
+      for (let i = 0; i < this.imagens.length; i++) {
+        this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
+      }
     }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
+    }
+    
   }
 
   async carregarImgServico(cdServico: any, cdimg: any, nmTipoImg: any, i: any) {
     let link = dominio + `/Imgs/Solicitacao/${cdServico}/${cdimg}${nmTipoImg}`;
-    let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-    let urlImg = URL.createObjectURL(res);
-    this.imagens[i].img = urlImg;
+
+    try{
+      let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+      let urlImg = URL.createObjectURL(res);
+      this.imagens[i].img = urlImg;
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
+    }
   }
 
   ngAfterViewInit() { }
@@ -66,10 +92,18 @@ export class AnalisaServicoPage implements OnInit {
     dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
     dadosForm.append("situacao", "true");
     let link = dominio + "/Trabalhador/EnviarServicoAceito";
-    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
-    if (resposta == "0") {
-      this.navCl.navigateRoot("/confirmacao-cliente");
+    try{
+      let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
+      if (resposta == "0") {
+        this.navCl.navigateRoot("/confirmacao-cliente");
+      }
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
     }
   }
 
@@ -79,10 +113,18 @@ export class AnalisaServicoPage implements OnInit {
     dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
     dadosForm.append("situacao", "false");
     let link = dominio + "/Trabalhador/EnviarServicoAceito";
-    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
-    if (resposta == "0") {
-      this.navCl.navigateRoot("/trabalhador/inicial");
+    try{
+      let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+
+      if (resposta == "0") {
+        this.navCl.navigateRoot("/trabalhador/inicial");
+      }
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
     }
   }
 
@@ -90,8 +132,16 @@ export class AnalisaServicoPage implements OnInit {
 
   async carregarImgPerfilCliente() {
     let link = dominio + `/Imgs/Perfil/Cliente/${this.cliente.Cpf}.jpg`;
-    let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
-    this.urlImg = URL.createObjectURL(res);
+
+    try{
+      let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+      this.urlImg = URL.createObjectURL(res);
+    }
+    catch (erro: any) {
+      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+      alert.message = "Erro ao conectar-se ao servidor";
+      alert.present();
+    }
   }
 
 }
