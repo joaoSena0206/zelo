@@ -2,12 +2,12 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
-# Copiar certificados (temporário)
-COPY certificados /app/certificados
-
 # Etapa 2: Restaura as dependências e publica a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
+# Copiar certificados (temporário)
+COPY certificados /app/certificados
 
 # Copia o arquivo de projeto e restaura as dependências (aproveitamento do cache)
 COPY zelo-core.csproj ./
