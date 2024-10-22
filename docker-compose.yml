@@ -23,7 +23,7 @@ services:
     networks:
       - zelo-network
     volumes:
-      - /etc/letsencrypt/live/zelo-server.com.br:/etc/letsencrypt/live/zelo-server.com.br
+      - /etc/letsencrypt/live/zelo-server.com.br:/etc/letsencrypt/live/zelo-server.com.br:ro
   banco:
     image: mysql:5.5
     container_name: banco
