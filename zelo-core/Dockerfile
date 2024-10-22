@@ -1,7 +1,7 @@
 # Etapa 1: Build da aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 8080
+EXPOSE 443
 
 # Etapa 2: Restaura as dependências e build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
