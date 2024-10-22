@@ -9,6 +9,7 @@ services:
       - 5678:5678
     volumes:
       - n8n_data:/home/node/.n8n
+      - /home/admin/Documents/zelo:/zelo-git
     networks:
       - zelo-network
   server:
@@ -23,8 +24,6 @@ services:
       - 443:443
     networks:
       - zelo-network
-    volumes:
-      - /home/admin/Documents/zelo:/zelo-git
   banco:
     image: mysql:5.5
     container_name: banco
