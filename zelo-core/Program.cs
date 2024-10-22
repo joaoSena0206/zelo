@@ -1,9 +1,20 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options => {
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80);
+    options.ListenAnyIP(443, listenOptions =>
+    {
+        listenOptions.UseHttps("/etc/letsencrypt/live/zelo-server.com.br/fullchain.pem", "/etc/letsencrypt/live/zelo-server.com.br/privkey.pem");
+    });
+});
+
+builder.Services.AddCors(options =>
+{
 
     options.AddPolicy(name: "AllowAllOrigins",
-        configurePolicy: policy => {
+        configurePolicy: policy =>
+        {
             policy.AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod();
@@ -19,6 +30,9 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
+
+app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
