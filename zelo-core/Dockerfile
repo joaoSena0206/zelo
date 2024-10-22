@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 # Copiar certificados (temporário)
-COPY /etc/letsencrypt/live/zelo-server.com.br/fullchain.pem /etc/letsencrypt/live/zelo-server.com.br/fullchain.pem
-COPY /etc/letsencrypt/live/zelo-server.com.br/privkey.pem /etc/letsencrypt/live/zelo-server.com.br/privkey.pem
+COPY /etc/letsencrypt/live/zelo-server.com.br/fullchain.pem /app/certificados
+COPY /etc/letsencrypt/live/zelo-server.com.br/privkey.pem /app/certificados
 
 # Etapa 2: Restaura as dependências e publica a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
