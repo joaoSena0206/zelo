@@ -22,6 +22,8 @@ services:
       - 443:443
     networks:
       - zelo-network
+    volumes:
+      - /etc/letsencrypt/live/zelo-server.com.br:/etc/letsencrypt/live/zelo-server.com.br:ro
   banco:
     image: mysql:5.5
     container_name: banco
@@ -35,10 +37,11 @@ services:
       - zelo-data:/var/lib/mysql
     networks:
       - zelo-network
-    
+
 volumes:
   zelo-data:
   n8n_data:
+
 
 networks:
   zelo-network:
