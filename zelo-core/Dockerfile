@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 # Copiar certificados (temporário)
-COPY /certificados /app/certificados
+COPY certificados /app/certificados
 
 # Etapa 2: Restaura as dependências e publica a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
