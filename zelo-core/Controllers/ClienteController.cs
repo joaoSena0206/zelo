@@ -388,4 +388,10 @@ public class ClienteController : ControllerBase
             banco.Desconectar();
         }
     }
+
+    [HttpGet("RetornaTexto")]
+    public string RetornaTexto()
+    {
+        return "Marco viado";
+    }
 }
