@@ -1,4 +1,10 @@
 services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token eyJhIjoiZTcxMzRjZWI0OTRlZGNjOWYxNTM2YWMwYTc3MDc1MjQiLCJ0IjoiNjdjMjk0MzMtM2RmOS00MWUzLTljMzQtNTMxZGYyM2U4YTc1IiwicyI6Ik1UYzNOamd4TlRFdE16VTNOQzAwTkdVNUxUaG1PV1l0TWpBelpHVmhNemN6WldZeSJ9
+    restart: always
+    networks:
+      - zelo-network
   n8n:
     image: n8nio/n8n
     container_name: n8n
@@ -10,9 +16,7 @@ services:
     networks:
       - zelo-network
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/admin/Documents/zelo:/zelo-git
-      - /home/admin/pipes/n8n:/hostpipe
+      - C:\Users\Joao\Documents\Projetos\zelo:/zelo-git
       - n8n_data:/home/node/.n8n
   server:
     build: zelo-core
@@ -22,8 +26,7 @@ services:
     environment:
       - ASPNETCORE_HTTP_PORTS=80
     ports:
-      - 80:80
-      - 443:443
+      - 81:80
     networks:
       - zelo-network
   banco:
