@@ -1,4 +1,16 @@
 services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    restart: always
+    environment:
+      - WEBHOOK_URL=https://n8n.zelo-server.com.br
+    ports:
+      - 5678:5678
+    networks:
+      - zelo-network
+    volumes:
+      - n8n_data:/home/node/.n8n
   server:
     build: zelo-core
     user: "0"
