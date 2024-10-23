@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://9dw187pm-32613.brs.devtunnels.ms";
+export const dominio = "https://q5j7588m-32613.brs.devtunnels.ms";
