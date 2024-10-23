@@ -394,4 +394,10 @@ public class ClienteController : ControllerBase
     {
         return "Marco viado";
     }
+
+    [HttpGet("RetornaTexto2")]
+    public string RetornaTexto2()
+    {
+        return "Marco viado";
+    }
 }
