@@ -57,6 +57,8 @@ export class CategoriaPage implements OnInit {
             this.carregar = true;
             let res = await firstValueFrom(this.http.get(dominio + '/Servico/CarregarServicos', {headers: headerNgrok}));
             this.listaCategorias = res;
+
+            console.log(this.listaCategorias)
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -92,7 +94,7 @@ export class CategoriaPage implements OnInit {
                 codigo = listaBotao2[i].parentElement?.id;
 
                 let categoria = {
-                    Codigo: codigo,
+                    Codigo: Number(codigo),
                     Nome: texto
                 };
 

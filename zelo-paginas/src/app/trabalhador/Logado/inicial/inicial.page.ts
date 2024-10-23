@@ -27,7 +27,7 @@ const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("Backg
 export class InicialPage implements OnInit {
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     historico: any;
-    Nome: any = this.trabalhador.Nome.trim();
+    Nome: any = this.trabalhador.Nome;
     ComentarioAnonimo: any;
     qtEstrelas: any;
     carregar: boolean = false;

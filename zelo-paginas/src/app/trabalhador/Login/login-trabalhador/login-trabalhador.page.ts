@@ -119,9 +119,9 @@ export class LoginTrabalhadorPage implements OnInit {
             try
             {
                 this.carregar = true;
-                let res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
+                res = await firstValueFrom(this.http.post(link, dadosForm, {headers:headerNgrok}));
             }
-            catch (erro: any) {
+            catch{
                 const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
                 alert.message = "Erro ao conectar-se ao servidor";
                 alert.present();
