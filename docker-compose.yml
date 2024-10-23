@@ -12,6 +12,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/admin/Documents/zelo:/zelo-git
+      - /home/admin/pipes/n8n:/hostpipe
       - n8n_data:/home/node/.n8n
   server:
     build: zelo-core
