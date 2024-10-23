@@ -29,24 +29,9 @@ services:
       - 81:80
     networks:
       - zelo-network
-  banco:
-    image: mysql:5.5
-    container_name: banco
-    restart: always
-    environment:
-      - MYSQL_DATABASE=Zelo
-      - MYSQL_ROOT_PASSWORD=zeloroot
-    ports:
-      - 3306:3306
-    volumes:
-      - zelo-data:/var/lib/mysql
-    networks:
-      - zelo-network
-
 volumes:
   zelo-data:
   n8n_data:
-
 
 networks:
   zelo-network:
