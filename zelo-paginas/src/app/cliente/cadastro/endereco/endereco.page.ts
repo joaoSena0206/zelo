@@ -122,14 +122,14 @@ export class EnderecoPage implements OnInit {
                 CpfCliente: cliente.Cpf,
                 Identificacao: this.endereco.controls['identificacao'].value,
                 Cep: this.endereco.controls['cep'].value?.replace("-", ""),
-                Numero: this.endereco.controls['numero'].value,
+                Numero: Number(this.endereco.controls['numero'].value),
                 Complemento: this.endereco.controls['complemento'].value,
                 Referencia: this.endereco.controls['pontoReferencia'].value
             };
 
             let dadosForm = new FormData();
             dadosForm.append("endereco", JSON.stringify(endereco));
-
+            
             try {
                 this.carregar = true;
 
