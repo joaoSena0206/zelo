@@ -39,7 +39,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpGet("AdicionarFotoPerfil")]
-    public async Task<IActionResult> AdicionarFotoPerfil([FromQuery] string cpf, [FromQuery] IFormFile? file= null)
+    public async Task<IActionResult> AdicionarFotoPerfil([FromQuery] string cpf, [FromQuery] IFormFile? file = null)
     {
         try
         {
