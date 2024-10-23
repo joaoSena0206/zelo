@@ -39,7 +39,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("AdicionarFotoPerfil")]
-    public async Task<IActionResult> AdicionarFotoPerfil([FromForm] string cpf, [FromForm] IFormFile file)
+    public async Task<IActionResult> AdicionarFotoPerfil([FromForm] string cpf, [FromForm] IFormFile? file = null)
     {
         try
         {
