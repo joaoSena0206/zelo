@@ -46,6 +46,7 @@ export class UltimosPedidosPage implements OnInit {
   enderecoServico: any;
   modal: any;
   listaDataServico: any = [];
+  dominio = dominio;
 
   async carregarHistorico() {
     let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
@@ -56,9 +57,9 @@ export class UltimosPedidosPage implements OnInit {
       this.carregar = true;
       let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
-      for (let i = 0; i < res.length; i++) {
+      /* for (let i = 0; i < res.length; i++) {
         res[i].img = await this.carregarImgServico(res[i].cdSolicitacaoServico);
-      }
+      } */
 
       this.historico = res;
 
@@ -96,28 +97,64 @@ export class UltimosPedidosPage implements OnInit {
       }
 
       this.listaDataServico.push(DataFormatada);
+
+      this.historico[i].dtSolicitacaoServico = this.listaDataServico[i];
       
     }
     
   }
 
-  filtroRecentes(){
+  mudarFiltro(btn: any) {
+    const btns = document.querySelectorAll(".btn_filtro");
 
-  }
+    for (let i = 0; i < btns.length; i++) {
+        if (btn !== btns[i]) {
+            if (btns[i].classList.contains("btn_filtro--ativado")) {
+                btns[i].classList.remove("btn_filtro--ativado");
+                btn.classList.add("btn_filtro--ativado");
+            }
 
-  
-  filtroAntigos(){
-    
-  }
+            if (btn.textContent == "Recentes") {
+                this.historico.sort((a: any, b: any) => {
+                    if (a.dtSolicitacaoServico > b.dtSolicitacaoServico) {
+                        return -1;
+                    }
+                    else if (a.dtSolicitacaoServico < b.dtSolicitacaoServico) {
+                        return 1;
+                    }
 
-  
-  filtroAvaliados (){
-    
-  }
+                    return 0;
+                });
+            }
+            else if (btn.textContent == "Antigos") {
+                this.historico.sort((a: any, b: any) => {
+                    if (a.dtSolicitacaoServico < b.dtSolicitacaoServico) {
+                        return -1;
+                    }
+                    else if (a.dtSolicitacaoServico > b.dtSolicitacaoServico) {
+                        return 1;
+                    }
 
+                    return 0;
+                });
+            }
+            else {
+                this.historico.sort((a: any, b: any) => {
+                    if (a.qtEstrelasAvaliacaoCliente < b.qtEstrelasAvaliacaoCliente) {
+                        return -1;
+                    }
+                    else if (a.qtEstrelasAvaliacaoCliente > b.qtEstrelasAvaliacaoCliente) {
+                        return 1;
+                    }
 
+                    return 0;
+                });
+            }
+        }
+    }
+}
 
-  async carregarImgServico(cdSolicitacao: any) {
+  /* async carregarImgServico(cdSolicitacao: any) {
     try {
       this.carregar = true;
 
@@ -147,12 +184,10 @@ export class UltimosPedidosPage implements OnInit {
     }
 
     return null;
-  }
+  } */
 
   ngAfterViewInit() {
     this.carregarHistorico();
   }
-
-  
 
 }

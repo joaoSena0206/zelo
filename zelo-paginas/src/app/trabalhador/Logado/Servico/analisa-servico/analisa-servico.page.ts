@@ -27,7 +27,7 @@ export class AnalisaServicoPage implements OnInit {
     this.clienteServico = JSON.parse(localStorage.getItem('cliente')!);
     this.enderecoServico = JSON.parse(localStorage.getItem('endereco')!);
     this.solicitacaoServico = JSON.parse(localStorage.getItem('solicitacao')!);
-    this.cdSolicitacao = this.solicitacaoServico.CdSolicitacaoServico;
+    this.cdSolicitacao = this.solicitacaoServico.cdSolicitacaoServico;
     this.carregarServicos();
     this.pegarTokenCliente();
     this.carregarImgPerfilCliente();
@@ -35,7 +35,7 @@ export class AnalisaServicoPage implements OnInit {
 
   async pegarTokenCliente() {
     let dadosForm = new FormData();
-    dadosForm.append("cpf", this.cliente.Cpf);
+    dadosForm.append("cpf", this.cliente.cpf);
     let link = dominio + "/Cliente/PegarTokenFCM";
 
     try{
@@ -58,7 +58,7 @@ export class AnalisaServicoPage implements OnInit {
       this.imagens = res;
 
       for (let i = 0; i < this.imagens.length; i++) {
-        this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
+        this.carregarImgServico(this.imagens[i].solicitacao.cdSolicitacaoServico, this.imagens[i].codigo, this.imagens[i].tipoArquivo, i);
       }
     }
     catch (erro: any) {
@@ -95,10 +95,7 @@ export class AnalisaServicoPage implements OnInit {
 
     try{
       let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
-
-      if (resposta == "0") {
-        this.navCl.navigateRoot("/confirmacao-cliente");
-      }
+      this.navCl.navigateRoot("/confirmacao-cliente");
     }
     catch (erro: any) {
       const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -116,10 +113,7 @@ export class AnalisaServicoPage implements OnInit {
 
     try{
       let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
-
-      if (resposta == "0") {
-        this.navCl.navigateRoot("/trabalhador/inicial");
-      }
+      this.navCl.navigateRoot("/trabalhador/inicial");
     }
     catch (erro: any) {
       const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -131,7 +125,7 @@ export class AnalisaServicoPage implements OnInit {
   urlImg: any;
 
   async carregarImgPerfilCliente() {
-    let link = dominio + `/Imgs/Perfil/Cliente/${this.cliente.Cpf}.jpg`;
+    let link = dominio + `/Imgs/Perfil/Cliente/${this.cliente.cpf}.jpg`;
 
     try{
       let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
