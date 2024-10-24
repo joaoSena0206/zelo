@@ -8,10 +8,6 @@
     font-size: 15px;
 }
 
-.content{
-    padding: 30px;
-}
-
 .content__seta
 {
     font-size: 30px;
@@ -19,18 +15,24 @@
     position: absolute;
     top: 30px;
     left: 30px;
+    color: white;
+}
+
+.contente{
+    padding: 30px;
+    background-color: #CB2316;
+    border-radius: 0 0 20px 20px;
+    position: relative;
+    height: 300px;
 }
 
 .content__h1
 {
     font-weight: 700;
-    font-size: 32px;
+    font-size: 20px;
     margin: 50px 0 20px 0;
     text-align: center;
-}
-
-ion-input{
-    color: black;
+    color: white;
 }
 
 ion-card{
@@ -64,23 +66,25 @@ ion-card div p{
 
 ion-input{
     width: 100%;
-    background-color: white;
+    background-color: rgba(217, 217, 217, 1);
     border-radius: 20px;
     opacity: 1;
     font-weight: bold;
     color: black;
-
     --padding-start: 15px
 }
 .card_anuncio{
     max-width: 600px;
     margin: auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba( 0, 0, 0, 0.2);
 }
 
 .div_btn{
     width: 100%;
     display: flex;
     justify-content: center;
+    height: 45px;
 }
 
 .form__btn {
@@ -106,6 +110,7 @@ ion-input{
     justify-content: center;
     padding: 10px;
     text-align: center;
+    margin: 10px;
 }
 
 .div2 p{
@@ -120,8 +125,6 @@ ion-input{
 .div_estatistica{
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    
 }
 
 .card_estatistica{
