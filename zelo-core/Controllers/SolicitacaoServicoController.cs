@@ -321,7 +321,8 @@ public class SolicitacaoServicoController : ControllerBase
                             cliente.nm_cliente,
                             solicitacao_servico.dt_solicitacao_servico,
                             solicitacao_servico.ds_servico,
-                            solicitacao_servico.qt_estrelas_avaliacao_servico
+                            solicitacao_servico.qt_estrelas_avaliacao_servico,
+                            solicitacao_servico.cd_solicitacao_servico
                         FROM 
                             cliente
                         JOIN 
