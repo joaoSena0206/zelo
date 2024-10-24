@@ -8,7 +8,7 @@ public class Banco
     {
         if (conexao == null)
         {
-            string linhaConexao = "SERVER=54.233.160.22; PORT=3306; UID=root; PASSWORD=root; DATABASE=Zelo";
+            string linhaConexao = "SERVER=54.207.255.97; PORT=3306; UID=root; PASSWORD=root; DATABASE=Zelo";
             conexao = new MySqlConnection(linhaConexao);
 
             conexao.Open();
