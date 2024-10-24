@@ -11,21 +11,21 @@
 
       <div class="wrapper">
         <div class="btns_filtro">
-            <ion-button class="btn_filtro btn_filtro--ativado">Recentes</ion-button>
-            <ion-button class="btn_filtro">Antigos</ion-button>
-            <ion-button class="btn_filtro">Melhor avaliados</ion-button>
+            <ion-button class="btn_filtro btn_filtro--ativado" (click)="filtroRecentes();">Recentes</ion-button>
+            <ion-button class="btn_filtro" (click)="filtroAntigos();">Antigos</ion-button>
+            <ion-button class="btn_filtro" (click)="filtroAvaliados();">Melhor avaliados</ion-button>
         </div>
       </div>
 
-      <ion-card class="area_pedido" *ngFor="let historico of historico">
+      <ion-card class="area_pedido" *ngFor="let historico of historico let i = index">
         <div class="area_sobre_cliente">
           <div>
             <img src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
           </div>
           <div style="padding: 10px;">
             <h3 style="font-weight: bold; font-size: 22px;">{{historico.cliente.nome}}</h3>
-            <p style="margin: 3px 0;">{{historico.dtSolicitacaoServico}}</p>
-            <p><ion-icon name="star-outline"></ion-icon>3.5</p>
+            <p style="margin: 3px 0;">{{listaDataServico[i]}}</p>
+            <p><ion-icon name="star-outline"></ion-icon>{{historico.qtEstrelasAvaliacaoCliente}}</p>
           </div>
           <div class="txt-ver-perfil">
             <ion-text>Ver perfil</ion-text>
@@ -44,7 +44,7 @@
           </p>
 
           <p class="txt_descricao">
-            Estou com problemas no meu chuveiro. Ele so está gelando e não a esquentando. Por favor me aajuda!
+            {{historico.dsServico}}
           </p>
         </div>
       </ion-card>

@@ -22,6 +22,7 @@ export class InicialPage implements OnInit {
     historico: any;
     carregar: boolean = false;
     mostrar: boolean = true;
+    dominio: any = dominio;
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 

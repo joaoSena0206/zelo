@@ -21,6 +21,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     carregar: boolean = false;
     trabalhadores: any;
     tokenCliente: any;
+    dominio = dominio;
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 

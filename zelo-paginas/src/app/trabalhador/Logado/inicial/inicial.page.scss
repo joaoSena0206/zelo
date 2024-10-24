@@ -7,6 +7,7 @@
 
 .nm_titulo{
     color: #CB2316;
+    font-weight: bold;
 }
 
 .content{
@@ -23,6 +24,7 @@
     color: white;
 }
 
+
 .footer{
     display: flex;
     padding: 20px;
@@ -30,13 +32,13 @@
     align-items: center;
     bottom: 0;
     height: 85px;
-    background-color: white;
+    background-color: rgb(0, 0, 0);
 }
 
 .btn_situacao_trabalhador{
     width: 100%;
+    height: 55px;
     --background: #FF1200;
-    border-radius: 15px;
     display: flex;
     justify-content: start;
     position: relative;
@@ -47,8 +49,8 @@
     margin-right: 20px;
     position: absolute;
     left: 0;
-    width: 41px;
-    height: 41px;
+    width: 30px;
+    height: 30px;
 }
 
 .título_ultimos_pedidos{
@@ -67,6 +69,7 @@
 
 .título_ultimos_pedidos h3{
     font-size: 22px;
+    font-weight: bold;
 }
 
 .local_ultimos_trabalhos{
