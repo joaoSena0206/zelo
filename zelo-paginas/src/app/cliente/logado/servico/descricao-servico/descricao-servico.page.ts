@@ -72,18 +72,18 @@ export class DescricaoServicoPage implements OnInit {
 
     async carregarEndereco() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = dominio + "/Endereco/CarregarEndereco?cpf=" + cliente.Cpf;
+        let link = dominio + "/Endereco/CarregarEndereco?cpf=" + cliente.cpf;
 
         try {
             this.carregar = true;
             let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             this.endereco = resposta;
 
-            link = `https://viacep.com.br/ws/${this.endereco.Cep}/json/`;
+            link = `https://viacep.com.br/ws/${this.endereco.cep}/json/`;
             resposta = await firstValueFrom(this.http.get(link));
 
-            this.endereco.Cep = {
-                cep: this.endereco.Cep,
+            this.endereco.cep = {
+                cep: this.endereco.cep,
                 bairro: resposta.bairro,
                 rua: resposta.logradouro,
                 estado: resposta.estado,
@@ -91,7 +91,7 @@ export class DescricaoServicoPage implements OnInit {
             };
 
             this.form.controls['endereco'].disable();
-            this.form.controls['endereco'].setValue(`${this.endereco.Cep.rua}, ${this.endereco.Numero}, ${this.endereco.Complemento == "" ? "" : this.endereco.Complemento + ","} ${this.endereco.Cep.bairro}, ${this.endereco.Cep.cidade} - ${this.endereco.Cep.estado}, ${this.endereco.Cep.cep.substring(0, 5) + "-" + this.endereco.Cep.cep.substring(5)}`);
+            this.form.controls['endereco'].setValue(`${this.endereco.cep.rua}, ${this.endereco.numero}, ${this.endereco.complemento == "" ? "" : this.endereco.complemento + ","} ${this.endereco.cep.bairro}, ${this.endereco.cep.cidade} - ${this.endereco.cep.estado}, ${this.endereco.cep.cep.substring(0, 5) + "-" + this.endereco.cep.cep.substring(5)}`);
             localStorage.setItem("endereco", this.form.controls['endereco'].value!);
         }
         catch {
@@ -192,9 +192,9 @@ export class DescricaoServicoPage implements OnInit {
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let servico = JSON.parse(localStorage.getItem("servico")!);
                 let dadosForm = new FormData();
-                dadosForm.append("cpf", cliente.Cpf);
+                dadosForm.append("cpf", cliente.cpf);
                 dadosForm.append("desc", this.form.controls["descServico"].value!);
-                dadosForm.append("codigoServico", servico.Codigo);
+                dadosForm.append("codigoServico", servico.codigo);
 
                 if (this.imgs.length > 0) {
                     for (let i = 0; i < this.imgs.length; i++) {

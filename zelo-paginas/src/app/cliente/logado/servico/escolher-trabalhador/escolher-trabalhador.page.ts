@@ -26,7 +26,7 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     ngOnInit() {
         let servico = JSON.parse(localStorage.getItem("servico")!);
-        this.carregarTrabalhadores(servico.Codigo);
+        this.carregarTrabalhadores(servico.codigo);
     }
 
     ngAfterViewInit() {
@@ -48,7 +48,7 @@ export class EscolherTrabalhadorPage implements OnInit {
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
-            const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
+            const modal = document.querySelector("#modal_" + trabalhador.cpf) as HTMLIonModalElement;
             modal.dismiss();
             const data = await modal.onDidDismiss();
 
@@ -129,17 +129,17 @@ export class EscolherTrabalhadorPage implements OnInit {
             let posicaoAtual = await this.pegarPosicaoAtual();
 
             for (let i = 0; i < resposta.length; i++) {
-                let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
+                let latlng = L.latLng(resposta[i].trabalhador.latitudeAtual, resposta[i].trabalhador.longitudeAtual);
                 let distancia = latlng.distanceTo(posicaoAtual!) / 1000;
 
-                resposta[i].Trabalhador.Distancia = distancia;
+                resposta[i].trabalhador.distancia = distancia;
             }
 
             resposta.sort((a: any, b: any) => {
-                if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
+                if (a.trabalhador.distancia < b.trabalhador.distancia) {
                     return -1;
                 }
-                else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
+                else if (a.trabalhador.distancia > b.trabalhador.distancia) {
                     return 1;
                 }
 

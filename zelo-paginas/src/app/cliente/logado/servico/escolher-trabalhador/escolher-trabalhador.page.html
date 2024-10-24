@@ -20,65 +20,65 @@
 
             <div class="UltimosPedidosDiv">
                 <div class="areaUltimoPedido" *ngFor="let trabalhador of trabalhadores"
-                    [id]="'t_' + trabalhador.Trabalhador.Cpf">
+                    [id]="'t_' + trabalhador.trabalhador.cpf">
                     <div class="divWrapper">
                         <div class="infoTrabalhorPedido">
                             <figure class="fotoTrabalhadorPedido">
-                                <img draggable="false" [src]="trabalhador.Trabalhador.img">
+                                <img draggable="false" [src]="'http://localhost:32613/Imgs/Perfil/Trabalhador/' + trabalhador.trabalhador.cpf + '.jpg'">
                             </figure>
 
                             <div>
                                 <div>
-                                    <h3 class="titulo tituloPedido">{{ trabalhador.Trabalhador.Nome }}</h3>
-                                    <h3 class="titulo tituloPedido">{{ trabalhador.Servico.Nome }}</h3>
+                                    <h3 class="titulo tituloPedido">{{ trabalhador.trabalhador.nome }}</h3>
+                                    <h3 class="titulo tituloPedido">{{ trabalhador.servico.nome }}</h3>
 
                                     <div class="estrelaPreco">
                                         <ion-icon name="star"></ion-icon>
-                                        <p class="titulo">{{ trabalhador.Trabalhador.Avaliacao.toFixed(1) }}</p>
+                                        <p class="titulo">{{ trabalhador.trabalhador.avaliacao.toFixed(1) }}</p>
                                     </div>
                                 </div>
 
                                 <div class="divCalendario">
                                     <p class="titulo precoPedido">R$ {{
-                                        trabalhador.Trabalhador.ValorVisita.toFixed(2).replace(".", ",") }}</p>
+                                        trabalhador.trabalhador.valorVisita.toFixed(2).replace(".", ",") }}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <p class="distancia">Distância: {{ trabalhador.Trabalhador.Distancia.toFixed(2).replace(".",
+                            <p class="distancia">Distância: {{ trabalhador.trabalhador.distancia.toFixed(2).replace(".",
                                 ",") }} km</p>
                             <ion-button class="btnContratar"
-                                [id]="'contratar_' + trabalhador.Trabalhador.Cpf">Contratar</ion-button>
-                            <ion-modal [id]="'modal_' + trabalhador.Trabalhador.Cpf"
-                                [trigger]="'contratar_' + trabalhador.Trabalhador.Cpf">
+                                [id]="'contratar_' + trabalhador.trabalhador.cpf">Contratar</ion-button>
+                            <ion-modal [id]="'modal_' + trabalhador.trabalhador.cpf"
+                                [trigger]="'contratar_' + trabalhador.trabalhador.cpf">
                                 <ng-template>
                                     <div class="divModalWrapper">
                                         <div class="areaUltimoPedido">
                                             <div class="divWrapper">
                                                 <div class="infoTrabalhorPedido">
                                                     <figure class="fotoTrabalhadorPedido">
-                                                        <img draggable="false" [src]="trabalhador.Trabalhador.img">
+                                                        <img draggable="false" [src]="trabalhador.trabalhador.img">
                                                     </figure>
 
                                                     <div>
                                                         <div>
                                                             <h3 class="titulo tituloPedido">{{
-                                                                trabalhador.Trabalhador.Nome }}</h3>
-                                                            <h3 class="titulo tituloPedido">{{ trabalhador.Servico.Nome
+                                                                trabalhador.trabalhador.nome }}</h3>
+                                                            <h3 class="titulo tituloPedido">{{ trabalhador.servico.nome
                                                                 }}</h3>
 
                                                             <div class="estrelaPreco">
                                                                 <ion-icon name="star"></ion-icon>
                                                                 <p class="titulo">{{
-                                                                    trabalhador.Trabalhador.Avaliacao.toFixed(1) }}</p>
+                                                                    trabalhador.trabalhador.avaliacao.toFixed(1) }}</p>
                                                             </div>
                                                         </div>
 
                                                         <div class="divCalendario">
                                                             <p class="titulo precoPedido">R$ {{
-                                                                trabalhador.Trabalhador.ValorVisita.toFixed(2).replace(".",
+                                                                trabalhador.trabalhador.valorVisita.toFixed(2).replace(".",
                                                                 ",") }}</p>
                                                         </div>
                                                     </div>
@@ -86,15 +86,15 @@
 
                                                 <div style="margin-top: 10px;">
                                                     <p class="distancia">Distância: {{
-                                                        trabalhador.Trabalhador.Distancia.toFixed(1).replace(".",
+                                                        trabalhador.trabalhador.distancia.toFixed(1).replace(".",
                                                         ",") }} km</p>
                                                 </div>
 
                                                 <div class="divBtns">
                                                     <ion-button
-                                                        (click)="dismissModal(trabalhador.Trabalhador.Cpf)">Cancelar</ion-button>
+                                                        (click)="dismissModal(trabalhador.trabalhador.cpf)">Cancelar</ion-button>
                                                     <ion-button
-                                                        (click)="contratarTrabalhador(trabalhador.Trabalhador)">Confirmar</ion-button>
+                                                        (click)="contratarTrabalhador(trabalhador.trabalhador)">Confirmar</ion-button>
                                                 </div>
                                             </div>
 
