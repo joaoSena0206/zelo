@@ -344,7 +344,7 @@ public class SolicitacaoServicoController : ControllerBase
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
                     solicitacaoServico.DsServico = dados.GetString("ds_servico");
                     solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
-                    solicitacaoServico.CdSolicitacaoServico = dados.GetInt16(5);
+                    solicitacaoServico.CdSolicitacaoServico = dados.GetInt16(4);
 
                     listahistoricotrabalhador.Add(solicitacaoServico);
                 }
