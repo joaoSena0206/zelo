@@ -37,6 +37,7 @@ export class InicialPage implements OnInit {
     solicitacaoServico: any;
     enderecoServico: any;
     modal: any;
+    dominio = dominio;
 
     constructor(private http: HttpClient, private navCl: NavController) {
 

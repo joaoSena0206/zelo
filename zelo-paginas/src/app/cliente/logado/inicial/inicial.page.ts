@@ -99,6 +99,8 @@ export class InicialPage implements OnInit {
     async carregarCategorias() {
         let link = dominio + "/CategoriaServico/CarregarCategoria";
 
+        this.carregar = true;
+
         try {
             let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             this.categorias = res;
