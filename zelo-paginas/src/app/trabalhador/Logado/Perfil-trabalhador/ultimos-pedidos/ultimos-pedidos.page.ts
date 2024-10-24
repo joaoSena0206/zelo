@@ -45,6 +45,7 @@ export class UltimosPedidosPage implements OnInit {
   solicitacaoServico: any;
   enderecoServico: any;
   modal: any;
+  listaDataServico: any = [];
 
   async carregarHistorico() {
     let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
@@ -73,13 +74,48 @@ export class UltimosPedidosPage implements OnInit {
 
     console.log(this.historico)
 
-    const dateString: string = "2024-09-27T00:00:00";
-    const timestamp: number = Date.parse(dateString);
-    const date: Date = new Date(timestamp);
+    for (let i = 0; i < this.historico.length; i++) {
+      
+      const dateString: string = this.historico[i].dtSolicitacaoServico;
+      const timestamp: number = Date.parse(dateString);
+      const date: Date = new Date(timestamp);
 
-    console.log(date.getMonth() + 1)
-    console.log(date.getDate())
+      let dia = date.getDate();
+      let mes = date.getMonth() + 1;
+      let ano = date.getFullYear();
+
+      let DataFormatada = null;
+
+      if(mes < 10)
+      {
+        DataFormatada = dia + "/" + "0" + mes + "/" + ano;
+      }
+      else
+      {
+        DataFormatada = dia + "/" + mes + "/" + ano;
+      }
+
+      this.listaDataServico.push(DataFormatada);
+      
+    }
+    
   }
+
+  filtroRecentes(){
+
+  }
+
+  
+  filtroAntigos(){
+    
+  }
+
+  
+  filtroAvaliados (){
+    
+  }
+
+
 
   async carregarImgServico(cdSolicitacao: any) {
     try {
@@ -116,5 +152,7 @@ export class UltimosPedidosPage implements OnInit {
   ngAfterViewInit() {
     this.carregarHistorico();
   }
+
+  
 
 }

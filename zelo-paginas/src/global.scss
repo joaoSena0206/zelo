@@ -78,14 +78,14 @@ ion-searchbar input {
     box-shadow: 0 4px 4px rgb(0, 0, 0, 0.25);
 }
 
-.footer {
+.footer{
     display: flex;
-    padding: 20px;
-    justify-content: space-around;
-    align-items: center;
-    bottom: 0;
     height: 85px;
     background-color: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px; 
+    margin: 10px; 
 }
 
 .ion_tabs {
