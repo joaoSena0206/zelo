@@ -25,13 +25,13 @@
 
         <div class="local_ultimos_trabalhos">
             <ion-card class="card_servico" *ngFor="let historico of historico">
-                <img draggable="false" class="img_pedido" [src]="historico.img" [alt]="historico.Nome">
+                <img draggable="false" class="img_pedido" [src]="historico.img" [alt]="historico.nome">
 
-                <p class="nm_cliente_pedido">{{historico.Cliente.Nome}}</p>
+                <p class="nm_cliente_pedido">{{historico.cliente.nome}}</p>
 
                 <p class="ds_pedido">
-                    {{ historico.DsServico.length > 60 ? (historico.DsServico | slice:0:60) + '...' :
-                    historico.DsServico }}
+                    {{ historico.dsServico.length > 60 ? (historico.dsServico | slice:0:60) + '...' :
+                    historico.dsServico }}
                 </p>
             </ion-card>
         </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div>
                     <p class="txt_anonimo">Anônimo</p>
-                    <p class="txt_comentario_anonimo">{{Comentario.DsComentarioAvaliacaoServico}}</p>
+                    <p class="txt_comentario_anonimo">{{Comentario.dsComentarioAvaliacaoServico}}</p>
                 </div>
             </ion-item>
         </ion-list>
@@ -123,7 +123,7 @@
             </div>
 
             <div class="area_branca">
-                <h1>{{clienteServico.Nome}}</h1>
+                <h1>{{clienteServico.nome}}</h1>
                 <h1 style="font-size: 22px;">Novo serviço solicitado!</h1>
                 <div>
                     <ion-button class="form__btn2" (click)="analisarServico();">Analisar</ion-button>

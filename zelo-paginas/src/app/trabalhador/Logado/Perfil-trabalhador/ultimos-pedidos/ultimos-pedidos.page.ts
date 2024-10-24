@@ -35,7 +35,7 @@ export class UltimosPedidosPage implements OnInit {
 
   trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
   historico: any;
-  Nome: any = this.trabalhador.Nome.trim();
+  Nome: any = this.trabalhador.nome;
   ComentarioAnonimo: any;
   qtEstrelas: any;
   carregar: boolean = false;
@@ -48,7 +48,7 @@ export class UltimosPedidosPage implements OnInit {
 
   async carregarHistorico() {
     let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
+    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?cpf=${trabalhador.cpf}&tipo=trabalhador`;
 
     try {
 
@@ -56,7 +56,7 @@ export class UltimosPedidosPage implements OnInit {
       let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
       for (let i = 0; i < res.length; i++) {
-        res[i].img = await this.carregarImgServico(res[i].CdSolicitacaoServico);
+        res[i].img = await this.carregarImgServico(res[i].cdSolicitacaoServico);
       }
 
       this.historico = res;
@@ -72,6 +72,13 @@ export class UltimosPedidosPage implements OnInit {
     }
 
     console.log(this.historico)
+
+    const dateString: string = "2024-09-27T00:00:00";
+    const timestamp: number = Date.parse(dateString);
+    const date: Date = new Date(timestamp);
+
+    console.log(date.getMonth() + 1)
+    console.log(date.getDate())
   }
 
   async carregarImgServico(cdSolicitacao: any) {
@@ -82,7 +89,7 @@ export class UltimosPedidosPage implements OnInit {
       let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
       if (res.length > 0) {
-        link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+        link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].tipoArquivo}`;
       }
       else {
         link = "../../../../assets/icon/geral/sem-foto.jpg";

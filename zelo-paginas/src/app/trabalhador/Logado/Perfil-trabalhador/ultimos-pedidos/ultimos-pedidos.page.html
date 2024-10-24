@@ -17,14 +17,14 @@
         </div>
       </div>
 
-      <ion-card class="area_pedido">
+      <ion-card class="area_pedido" *ngFor="let historico of historico">
         <div class="area_sobre_cliente">
           <div>
             <img src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
           </div>
           <div style="padding: 10px;">
-            <h3 style="font-weight: bold; font-size: 22px;">Sandra Rodrigues</h3>
-            <p style="margin: 3px 0;">25/03/2024</p>
+            <h3 style="font-weight: bold; font-size: 22px;">{{historico.cliente.nome}}</h3>
+            <p style="margin: 3px 0;">{{historico.dtSolicitacaoServico}}</p>
             <p><ion-icon name="star-outline"></ion-icon>3.5</p>
           </div>
           <div class="txt-ver-perfil">
@@ -49,7 +49,7 @@
         </div>
       </ion-card>
 
-      <ion-card class="area_pedido">
+      <!-- <ion-card class="area_pedido">
         <div class="area_sobre_cliente">
           <div>
             <img src="../../../../../assets/icon/Trabalhador/imagens/fotohomem3.jpg" alt="">
@@ -79,7 +79,7 @@
             Hoje, ao chegar em casa após um longo dia de trabalho, encontrei problemas com a fechadura da porta: a chave não girava. Tentei diversas formas de abri-la, mas sem sucesso. Então se puder me ajudar, tenho um compromisso de noite e não posso me atrasar.
           </p>
         </div>
-      </ion-card>
+      </ion-card> -->
 
     </div>
   </div>

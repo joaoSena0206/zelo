@@ -27,7 +27,7 @@ const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("Backg
 export class InicialPage implements OnInit {
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     historico: any;
-    Nome: any = this.trabalhador.Nome;
+    Nome: any = this.trabalhador.nome;
     ComentarioAnonimo: any;
     qtEstrelas: any;
     carregar: boolean = false;
@@ -97,7 +97,7 @@ export class InicialPage implements OnInit {
         const img = document.querySelector('.img_btn_situacao');
 
         let dadosForm = new FormData();
-        dadosForm.append("cpf", this.trabalhador.Cpf);
+        dadosForm.append("cpf", this.trabalhador.cpf);
 
         let res;
 
@@ -139,7 +139,7 @@ export class InicialPage implements OnInit {
         let link = dominio + "/Trabalhador/AdicionarTokenFCM";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let dadosForm = new FormData();
-        dadosForm.append("cpf", trabalhador.Cpf);
+        dadosForm.append("cpf", trabalhador.cpf);
         dadosForm.append("token", token);
 
         try {
@@ -215,7 +215,7 @@ export class InicialPage implements OnInit {
                 let link = dominio + "/Trabalhador/AtualizarLoc";
                 let dadosForm = new FormData();
                 if (location) {
-                    dadosForm.append("cpf", this.trabalhador.Cpf);
+                    dadosForm.append("cpf", this.trabalhador.cpf);
                     dadosForm.append("lat", location.latitude.toFixed(8));
                     dadosForm.append("log", location.longitude.toFixed(8));
                 }
@@ -278,7 +278,7 @@ export class InicialPage implements OnInit {
     }
 
     async carregarComentarioAnonimo() {
-        let link = dominio + `/SolicitacaoServico/carregarcomentariosAnonimos?cpf=${this.trabalhador.Cpf}&tipo=trabalhador`;
+        let link = dominio + `/SolicitacaoServico/carregarcomentariosAnonimos?cpf=${this.trabalhador.cpf}&tipo=trabalhador`;
 
         let res;
 
@@ -313,7 +313,7 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
+        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${trabalhador.cpf}&tipo=trabalhador`;
 
         let res: any;
 
@@ -330,9 +330,7 @@ export class InicialPage implements OnInit {
             this.carregar = false;
         }
 
-        for (let i = 0; i < res.length; i++) {
-            res[i].img = await this.carregarImgServico(res[i].CdSolicitacaoServico);
-        }
+        
 
         this.historico = res;
     }
@@ -348,7 +346,7 @@ export class InicialPage implements OnInit {
             let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
             if (res.length > 0) {
-                link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].TipoArquivo}`;
+                link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].tipoArquivo}`;
             }
             else {
                 link = "../../../../assets/icon/geral/sem-foto.jpg";
@@ -423,7 +421,7 @@ export class InicialPage implements OnInit {
 
         let dadosForm = new FormData();
         dadosForm.append("codigoResultado", this.resultado!);
-        dadosForm.append("cpf", this.trabalhador.Cpf);
+        dadosForm.append("cpf", this.trabalhador.cpf);
 
         try
         {
