@@ -60,7 +60,7 @@
                                             <div class="divWrapper">
                                                 <div class="infoTrabalhorPedido">
                                                     <figure class="fotoTrabalhadorPedido">
-                                                        <img draggable="false" [src]="trabalhador.trabalhador.img">
+                                                        <img draggable="false" [src]="'http://localhost:32613/Imgs/Perfil/Trabalhador/' + trabalhador.trabalhador.cpf + '.jpg'">
                                                     </figure>
 
                                                     <div>
@@ -87,7 +87,7 @@
 
                                                 <div style="margin-top: 10px;">
                                                     <p class="distancia">Distância: {{
-                                                        trabalhador.trabalhador.distancia.toFixed(1).replace(".",
+                                                        trabalhador.trabalhador.distancia.toFixed(2).replace(".",
                                                         ",") }} km</p>
                                                 </div>
 
