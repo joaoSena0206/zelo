@@ -61,7 +61,7 @@ export class DescricaoServicoPage implements OnInit {
 
             this.form.controls['endereco'].setValue(endereco);
             this.form.controls['endereco'].disable();
-            this.form.controls['descServico'].setValue(solicitacao.DsServico);
+            this.form.controls['descServico'].setValue(solicitacao.dsServico);
         }
     }
 
@@ -170,7 +170,7 @@ export class DescricaoServicoPage implements OnInit {
 
         let resposta = await fetch(imgArquivo.webPath!);
         let blob = await resposta.blob();
-        let file = new File([blob], "img." + blob.type.substring(blob.type.indexOf("/") + 1), { type: blob.type });
+        let file = new File([blob], "img." + blob.type.substring(blob.type.indexOf("/") + 1), { type: "image/jpeg" });
 
         let arquivo = {
             src: imgArquivo.webPath,
