@@ -79,10 +79,10 @@ export class EscolherTrabalhadorPage implements OnInit {
 
                 if (btn.textContent == "Próximos") {
                     this.trabalhadores.sort((a: any, b: any) => {
-                        if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
+                        if (a.trabalhador.distancia < b.trabalhador.distancia) {
                             return -1;
                         }
-                        else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
+                        else if (a.Trabalhador.distancia > b.trabalhador.distancia) {
                             return 1;
                         }
 
@@ -91,10 +91,10 @@ export class EscolherTrabalhadorPage implements OnInit {
                 }
                 else if (btn.textContent == "Melhor avaliados") {
                     this.trabalhadores.sort((a: any, b: any) => {
-                        if (a.Trabalhador.Avaliacao > b.Trabalhador.Avaliacao) {
+                        if (a.trabalhador.avaliacao > b.trabalhador.avaliacao) {
                             return -1;
                         }
-                        else if (a.Trabalhador.Avaliacao < b.Trabalhador.Avaliacao) {
+                        else if (a.trabalhador.avaliacao < b.trabalhador.avaliacao) {
                             return 1;
                         }
 
@@ -103,10 +103,10 @@ export class EscolherTrabalhadorPage implements OnInit {
                 }
                 else {
                     this.trabalhadores.sort((a: any, b: any) => {
-                        if (a.Trabalhador.ValorVisita < b.Trabalhador.ValorVisita) {
+                        if (a.trabalhador.valorVisita < b.trabalhador.valorVisita) {
                             return -1;
                         }
-                        else if (a.Trabalhador.ValorVisita > b.Trabalhador.ValorVisita) {
+                        else if (a.trabalhador.valorVisita > b.trabalhador.valorVisita) {
                             return 1;
                         }
 
@@ -129,7 +129,7 @@ export class EscolherTrabalhadorPage implements OnInit {
             let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             let posicaoAtual = await this.pegarPosicaoAtual();
 
-            
+
 
             for (let i = 0; i < resposta.length; i++) {
                 let latlng = L.latLng(resposta[i].trabalhador.latitudeAtual, resposta[i].trabalhador.longitudeAtual);
