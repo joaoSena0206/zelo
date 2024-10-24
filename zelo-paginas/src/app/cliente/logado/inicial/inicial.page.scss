@@ -366,7 +366,8 @@ p.titulo:nth-child(2) {
 }
 
 .tituloPedido {
-    font-size: 17px;
+    font-size: 15px;
+    color: #F66701;
 }
 
 .UltimosPedidosDiv {
@@ -385,10 +386,14 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>div:nth-child(2)>div:nth-chil
 
 .div_trabalhadores>ion-card:nth-child(1)>figure:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(3)>div:nth-child(2)>ion-icon:nth-child(1) {
     font-size: 17px;
+    
 }
 
 h3.titulo:nth-child(2) {
-    font-size: 15px;
+
+    font-size: 17px;
+    color: black;
+    margin: 5px 0px;
 }
 
 .divCalendario {

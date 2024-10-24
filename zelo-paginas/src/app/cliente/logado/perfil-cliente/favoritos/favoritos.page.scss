@@ -60,7 +60,8 @@ h1 {
 }
 
 .tituloPedido {
-    font-size: 17px;
+    font-size: 15px;
+    color: #F66701;
 }
 
 .estrelaPreco {
@@ -178,5 +179,7 @@ div.areaUltimoPedido:nth-child(2)>div:nth-child(1)>figure:nth-child(1) {
 }
 
 h3.titulo:nth-child(2) {
-    font-size: 15px;
+    font-size: 17px;
+    color: black;
+    margin: 5px 0px;
 }
