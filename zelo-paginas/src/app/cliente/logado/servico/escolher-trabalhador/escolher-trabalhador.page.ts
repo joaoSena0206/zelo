@@ -128,6 +128,8 @@ export class EscolherTrabalhadorPage implements OnInit {
             let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             let posicaoAtual = await this.pegarPosicaoAtual();
 
+            
+
             for (let i = 0; i < resposta.length; i++) {
                 let latlng = L.latLng(resposta[i].trabalhador.latitudeAtual, resposta[i].trabalhador.longitudeAtual);
                 let distancia = latlng.distanceTo(posicaoAtual!) / 1000;
