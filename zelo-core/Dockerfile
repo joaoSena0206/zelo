@@ -1,9 +1,9 @@
 # Etapa 1: Build da aplicação
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
 # Etapa 2: Restaura as dependências e publica a aplicação
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
 # Copia o arquivo de projeto e restaura as dependências (aproveitamento do cache)
