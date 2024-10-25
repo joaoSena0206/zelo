@@ -1,3 +1,7 @@
+<div *ngIf="carregar" class="divCarregamento">
+  <div class="carregamento--trabalhador"></div>
+</div>
+
 <ion-content [fullscreen]="true">
   <div class="wrapper">
     <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
@@ -11,9 +15,9 @@
 
       <div class="wrapper">
         <div class="btns_filtro">
-            <ion-button class="btn_filtro btn_filtro--ativado" (click)="filtroRecentes();">Recentes</ion-button>
-            <ion-button class="btn_filtro" (click)="filtroAntigos();">Antigos</ion-button>
-            <ion-button class="btn_filtro" (click)="filtroAvaliados();">Melhor avaliados</ion-button>
+            <ion-button class="btn_filtro btn_filtro--ativado" (click)="mudarFiltro($event.target)">Recentes</ion-button>
+            <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Antigos</ion-button>
+            <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Melhor avaliados</ion-button>
         </div>
       </div>
 
@@ -24,7 +28,7 @@
           </div>
           <div style="padding: 10px;">
             <h3 style="font-weight: bold; font-size: 22px;">{{historico.cliente.nome}}</h3>
-            <p style="margin: 3px 0;">{{listaDataServico[i]}}</p>
+            <p style="margin: 3px 0;">{{historico.dtSolicitacaoServico}}</p>
             <p><ion-icon name="star-outline"></ion-icon>{{historico.qtEstrelasAvaliacaoCliente}}</p>
           </div>
           <div class="txt-ver-perfil">
@@ -33,7 +37,7 @@
         </div>
 
         <div class="area_img">
-          <img src="../../../../../assets/icon/Trabalhador/imagens/image 118.png" alt="">
+          <img [src]="dominio + '/Imgs/Solicitacao/' + historico.cdSolicitacaoServico + '/1.jpeg'">
         </div>
 
         <div class="area_descricao_pedido">

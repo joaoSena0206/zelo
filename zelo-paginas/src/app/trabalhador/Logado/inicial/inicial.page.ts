@@ -111,7 +111,7 @@ export class InicialPage implements OnInit {
             alert.present();
         }
 
-        if (res == "True") {
+        if (res == "true") {
             this.situacao = 'Disponível';
 
             botaoSituacao?.classList.remove('btn_situacao_trabalhador');
@@ -330,9 +330,7 @@ export class InicialPage implements OnInit {
         finally {
             this.carregar = false;
         }
-
         
-
         this.historico = res;
     }
 
