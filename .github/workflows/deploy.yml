@@ -43,6 +43,7 @@ jobs:
 
             - name: Upload and deploy to Elastic Beanstalk
               run: |
+                cd zelo-core
                 aws s3 cp app.zip s3://elasticbeanstalk-sa-east-1-872515282645/app.zip
                 aws elasticbeanstalk create-application-version --application-name "Zelo" --source-bundle S3Bucket="elasticbeanstalk-sa-east-1-872515282645",S3Key="app.zip"
                 aws elasticbeanstalk update-environment --environment-name "Zelo-env"
