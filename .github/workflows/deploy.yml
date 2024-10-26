@@ -8,7 +8,10 @@ on:
             - 'zelo-core/**'
 
     pull_request:
-        branches: [main]
+        branches:
+            - main
+        paths:
+            - 'zelo-core/**'
     
 jobs:
     build:
