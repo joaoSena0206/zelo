@@ -13,7 +13,6 @@ public class SolicitacaoServicoController : ControllerBase
         banco.Conectar();
         try
         {
-
             string comando = $@"SELECT nm_trabalhador, nm_servico, dt_solicitacao_servico, vl_visita_trabalhador, ss.cd_cpf_trabalhador, ss.cd_servico FROM solicitacao_servico ss
             JOIN trabalhador t ON (ss.cd_cpf_trabalhador = t.cd_cpf_trabalhador)
             JOIN servico s ON (ss.cd_servico = s.cd_servico)
