@@ -1,4 +1,12 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+
 var builder = WebApplication.CreateBuilder(args);
+
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("zelo-dfe99-firebase-adminsdk-84ctk-e59450168b.json")
+});
 
 builder.Services.AddCors(options =>
 {
