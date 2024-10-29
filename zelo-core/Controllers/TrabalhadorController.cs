@@ -504,7 +504,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("EnviarServicoAceito")]
-    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string situacaoServico, [FromForm] string solicitacao)
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string situacaoServico)
     {
         try
         {
@@ -522,7 +522,7 @@ public class TrabalhadorController : ControllerBase
                     {"situacaoServico", situacaoServico}
                 },
                     Token = token
-                };
+             };
 
             string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
 
