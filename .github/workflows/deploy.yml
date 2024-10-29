@@ -41,8 +41,8 @@ jobs:
 
             - name: Empacota o arquivo
               run: |
-                cd zelo-core
-                zip -r app.zip ./publish
+                cd zelo-core/publish
+                zip -r ../app.zip .
 
             - name: Upload and deploy to Elastic Beanstalk
               run: |
