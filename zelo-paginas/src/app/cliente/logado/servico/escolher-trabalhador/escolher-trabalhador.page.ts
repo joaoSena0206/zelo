@@ -27,7 +27,7 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     ngOnInit() {
         let servico = JSON.parse(localStorage.getItem("servico")!);
-        this.carregarTrabalhadores(servico.codigo);
+        this.carregarTrabalhadores(servico.Codigo);
     }
 
     ngAfterViewInit() {
@@ -39,6 +39,7 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     async contratarTrabalhador(trabalhador: any) {
         let dadosForm = new FormData();
+
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
         dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
@@ -49,7 +50,7 @@ export class EscolherTrabalhadorPage implements OnInit {
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
-            const modal = document.querySelector("#modal_" + trabalhador.cpf) as HTMLIonModalElement;
+            const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
             modal.dismiss();
             const data = await modal.onDidDismiss();
 
@@ -79,10 +80,10 @@ export class EscolherTrabalhadorPage implements OnInit {
 
                 if (btn.textContent == "Próximos") {
                     this.trabalhadores.sort((a: any, b: any) => {
-                        if (a.trabalhador.distancia < b.trabalhador.distancia) {
+                        if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
                             return -1;
                         }
-                        else if (a.Trabalhador.distancia > b.trabalhador.distancia) {
+                        else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
                             return 1;
                         }
 
@@ -91,10 +92,10 @@ export class EscolherTrabalhadorPage implements OnInit {
                 }
                 else if (btn.textContent == "Melhor avaliados") {
                     this.trabalhadores.sort((a: any, b: any) => {
-                        if (a.trabalhador.avaliacao > b.trabalhador.avaliacao) {
+                        if (a.Trabalhador.Avaliacao > b.Trabalhador.Avaliacao) {
                             return -1;
                         }
-                        else if (a.trabalhador.avaliacao < b.trabalhador.avaliacao) {
+                        else if (a.Trabalhador.Avaliacao < b.Trabalhador.Avaliacao) {
                             return 1;
                         }
 
@@ -103,10 +104,10 @@ export class EscolherTrabalhadorPage implements OnInit {
                 }
                 else {
                     this.trabalhadores.sort((a: any, b: any) => {
-                        if (a.trabalhador.valorVisita < b.trabalhador.valorVisita) {
+                        if (a.Trabalhador.ValorVisita < b.Trabalhador.ValorVisita) {
                             return -1;
                         }
-                        else if (a.trabalhador.valorVisita > b.trabalhador.valorVisita) {
+                        else if (a.Trabalhador.ValorVisita > b.Trabalhador.ValorVisita) {
                             return 1;
                         }
 
@@ -129,20 +130,18 @@ export class EscolherTrabalhadorPage implements OnInit {
             let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             let posicaoAtual = await this.pegarPosicaoAtual();
 
-
-
             for (let i = 0; i < resposta.length; i++) {
-                let latlng = L.latLng(resposta[i].trabalhador.latitudeAtual, resposta[i].trabalhador.longitudeAtual);
+                let latlng = L.latLng(resposta[i].Trabalhador.LatitudeAtual, resposta[i].Trabalhador.LongitudeAtual);
                 let distancia = latlng.distanceTo(posicaoAtual!) / 1000;
 
-                resposta[i].trabalhador.distancia = distancia;
+                resposta[i].Trabalhador.Distancia = distancia;
             }
 
             resposta.sort((a: any, b: any) => {
-                if (a.trabalhador.distancia < b.trabalhador.distancia) {
+                if (a.Trabalhador.Distancia < b.Trabalhador.Distancia) {
                     return -1;
                 }
-                else if (a.trabalhador.distancia > b.trabalhador.distancia) {
+                else if (a.Trabalhador.Distancia > b.Trabalhador.Distancia) {
                     return 1;
                 }
 

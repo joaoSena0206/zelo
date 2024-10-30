@@ -79,7 +79,7 @@ export class InicialPage implements OnInit {
 
     async carregarHistorico() {
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${cliente.cpf}&tipo=cliente`;
+        let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${cliente.Cpf}&tipo=cliente`;
 
         try {
             let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
@@ -112,12 +112,13 @@ export class InicialPage implements OnInit {
 
                 let servicos: any = res2;
                 servicos.sort((a: any, b: any) => {
-                    if (a.nome < b.nome) {
+                    if (a.Nome < b.Nome) {
                         return -1;
                     }
-                    if (a.nome > b.nome) {
+                    if (a.Nome > b.Nome) {
                         return 1;
                     }
+
                     return 0;
                 });
 
@@ -126,7 +127,7 @@ export class InicialPage implements OnInit {
                         this.categorias[i].servicos = [];
 
                         for (let j = 0; j < servicos.length; j++) {
-                            if (this.categorias[i].codigo == servicos[j].categoria.codigo) {
+                            if (this.categorias[i].Codigo == servicos[j].Categoria.Codigo) {
                                 this.categorias[i].servicos.push(servicos[j]);
                             }
                         }
