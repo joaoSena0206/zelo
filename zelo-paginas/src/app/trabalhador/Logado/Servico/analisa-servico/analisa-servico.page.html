@@ -1,6 +1,6 @@
 <ion-header class="header" [translucent]="true">
   <ion-toolbar>
-    <ion-title>Olá, <ion-text class="nm_titulo">{{trabalhador.Nome}}</ion-text></ion-title>
+    <ion-title>Olá, <ion-text class="nm_titulo">{{trabalhador.nome}}</ion-text></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
       <div class="area_perfil">
         <img [src]="urlImg" alt="">
         <ion-text class="area_titulo_perfil">
-          <h1>{{clienteServico.Nome}}</h1>
+          <h1>{{clienteServico.nome}}</h1>
           <p style="text-decoration: underline;">Ver perfil</p>
         </ion-text>
       </div>
@@ -24,7 +24,7 @@
   
         <h3>Descrição</h3>
         <p class="descricao_pedido">
-          {{solicitacaoServico.DsServico}}
+          {{solicitacaoServico.dsServico}}
         </p>
   
         <div *ngFor="let imagens of imagens">

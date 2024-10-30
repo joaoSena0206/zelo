@@ -90,7 +90,7 @@ export class AnalisaServicoPage implements OnInit {
     let dadosForm = new FormData();
     dadosForm.append("token", this.tokenCliente);
     dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
-    dadosForm.append("situacao", "true");
+    dadosForm.append("situacaoServico", "true");
     let link = dominio + "/Trabalhador/EnviarServicoAceito";
 
     try{
@@ -108,7 +108,7 @@ export class AnalisaServicoPage implements OnInit {
     let dadosForm = new FormData();
     dadosForm.append("token", this.tokenCliente);
     dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
-    dadosForm.append("situacao", "false");
+    dadosForm.append("situacaoServico", "false");
     let link = dominio + "/Trabalhador/EnviarServicoAceito";
 
     try{

@@ -71,6 +71,9 @@ export class InicialPage implements OnInit {
             this.result = res.notification;
 
             this.clienteServico = JSON.parse(this.result.data.cliente);
+
+            console.log(this.result)
+            
             this.enderecoServico = this.result.data.endereco;
             this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
 
