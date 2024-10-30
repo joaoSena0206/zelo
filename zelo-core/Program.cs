@@ -3,6 +3,10 @@ using Google.Apis.Auth.OAuth2;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
+
 FirebaseApp.Create(new AppOptions
 {
     Credential = GoogleCredential.FromFile("zelo-dfe99-firebase-adminsdk-84ctk-e59450168b.json")
@@ -19,8 +23,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
         });
 });
-
-builder.Services.AddControllers();
 
 var app = builder.Build();
 
