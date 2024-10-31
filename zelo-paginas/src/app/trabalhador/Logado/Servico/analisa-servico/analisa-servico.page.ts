@@ -20,6 +20,7 @@ export class AnalisaServicoPage implements OnInit {
   trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
   tokenCliente: any;
   cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+  dominio = dominio;
 
   constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -27,7 +28,7 @@ export class AnalisaServicoPage implements OnInit {
     this.clienteServico = JSON.parse(localStorage.getItem('cliente')!);
     this.enderecoServico = JSON.parse(localStorage.getItem('endereco')!);
     this.solicitacaoServico = JSON.parse(localStorage.getItem('solicitacao')!);
-    this.cdSolicitacao = this.solicitacaoServico.cdSolicitacaoServico;
+    this.cdSolicitacao = this.solicitacaoServico.CdSolicitacaoServico;
     this.carregarServicos();
     this.pegarTokenCliente();
     this.carregarImgPerfilCliente();
@@ -35,7 +36,7 @@ export class AnalisaServicoPage implements OnInit {
 
   async pegarTokenCliente() {
     let dadosForm = new FormData();
-    dadosForm.append("cpf", this.cliente.cpf);
+    dadosForm.append("cpf", this.cliente.Cpf);
     let link = dominio + "/Cliente/PegarTokenFCM";
 
     try{
@@ -50,7 +51,7 @@ export class AnalisaServicoPage implements OnInit {
   }
 
   async carregarServicos() {
-    let link = dominio + `/ImgSolicitacao/CarregarImgs?c=${this.cdSolicitacao}`;
+    let link = dominio + `/ImgSolicitacao/CarregarImgs?cdSolicitacao=${this.cdSolicitacao}`;
 
     try{
       this.carregar = true;
@@ -58,7 +59,7 @@ export class AnalisaServicoPage implements OnInit {
       this.imagens = res;
 
       for (let i = 0; i < this.imagens.length; i++) {
-        this.carregarImgServico(this.imagens[i].solicitacao.cdSolicitacaoServico, this.imagens[i].codigo, this.imagens[i].tipoArquivo, i);
+        this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
       }
     }
     catch (erro: any) {
@@ -125,7 +126,7 @@ export class AnalisaServicoPage implements OnInit {
   urlImg: any;
 
   async carregarImgPerfilCliente() {
-    let link = dominio + `/Imgs/Perfil/Cliente/${this.cliente.cpf}.jpg`;
+    let link = dominio + `/Imgs/Perfil/Cliente/${this.cliente.Cpf}.jpg`;
 
     try{
       let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));

@@ -20,6 +20,7 @@ export class PrivacidadePage implements OnInit {
 
   ngOnInit() { }
 
+
   ngAfterViewInit() {
     this.pegarDados();
   }
@@ -55,9 +56,22 @@ export class PrivacidadePage implements OnInit {
   }
 
   disabilitarInput() {
+  }
+
+  inputValue: string = '';
+  isDisabled2 = true;
+
+  onInputChange(event: any) {
+    const newValue = event.detail.value;
+    console.log('Novo valor do input:', newValue);
     this.isDisabled = true;
     let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
     inputNome.style.border = 'none';
+  }
+
+  onInputChange2(event: KeyboardEvent) {
+    const newValue = (event.target as HTMLInputElement).value;
+    this.isDisabled2 = false;
   }
 
 }
