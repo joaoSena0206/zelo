@@ -59,7 +59,7 @@ export class AnalisaServicoPage implements OnInit {
       this.imagens = res;
 
       for (let i = 0; i < this.imagens.length; i++) {
-        this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
+        this.carregarImgServico(/* this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, */ 1, 1, ".jpeg", i);
       }
     }
     catch (erro: any) {

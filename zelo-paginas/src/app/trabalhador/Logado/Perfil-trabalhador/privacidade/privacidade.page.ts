@@ -28,6 +28,7 @@ export class PrivacidadePage implements OnInit {
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
                 input.disabled = true;
+                input.style.border = 'none';
             });
         });
     }
@@ -65,7 +66,6 @@ export class PrivacidadePage implements OnInit {
 
     disabilitarInput() {
         this.isDisabled = true;
-        let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
-        inputNome.style.border = 'none';
+        
     }
 }
