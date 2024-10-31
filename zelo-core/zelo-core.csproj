@@ -18,13 +18,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Teste\**" />
+    <Content Remove="Teste\**" />
+    <EmbeddedResource Remove="Teste\**" />
+    <None Remove="Teste\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Teste\" />
     <Folder Include="wwwroot\Imgs\Certificados\teste2\53890618880\" />
     <Folder Include="wwwroot\Imgs\Perfil\Cliente\" />
     <Folder Include="wwwroot\Imgs\ServicoRealizado\" />
