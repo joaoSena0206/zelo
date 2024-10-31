@@ -35,7 +35,7 @@ export class UltimosPedidosPage implements OnInit {
 
   trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
   historico: any;
-  Nome: any = this.trabalhador.nome;
+  Nome: any = this.trabalhador.Nome;
   ComentarioAnonimo: any;
   qtEstrelas: any;
   carregar: boolean = false;
@@ -50,7 +50,7 @@ export class UltimosPedidosPage implements OnInit {
 
   async carregarHistorico() {
     let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?cpf=${trabalhador.cpf}&tipo=trabalhador`;
+    let link = dominio + `/SolicitacaoServico/CarregarHistoricoTrabalhador?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
 
     try {
 
@@ -77,7 +77,7 @@ export class UltimosPedidosPage implements OnInit {
 
     for (let i = 0; i < this.historico.length; i++) {
       
-      const dateString: string = this.historico[i].dtSolicitacaoServico;
+      const dateString: string = this.historico[i].DtSolicitacaoServico;
       const timestamp: number = Date.parse(dateString);
       const date: Date = new Date(timestamp);
 
@@ -98,7 +98,7 @@ export class UltimosPedidosPage implements OnInit {
 
       this.listaDataServico.push(DataFormatada);
 
-      this.historico[i].dtSolicitacaoServico = this.listaDataServico[i];
+      this.historico[i].DtSolicitacaoServico = this.listaDataServico[i];
       
     }
     
@@ -116,10 +116,10 @@ export class UltimosPedidosPage implements OnInit {
 
             if (btn.textContent == "Recentes") {
                 this.historico.sort((a: any, b: any) => {
-                    if (a.dtSolicitacaoServico > b.dtSolicitacaoServico) {
+                    if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
                         return -1;
                     }
-                    else if (a.dtSolicitacaoServico < b.dtSolicitacaoServico) {
+                    else if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
                         return 1;
                     }
 
@@ -128,10 +128,10 @@ export class UltimosPedidosPage implements OnInit {
             }
             else if (btn.textContent == "Antigos") {
                 this.historico.sort((a: any, b: any) => {
-                    if (a.dtSolicitacaoServico < b.dtSolicitacaoServico) {
+                    if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
                         return -1;
                     }
-                    else if (a.dtSolicitacaoServico > b.dtSolicitacaoServico) {
+                    else if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
                         return 1;
                     }
 
@@ -140,10 +140,10 @@ export class UltimosPedidosPage implements OnInit {
             }
             else {
                 this.historico.sort((a: any, b: any) => {
-                    if (a.qtEstrelasAvaliacaoCliente < b.qtEstrelasAvaliacaoCliente) {
+                    if (a.QtEstrelasAvaliacaoCliente < b.QtEstrelasAvaliacaoCliente) {
                         return -1;
                     }
-                    else if (a.qtEstrelasAvaliacaoCliente > b.qtEstrelasAvaliacaoCliente) {
+                    else if (a.QtEstrelasAvaliacaoCliente > b.QtEstrelasAvaliacaoCliente) {
                         return 1;
                     }
 
