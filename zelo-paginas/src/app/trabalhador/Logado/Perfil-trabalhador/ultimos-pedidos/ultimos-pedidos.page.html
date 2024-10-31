@@ -27,9 +27,9 @@
             <img src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
           </div>
           <div style="padding: 10px;">
-            <h3 style="font-weight: bold; font-size: 22px;">{{historico.cliente.nome}}</h3>
-            <p style="margin: 3px 0;">{{historico.dtSolicitacaoServico}}</p>
-            <p><ion-icon name="star-outline"></ion-icon>{{historico.qtEstrelasAvaliacaoCliente}}</p>
+            <h3 style="font-weight: bold; font-size: 22px;">{{historico.Cliente.Nome}}</h3>
+            <p style="margin: 3px 0;">{{historico.DtSolicitacaoServico}}</p>
+            <p><ion-icon name="star-outline"></ion-icon>{{historico.QtEstrelasAvaliacaoCliente}}</p>
           </div>
           <div class="txt-ver-perfil">
             <ion-text>Ver perfil</ion-text>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="area_img">
-          <img [src]="dominio + '/Imgs/Solicitacao/' + historico.cdSolicitacaoServico + '/1.jpeg'">
+          <img [src]="dominio + '/Imgs/Solicitacao/' + historico.CdSolicitacaoServico + '/1.jpeg'">
         </div>
 
         <div class="area_descricao_pedido">
@@ -48,7 +48,7 @@
           </p>
 
           <p class="txt_descricao">
-            {{historico.dsServico}}
+            {{historico.DsServico}}
           </p>
         </div>
       </ion-card>

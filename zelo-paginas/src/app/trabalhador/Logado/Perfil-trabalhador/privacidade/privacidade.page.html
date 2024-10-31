@@ -21,15 +21,16 @@
                       <div slot="content" class="geral">
                           <div class="area_dado">
                               <p class="txt">Nome</p>
-                              <ion-input class="input" [disabled]="true" placeholder="Nome" value="{{trabalhador.nome}}">
-                                  <ion-icon class="iconeEditar" (click)="editar($event.target);" name="create-outline"></ion-icon>
-                              </ion-input>
+                              <div style="position: relative;">
+                                <ion-input #inputField id="inputNome" [disabled]="isDisabled" (blur)="disabilitarInput();" class="input" placeholder="Nome" value="{{trabalhador.Nome}}"></ion-input>
+                                <ion-icon class="iconeEditar" (click)="abilitarInput($event.target);" name="create-outline"></ion-icon>
+                              </div>
                           </div>
 
                           <div class="area_dado">
                               <p class="txt">Email</p>
-                              <ion-input class="input" [disabled]="true" placeholder="Email" value="{{trabalhador.email}}">
-                                  <ion-icon class="iconeEditar" (click)="editar($event.target);" name="create-outline"></ion-icon>
+                              <ion-input class="input" [disabled]="true" placeholder="Email" value="{{trabalhador.Email}}">
+                                  <ion-icon class="iconeEditar" (click)="abilitarInput($event.target);" name="create-outline"></ion-icon>
                               </ion-input>
                           </div>
 
@@ -42,7 +43,7 @@
                           <div class="area_dado">
                               <p class="txt">CPF</p>
                               <ion-input class="input" [disabled]="true" placeholder="CPF"
-                                  value="{{trabalhador.cpf}}"></ion-input>
+                                  value="{{trabalhador.Cpf}}"></ion-input>
                           </div>
                       </div>
                   </ion-accordion>

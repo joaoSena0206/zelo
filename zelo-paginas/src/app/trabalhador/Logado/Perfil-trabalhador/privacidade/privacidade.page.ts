@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
+import { ViewChild, ElementRef } from '@angular/core';
+import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-privacidade',
@@ -8,10 +10,13 @@ import * as moment from 'moment';
 })
 export class PrivacidadePage implements OnInit {
 
+  @ViewChild('inputField', { static: false }) inputField: IonInput;
+
   trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
   novoTexto: any;
+  isDisabled = true;
 
-  constructor() { }
+  constructor(private eRef: ElementRef) { }
 
   ngOnInit() { }
 
@@ -20,7 +25,7 @@ export class PrivacidadePage implements OnInit {
   }
 
   pegarDados() {
-    const dateString: string = this.trabalhador.dataNascimento;
+    const dateString: string = this.trabalhador.DataNascimento;
       const timestamp: number = Date.parse(dateString);
       const date: Date = new Date(timestamp);
 
@@ -42,8 +47,17 @@ export class PrivacidadePage implements OnInit {
       this.novoTexto = DataFormatada;
   }
 
-  editar(btn: any){
-    console.log(btn);
+  abilitarInput(inputElement: any){
+    this.isDisabled = false;
+    let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
+    inputNome.style.border = 'black 1px solid'
+    this.inputField.setFocus();
+  }
+
+  disabilitarInput() {
+    this.isDisabled = true;
+    let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
+    inputNome.style.border = 'none';
   }
 
 }
