@@ -1,127 +1,136 @@
 <ion-content [fullscreen]="true">
-  <div class="wrapper">
-      <div class="grupo">
-          <ion-header class="header ion-no-border">
-              <div class="titulo">
-                <ion-icon class="titulo__voltar" name="chevron-back-outline"></ion-icon>
-              </div>
-              <div class="area_foto_perfil">
-                  <ion-icon class="icone_editar" src="../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
-                  <img class="foto_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotohomem2.avif" alt="">
-              </div>
-          </ion-header>
+    <div class="wrapper">
+        <div class="grupo">
+            <ion-header class="header ion-no-border">
+                <div class="titulo">
+                    <ion-icon class="titulo__voltar" name="chevron-back-outline"></ion-icon>
+                </div>
+                <div class="area_foto_perfil">
+                    <ion-icon class="icone_editar"
+                        src="../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
+                    <img class="foto_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotohomem2.avif"
+                        alt="">
+                </div>
+            </ion-header>
 
-          <div class="content">
-              <ion-accordion-group class="ion_accordion_group">
-                  <ion-accordion value="first">
-                      <ion-item slot="header" class="div_titulo">
-                          <h1>Meus dados</h1>
-                      </ion-item>
+            <div class="content">
+                <ion-accordion-group class="ion_accordion_group">
+                    <ion-accordion value="first">
+                        <ion-item slot="header" class="div_titulo">
+                            <h1>Meus dados</h1>
+                        </ion-item>
 
-                      <div slot="content" class="geral">
-                          <div class="area_dado">
-                              <p class="txt">Nome</p>
-                              <div style="position: relative;">
-                                <ion-input #inputField id="inputNome" [disabled]="isDisabled" (blur)="disabilitarInput();" class="input" placeholder="Nome" value="{{trabalhador.Nome}}"></ion-input>
-                                <ion-icon class="iconeEditar" (click)="abilitarInput($event.target);" name="create-outline"></ion-icon>
-                              </div>
-                          </div>
+                        <div slot="content" class="geral">
+                            <div class="area_dado">
+                                <p class="txt">Nome</p>
+                                <div style="position: relative;">
+                                    <ion-input #inputField id="inputNome" disabled class="input" placeholder="Nome"
+                                        value="{{trabalhador.Nome}}"></ion-input>
+                                    <ion-icon class="iconeEditar"
+                                        (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
+                                </div>
+                            </div>
 
-                          <div class="area_dado">
-                              <p class="txt">Email</p>
-                              <ion-input class="input" [disabled]="true" placeholder="Email" value="{{trabalhador.Email}}">
-                                  <ion-icon class="iconeEditar" (click)="abilitarInput($event.target);" name="create-outline"></ion-icon>
-                              </ion-input>
-                          </div>
+                            <div class="area_dado">
+                                <p class="txt">Email</p>
+                                <ion-input class="input" [disabled]="true" placeholder="Email"
+                                    value="{{trabalhador.Email}}">
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target);"
+                                        name="create-outline"></ion-icon>
+                                </ion-input>
+                            </div>
 
-                          <div class="area_dado">
-                              <p class="txt">Data de Nascimento</p>
-                              <ion-input class="input" [disabled]="true" placeholder="Data de nascimento"
-                                  value="{{novoTexto}}"></ion-input>
-                          </div>
+                            <div class="area_dado">
+                                <p class="txt">Data de Nascimento</p>
+                                <ion-input class="input" [disabled]="true" placeholder="Data de nascimento"
+                                    value="{{novoTexto}}"></ion-input>
+                            </div>
 
-                          <div class="area_dado">
-                              <p class="txt">CPF</p>
-                              <ion-input class="input" [disabled]="true" placeholder="CPF"
-                                  value="{{trabalhador.Cpf}}"></ion-input>
-                          </div>
-                      </div>
-                  </ion-accordion>
-              </ion-accordion-group>
-
-              <ion-accordion-group class="ion_accordion_group">
-                <ion-accordion value="first">
-                    <ion-item slot="header" class="div_titulo">
-                        <h1>Certificados</h1>
-                    </ion-item>
-
-                    <div slot="content" class="geral">
-                        <div class="imgCertificado">
-                            <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
-                            <img src="../../../../../assets/icon/Trabalhador/imagens/certificado1.webp" alt="">
+                            <div class="area_dado">
+                                <p class="txt">CPF</p>
+                                <ion-input class="input" [disabled]="true" placeholder="CPF"
+                                    value="{{trabalhador.Cpf}}"></ion-input>
+                            </div>
                         </div>
+                    </ion-accordion>
+                </ion-accordion-group>
 
-                        <div class="imgCertificado">
-                            <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
-                            <img src="../../../../../assets/icon/Trabalhador/imagens/certificado2.webp" alt="">
+                <ion-accordion-group class="ion_accordion_group">
+                    <ion-accordion value="first">
+                        <ion-item slot="header" class="div_titulo">
+                            <h1>Certificados</h1>
+                        </ion-item>
+
+                        <div slot="content" class="geral">
+                            <div class="imgCertificado">
+                                <ion-icon class="icone_lixo" name="trash-outline"
+                                    id="abrir_modal_remover_certificado"></ion-icon>
+                                <img src="../../../../../assets/icon/Trabalhador/imagens/certificado1.webp" alt="">
+                            </div>
+
+                            <div class="imgCertificado">
+                                <ion-icon class="icone_lixo" name="trash-outline"
+                                    id="abrir_modal_remover_certificado"></ion-icon>
+                                <img src="../../../../../assets/icon/Trabalhador/imagens/certificado2.webp" alt="">
+                            </div>
+
+                            <div class="add_certificado">
+                                <ion-button>
+                                    <ion-icon fill="clear" name="add-circle-outline"></ion-icon>
+                                </ion-button>
+                            </div>
                         </div>
+                    </ion-accordion>
+                </ion-accordion-group>
 
-                        <div class="add_certificado">
-                            <ion-button>
-                                <ion-icon fill="clear" name="add-circle-outline"></ion-icon>
-                            </ion-button>
+                <ion-accordion-group class="ion_accordion_group">
+                    <ion-accordion value="second">
+                        <ion-item slot="header" class="div_titulo">
+                            <h1>Alterar Senha</h1>
+                        </ion-item>
+
+                        <div slot="content" class="geral">
+                            <div class="area_dado">
+                                <p class="txt">Senha atual</p>
+                                <ion-input class="input" [disabled]="true" type="password" placeholder="Senha atual"
+                                    value="">
+                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+                                </ion-input>
+                            </div>
+
+                            <div class="area_dado">
+                                <p class="txt">Nova senha</p>
+                                <ion-input class="input" [disabled]="true" type="password" placeholder="Nova senha"
+                                    value="">
+                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+                                </ion-input>
+                            </div>
+
+                            <div class="area_dado">
+                                <p class="txt">Confirmar nova senha</p>
+                                <ion-input class="input" [disabled]="true" type="password"
+                                    placeholder="Confirmar nova senha" value="">
+                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+                                </ion-input>
+                            </div>
                         </div>
-                    </div>
-                </ion-accordion>
-            </ion-accordion-group>
-              
-              <ion-accordion-group class="ion_accordion_group">
-                  <ion-accordion value="second">
-                      <ion-item slot="header" class="div_titulo">
-                          <h1>Alterar Senha</h1>
-                      </ion-item>
+                    </ion-accordion>
+                </ion-accordion-group>
 
-                      <div slot="content" class="geral">
-                          <div class="area_dado">
-                              <p class="txt">Senha atual</p>
-                              <ion-input class="input" [disabled]="true" type="password" placeholder="Senha atual"
-                                  value="">
-                                  <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
-                              </ion-input>
-                          </div>
-
-                          <div class="area_dado">
-                              <p class="txt">Nova senha</p>
-                              <ion-input class="input" [disabled]="true" type="password" placeholder="Nova senha"
-                                  value="">
-                                  <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
-                              </ion-input>
-                          </div>
-
-                          <div class="area_dado">
-                              <p class="txt">Confirmar nova senha</p>
-                              <ion-input class="input" [disabled]="true" type="password"
-                                  placeholder="Confirmar nova senha" value="">
-                                  <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
-                              </ion-input>
-                          </div>
-                      </div>
-                  </ion-accordion>
-              </ion-accordion-group>
-
-              <div class="divBtn">
-                  <ion-button id="abrir_modal_confirmar_dados" disabled="true" class="btn">Salvar</ion-button>
-              </div>
-          </div>
-      </div>
-  </div>
+                <div class="divBtn">
+                    <ion-button id="abrir_modal_confirmar_dados" disabled="true" class="btn">Salvar</ion-button>
+                </div>
+            </div>
+        </div>
+    </div>
 </ion-content>
 
 <ion-modal id="modal_dados" #modal_dados trigger="abrir_modal_confirmar_dados">
     <ng-template>
-  
+
         <ion-card class="poupop">
-  
+
             <div class="area_vermelha">
                 <ion-icon (click)="modal_dados.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
                 <div class="circulo_branca">
@@ -129,36 +138,37 @@
                         src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
                 </div>
             </div>
-  
+
             <div class="area_branca">
                 <h1 class="h1_denuncia">Confirmar mudança de dados?</h1>
                 <ion-button class="form__btn">Confirmar</ion-button>
             </div>
-  
-        </ion-card>
-  
-    </ng-template>
-  </ion-modal>
 
-  <ion-modal id="modal_certificado" #modal_certificado trigger="abrir_modal_remover_certificado">
+        </ion-card>
+
+    </ng-template>
+</ion-modal>
+
+<ion-modal id="modal_certificado" #modal_certificado trigger="abrir_modal_remover_certificado">
     <ng-template>
-  
+
         <ion-card class="poupop">
-  
+
             <div class="area_vermelha">
-                <ion-icon (click)="modal_certificado.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <ion-icon (click)="modal_certificado.dismiss();" class="iconeFechar2"
+                    name="close-circle-outline"></ion-icon>
                 <div class="circulo_branca">
                     <ion-icon class="iconeInterrogacao"
                         src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
                 </div>
             </div>
-  
+
             <div class="area_branca">
                 <h1 class="h1_denuncia">Tem certeza que deseja remover este certificado?</h1>
                 <ion-button class="form__btn">Confirmar</ion-button>
             </div>
-  
+
         </ion-card>
-  
+
     </ng-template>
-  </ion-modal>
+</ion-modal>

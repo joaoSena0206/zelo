@@ -9,7 +9,7 @@ builder.Services.AddControllers().AddJsonOptions(options => {
 
 FirebaseApp.Create(new AppOptions
 {
-    Credential = GoogleCredential.FromFile("zelo-dfe99-firebase-adminsdk-84ctk-e59450168b.json")
+    Credential = GoogleCredential.FromFile("zelo-dfe99-firebase-adminsdk-84ctk-92419782f8.json")
 });
 
 builder.Services.AddCors(options =>

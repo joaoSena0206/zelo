@@ -4,60 +4,68 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 
 @Component({
-  selector: 'app-privacidade',
-  templateUrl: './privacidade.page.html',
-  styleUrls: ['./privacidade.page.scss'],
+    selector: 'app-privacidade',
+    templateUrl: './privacidade.page.html',
+    styleUrls: ['./privacidade.page.scss'],
 })
 export class PrivacidadePage implements OnInit {
 
-  @ViewChild('inputField', { static: false }) inputField: IonInput;
+    @ViewChild('inputField', { static: false }) inputField: IonInput;
 
-  trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
-  novoTexto: any;
-  isDisabled = true;
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
+    novoTexto: any;
+    isDisabled = true;
 
-  constructor(private eRef: ElementRef) { }
+    constructor(private eRef: ElementRef) { }
 
-  ngOnInit() { }
+    ngOnInit() { }
 
-  ngAfterViewInit() {
-    this.pegarDados();
-  }
+    ngAfterViewInit() {
+        this.pegarDados();
 
-  pegarDados() {
-    const dateString: string = this.trabalhador.DataNascimento;
-      const timestamp: number = Date.parse(dateString);
-      const date: Date = new Date(timestamp);
+        const inputs = document.querySelectorAll("ion-input");
 
-      let dia = date.getDate();
-      let mes = date.getMonth() + 1;
-      let ano = date.getFullYear();
+        inputs.forEach((input: HTMLIonInputElement) => {
+            input.addEventListener("ionBlur", function () {
+                input.disabled = true;
+            });
+        });
+    }
 
-      let DataFormatada = null;
+    pegarDados() {
+        const dateString: string = this.trabalhador.DataNascimento;
+        const timestamp: number = Date.parse(dateString);
+        const date: Date = new Date(timestamp);
 
-      if(mes < 10)
-      {
-        DataFormatada = dia + "/" + "0" + mes + "/" + ano;
-      }
-      else
-      {
-        DataFormatada = dia + "/" + mes + "/" + ano;
-      }
+        let dia = date.getDate();
+        let mes = date.getMonth() + 1;
+        let ano = date.getFullYear();
 
-      this.novoTexto = DataFormatada;
-  }
+        let DataFormatada = null;
 
-  abilitarInput(inputElement: any){
-    this.isDisabled = false;
-    let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
-    inputNome.style.border = 'black 1px solid'
-    this.inputField.setFocus();
-  }
+        if (mes < 10) {
+            DataFormatada = dia + "/" + "0" + mes + "/" + ano;
+        }
+        else {
+            DataFormatada = dia + "/" + mes + "/" + ano;
+        }
 
-  disabilitarInput() {
-    this.isDisabled = true;
-    let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
-    inputNome.style.border = 'none';
-  }
+        this.novoTexto = DataFormatada;
+    }
 
+    abilitarInput(inputElement: any) {
+        let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
+        input.disabled = false;
+        input.style.border = 'black 1px solid';
+
+        setTimeout(() => {
+            input.setFocus();
+        }, 100);
+    }
+
+    disabilitarInput() {
+        this.isDisabled = true;
+        let inputNome = document.querySelector('#inputNome') as HTMLIonInputElement;
+        inputNome.style.border = 'none';
+    }
 }

@@ -57,7 +57,7 @@ public class ImgSolicitacaoController : ControllerBase
     }
 
     [HttpGet("CarregarImgs")]
-    public IActionResult CarregarImgs([FromQuery]int cdSolicitacao, [FromQuery]string quantidade)
+    public IActionResult CarregarImgs([FromQuery]int cdSolicitacao)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -67,11 +67,6 @@ public class ImgSolicitacaoController : ControllerBase
             #region Carrega as imgs do banco e envia
 
             string comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao}";
-
-            if (!String.IsNullOrEmpty(quantidade))
-            {
-                comando = $"SELECT * FROM img_solicitacao WHERE cd_solicitacao_servico = {cdSolicitacao} LIMIT {quantidade}";
-            }
 
             MySqlDataReader dados = banco.Consultar(comando);
 
