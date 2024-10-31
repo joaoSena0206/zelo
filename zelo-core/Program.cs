@@ -32,11 +32,18 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+    }
+});
 
-app.UseRouting();
 
 app.UseCors("AllowAllOrigins");
+
+app.UseRouting();
 
 app.UseAuthorization();
 
