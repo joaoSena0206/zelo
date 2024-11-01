@@ -74,7 +74,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Serviço excelente, voltarei a chamar!',
 	3.0,
 	'Bom trabalho, mas a comunicação pode melhorar.',
-	4.0
+	4.0,
+	null
 ),
 (
 	2,
@@ -86,7 +87,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Profissional muito atencioso e competente.',
 	5.0,
 	'Ótimo trabalho, muito satisfeito!',
-	4.0
+	4.0,
+	null
 ),
 (
 	3,
@@ -98,7 +100,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Resolveu o problema rapidamente, recomendo!',
 	4.0,
 	'Serviço bom, mas poderia ser mais rápido.',
-	3.0
+	3.0,
+	null
 ),
 (
 	4,
@@ -110,7 +113,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Ótimo trabalho, muito satisfeito!',
 	1.0,
 	'Ótimo serviço, recomendo!',
-	4.0
+	4.0,
+	null
 ),
 (
 	5,
@@ -122,7 +126,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Trabalho realizado com excelência, sem reclamações.',
 	5.0,
 	'Sem problemas, nota dez para o profissional.',
-	4.0
+	4.0,
+	null
 ),
 (
 	6,
@@ -134,7 +139,8 @@ INSERT INTO solicitacao_servico VALUES
 	'Ótimo trabalhador, muito eficiente!',
 	2.0,
 	'Profissional educado e simpático, gostei muito.',
-	5.0
+	5.0,
+	null
 );
 
 INSERT INTO img_solicitacao VALUES
@@ -176,3 +182,5 @@ INSERT INTO img_solicitacao VALUES
 	6,
 	'.png'
 );
+
+UPDATE solicitacao_servico SET nm_codigo_aleatorio = '98212';
