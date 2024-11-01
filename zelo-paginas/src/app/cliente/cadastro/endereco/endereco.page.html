@@ -15,7 +15,7 @@
                     <ion-input formControlName="identificacao"
                         (ionInput)="validarControl(endereco.controls['identificacao'])"
                         [class.inputErro]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty)"
-                        class="form__input" placeholder="Identificação"></ion-input>
+                        class="form__input" placeholder="Rotule seu endereço"></ion-input>
                 </ion-item>
                 <span
                     [ngClass]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty) ? 'erro' : 'escondido'">{{
