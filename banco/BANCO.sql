@@ -126,6 +126,7 @@ Create Table solicitacao_servico
 	qt_estrelas_avaliacao_servico DECIMAL(2, 1),
 	ds_comentario_avaliacao_cliente TEXT,
 	qt_estrelas_avaliacao_cliente DECIMAL(2, 1),
+	nm_codigo_aleatorio CHAR(5),
 
     CONSTRAINT pk_solicitacao_servico PRIMARY KEY (cd_solicitacao_servico),
     CONSTRAINT fk_solicitacao_servico_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador),
