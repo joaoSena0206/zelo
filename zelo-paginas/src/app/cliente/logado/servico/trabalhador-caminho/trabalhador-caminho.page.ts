@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { dominio } from 'src/app/gerais';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -9,6 +10,8 @@ import { NavController } from '@ionic/angular';
 export class TrabalhadorCaminhoPage implements OnInit {
     msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?';
     msg: any = "Informe o motivo da denúncia";
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+    dominio: any = dominio;
 
     constructor(private navCl: NavController) { }
 
