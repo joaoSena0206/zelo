@@ -11,15 +11,15 @@
             <div class="divFoto">
                 <div>
                     <figure>
-                        <img src="../../../../../assets/icon/cliente/foto_trabalhador.png">
+                        <img [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.jpg'">
                     </figure>
 
                     <div>
-                        <h2>Breno Santos</h2>
+                        <h2>{{ trabalhador.Nome }}</h2>
 
                         <div class="divEstrela">
                             <ion-icon name="star"></ion-icon>
-                            <p>3.5</p>
+                            <p>{{ trabalhador.Avaliacao.toFixed(1) }}</p>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,8 @@
                                             </ion-accordion>
                                         </ion-accordion-group>
 
-                                        <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="mudarOutro2()">Enviar</ion-button>
+                                        <ion-button class="form__btn nm_btn" id="btnDenuncia"
+                                            (click)="mudarOutro2()">Enviar</ion-button>
                                     </div>
 
                                 </ion-card>
@@ -82,7 +83,8 @@
             <div>
                 <div>
                     <ion-icon src="../../../../../assets/icon/cliente/localizador.svg"></ion-icon>
-                    <p>18,5 km</p>
+                    <p>{{ trabalhador.Distancia.toFixed(2).replace(".",
+                        ",") }} km</p>
                 </div>
 
                 <div>
