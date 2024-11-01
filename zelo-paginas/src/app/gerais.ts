@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://republicans-what-loan-pregnant.trycloudflare.com";
+export const dominio = "https://dedicated-remember-cup-lang.trycloudflare.com";
