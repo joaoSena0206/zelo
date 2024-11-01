@@ -358,7 +358,7 @@ public class SolicitacaoServicoController : ControllerBase
         }
         catch (Exception erro)
         {
-            return BadRequest(erro.Message);
+            
         }
         finally
         {
@@ -366,4 +366,32 @@ public class SolicitacaoServicoController : ControllerBase
         }
 
     }
+
+    [HttpPost]
+    public IActionResult GerarCodigoAleatorio([FromForm] int cdSolicitacao)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            Random random = new Random();
+            string codigo = random.Next(10000, 99999).ToString();
+
+            string comando = $@"UPDATE solicitacao_servico SET nm_codigo_aleatorio = '98212'
+            WHERE cd_solicitacao_servico = {cdSolicitacao}";
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
 }
