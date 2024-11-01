@@ -307,7 +307,7 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpGet("CarregarHistoricoTrabalhador")]
-    public IActionResult CarregarHisotricoTrabalhador([FromQuery] string cpf, [FromQuery]string tipo)
+    public IActionResult CarregarHisotricoTrabalhador([FromQuery] string cpf, [FromQuery] string tipo)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -358,7 +358,7 @@ public class SolicitacaoServicoController : ControllerBase
         }
         catch (Exception erro)
         {
-            
+            return BadRequest(erro.Message);
         }
         finally
         {
