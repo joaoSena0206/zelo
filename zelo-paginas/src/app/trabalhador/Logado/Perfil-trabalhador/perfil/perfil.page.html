@@ -7,9 +7,8 @@
                 <h1 style="font-size: 32px; font-weight: bold; color: white;">Perfil</h1>
             </div>
             <div class="area_foto_perfil">
-                <ion-icon class="icone_editar"
-                    src="../../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
-                <img class="foto_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotohomem2.avif" alt="">
+                
+                <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.JPG'" alt="">
 
                 <div class="estrelas">
                     <ion-icon name="star"></ion-icon>
@@ -17,7 +16,7 @@
                     <ion-icon name="star"></ion-icon>
                 </div>
             </div>
-            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">Marcos Vinicius</p>
+            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">{{trabalhador.Nome}}</p>
 
             <div style="display: flex; gap: 10px; align-items: center;">
                 <p style="font-size: 15px; color: white;">100 avaliações</p>
