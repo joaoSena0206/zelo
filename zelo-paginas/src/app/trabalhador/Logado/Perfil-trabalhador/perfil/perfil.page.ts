@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { dominio, headerNgrok } from 'src/app/gerais';
 
 @Component({
     selector: 'app-perfil',
@@ -7,6 +8,9 @@ import { NavController } from '@ionic/angular';
     styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
+
+    dominio = dominio;
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
 
     constructor(private navCl: NavController) { }
 

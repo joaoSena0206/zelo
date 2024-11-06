@@ -2,6 +2,14 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import { ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
+import { dominio, headerNgrok } from 'src/app/gerais';
+import { first, firstValueFrom } from 'rxjs';
+
 
 @Component({
     selector: 'app-privacidade',
@@ -10,18 +18,79 @@ import { IonInput } from '@ionic/angular';
 })
 export class PrivacidadePage implements OnInit {
 
-    @ViewChild('inputField', { static: false }) inputField: IonInput;
-
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     novoTexto: any;
     isDisabled = true;
+    isDisabled2 = true;
+    cpf: any = this.trabalhador.Cpf;
+    cpfFormatado: any;
+    dominio = dominio;
 
-    constructor(private eRef: ElementRef) { }
+    form = new FormGroup({
+        email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email]),
+        senha: new FormControl("", Validators.required)
+    });
+
+    erro: any = {
+        form: "",
+        email: "Email obrigatório",
+        senha: "Senha obrigatório"
+    };
+
+
+    constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef) { }
+
 
     ngOnInit() { }
 
+    validacaoInput(control: FormControl) {
+        let nome = this.acharNomeControl(control);
+        let vlControl = control.value as String;
+        let invalido = false;
+
+        Object.keys(this.form.controls).forEach(item => {
+            if (this.form.get(item)?.hasError("invalido")) {
+                this.form.get(item)?.setErrors({ invalido: null });
+                this.form.get(item)?.updateValueAndValidity();
+            }
+        });
+
+        this.erro.form = "";
+
+
+        if (control.hasError("email")) {
+            this.erro[nome] = `Email inválido!`;
+
+            return;
+        }
+        else {
+            let erros = control.errors;
+
+            if (erros != null) {
+                Object.keys(erros).forEach(erro => {
+                    this.erro[nome] = erros![erro].msg;
+                });
+            }
+            else {
+                this.erro[nome] = "";
+            }
+        }
+    }
+
+    acharNomeControl(control: FormControl) {
+        let controlName = "";
+
+        Object.keys(this.form.controls).forEach(item => {
+            if (this.form.get(item) === control) {
+                controlName = item;
+            }
+        });
+
+        return controlName;
+    }
+
     ngAfterViewInit() {
-        this.pegarDados();
+        this.FormatarData();
 
         const inputs = document.querySelectorAll("ion-input");
 
@@ -31,9 +100,22 @@ export class PrivacidadePage implements OnInit {
                 input.style.border = 'none';
             });
         });
+
+        this.formatCPF(this.cpf);
     }
 
-    pegarDados() {
+    formatCPF(cpf: string): string {
+        cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+        this.cpfFormatado = cpf;
+        return cpf;
+    }
+
+
+    FormatarData() {
         const dateString: string = this.trabalhador.DataNascimento;
         const timestamp: number = Date.parse(dateString);
         const date: Date = new Date(timestamp);
@@ -56,7 +138,14 @@ export class PrivacidadePage implements OnInit {
 
     abilitarInput(inputElement: any) {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
-        input.disabled = false;
+
+        if (input.placeholder == "Nome") {
+            this.isDisabled = false;
+        }
+        else {
+            this.form.controls['email'].enable();
+        }
+
         input.style.border = 'black 1px solid';
 
         setTimeout(() => {
@@ -65,7 +154,48 @@ export class PrivacidadePage implements OnInit {
     }
 
     disabilitarInput() {
-        this.isDisabled = true;
-        
+        this.form.controls['email'].disable();
+        this.isDisabled = false;
     }
+
+    AtivarBotaoSalvar(event: KeyboardEvent) {
+        this.isDisabled2 = false;
+    }
+
+    modal_dados: any;
+
+    async salvar() {
+        let nome = document.querySelector("#inputNome") as HTMLIonInputElement;
+        let email = document.querySelector("#inputEmail") as HTMLIonInputElement;
+
+        if (nome.value != this.trabalhador.Nome) {
+            if (nome.value == "") {
+                nome.value = this.trabalhador.Nome;
+            }
+            else {
+                let link = dominio + "/Trabalhador/AlterarDados";
+                let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+                let dadosForm = new FormData();
+                dadosForm.append("cpf", trabalhador.Cpf);
+                dadosForm.append("TipoDado", "Nome");
+                dadosForm.append("Dado", "Marco Juino");
+
+                try {
+                    
+                    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                    console.log(resposta);
+                    localStorage.setItem("trabalhador", JSON.stringify(resposta));
+                }
+                catch (erro: any) {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+            }
+        }
+        else if (email.value != this.trabalhador.Email) {
+
+        }
+    }
+
 }

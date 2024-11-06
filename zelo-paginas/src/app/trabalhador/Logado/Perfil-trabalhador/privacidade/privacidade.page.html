@@ -8,8 +8,8 @@
                 <div class="area_foto_perfil">
                     <ion-icon class="icone_editar"
                         src="../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
-                    <img class="foto_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotohomem2.avif"
-                        alt="">
+                    <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.JPG'"
+                        alt="Foto de Perfil">
                 </div>
             </ion-header>
 
@@ -20,25 +20,47 @@
                             <h1>Meus dados</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral">
+                        <div [formGroup]="form" slot="content" class="geral">
                             <div class="area_dado">
                                 <p class="txt">Nome</p>
                                 <div style="position: relative;">
-                                    <ion-input #inputField id="inputNome" disabled class="input" placeholder="Nome"
-                                        value="{{trabalhador.Nome}}"></ion-input>
-                                    <ion-icon class="iconeEditar"
+                                    <ion-input 
+                                        id="inputNome" 
+                                        (keyup)="AtivarBotaoSalvar($event)" 
+                                        [disabled]="isDisabled"
+                                        class="input" 
+                                        placeholder="Nome" 
+                                        value="{{trabalhador.Nome}}">
+                                    </ion-input>
+                                    <ion-icon 
+                                        class="iconeEditar" 
                                         (click)="abilitarInput($event.target)"
-                                        name="create-outline"></ion-icon>
+                                        name="create-outline">
+                                    </ion-icon>
                                 </div>
                             </div>
 
                             <div class="area_dado">
                                 <p class="txt">Email</p>
-                                <ion-input class="input" [disabled]="true" placeholder="Email"
-                                    value="{{trabalhador.Email}}">
-                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target);"
-                                        name="create-outline"></ion-icon>
-                                </ion-input>
+                                <div style="position: relative;">
+                                    <ion-input
+                                        id="inputEmail"
+                                        (keyup)="AtivarBotaoSalvar($event)"
+                                        (ionInput)="validacaoInput(form.controls['email'])" class="input"
+                                        [class.inputErro]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)"
+                                        formControlName="email"
+                                        placeholder="Email" value="{{trabalhador.Email}}">
+                                    </ion-input>
+                                    <ion-icon 
+                                        class="iconeEditar" 
+                                        (click)="abilitarInput($event.target)"
+                                        name="create-outline">
+                                    </ion-icon>
+                                </div>
+
+                                <span
+                                    [ngClass]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.email }}</span>
                             </div>
 
                             <div class="area_dado">
@@ -50,7 +72,7 @@
                             <div class="area_dado">
                                 <p class="txt">CPF</p>
                                 <ion-input class="input" [disabled]="true" placeholder="CPF"
-                                    value="{{trabalhador.Cpf}}"></ion-input>
+                                    value="{{cpfFormatado}}"></ion-input>
                             </div>
                         </div>
                     </ion-accordion>
@@ -119,7 +141,8 @@
                 </ion-accordion-group>
 
                 <div class="divBtn">
-                    <ion-button id="abrir_modal_confirmar_dados" disabled="true" class="btn">Salvar</ion-button>
+                    <ion-button id="abrir_modal_confirmar_dados" [disabled]="isDisabled2"
+                        class="btn">Salvar</ion-button>
                 </div>
             </div>
         </div>
@@ -141,7 +164,7 @@
 
             <div class="area_branca">
                 <h1 class="h1_denuncia">Confirmar mudança de dados?</h1>
-                <ion-button class="form__btn">Confirmar</ion-button>
+                <ion-button class="form__btn" (click)="salvar(); modal_dados.dismiss();">Confirmar</ion-button>
             </div>
 
         </ion-card>

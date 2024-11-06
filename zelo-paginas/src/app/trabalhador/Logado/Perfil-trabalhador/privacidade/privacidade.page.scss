@@ -307,3 +307,25 @@ ion-content {
     position: absolute;
     bottom: -20px;
 }
+
+//---------------------------------------------------//
+
+.form__text
+{
+    color: #CB2316;
+    font-weight: 700;
+}
+
+.erro {
+    color: red;
+    font-size: 14px;
+    margin: 5px 10px 5px 10px;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
+.escondido {
+    display: none;
+}
