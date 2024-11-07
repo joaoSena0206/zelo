@@ -1,9 +1,13 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento--trabalhador"></div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="wrapper">
         <div class="grupo">
             <ion-header class="header ion-no-border">
                 <div class="titulo">
-                    <ion-icon class="titulo__voltar" name="chevron-back-outline"></ion-icon>
+                    <ion-icon class="titulo__voltar" (click)="voltarPag()" name="chevron-back-outline"></ion-icon>
                 </div>
                 <div class="area_foto_perfil">
                     <ion-icon class="icone_editar"
@@ -42,7 +46,7 @@
 
                             <div class="area_dado">
                                 <p class="txt">Email</p>
-                                <div style="position: relative;">
+                                <div style="position: relative; margin-bottom: 10px;">
                                     <ion-input
                                         id="inputEmail"
                                         (keyup)="AtivarBotaoSalvar($event)"
@@ -115,11 +119,22 @@
                         <div slot="content" class="geral">
                             <div class="area_dado">
                                 <p class="txt">Senha atual</p>
-                                <ion-input class="input" [disabled]="true" type="password" placeholder="Senha atual"
-                                    value="">
-                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+
+                                <ion-input 
+                                    (ionInput)="validacaoInput(form.controls['senha'])"
+                                    [class.inputErro]="form.controls['senha'].invalid && (form.controls['senha'].touched || form.controls['senha'].dirty)"
+                                    formControlName="senha" type="password" class="input" 
+                                    placeholder="Digite sua senha">
+
+                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                        name="eye-outline" aria-hidden="true">
+                                    </ion-icon>
                                 </ion-input>
                             </div>
+
+                            <span
+                                [ngClass]="form.controls['senha'].invalid && (form.controls['senha'].touched || form.controls['senha'].dirty) ? 'erro' : 'escondido'">{{ erro.senha }}
+                            </span>
 
                             <div class="area_dado">
                                 <p class="txt">Nova senha</p>
@@ -142,7 +157,8 @@
 
                 <div class="divBtn">
                     <ion-button id="abrir_modal_confirmar_dados" [disabled]="isDisabled2"
-                        class="btn">Salvar</ion-button>
+                        class="btn">Salvar
+                    </ion-button>
                 </div>
             </div>
         </div>

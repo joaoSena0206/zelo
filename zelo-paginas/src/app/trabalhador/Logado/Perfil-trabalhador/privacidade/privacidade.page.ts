@@ -25,6 +25,7 @@ export class PrivacidadePage implements OnInit {
     cpf: any = this.trabalhador.Cpf;
     cpfFormatado: any;
     dominio = dominio;
+    carregar: boolean = false;
 
     form = new FormGroup({
         email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email]),
@@ -57,10 +58,11 @@ export class PrivacidadePage implements OnInit {
 
         this.erro.form = "";
 
-
-        if (control.hasError("email")) {
+        if (control.hasError("required")) {
+            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
+        }
+        else if(control.hasError("email")) {
             this.erro[nome] = `Email inválido!`;
-
             return;
         }
         else {
@@ -87,6 +89,24 @@ export class PrivacidadePage implements OnInit {
         });
 
         return controlName;
+    }
+
+    estadoSenha(event: any) {
+        const olho = event.target as HTMLIonIconElement;
+        const input = event.target.parentElement as HTMLIonInputElement;
+
+        if (input.type == "password") {
+            olho.name = "eye-outline";
+            input.type = "text";
+        }
+        else {
+            olho.name = "eye-off-outline";
+            input.type = "password";
+        }
+    }
+
+    voltarPag() {
+        this.navCl.back();
     }
 
     ngAfterViewInit() {
@@ -174,27 +194,32 @@ export class PrivacidadePage implements OnInit {
             }
             else {
                 let link = dominio + "/Trabalhador/AlterarDados";
+
                 let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
                 let dadosForm = new FormData();
+
                 dadosForm.append("cpf", trabalhador.Cpf);
                 dadosForm.append("TipoDado", "Nome");
-                dadosForm.append("Dado", "Marco Juino");
+                dadosForm.append("Dado", nome.value?.toString()!);
 
                 try {
-                    
+                    this.carregar = true;
                     let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-                    console.log(resposta);
-                    localStorage.setItem("trabalhador", JSON.stringify(resposta));
+                    trabalhador.Nome = nome.value;
+
+                    localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
                 }
                 catch (erro: any) {
                     const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
                     alert.message = "Erro ao conectar-se ao servidor";
                     alert.present();
                 }
+                finally {
+                    this.carregar = false;
+                }
             }
         }
         else if (email.value != this.trabalhador.Email) {
-
         }
     }
 

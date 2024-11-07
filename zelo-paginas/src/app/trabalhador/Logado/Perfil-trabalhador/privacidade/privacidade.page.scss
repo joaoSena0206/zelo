@@ -67,6 +67,17 @@ h1 {
     right: 0;
 }
 
+.ion_item__icon
+{
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%);
+    right: 19px;
+    font-size: 18px;
+    z-index: 100;
+}
+
 .geral {
     padding: 15px;
     padding-bottom: 20px;
