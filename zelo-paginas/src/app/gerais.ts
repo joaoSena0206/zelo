@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://taught-graphical-informal-meters.trycloudflare.com";
+export const dominio = "https://scared-reject-induction-egyptian.trycloudflare.com";
