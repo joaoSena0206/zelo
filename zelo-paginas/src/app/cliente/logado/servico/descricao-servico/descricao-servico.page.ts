@@ -61,7 +61,7 @@ export class DescricaoServicoPage implements OnInit {
 
             this.form.controls['endereco'].setValue(endereco);
             this.form.controls['endereco'].disable();
-            this.form.controls['descServico'].setValue(solicitacao.dsServico);
+            this.form.controls['descServico'].setValue(solicitacao.DsServico);
         }
     }
 
@@ -170,14 +170,36 @@ export class DescricaoServicoPage implements OnInit {
 
         let resposta = await fetch(imgArquivo.webPath!);
         let blob = await resposta.blob();
+        let base64 = await this.blobParaBase64(blob);
+
         let file = new File([blob], "img." + blob.type.substring(blob.type.indexOf("/") + 1), { type: "image/jpeg" });
 
         let arquivo = {
             src: imgArquivo.webPath,
-            blob: file
+            base64: base64
         };
 
         this.imgs.push(arquivo);
+    }
+
+    blobParaBase64(blob: any) {
+        return new Promise((resolve, _) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
+    }
+
+    base64ParaBlob(dataURI: any) {
+        let byteString = atob(dataURI.split(",")[1]);
+        let ab = new ArrayBuffer(byteString.length);
+        let ia = new Uint8Array(ab);
+
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ab], { type: 'image/jpeg' });
     }
 
     async enviar() {
@@ -192,62 +214,33 @@ export class DescricaoServicoPage implements OnInit {
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let servico = JSON.parse(localStorage.getItem("servico")!);
                 let dadosForm = new FormData();
-                dadosForm.append("cpf", cliente.Cpf);
-                dadosForm.append("desc", this.form.controls["descServico"].value!);
-                dadosForm.append("codigoServico", servico.Codigo);
+                let solicitacao = {
+                    Cliente: {
+                        Cpf: cliente.Cpf
+                    },
+                    Servico: {
+                        Codigo: servico.Codigo
+                    },
+                    DsServico: this.form.controls["descServico"].value!
+                };
 
                 if (this.imgs.length > 0) {
-                    for (let i = 0; i < this.imgs.length; i++) {
-                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
-                    }
+                    localStorage.setItem("imgs", JSON.stringify(this.imgs));
                 }
 
-                try {
-                    this.carregar = true;
-                    let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-
-                    localStorage.setItem("solicitacao", JSON.stringify(res));
-                    this.navCl.navigateForward("/escolher-trabalhador");
-                }
-                catch {
-                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                    alert.message = "Erro ao conectar-se ao servidor";
-                    alert.present();
-                }
-                finally {
-                    this.carregar = false;
-                }
+                localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
+                this.navCl.navigateForward("/escolher-trabalhador");
             }
             else {
                 let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
                 solicitacao.DsServico = this.form.controls['descServico'].value;
 
-                let link = dominio + "/SolicitacaoServico/AtualizarSituacao";
-                let dadosForm = new FormData();
-                dadosForm.append("solicitacaoServico", JSON.stringify(solicitacao));
-
                 if (this.imgs.length > 0) {
-                    for (let i = 0; i < this.imgs.length; i++) {
-                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
-                    }
+                    localStorage.setItem("imgs", JSON.stringify(this.imgs));
                 }
 
-                try {
-                    this.carregar = true;
-                    let res = await firstValueFrom(this.http.post(link, dadosForm));
-                    this.carregar = false;
-
-                    localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
-                    this.navCl.navigateForward("/escolher-trabalhador");
-                }
-                catch {
-                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                    alert.message = "Erro ao conectar-se ao servidor";
-                    alert.present();
-                }
-                finally {
-                    this.carregar = false;
-                }
+                localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
+                this.navCl.navigateForward("/escolher-trabalhador");
             }
         }
     }

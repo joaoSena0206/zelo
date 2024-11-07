@@ -143,6 +143,7 @@ INSERT INTO solicitacao_servico VALUES
 	null
 );
 
+
 INSERT INTO img_solicitacao VALUES
 (
 	1,

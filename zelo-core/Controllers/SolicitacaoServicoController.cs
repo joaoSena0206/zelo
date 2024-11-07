@@ -87,7 +87,7 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpPost("AdicionarSolicitacao")]
-    public IActionResult AdicionarSolicitacao([FromForm]string cpf, [FromForm] int codigoServico, [FromForm]string desc)
+    async public Task<IActionResult> AdicionarSolicitacao([FromForm]string cpf, [FromForm] int codigoServico, [FromForm]string desc)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -147,7 +147,7 @@ public class SolicitacaoServicoController : ControllerBase
             banco.Executar(comando);
             banco.Desconectar();
 
-            AdicionarImgs(codigoSolicitacao, Request.Form.Files);
+            await AdicionarImgs(codigoSolicitacao, Request.Form.Files);
 
             #endregion
 
@@ -192,8 +192,10 @@ public class SolicitacaoServicoController : ControllerBase
                         string caminho = Path.Combine(caminhoPasta, (i + 1) + Path.GetExtension(file.FileName));
                         imgSolicitacaoController.AdicionarImgs(i + 1, cdSolicitacao, Path.GetExtension(file.FileName));
 
-                        using var stream = new FileStream(caminho, FileMode.Create);
-                        await file.CopyToAsync(stream);
+                        using (var stream = new FileStream(caminho, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
                     }
                 }
             }
