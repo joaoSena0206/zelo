@@ -126,12 +126,12 @@ export class PrivacidadePage implements OnInit {
 
         const inputs = document.querySelectorAll("ion-input");
 
-        inputs.forEach((input: HTMLIonInputElement) => {
+       /*  inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
                 input.disabled = true;
                 input.style.border = 'none';
             });
-        });
+        }); */
 
         this.formatCPF(this.cpf);
     }
