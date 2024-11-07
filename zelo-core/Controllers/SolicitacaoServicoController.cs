@@ -132,7 +132,8 @@ public class SolicitacaoServicoController : ControllerBase
 	            cd_cpf_cliente,
 	            cd_servico,
 	            dt_solicitacao_servico,
-	            ds_servico
+	            ds_servico,
+                nm_codigo_aleatorio
             )
             VALUES
             (
@@ -140,7 +141,8 @@ public class SolicitacaoServicoController : ControllerBase
 	            '{cpf}',
 	            {codigoServico},
 	            '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
-	            '{desc}'
+	            '{desc}',
+                NULL
             )";
             banco.Executar(comando);
             banco.Desconectar();
@@ -162,7 +164,7 @@ public class SolicitacaoServicoController : ControllerBase
 
     }
 
-    public void AdicionarImgs(int cdSolicitacao, IFormFileCollection files)
+    async public Task AdicionarImgs(int cdSolicitacao, IFormFileCollection files)
     {
         try
         {
@@ -191,7 +193,7 @@ public class SolicitacaoServicoController : ControllerBase
                         imgSolicitacaoController.AdicionarImgs(i + 1, cdSolicitacao, Path.GetExtension(file.FileName));
 
                         using var stream = new FileStream(caminho, FileMode.Create);
-                        file.CopyToAsync(stream);
+                        await file.CopyToAsync(stream);
                     }
                 }
             }

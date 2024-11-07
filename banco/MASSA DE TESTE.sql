@@ -182,5 +182,3 @@ INSERT INTO img_solicitacao VALUES
 	6,
 	'.png'
 );
-
-UPDATE solicitacao_servico SET nm_codigo_aleatorio = '98212';
