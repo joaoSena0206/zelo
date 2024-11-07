@@ -3,12 +3,13 @@ import * as moment from 'moment';
 import { ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { first, firstValueFrom } from 'rxjs';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -29,7 +30,10 @@ export class PrivacidadePage implements OnInit {
 
     form = new FormGroup({
         email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email]),
-        senha: new FormControl("", Validators.required)
+        senhas: new FormGroup({
+            senha: new FormControl("", [Validators.required, validadorSenha()]),
+            confirmarSenha: new FormControl("")
+        }, validadorSenhaConfere()),
     });
 
     erro: any = {
@@ -77,6 +81,14 @@ export class PrivacidadePage implements OnInit {
                 this.erro[nome] = "";
             }
         }
+    }
+
+    filtroInput(event: any, regex: RegExp) {
+        const input = event.target as HTMLIonInputElement;
+        const vl = input.value;
+        const vlFiltrado = vl?.toString().replace(regex, "");
+
+        event.target.value = vlFiltrado;
     }
 
     acharNomeControl(control: FormControl) {
@@ -182,8 +194,6 @@ export class PrivacidadePage implements OnInit {
         this.isDisabled2 = false;
     }
 
-    modal_dados: any;
-
     async salvar() {
         let nome = document.querySelector("#inputNome") as HTMLIonInputElement;
         let email = document.querySelector("#inputEmail") as HTMLIonInputElement;
@@ -224,3 +234,31 @@ export class PrivacidadePage implements OnInit {
     }
 
 }
+
+export function validadorSenha(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        let senha = control.value;
+        let regexEspeciais = /[!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\;'/]/g;
+        let regexNumeros = /\d/g;
+        let regexLetras = /[a-zA-Z]/g;
+
+        if (senha.length >= 8 && regexEspeciais.test(senha) && regexNumeros.test(senha) && regexLetras.test(senha)) {
+            return null;
+        }
+
+        return { invalida: { msg: "Senha necessita de pelo menos 8 caracteres: letras, números, e caractéres especiais" } };
+    };
+};
+
+export function validadorSenhaConfere(): ValidatorFn {
+    return (form: AbstractControl): ValidationErrors | null => {
+        let senha = form.get("senha")?.value;
+        let confirmarSenha = form.get("confirmarSenha")?.value;
+
+        if (senha != confirmarSenha) {
+            return { confere: { msg: "Senhas não conferem" } };
+        }
+
+        return null;
+    };
+};

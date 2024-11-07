@@ -116,31 +116,38 @@
                             <h1>Alterar Senha</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral">
-                            <div class="area_dado">
+                        <div [formGroup]="form" slot="content" class="geral">
+                            <div formGroupName="senhas" class="area_dado">
                                 <p class="txt">Senha atual</p>
 
                                 <ion-input 
-                                    (ionInput)="validacaoInput(form.controls['senha'])"
-                                    [class.inputErro]="form.controls['senha'].invalid && (form.controls['senha'].touched || form.controls['senha'].dirty)"
-                                    formControlName="senha" type="password" class="input" 
-                                    placeholder="Digite sua senha">
+                                    formControlName="senha"
+                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
+                                    [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
+                                    type="password" class="input" placeholder="Crie sua senha">
 
                                     <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
-                                        name="eye-outline" aria-hidden="true">
+                                        name="eye-off-outline" aria-hidden="true">
                                     </ion-icon>
                                 </ion-input>
                             </div>
 
                             <span
-                                [ngClass]="form.controls['senha'].invalid && (form.controls['senha'].touched || form.controls['senha'].dirty) ? 'erro' : 'escondido'">{{ erro.senha }}
+                                [ngClass]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty) ? 'erro' : 'escondido'">{{ erro.senha }}
                             </span>
 
-                            <div class="area_dado">
+                            <div formGroupName="senhas" class="area_dado">
                                 <p class="txt">Nova senha</p>
-                                <ion-input class="input" [disabled]="true" type="password" placeholder="Nova senha"
-                                    value="">
-                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+
+                                <ion-input
+                                    formControlName="confirmarSenha"
+                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
+                                    [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
+                                    type="password" class="input" placeholder="Crie sua senha">
+
+                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                        name="eye-off-outline" aria-hidden="true">
+                                    </ion-icon>
                                 </ion-input>
                             </div>
 
