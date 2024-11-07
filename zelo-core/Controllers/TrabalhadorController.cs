@@ -560,7 +560,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("AlterarDados")]
-    public IActionResult AlterarDados([FromForm] string cpf, [FromForm] string TipoDado, [FromForm] string Dado)
+    public IActionResult AlterarDados([FromForm] string cpf, [FromForm] string nome, [FromForm] string email, [FromForm] string senha)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -569,14 +569,11 @@ public class TrabalhadorController : ControllerBase
         {
             string comando = "";
 
-            if (TipoDado == "Nome")
-            {
-                comando = $@"UPDATE trabalhador SET nm_trabalhador = '{Dado}' WHERE cd_cpf_trabalhador = '{cpf}';";
-            }
-            else if(TipoDado == "Email")
-            {
-                comando = $@"UPDATE trabalhador SET nm_email_trabalhador = '{Dado}' WHERE cd_cpf_trabalhador = '{cpf}';";
-            }
+            comando = $@"UPDATE trabalhador 
+                        SET nm_trabalhador = '{nome}', 
+                            nm_email_trabalhador = '{email}', 
+                            nm_senha_trabalhador = '{senha}' 
+                        WHERE cd_cpf_trabalhador = '{cpf}'";
             
             banco.Executar(comando);
 
