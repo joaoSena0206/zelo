@@ -569,8 +569,6 @@ public class TrabalhadorController : ControllerBase
         {
             string comando = "";
 
-            string comando2 = "SELECT cd_cpf_trabalhador, nm_trabalhador, dt_nascimento_trabalhador, ic_email_confirmado_trabalhador, nm_pix_trabalhador, nm_email_trabalhador FROM trabalhador WHERE cd_cpf_trabalhador = '{cpf}');";
-
             if (TipoDado == "Nome")
             {
                 comando = $@"UPDATE trabalhador SET nm_trabalhador = '{Dado}' WHERE cd_cpf_trabalhador = '{cpf}';";
@@ -581,24 +579,8 @@ public class TrabalhadorController : ControllerBase
             }
             
             banco.Executar(comando);
-            banco.Desconectar();
 
-            banco.Conectar();
-            MySqlDataReader dados = banco.Consultar(comando2);
-
-            Trabalhador trabalhador = new Trabalhador();
-
-            if (dados != null && dados.Read())
-            {
-                trabalhador.Cpf = dados.GetString(0);
-                trabalhador.Nome = dados.GetString(1);
-                trabalhador.DataNascimento = dados.GetDateTime(2);
-                trabalhador.Confirmado = dados.GetBoolean(3);
-                trabalhador.Pix = dados.GetString(4);
-                trabalhador.Email = dados.GetString(5);
-            }
-
-            return Ok(trabalhador);
+            return Ok();
         }
         catch (Exception erro)
         {
