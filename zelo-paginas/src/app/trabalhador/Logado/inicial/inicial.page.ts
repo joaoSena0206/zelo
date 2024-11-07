@@ -335,6 +335,8 @@ export class InicialPage implements OnInit {
         }
         
         this.historico = res;
+
+        console.log(this.historico);
     }
 
     async carregarImgServico(cdSolicitacao: any) {

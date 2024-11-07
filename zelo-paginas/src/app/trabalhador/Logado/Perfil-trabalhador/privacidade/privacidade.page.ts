@@ -95,7 +95,14 @@ export class PrivacidadePage implements OnInit {
         let controlName = "";
 
         Object.keys(this.form.controls).forEach(item => {
-            if (this.form.get(item) === control) {
+            if (item == "senhas") {
+                Object.keys(this.form.controls["senhas"].controls).forEach(senha => {
+                    if (this.form.controls["senhas"].get(senha) === control) {
+                        controlName = senha;
+                    }
+                });
+            }
+            else if (this.form.get(item) === control) {
                 controlName = item;
             }
         });
@@ -126,12 +133,12 @@ export class PrivacidadePage implements OnInit {
 
         const inputs = document.querySelectorAll("ion-input");
 
-       /*  inputs.forEach((input: HTMLIonInputElement) => {
+        inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
                 input.disabled = true;
                 input.style.border = 'none';
             });
-        }); */
+        });
 
         this.formatCPF(this.cpf);
     }
@@ -172,7 +179,7 @@ export class PrivacidadePage implements OnInit {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
 
         if (input.placeholder == "Nome") {
-            this.isDisabled = false;
+            input.disabled = false;
         }
         else {
             this.form.controls['email'].enable();
@@ -185,13 +192,14 @@ export class PrivacidadePage implements OnInit {
         }, 100);
     }
 
-    disabilitarInput() {
-        this.form.controls['email'].disable();
-        this.isDisabled = false;
-    }
-
     AtivarBotaoSalvar(event: KeyboardEvent) {
-        this.isDisabled2 = false;
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            this.isDisabled2 = true;
+        }
+        else{
+            this.isDisabled2 = false;
+        }
     }
 
     async salvar() {
@@ -209,8 +217,9 @@ export class PrivacidadePage implements OnInit {
                 let dadosForm = new FormData();
 
                 dadosForm.append("cpf", trabalhador.Cpf);
-                dadosForm.append("TipoDado", "Nome");
-                dadosForm.append("Dado", nome.value?.toString()!);
+                dadosForm.append("nome", "Nome");
+                dadosForm.append("email", nome.value?.toString()!);
+                dadosForm.append("senha", nome.value?.toString()!);
 
                 try {
                     this.carregar = true;

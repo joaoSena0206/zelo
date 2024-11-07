@@ -119,9 +119,21 @@
                         <div [formGroup]="form" slot="content" class="geral">
                             
                             <div formGroupName="senhas" style="display: flex; flex-direction: column;">
+
                                 <p class="txt">Senha atual</p>
 
+                                <ion-input 
+                                    type="password" class="input" placeholder="Senha atual">
+
+                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                        name="eye-off-outline" aria-hidden="true">
+                                    </ion-icon>
+                                </ion-input>
+
+                                <p class="txt">Nova senha</p>
+
                                 <ion-input formControlName="senha"
+                                    (keyup)="AtivarBotaoSalvar($event)" 
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
                                     [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
@@ -136,9 +148,10 @@
                                     erro.senha }}
                                 </span>
             
-                                <p class="txt">Nova senha</p>
+                                <p class="txt">Confirmar nova senha</p>
                                 
                                 <ion-input 
+                                    (keyup)="AtivarBotaoSalvar($event)" 
                                     formControlName="confirmarSenha"
                                     [class.inputErro]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty)"
                                     type="password" class="input" placeholder="Confirme sua senha">

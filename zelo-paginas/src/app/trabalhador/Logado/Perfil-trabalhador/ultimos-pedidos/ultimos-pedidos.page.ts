@@ -57,10 +57,6 @@ export class UltimosPedidosPage implements OnInit {
       this.carregar = true;
       let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
 
-      /* for (let i = 0; i < res.length; i++) {
-        res[i].img = await this.carregarImgServico(res[i].cdSolicitacaoServico);
-      } */
-
       this.historico = res;
 
     }
