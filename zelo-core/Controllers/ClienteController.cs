@@ -212,7 +212,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("EnviarSolicitacao")]
-    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao)
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao, IFormFileCollection files) 
     {      
         try
         {
@@ -229,7 +229,8 @@ public class ClienteController : ControllerBase
                 {
                     {"cliente", JsonSerializer.Serialize(cliente)},
                     {"endereco", endereco},
-                    {"solicitacao", solicitacao}
+                    {"solicitacao", solicitacao},
+                    {"imgs", imgs }
                 },
                 Token = token
             };

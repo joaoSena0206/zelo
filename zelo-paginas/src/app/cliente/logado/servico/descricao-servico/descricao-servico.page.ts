@@ -213,7 +213,6 @@ export class DescricaoServicoPage implements OnInit {
                 let link = dominio + "/SolicitacaoServico/AdicionarSolicitacao";
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let servico = JSON.parse(localStorage.getItem("servico")!);
-                let dadosForm = new FormData();
                 let solicitacao = {
                     Cliente: {
                         Cpf: cliente.Cpf

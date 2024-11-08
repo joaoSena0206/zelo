@@ -39,10 +39,19 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     async contratarTrabalhador(trabalhador: any) {
         let dadosForm = new FormData();
+        let imgs = JSON.parse(localStorage.getItem("imgs")!);
+
+        for (let i = 0; i < imgs.length; i++) {
+            let blob = this.base64ParaBlob(imgs[i].base64);
+            let file = new File([blob], i.toString(), { type: "image/jpeg" });
+
+            dadosForm.append("files", file);
+        }
 
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
         dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
+        dadosForm.append("imgs", localStorage.getItem("imgs")!);
         dadosForm.append("endereco", localStorage.getItem("endereco")!);
 
         let link = dominio + "/Cliente/EnviarSolicitacao";
@@ -66,6 +75,18 @@ export class EscolherTrabalhadorPage implements OnInit {
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
         }
+    }
+
+    base64ParaBlob(dataURI: any) {
+        let byteString = atob(dataURI.split(",")[1]);
+        let ab = new ArrayBuffer(byteString.length);
+        let ia = new Uint8Array(ab);
+
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ab], { type: 'image/jpeg' });
     }
 
     mudarFiltro(btn: any) {
