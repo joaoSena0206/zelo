@@ -208,7 +208,7 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpPost("AtualizarSituacao")]
-    public IActionResult AtualizarSolicitacao()
+    async public Task<IActionResult> AtualizarSolicitacao()
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -220,7 +220,7 @@ public class SolicitacaoServicoController : ControllerBase
             WHERE cd_solicitacao_servico = {solicitacaoServico.CdSolicitacaoServico}";
             banco.Executar(comando);
 
-            AdicionarImgs(solicitacaoServico.CdSolicitacaoServico, Request.Form.Files);
+            await AdicionarImgs(solicitacaoServico.CdSolicitacaoServico, Request.Form.Files);
 
             return Ok();
         }
