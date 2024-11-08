@@ -40,13 +40,12 @@ export class EscolherTrabalhadorPage implements OnInit {
     async contratarTrabalhador(trabalhador: any) {
         let dadosForm = new FormData();
         let imgs = JSON.parse(localStorage.getItem("imgs")!);
+        let listaImgs: any = [];
+        imgs.forEach((img: any) => {
+            listaImgs.push(img.base64);
+        });
 
-        for (let i = 0; i < imgs.length; i++) {
-            let blob = this.base64ParaBlob(imgs[i].base64);
-            let file = new File([blob], i.toString(), { type: "image/jpeg" });
-
-            dadosForm.append("files", file);
-        }
+        console.log(listaImgs);
 
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
