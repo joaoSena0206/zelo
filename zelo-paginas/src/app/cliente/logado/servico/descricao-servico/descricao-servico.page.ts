@@ -172,8 +172,6 @@ export class DescricaoServicoPage implements OnInit {
         let blob = await resposta.blob();
         let base64 = await this.blobParaBase64(blob);
 
-        let file = new File([blob], "img." + blob.type.substring(blob.type.indexOf("/") + 1), { type: "image/jpeg" });
-
         let arquivo = {
             src: imgArquivo.webPath,
             base64: base64
