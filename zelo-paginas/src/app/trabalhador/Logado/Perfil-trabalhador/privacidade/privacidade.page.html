@@ -123,6 +123,7 @@
                                 <p class="txt">Senha atual</p>
 
                                 <ion-input 
+                                    id="senha"
                                     type="password" class="input" placeholder="Senha atual">
 
                                     <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
@@ -132,7 +133,9 @@
 
                                 <p class="txt">Nova senha</p>
 
-                                <ion-input formControlName="senha"
+                                <ion-input
+                                    id="senha" 
+                                    formControlName="senha"
                                     (keyup)="AtivarBotaoSalvar($event)" 
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
                                     [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
@@ -151,6 +154,7 @@
                                 <p class="txt">Confirmar nova senha</p>
                                 
                                 <ion-input 
+                                    id="senha"
                                     (keyup)="AtivarBotaoSalvar($event)" 
                                     formControlName="confirmarSenha"
                                     [class.inputErro]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty)"

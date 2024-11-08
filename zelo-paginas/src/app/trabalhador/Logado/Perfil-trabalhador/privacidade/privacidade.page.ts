@@ -135,8 +135,35 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
-                input.disabled = true;
-                input.style.border = 'none';
+                console.log(input);
+                if(input.id != "senha")
+                {
+                    input.disabled = true;
+                    input.style.border = 'none';
+                }
+                {
+                    input.style.border = 'none';
+                }
+            });
+        });
+
+        inputs.forEach((input: HTMLIonInputElement) => {
+            input.addEventListener("ionFocus", function () {
+                console.log(input);
+                if(input.id == "senha")
+                {
+                    input.style.border = 'black 1px solid';
+                }
+            });
+        });
+
+        inputs.forEach((input: HTMLIonInputElement) => {
+            input.addEventListener("ionFocus", function () {
+                console.log(input);
+                if(input.id == "senha")
+                {
+                    input.style.border = 'black 1px solid';
+                }
             });
         });
 
