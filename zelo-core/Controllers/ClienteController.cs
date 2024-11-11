@@ -214,7 +214,7 @@ public class ClienteController : ControllerBase
 
 
     [HttpPost("EnviarSolicitacao")]
-    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao, [FromForm] List<string> listaBase64) 
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao, [FromForm] string[] listaBase64) 
     {      
         try
         {
@@ -222,18 +222,22 @@ public class ClienteController : ControllerBase
 
             #region Limpa os base64 e envia para o transfer.sh
 
-            for (int i = 0; i < listaBase64.Count; i++)
+            for (int i = 0; i < listaBase64.Length; i++)
             {
                 string base64Limpo = listaBase64[i].Contains("data:image/jpeg;base64,") ? listaBase64[i].Substring(listaBase64[i].IndexOf(",") + 1) : listaBase64[i];
+                base64Limpo = base64Limpo.Substring(0, base64Limpo.Length - 2);
+
                 byte[] imgBytes = Convert.FromBase64String(base64Limpo);
 
-                using HttpClient HttpClient = new HttpClient();
-                using ByteArrayContent content = new ByteArrayContent(imgBytes);
-                content.Headers.Add("Content-Type", "image/jpeg");
+                using var content = new MultipartFormDataContent();
+                using var byteArrayContent = new ByteArrayContent(imgBytes);
+                byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
 
                 string nmArquivo = $"{i + 1}.jpeg";
+                content.Add(byteArrayContent, "file", nmArquivo);
 
-                var res = await HttpClient.PostAsync($"https://transfer.sh/{nmArquivo}", content);
+                using var httpClient = new HttpClient();
+                var res = await httpClient.PostAsync("https://file.io", content);
                 if (res.IsSuccessStatusCode)
                 {
                     string urlDownload = await res.Content.ReadAsStringAsync();
