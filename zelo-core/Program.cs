@@ -4,18 +4,6 @@ using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<FormOptions>(options =>
-{
-    options.MultipartBodyLengthLimit = 104857600; // 100 MB (ou ajuste conforme necessário)
-});
-
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxRequestBodySize = 104857600; // 100 MB
-    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(2); // Timeout de 10 minutos
-    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(2);
-});
-
 builder.Services.AddControllers().AddJsonOptions(options => {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
