@@ -55,7 +55,7 @@ export class EscolherTrabalhadorPage implements OnInit {
 
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
-            
+
             const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
             modal.dismiss();
             const data = await modal.onDidDismiss();
@@ -167,9 +167,18 @@ export class EscolherTrabalhadorPage implements OnInit {
 
             this.trabalhadores = resposta;
         }
-        catch {
+        catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-            alert.message = "Erro ao conectar-se ao servidor";
+
+            if (erro.message == "Location services are not enabled") {
+                alert.message = "Ative a localização do celular!";
+            }
+            else
+            {
+                alert.message = "Erro ao conectar-se ao servidor";
+            }
+
+
             alert.present();
         }
         finally {
