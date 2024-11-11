@@ -45,19 +45,17 @@ export class EscolherTrabalhadorPage implements OnInit {
             listaImgs.push(img.base64);
         });
 
-        console.log(listaImgs);
-
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
         dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
-        dadosForm.append("imgs", localStorage.getItem("imgs")!);
+        dadosForm.append("listaBase64", JSON.stringify(listaImgs));
         dadosForm.append("endereco", localStorage.getItem("endereco")!);
 
         let link = dominio + "/Cliente/EnviarSolicitacao";
 
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
-
+            
             const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
             modal.dismiss();
             const data = await modal.onDidDismiss();
@@ -67,7 +65,6 @@ export class EscolherTrabalhadorPage implements OnInit {
 
                 this.navCl.navigateRoot("/confirmacao-trabalhador");
             }
-
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
