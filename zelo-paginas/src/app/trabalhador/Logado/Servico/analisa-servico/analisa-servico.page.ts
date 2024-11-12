@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { cpf } from 'cpf-cnpj-validator';
 
 @Component({
@@ -21,6 +21,7 @@ export class AnalisaServicoPage implements OnInit {
 	tokenCliente: any;
 	cliente: any = JSON.parse(localStorage.getItem("cliente")!);
 	dominio = dominio;
+	ImagensServico: any;
 
 	constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -28,6 +29,8 @@ export class AnalisaServicoPage implements OnInit {
 		this.clienteServico = JSON.parse(localStorage.getItem('cliente')!);
 		this.enderecoServico = JSON.parse(localStorage.getItem('endereco')!);
 		this.solicitacaoServico = JSON.parse(localStorage.getItem('solicitacao')!);
+		this.ImagensServico = JSON.parse(localStorage.getItem('imagens')!);
+
 		this.cdSolicitacao = this.solicitacaoServico.CdSolicitacaoServico;
 		this.carregarServicos();
 		this.pegarTokenCliente();
@@ -51,30 +54,22 @@ export class AnalisaServicoPage implements OnInit {
 	}
 
 	async carregarServicos() {
-		let link = dominio + `/ImgSolicitacao/CarregarImgs?cdSolicitacao=${this.cdSolicitacao}`;
 
-		try {
-			this.carregar = true;
-			let res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-			this.imagens = res;
+		this.imagens = this.ImagensServico;
 
-			for (let i = 0; i < this.imagens.length; i++) {
-				this.carregarImgServico(this.imagens[i].Solicitacao.CdSolicitacaoServico, this.imagens[i].Codigo, this.imagens[i].TipoArquivo, i);
-			}
-		}
-		catch (erro: any) {
-			const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-			alert.message = "Erro ao conectar-se ao servidor";
-			alert.present();
+		for (let i = 0; i < this.imagens.length; i++) {
+			this.carregarImgServico(this.imagens[i], i);
 		}
 
 	}
 
-	async carregarImgServico(cdServico: any, cdimg: any, nmTipoImg: any, i: any) {
-		let link = dominio + `/Imgs/Solicitacao/${cdServico}/${cdimg}${nmTipoImg}`;
+	async carregarImgServico(imagens: any, i: any) {
+		let link = imagens;
+		let headers = new HttpHeaders();
+		headers.set("accept", "*/*");
 
 		try {
-			let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headerNgrok }));
+			let res = await firstValueFrom(this.http.get(link, { responseType: "blob", headers: headers }));
 			let urlImg = URL.createObjectURL(res);
 			this.imagens[i].img = urlImg;
 		}

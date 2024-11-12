@@ -24,47 +24,45 @@
                             <h1>Meus dados</h1>
                         </ion-item>
 
-                        <div [formGroup]="form" slot="content" class="geral">
+                        <div [formGroup]="formDados" slot="content" class="geral">
                             <div class="area_dado">
                                 <p class="txt">Nome</p>
                                 <div style="position: relative;">
-                                    <ion-input 
-                                        id="inputNome" 
-                                        (keyup)="AtivarBotaoSalvar($event)" 
-                                        [disabled]="isDisabled"
-                                        class="input" 
-                                        placeholder="Nome" 
-                                        value="{{trabalhador.Nome}}">
+                                    <ion-input id="inputNome" (keyup)="AtivarBotaoSalvar($event)"
+                                        [disabled]="isDisabled" class="input" placeholder="Nome"
+                                        value="{{trabalhador.Nome}}"
+                                        (ionInput)="validacaoInput(formDados.controls['nome'])"
+                                        [class.inputErro]="formDados.controls['nome'].invalid && (formDados.controls['nome'].touched || formDados.controls['nome'].dirty)"
+                                        formControlName="nome">
                                     </ion-input>
-                                    <ion-icon 
-                                        class="iconeEditar" 
-                                        (click)="abilitarInput($event.target)"
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
                                         name="create-outline">
                                     </ion-icon>
                                 </div>
                             </div>
 
+                            <span
+                                [ngClass]="formDados.controls['nome'].invalid && (formDados.controls['nome'].touched || formDados.controls['nome'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.nome }}
+                            </span>
+
                             <div class="area_dado">
                                 <p class="txt">Email</p>
                                 <div style="position: relative; margin-bottom: 10px;">
-                                    <ion-input
-                                        id="inputEmail"
-                                        (keyup)="AtivarBotaoSalvar($event)"
-                                        (ionInput)="validacaoInput(form.controls['email'])" class="input"
-                                        [class.inputErro]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty)"
-                                        formControlName="email"
-                                        placeholder="Email" value="{{trabalhador.Email}}">
+                                    <ion-input id="inputEmail" (keyup)="AtivarBotaoSalvar($event)"
+                                        (ionInput)="validacaoInput(formDados.controls['email'])" class="input"
+                                        [class.inputErro]="formDados.controls['email'].invalid && (formDados.controls['email'].touched || formDados.controls['email'].dirty)"
+                                        formControlName="email" placeholder="Email" value="{{trabalhador.Email}}">
                                     </ion-input>
-                                    <ion-icon 
-                                        class="iconeEditar" 
-                                        (click)="abilitarInput($event.target)"
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
                                         name="create-outline">
                                     </ion-icon>
                                 </div>
 
                                 <span
-                                    [ngClass]="form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty) ? 'erro' : 'escondido'">{{
-                                    erro.email }}</span>
+                                    [ngClass]="formDados.controls['email'].invalid && (formDados.controls['email'].touched || formDados.controls['email'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.email }}
+                                </span>
                             </div>
 
                             <div class="area_dado">
@@ -117,26 +115,29 @@
                         </ion-item>
 
                         <div [formGroup]="form" slot="content" class="geral">
-                            
+
                             <div formGroupName="senhas" style="display: flex; flex-direction: column;">
 
                                 <p class="txt">Senha atual</p>
 
-                                <ion-input 
-                                    id="senha"
-                                    type="password" class="input" placeholder="Senha atual">
+                                <ion-input id="senha" formControlName="senhaAtual" (keyup)="AtivarBotaoSalvar2($event)"
+                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senhaAtual'])"
+                                    [class.inputErro]="form.controls['senhas'].controls['senhaAtual'].invalid && (form.controls['senhas'].controls['senhaAtual'].touched || form.controls['senhas'].controls['senhaAtual'].dirty)"
+                                    type="password" class="input" placeholder="Crie sua senha">
 
                                     <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
                                         name="eye-off-outline" aria-hidden="true">
                                     </ion-icon>
                                 </ion-input>
 
+                                <span
+                                    [ngClass]="form.controls['senhas'].controls['senhaAtual'].invalid && (form.controls['senhas'].controls['senhaAtual'].touched || form.controls['senhas'].controls['senhaAtual'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.senhaAtual }}
+                                </span>
+
                                 <p class="txt">Nova senha</p>
 
-                                <ion-input
-                                    id="senha" 
-                                    formControlName="senha"
-                                    (keyup)="AtivarBotaoSalvar($event)" 
+                                <ion-input id="senha" formControlName="senha" (keyup)="AtivarBotaoSalvar2($event)"
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
                                     [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
@@ -145,17 +146,15 @@
                                         name="eye-off-outline" aria-hidden="true">
                                     </ion-icon>
                                 </ion-input>
-                                
+
                                 <span
                                     [ngClass]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty) ? 'erro' : 'escondido'">{{
                                     erro.senha }}
                                 </span>
-            
+
                                 <p class="txt">Confirmar nova senha</p>
-                                
-                                <ion-input 
-                                    id="senha"
-                                    (keyup)="AtivarBotaoSalvar($event)" 
+
+                                <ion-input id="senha" (keyup)="AtivarBotaoSalvar2($event)"
                                     formControlName="confirmarSenha"
                                     [class.inputErro]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty)"
                                     type="password" class="input" placeholder="Confirme sua senha">
@@ -164,62 +163,19 @@
                                         name="eye-off-outline" aria-hidden="true">
                                     </ion-icon>
                                 </ion-input>
-                                
+
                                 <span
                                     [ngClass]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty) ? 'erro' : 'escondido'">{{
                                     form.controls['senhas'].errors?.['confere'].msg }}
                                 </span>
                             </div>
-                            
 
-                            <!-- <div formGroupName="senhas" class="area_dado">
-                                
-
-                                <ion-input 
-                                    formControlName="senha"
-                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
-                                    [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
-                                    type="password" class="input" placeholder="Crie sua senha">
-
-                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
-                                        name="eye-off-outline" aria-hidden="true">
-                                    </ion-icon>
-                                </ion-input>
-                            </div>
-
-                            <span
-                                [ngClass]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty) ? 'erro' : 'escondido'">{{ erro.senha }}
-                            </span>
-
-                            <div formGroupName="senhas" class="area_dado">
-                                
-
-                                <ion-input
-                                    formControlName="confirmarSenha"
-                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
-                                    [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
-                                    type="password" class="input" placeholder="Crie sua senha">
-
-                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
-                                        name="eye-off-outline" aria-hidden="true">
-                                    </ion-icon>
-                                </ion-input>
-                            </div>
-
-                            <div class="area_dado">
-                                <p class="txt">Confirmar nova senha</p>
-                                <ion-input class="input" [disabled]="true" type="password"
-                                    placeholder="Confirmar nova senha" value="">
-                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
-                                </ion-input>
-                            </div> -->
                         </div>
                     </ion-accordion>
                 </ion-accordion-group>
 
                 <div class="divBtn">
-                    <ion-button id="abrir_modal_confirmar_dados" [disabled]="isDisabled2"
-                        class="btn">Salvar
+                    <ion-button id="abrir_modal_confirmar_dados" [disabled]="isDisabled2" class="btn">Salvar
                     </ion-button>
                 </div>
             </div>

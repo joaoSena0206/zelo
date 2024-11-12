@@ -1,0 +1,10 @@
+{
+    "/api": {
+        "target": "https://file.io",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

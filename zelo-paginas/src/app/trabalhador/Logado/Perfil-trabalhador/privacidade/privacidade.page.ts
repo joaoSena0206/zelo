@@ -9,8 +9,7 @@ import { FormBuilder } from '@angular/forms';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { first, firstValueFrom } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-
-
+import validator from 'cpf-cnpj-validator';
 
 @Component({
     selector: 'app-privacidade',
@@ -29,19 +28,26 @@ export class PrivacidadePage implements OnInit {
     carregar: boolean = false;
 
     form = new FormGroup({
-        email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email]),
         senhas: new FormGroup({
+            senhaAtual:  new FormControl("", Validators.required),
             senha: new FormControl("", [Validators.required, validadorSenha()]),
             confirmarSenha: new FormControl("")
         }, validadorSenhaConfere()),
     });
 
+    formDados = new FormGroup({
+        nome: new FormControl({ value: this.trabalhador.Nome, disabled: true }, [Validators.required]),
+        email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email])
+    });
+
     erro: any = {
         form: "",
+        formDados: "",
         email: "Email obrigatório",
-        senha: "Senha obrigatório"
+        senha: "Senha obrigatório",
+        senhaAtual: "Digite sua senha atual",
+        nome: "Nome obrigatório"
     };
-
 
     constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef) { }
 
@@ -60,13 +66,25 @@ export class PrivacidadePage implements OnInit {
             }
         });
 
+        Object.keys(this.formDados.controls).forEach(item => {
+            if (this.formDados.get(item)?.hasError("invalido")) {
+                this.formDados.get(item)?.setErrors({ invalido: null });
+                this.formDados.get(item)?.updateValueAndValidity();
+            }
+        });
+
         this.erro.form = "";
+        this.erro.formDados = "";
 
         if (control.hasError("required")) {
             this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
         }
         else if(control.hasError("email")) {
             this.erro[nome] = `Email inválido!`;
+            return;
+        }
+        else if(control.hasError("nome")){
+            this.erro[nome] = `nome inválido!`;
             return;
         }
         else {
@@ -107,6 +125,12 @@ export class PrivacidadePage implements OnInit {
             }
         });
 
+        Object.keys(this.formDados.controls).forEach(item => {
+            if (this.formDados.get(item) === control) {
+                controlName = item;
+            }
+        });
+
         return controlName;
     }
 
@@ -135,7 +159,7 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
-                console.log(input);
+
                 if(input.id != "senha")
                 {
                     input.disabled = true;
@@ -149,7 +173,6 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionFocus", function () {
-                console.log(input);
                 if(input.id == "senha")
                 {
                     input.style.border = 'black 1px solid';
@@ -159,7 +182,6 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionFocus", function () {
-                console.log(input);
                 if(input.id == "senha")
                 {
                     input.style.border = 'black 1px solid';
@@ -209,7 +231,7 @@ export class PrivacidadePage implements OnInit {
             input.disabled = false;
         }
         else {
-            this.form.controls['email'].enable();
+            this.formDados.controls['email'].enable();
         }
 
         input.style.border = 'black 1px solid';
@@ -220,14 +242,24 @@ export class PrivacidadePage implements OnInit {
     }
 
     AtivarBotaoSalvar(event: KeyboardEvent) {
-        if (this.form.invalid) {
-            this.form.markAllAsTouched();
+        if (this.formDados.invalid) {
+            this.formDados.markAllAsTouched();
             this.isDisabled2 = true;
-        }
+        } 
         else{
             this.isDisabled2 = false;
         }
     }
+
+    AtivarBotaoSalvar2(event: KeyboardEvent) {
+         if (this.form.invalid) {
+             this.form.markAllAsTouched();
+             this.isDisabled2 = true;
+         } 
+         else{
+            this.isDisabled2 = false;
+         }
+     }
 
     async salvar() {
         let nome = document.querySelector("#inputNome") as HTMLIonInputElement;
@@ -273,6 +305,7 @@ export class PrivacidadePage implements OnInit {
 
 export function validadorSenha(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+        console.log(control)
         let senha = control.value;
         let regexEspeciais = /[!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\;'/]/g;
         let regexNumeros = /\d/g;
