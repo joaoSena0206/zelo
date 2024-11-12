@@ -26,6 +26,7 @@ export class PrivacidadePage implements OnInit {
     cpfFormatado: any;
     dominio = dominio;
     carregar: boolean = false;
+    situacaoBotao: boolean = true;
 
     form = new FormGroup({
         senhas: new FormGroup({
@@ -36,7 +37,7 @@ export class PrivacidadePage implements OnInit {
     });
 
     formDados = new FormGroup({
-        nome: new FormControl({ value: this.trabalhador.Nome, disabled: true }, [Validators.required]),
+        nomeCaixa: new FormControl({ value: this.trabalhador.Nome, disabled: true }, [Validators.required]),
         email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email])
     });
 
@@ -46,11 +47,10 @@ export class PrivacidadePage implements OnInit {
         email: "Email obrigatório",
         senha: "Senha obrigatório",
         senhaAtual: "Digite sua senha atual",
-        nome: "Nome obrigatório"
+        nomeCaixa: "Nome obrigatório"
     };
 
     constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef) { }
-
 
     ngOnInit() { }
 
@@ -81,10 +81,6 @@ export class PrivacidadePage implements OnInit {
         }
         else if(control.hasError("email")) {
             this.erro[nome] = `Email inválido!`;
-            return;
-        }
-        else if(control.hasError("nome")){
-            this.erro[nome] = `nome inválido!`;
             return;
         }
         else {
@@ -228,7 +224,7 @@ export class PrivacidadePage implements OnInit {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
 
         if (input.placeholder == "Nome") {
-            input.disabled = false;
+            this.formDados.controls['nomeCaixa'].enable();
         }
         else {
             this.formDados.controls['email'].enable();
@@ -241,35 +237,55 @@ export class PrivacidadePage implements OnInit {
         }, 100);
     }
 
+    situacao1: boolean = false;
+    situacao2: boolean = false;
+
     AtivarBotaoSalvar(event: KeyboardEvent) {
         if (this.formDados.invalid) {
             this.formDados.markAllAsTouched();
-            this.isDisabled2 = true;
+            this.situacao1 = true;
+            this.isFormValid();
         } 
         else{
-            this.isDisabled2 = false;
+            this.situacao1 = false;
+            this.isFormValid();
         }
     }
 
     AtivarBotaoSalvar2(event: KeyboardEvent) {
          if (this.form.invalid) {
              this.form.markAllAsTouched();
-             this.isDisabled2 = true;
+             this.situacao2 = true;
+             this.isFormValid();
          } 
          else{
-            this.isDisabled2 = false;
+            this.situacao2 = false;
+            this.isFormValid();
          }
      }
+
+     isFormValid(){
+        if(this.situacao1 == true)
+        {
+            this.situacaoBotao = true;
+        }
+        else
+        {
+            if(this.situacao2 == true)
+            {
+                this.situacaoBotao = true;
+            }
+            else
+            {
+                this.situacaoBotao = false;
+            }
+        }
+    }
 
     async salvar() {
         let nome = document.querySelector("#inputNome") as HTMLIonInputElement;
         let email = document.querySelector("#inputEmail") as HTMLIonInputElement;
-
-        if (nome.value != this.trabalhador.Nome) {
-            if (nome.value == "") {
-                nome.value = this.trabalhador.Nome;
-            }
-            else {
+            
                 let link = dominio + "/Trabalhador/AlterarDados";
 
                 let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
@@ -295,17 +311,14 @@ export class PrivacidadePage implements OnInit {
                 finally {
                     this.carregar = false;
                 }
-            }
-        }
-        else if (email.value != this.trabalhador.Email) {
-        }
+            
+        
     }
 
 }
 
 export function validadorSenha(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-        console.log(control)
         let senha = control.value;
         let regexEspeciais = /[!@#$%^&*(),.?":{}|<>_\-+=~`[\]\\;'/]/g;
         let regexNumeros = /\d/g;

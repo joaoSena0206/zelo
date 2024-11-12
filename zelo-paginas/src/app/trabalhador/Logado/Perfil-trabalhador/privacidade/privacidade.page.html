@@ -31,9 +31,9 @@
                                     <ion-input id="inputNome" (keyup)="AtivarBotaoSalvar($event)"
                                         [disabled]="isDisabled" class="input" placeholder="Nome"
                                         value="{{trabalhador.Nome}}"
-                                        (ionInput)="validacaoInput(formDados.controls['nome'])"
-                                        [class.inputErro]="formDados.controls['nome'].invalid && (formDados.controls['nome'].touched || formDados.controls['nome'].dirty)"
-                                        formControlName="nome">
+                                        (ionInput)="validacaoInput(formDados.controls['nomeCaixa'])"
+                                        [class.inputErro]="formDados.controls['nomeCaixa'].invalid && (formDados.controls['nomeCaixa'].touched || formDados.controls['nomeCaixa'].dirty)"
+                                        formControlName="nomeCaixa">
                                     </ion-input>
                                     <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
                                         name="create-outline">
@@ -42,8 +42,8 @@
                             </div>
 
                             <span
-                                [ngClass]="formDados.controls['nome'].invalid && (formDados.controls['nome'].touched || formDados.controls['nome'].dirty) ? 'erro' : 'escondido'">{{
-                                erro.nome }}
+                                [ngClass]="formDados.controls['nomeCaixa'].invalid && (formDados.controls['nomeCaixa'].touched || formDados.controls['nomeCaixa'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.nomeCaixa }}
                             </span>
 
                             <div class="area_dado">
@@ -175,7 +175,7 @@
                 </ion-accordion-group>
 
                 <div class="divBtn">
-                    <ion-button id="abrir_modal_confirmar_dados" [disabled]="isDisabled2" class="btn">Salvar
+                    <ion-button id="abrir_modal_confirmar_dados" [disabled]="situacaoBotao" class="btn">Salvar
                     </ion-button>
                 </div>
             </div>
