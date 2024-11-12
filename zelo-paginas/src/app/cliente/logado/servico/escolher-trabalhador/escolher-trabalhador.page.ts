@@ -39,11 +39,6 @@ export class EscolherTrabalhadorPage implements OnInit {
 
     async contratarTrabalhador(trabalhador: any) {
         let dadosForm = new FormData();
-        let imgs = JSON.parse(localStorage.getItem("imgs")!);
-        let listaImgs: any = [];
-        imgs.forEach((img: any) => {
-            listaImgs.push(img.base64);
-        });
 
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
@@ -144,6 +139,7 @@ export class EscolherTrabalhadorPage implements OnInit {
         try {
             this.carregar = true;
             let resposta: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
             let posicaoAtual = await this.pegarPosicaoAtual();
 
             for (let i = 0; i < resposta.length; i++) {
@@ -172,11 +168,11 @@ export class EscolherTrabalhadorPage implements OnInit {
             if (erro.message == "Location services are not enabled") {
                 alert.message = "Ative a localização do celular!";
             }
-            else
-            {
+            else {
                 alert.message = "Erro ao conectar-se ao servidor";
             }
 
+            console.error(erro.message);
 
             alert.present();
         }
@@ -204,7 +200,6 @@ export class EscolherTrabalhadorPage implements OnInit {
                 }
 
                 coordenadas = await Geolocation.getCurrentPosition(options);
-                console.log(coordenadas);
 
                 return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
             }
