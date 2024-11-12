@@ -35,6 +35,7 @@ export class InicialPage implements OnInit {
     result: any;
     clienteServico: any;
     solicitacaoServico: any;
+    imgs: any;
     enderecoServico: any;
     modal: any;
     dominio = dominio;
@@ -61,6 +62,21 @@ export class InicialPage implements OnInit {
             this.result = notification;
 
             this.clienteServico = JSON.parse(this.result.data.cliente);
+            this.imgs = JSON.parse(this.result.data.imgs);
+
+            let lista = [];
+
+            for (let i = 0; i < this.imgs.length; i++) {
+                
+                let img = JSON.parse(this.imgs[i])
+                lista.push(img.link);
+            
+            }
+
+            console.log(this.imgs);
+            this.imgs = lista;
+            console.log(lista);
+            
             this.enderecoServico = this.result.data.endereco;
             this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
 
@@ -71,9 +87,7 @@ export class InicialPage implements OnInit {
             this.result = res.notification;
 
             this.clienteServico = JSON.parse(this.result.data.cliente);
-
-            console.log(this.result)
-            
+            this.imgs = JSON.parse(this.result.data.imgs);
             this.enderecoServico = this.result.data.endereco;
             this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
 
@@ -85,6 +99,7 @@ export class InicialPage implements OnInit {
         localStorage.setItem("cliente", JSON.stringify(this.clienteServico));
         localStorage.setItem("endereco", JSON.stringify(this.enderecoServico));
         localStorage.setItem("solicitacao", JSON.stringify(this.solicitacaoServico));
+        localStorage.setItem("imagens", JSON.stringify(this.imgs));
 
         this.navCl.navigateForward("/analisa-servico");
         this.modal.dismiss();
@@ -335,8 +350,6 @@ export class InicialPage implements OnInit {
         }
         
         this.historico = res;
-
-        console.log(this.historico);
     }
 
     async carregarImgServico(cdSolicitacao: any) {
