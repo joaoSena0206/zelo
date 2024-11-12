@@ -170,11 +170,10 @@ export class DescricaoServicoPage implements OnInit {
 
         let resposta = await fetch(imgArquivo.webPath!);
         let blob = await resposta.blob();
-        let base64 = await this.blobParaBase64(blob);
 
         let arquivo = {
             src: imgArquivo.webPath,
-            base64: base64
+            blob: blob
         };
 
         this.imgs.push(arquivo);
@@ -218,7 +217,7 @@ export class DescricaoServicoPage implements OnInit {
 
                 if (this.imgs.length > 0) {
                     for (let i = 0; i < this.imgs.length; i++) {
-                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                        dadosForm.append("files", this.imgs[i].blob, `${i}.jpeg`);
                     }
                 }
 
@@ -248,7 +247,7 @@ export class DescricaoServicoPage implements OnInit {
 
                 if (this.imgs.length > 0) {
                     for (let i = 0; i < this.imgs.length; i++) {
-                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                        dadosForm.append("files", this.imgs[i].blob, `${i}.jpeg`);
                     }
                 }
 
