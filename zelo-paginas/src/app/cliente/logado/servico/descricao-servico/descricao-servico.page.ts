@@ -211,33 +211,63 @@ export class DescricaoServicoPage implements OnInit {
                 let link = dominio + "/SolicitacaoServico/AdicionarSolicitacao";
                 let cliente = JSON.parse(localStorage.getItem("cliente")!);
                 let servico = JSON.parse(localStorage.getItem("servico")!);
-                let solicitacao = {
-                    Cliente: {
-                        Cpf: cliente.Cpf
-                    },
-                    Servico: {
-                        Codigo: servico.Codigo
-                    },
-                    DsServico: this.form.controls["descServico"].value!
-                };
+                let dadosForm = new FormData();
+                dadosForm.append("cpf", cliente.Cpf);
+                dadosForm.append("desc", this.form.controls["descServico"].value!);
+                dadosForm.append("codigoServico", servico.Codigo);
 
                 if (this.imgs.length > 0) {
-                    localStorage.setItem("imgs", JSON.stringify(this.imgs));
+                    for (let i = 0; i < this.imgs.length; i++) {
+                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                    }
                 }
 
-                localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
-                this.navCl.navigateForward("/escolher-trabalhador");
+                try {
+                    this.carregar = true;
+                    let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+                    localStorage.setItem("solicitacao", JSON.stringify(res));
+                    this.navCl.navigateForward("/escolher-trabalhador");
+                }
+                catch {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
+                }
             }
             else {
                 let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
                 solicitacao.DsServico = this.form.controls['descServico'].value;
 
+                let link = dominio + "/SolicitacaoServico/AtualizarSituacao";
+                let dadosForm = new FormData();
+                dadosForm.append("solicitacaoServico", JSON.stringify(solicitacao));
+
                 if (this.imgs.length > 0) {
-                    localStorage.setItem("imgs", JSON.stringify(this.imgs));
+                    for (let i = 0; i < this.imgs.length; i++) {
+                        dadosForm.append("files", this.imgs[i].blob, this.imgs[i].blob.name);
+                    }
                 }
 
-                localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
-                this.navCl.navigateForward("/escolher-trabalhador");
+                try {
+                    this.carregar = true;
+                    let res = await firstValueFrom(this.http.post(link, dadosForm));
+                    this.carregar = false;
+
+                    localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
+                    this.navCl.navigateForward("/escolher-trabalhador");
+                }
+                catch {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
+                }
             }
         }
     }

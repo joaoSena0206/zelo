@@ -48,7 +48,6 @@ export class EscolherTrabalhadorPage implements OnInit {
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
         dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
-        dadosForm.append("listaBase64", JSON.stringify(listaImgs));
         dadosForm.append("endereco", localStorage.getItem("endereco")!);
 
         let link = dominio + "/Cliente/EnviarSolicitacao";
