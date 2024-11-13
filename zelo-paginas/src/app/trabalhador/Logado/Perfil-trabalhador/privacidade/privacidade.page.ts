@@ -285,32 +285,54 @@ export class PrivacidadePage implements OnInit {
     async salvar() {
         let nome = document.querySelector("#inputNome") as HTMLIonInputElement;
         let email = document.querySelector("#inputEmail") as HTMLIonInputElement;
+        let senhaAtual = document.querySelector("#senhaAtual") as HTMLIonInputElement;
+        let novaSenha = document.querySelector("#senhaNova") as HTMLIonInputElement;
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+        let dadosForm = new FormData();
+
+        if(novaSenha.value != null)
+        {
+            let link = dominio + "/Trabalhador/VerificarSenha";
+            dadosForm.append("senha", novaSenha.value?.toString()!);
+
+            try {
+                this.carregar = true;
+                let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+    
+                
+                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+            }
+            catch (erro: any) {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+            finally {
+                this.carregar = false;
+            }
+        }
             
-                let link = dominio + "/Trabalhador/AlterarDados";
+        let link = dominio + "/Trabalhador/AlterarDados";
 
-                let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
-                let dadosForm = new FormData();
+        dadosForm.append("cpf", trabalhador.Cpf);
+        dadosForm.append("nome", nome.value?.toString()!);
+        dadosForm.append("email", email.value?.toString()!);
 
-                dadosForm.append("cpf", trabalhador.Cpf);
-                dadosForm.append("nome", "Nome");
-                dadosForm.append("email", nome.value?.toString()!);
-                dadosForm.append("senha", nome.value?.toString()!);
+        try {
+            this.carregar = true;
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+            trabalhador.Nome = nome.value;
 
-                try {
-                    this.carregar = true;
-                    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-                    trabalhador.Nome = nome.value;
-
-                    localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
-                }
-                catch (erro: any) {
-                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                    alert.message = "Erro ao conectar-se ao servidor";
-                    alert.present();
-                }
-                finally {
-                    this.carregar = false;
-                }
+            localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
             
         
     }

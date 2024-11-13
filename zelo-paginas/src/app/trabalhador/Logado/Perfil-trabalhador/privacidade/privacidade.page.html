@@ -120,7 +120,7 @@
 
                                 <p class="txt">Senha atual</p>
 
-                                <ion-input id="senha" formControlName="senhaAtual" (keyup)="AtivarBotaoSalvar2($event)"
+                                <ion-input id="senhaAtual" formControlName="senhaAtual" (keyup)="AtivarBotaoSalvar2($event)"
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['senhaAtual'])"
                                     [class.inputErro]="form.controls['senhas'].controls['senhaAtual'].invalid && (form.controls['senhas'].controls['senhaAtual'].touched || form.controls['senhas'].controls['senhaAtual'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
@@ -137,7 +137,7 @@
 
                                 <p class="txt">Nova senha</p>
 
-                                <ion-input id="senha" formControlName="senha" (keyup)="AtivarBotaoSalvar2($event)"
+                                <ion-input id="senhaNova" formControlName="senha" (keyup)="AtivarBotaoSalvar2($event)"
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
                                     [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
