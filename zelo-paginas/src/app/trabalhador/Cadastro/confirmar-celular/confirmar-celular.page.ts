@@ -96,10 +96,18 @@ export class ConfirmarCelularPage implements OnInit {
 
         let link = dominio + "/Confirmacao/GerarCodigo";
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
+        let emailTroca = localStorage.getItem("TrocaEmail")!;
 
         let dadosForm = new FormData();
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("tipo", "trabalhador");
+
+        if (localStorage.getItem("TrocaEmail") !== null) {
+            dadosForm.append("trocarEmail", emailTroca);
+        } 
+        else {
+            dadosForm.append("trocarEmail", null!);
+        }
 
         try {
             this.http.post(link, dadosForm, { headers: headerNgrok }).subscribe(res => {
@@ -147,7 +155,14 @@ export class ConfirmarCelularPage implements OnInit {
 
                     res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
-                    this.navCl.navigateRoot("/tipo-saque");
+                    if (localStorage.getItem("TrocaEmail") !== null) {
+                        localStorage.removeItem("TrocaEmail");
+                        this.navCl.navigateRoot("/trabalhador/privacidade");
+                    } 
+                    else {
+                        this.navCl.navigateRoot("/tipo-saque");
+                    }
+                    
                 }
                 catch (erro: any) {
                     const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
