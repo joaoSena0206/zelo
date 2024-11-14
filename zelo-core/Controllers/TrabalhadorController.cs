@@ -560,7 +560,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("AlterarDados")]
-    public IActionResult AlterarDados([FromForm] string cpf, [FromForm] string nome, [FromForm] string email, [FromForm] string senha)
+    public IActionResult AlterarDados([FromForm] string cpf, [FromForm] string nome, [FromForm] string email)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -571,10 +571,72 @@ public class TrabalhadorController : ControllerBase
 
             comando = $@"UPDATE trabalhador 
                         SET nm_trabalhador = '{nome}', 
-                            nm_email_trabalhador = '{email}', 
-                            nm_senha_trabalhador = '{senha}' 
+                            nm_email_trabalhador = '{email}'
                         WHERE cd_cpf_trabalhador = '{cpf}'";
             
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpGet("VerificarSenha")]
+    public IActionResult VerificarSenha([FromQuery] string cpf, [FromQuery] string senha)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+            int? SenhaConfere = null;
+
+            comando = $@"SELECT EXISTS  ( SELECT 1 FROM trabalhador WHERE nm_senha_trabalhador = md5('{senha}') AND cd_cpf_trabalhador = '{cpf}' ) AS ExisteIgualdade";
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    SenhaConfere = dados.GetInt16(0);
+                }
+            }
+
+            dados.Close();
+
+            return Ok(SenhaConfere);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpPost("AlterarSenha")]
+    public IActionResult AlterarSenha([FromForm] string cpf, [FromForm] string novaSenha)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+
+            comando = $@"UPDATE trabalhador SET nm_senha_trabalhador = md5('{novaSenha}') WHERE cd_cpf_trabalhador = '{cpf}'";
+
             banco.Executar(comando);
 
             return Ok();
