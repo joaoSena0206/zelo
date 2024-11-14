@@ -43,6 +43,10 @@ export class InicialPage implements OnInit {
         PushNotifications.addListener("registration", (token: Token) => {
             this.enviarToken(token.value);
         });
+
+        if (localStorage.getItem("confirmacao")) {
+            this.navCl.navigateRoot("confirmacao-trabalhador");
+        }
     }
 
     async enviarToken(token: any) {
