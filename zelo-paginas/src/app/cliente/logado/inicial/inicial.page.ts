@@ -47,6 +47,12 @@ export class InicialPage implements OnInit {
         if (localStorage.getItem("confirmacao")) {
             this.navCl.navigateRoot("confirmacao-trabalhador");
         }
+        else
+        {
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("servico");
+            localStorage.removeItem("endereco");
+        }
     }
 
     async enviarToken(token: any) {
