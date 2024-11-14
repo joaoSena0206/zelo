@@ -218,38 +218,7 @@ public class ClienteController : ControllerBase
     {      
         try
         {
-            List<string> urlImgs = new List<string>();
-
-            #region Limpa os base64 e envia para o transfer.sh
-
-            for (int i = 0; i < listaBase64.Length; i++)
-            {
-                string base64Limpo = listaBase64[i].Contains("data:image/jpeg;base64,") ? listaBase64[i].Substring(listaBase64[i].IndexOf(",") + 1) : listaBase64[i];
-                base64Limpo = base64Limpo.Substring(0, base64Limpo.Length - 2);
-
-                byte[] imgBytes = Convert.FromBase64String(base64Limpo);
-
-                using var content = new MultipartFormDataContent();
-                using var byteArrayContent = new ByteArrayContent(imgBytes);
-                byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
-
-                string nmArquivo = $"{i + 1}.jpeg";
-                content.Add(byteArrayContent, "file", nmArquivo);
-
-                using var httpClient = new HttpClient();
-                var res = await httpClient.PostAsync("https://file.io", content);
-                if (res.IsSuccessStatusCode)
-                {
-                    string urlDownload = await res.Content.ReadAsStringAsync();
-                    urlImgs.Add(urlDownload);
-                }
-                else
-                {
-                    return BadRequest("Erro ao fazer o upload da img");
-                }
-            }
-
-            #endregion
+            List<string> urlImgs = new List<string>();           
 
             Cliente cliente = JsonSerializer.Deserialize<Cliente>(Request.Form["cliente"]);
 
@@ -264,8 +233,7 @@ public class ClienteController : ControllerBase
                 {
                     {"cliente", JsonSerializer.Serialize(cliente)},
                     {"endereco", endereco},
-                    {"solicitacao", solicitacao},
-                    {"imgs", JsonSerializer.Serialize(urlImgs) }
+                    {"solicitacao", solicitacao}
                 },
                 Token = token
             };
