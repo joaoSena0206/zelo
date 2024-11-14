@@ -9,7 +9,7 @@ INSERT INTO trabalhador VALUES
 ('67890123456', 'Fernando Lima', '1980-03-25', '2023-06-10', 'fernando.lima@example.com', md5('senha678'), 'pix-fernando', TRUE, TRUE, 90.00, -23.550520, -46.633308, ""),
 ('78901234567', 'Gabriela Rocha', '1997-07-14', '2023-07-25', 'gabriela.rocha@example.com', md5('senha901'), 'pix-gabi', TRUE, FALSE, 80.00, -3.71722, -38.5433, ""),
 ('53890618880', 'Marco', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), '50082480818', TRUE, TRUE, 0.1, -23.9524, -46.3603, ""),
-('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', FALSE, TRUE, 25, -23.9738, -46.3437, ""),
+/* ('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), '50082480818', FALSE, TRUE, 25, -23.9738, -46.3437, ""), */
 ('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', TRUE, TRUE, 32.65, -23.9336, -46.3221, ""),
 ('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', TRUE, TRUE, 25.50, -23.9560, -46.3305, "");
 
@@ -33,8 +33,8 @@ INSERT INTO servico_trabalhador (cd_cpf_trabalhador, cd_servico) VALUES
 ('78901234567', 7),
 ('53890618880', 3),
 ('56787654567', 3),
-('56787654566', 3),
-('50082480818', 3);
+('56787654566', 3);
+/* ('50082480818', 3); */
 
 
 INSERT INTO cliente VALUES
