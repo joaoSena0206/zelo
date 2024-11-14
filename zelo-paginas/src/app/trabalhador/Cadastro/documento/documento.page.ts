@@ -6,6 +6,7 @@ import { FileOpener } from '@capawesome-team/capacitor-file-opener';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
     selector: 'app-documento',
@@ -32,7 +33,10 @@ export class DocumentoPage implements OnInit {
                 types: ['image/png', 'image/jpeg', 'application/pdf'],
                 limit: 1
             });
-            const arquivo = resultado.files[0].blob;
+            const arquivo = resultado.files[0];
+            let caminho = Capacitor.convertFileSrc(arquivo.path!);
+            let resposta = await fetch(caminho);
+            let arquivoBlob = await resposta.blob();
 
             interface objSafeUrl {
                 id: any,
@@ -50,11 +54,11 @@ export class DocumentoPage implements OnInit {
 
             obj.arquivo = arquivo;
 
-            if (arquivo) {
+            if (arquivoBlob) {
                 const reader = new FileReader();
 
                 reader.onload = (e: any) => {
-                    if (arquivo.type == "image/png" || arquivo.type == "image/jpeg") {
+                    if (arquivoBlob.type == "image/png" || arquivoBlob.type == "image/jpeg") {
                         obj.img = e.target.result;
                     }
                     else {
@@ -62,10 +66,12 @@ export class DocumentoPage implements OnInit {
                     }
                 };
 
-                reader.readAsDataURL(arquivo);
+                reader.readAsDataURL(arquivoBlob);
             }
 
             this.arquivos.push(obj)
+
+            console.log(this.arquivos);
         };
 
         pegarArquivos();
