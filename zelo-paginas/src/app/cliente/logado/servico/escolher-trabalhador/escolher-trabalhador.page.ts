@@ -130,7 +130,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.back();
+        this.navCl.navigateBack("/descricao-servico");
     }
 
     async carregarTrabalhadores(codigo: number) {
