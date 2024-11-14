@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 public class ConfirmacaoController : ControllerBase
 {
     [HttpPost("GerarCodigo")]
-    public IActionResult GerarCodigo([FromForm]string cpf, [FromForm] string tipo)
+    public IActionResult GerarCodigo([FromForm]string cpf, [FromForm] string tipo, [FromForm] string trocarEmail)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -85,7 +85,7 @@ public class ConfirmacaoController : ControllerBase
             }
 
             banco.Executar(comando);
-            EnviarEmail(confirmacao);
+            EnviarEmail(confirmacao, trocarEmail);
 
             string json = "{'res': 'ok', 'codigo': '" + confirmacao.CodigoConfirmacao + "'}";
             json = json.Replace("'", "\"");
@@ -104,7 +104,7 @@ public class ConfirmacaoController : ControllerBase
         }
     }
 
-    public void EnviarEmail(Confirmacao confirmacao)
+    public void EnviarEmail(Confirmacao confirmacao, string trocaEmail)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -113,22 +113,30 @@ public class ConfirmacaoController : ControllerBase
         {
             #region Pega o email do cliente no banco
 
-            string comando = $"SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '{confirmacao.CpfCliente}';";
-
-            if (confirmacao.CpfCliente == "" || confirmacao.CpfCliente == null)
-            {
-                comando = $"SELECT nm_email_trabalhador FROM trabalhador WHERE cd_cpf_trabalhador = '{confirmacao.CpfTrabalhador}';";
-            }
-
-            MySqlDataReader dados = banco.Consultar(comando);
             string emailUsuario = "";
 
-            if (dados != null && dados.Read())
+            if (trocaEmail != "null")
             {
-                emailUsuario = dados.GetString(0);
+                emailUsuario = trocaEmail;
             }
+            else
+            {
+                string comando = $"SELECT nm_email_cliente FROM cliente WHERE cd_cpf_cliente = '{confirmacao.CpfCliente}';";
 
-            dados.Close();
+                if (confirmacao.CpfCliente == "" || confirmacao.CpfCliente == null)
+                {
+                    comando = $"SELECT nm_email_trabalhador FROM trabalhador WHERE cd_cpf_trabalhador = '{confirmacao.CpfTrabalhador}';";
+                }
+
+                MySqlDataReader dados = banco.Consultar(comando);
+
+                if (dados != null && dados.Read())
+                {
+                    emailUsuario = dados.GetString(0);
+                }
+
+                dados.Close();
+            }
 
             #endregion
 

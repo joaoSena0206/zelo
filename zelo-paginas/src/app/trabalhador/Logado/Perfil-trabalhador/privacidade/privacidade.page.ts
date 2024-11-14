@@ -30,7 +30,7 @@ export class PrivacidadePage implements OnInit {
 
     form = new FormGroup({
         senhas: new FormGroup({
-            senhaAtual:  new FormControl("", Validators.required),
+            senhaAtual: new FormControl("", Validators.required),
             senha: new FormControl("", [Validators.required, validadorSenha()]),
             confirmarSenha: new FormControl("")
         }, validadorSenhaConfere()),
@@ -79,7 +79,7 @@ export class PrivacidadePage implements OnInit {
         if (control.hasError("required")) {
             this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
         }
-        else if(control.hasError("email")) {
+        else if (control.hasError("email")) {
             this.erro[nome] = `Email inválido!`;
             return;
         }
@@ -156,8 +156,7 @@ export class PrivacidadePage implements OnInit {
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
 
-                if(input.id != "senha")
-                {
+                if (input.id != "senha" && input.id != "senhaAtual" && input.id != "senhaNova") {
                     input.disabled = true;
                     input.style.border = 'none';
                 }
@@ -169,8 +168,7 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionFocus", function () {
-                if(input.id == "senha")
-                {
+                if (input.id == "senha" || input.id == "senhaAtual" || input.id == "senhaNova") {
                     input.style.border = 'black 1px solid';
                 }
             });
@@ -178,8 +176,7 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionFocus", function () {
-                if(input.id == "senha")
-                {
+                if (input.id == "senha") {
                     input.style.border = 'black 1px solid';
                 }
             });
@@ -245,38 +242,34 @@ export class PrivacidadePage implements OnInit {
             this.formDados.markAllAsTouched();
             this.situacao1 = true;
             this.isFormValid();
-        } 
-        else{
+        }
+        else {
             this.situacao1 = false;
             this.isFormValid();
         }
     }
 
     AtivarBotaoSalvar2(event: KeyboardEvent) {
-         if (this.form.invalid) {
-             this.form.markAllAsTouched();
-             this.situacao2 = true;
-             this.isFormValid();
-         } 
-         else{
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            this.situacao2 = true;
+            this.isFormValid();
+        }
+        else {
             this.situacao2 = false;
             this.isFormValid();
-         }
-     }
+        }
+    }
 
-     isFormValid(){
-        if(this.situacao1 == true)
-        {
+    isFormValid() {
+        if (this.situacao1 == true) {
             this.situacaoBotao = true;
         }
-        else
-        {
-            if(this.situacao2 == true)
-            {
+        else {
+            if (this.situacao2 == true) {
                 this.situacaoBotao = true;
             }
-            else
-            {
+            else {
                 this.situacaoBotao = false;
             }
         }
@@ -289,18 +282,26 @@ export class PrivacidadePage implements OnInit {
         let novaSenha = document.querySelector("#senhaNova") as HTMLIonInputElement;
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let dadosForm = new FormData();
+        let link;
 
-        if(novaSenha.value != null)
-        {
-            let link = dominio + "/Trabalhador/VerificarSenha";
-            dadosForm.append("senha", novaSenha.value?.toString()!);
+        if (novaSenha.value != "") {
+            link = dominio + `/Trabalhador/VerificarSenha?cpf=${trabalhador.Cpf}&senha=${senhaAtual.value?.toString()}`;
 
             try {
                 this.carregar = true;
-                let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-    
-                
-                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+                let resposta = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+
+                if (resposta == 1) {
+                    link = dominio + "/Trabalhador/AlterarSenha";
+                    dadosForm.append("cpf", trabalhador.Cpf);
+                    dadosForm.append("novaSenha", novaSenha.value?.toString()!);
+
+                    let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                }
+                else {
+                    console.log("erro na senha atual");
+                    return;
+                }
             }
             catch (erro: any) {
                 const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -311,30 +312,34 @@ export class PrivacidadePage implements OnInit {
                 this.carregar = false;
             }
         }
+
+        if (email.value != trabalhador.Email) {
             
-        let link = dominio + "/Trabalhador/AlterarDados";
+            localStorage.setItem('TrocaEmail', email.value?.toString()!)
+            this.navCl.navigateForward("/trabalhador/confirmar-celular");
 
-        dadosForm.append("cpf", trabalhador.Cpf);
-        dadosForm.append("nome", nome.value?.toString()!);
-        dadosForm.append("email", email.value?.toString()!);
+            /* dadosForm.append("cpf", trabalhador.Cpf);
+            dadosForm.append("nome", nome.value?.toString()!);
+            dadosForm.append("email", email.value?.toString()!);
+            link = dominio + "/Trabalhador/AlterarDados";
 
-        try {
-            this.carregar = true;
-            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-            trabalhador.Nome = nome.value;
+            try {
+                this.carregar = true;
+                let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                trabalhador.Nome = nome.value;
+    
+                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+            }
+            catch (erro: any) {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+            finally {
+                this.carregar = false;
+            } */
+        }
 
-            localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
-        }
-        catch (erro: any) {
-            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-            alert.message = "Erro ao conectar-se ao servidor";
-            alert.present();
-        }
-        finally {
-            this.carregar = false;
-        }
-            
-        
     }
 
 }
