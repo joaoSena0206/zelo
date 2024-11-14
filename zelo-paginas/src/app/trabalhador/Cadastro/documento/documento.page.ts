@@ -70,8 +70,6 @@ export class DocumentoPage implements OnInit {
             }
 
             this.arquivos.push(obj)
-
-            console.log(this.arquivos);
         };
 
         pegarArquivos();
