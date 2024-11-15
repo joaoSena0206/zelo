@@ -52,6 +52,28 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             this.tempo = JSON.parse(localStorage.getItem("confirmacao")!);
         }
 
+        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            if (notification.data.situacaoServico) {
+                localStorage.removeItem("confirmacao");
+                localStorage.removeItem("trabalhadorEscolhido");
+
+                clearInterval(this.id);
+
+                this.navCl.navigateRoot("/escolher-trabalhador");
+            }
+        });
+
+        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
+            if (res.notification.data.situacaoServico) {
+                localStorage.removeItem("confirmacao");
+                localStorage.removeItem("trabalhadorEscolhido");
+
+                clearInterval(this.id);
+
+                this.navCl.navigateRoot("/escolher-trabalhador");
+            }
+        });
+
         this.temporizador();
     }
 
