@@ -104,10 +104,19 @@ export class DescricaoServicoPage implements OnInit {
         }
     }
 
-    voltarPag() {
+    async voltarPag() {
+        if (localStorage.getItem("solicitacao")) {
+            let link = dominio + "/SolicitacaoServico/ExcluirSolicitacao";
+            let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+            let dadosForm = new FormData();
+            dadosForm.append("cdSolicitacao", solicitacao.CdSolicitacaoServico);
+
+            await firstValueFrom(this.http.post(link, dadosForm));
+            localStorage.removeItem("solicitacao");
+        }
+
         localStorage.removeItem("servico");
         localStorage.removeItem("endereco");
-        localStorage.removeItem("solicitacao");
 
         this.navCl.navigateBack("inicial");
     }
