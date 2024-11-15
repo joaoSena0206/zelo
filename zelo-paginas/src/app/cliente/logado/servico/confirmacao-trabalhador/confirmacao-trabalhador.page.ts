@@ -18,6 +18,9 @@ import { firstValueFrom } from 'rxjs';
 export class ConfirmacaoTrabalhadorPage implements OnInit {
     tempo: any;
     id: any;
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -38,7 +41,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
-                min: 1,
+                min: 5,
                 seg: 0
             };
 
@@ -111,7 +114,15 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         }
     }
 
-    cancelar(id: any) {
+    async cancelar(id: any) {
+        let link = dominio + "/Cliente/CancelarSolicitacao";
+        let dadosForm = new FormData();
+        dadosForm.append("token", this.trabalhador.TokenFCM);
+        dadosForm.append("situacaoServico", "false");
+        dadosForm.append("nmCliente", this.cliente.Nome);
+
+        await firstValueFrom(this.http.post(link, dadosForm));
+
         localStorage.removeItem("confirmacao");
         localStorage.removeItem("trabalhadorEscolhido");
 
