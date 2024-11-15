@@ -109,7 +109,7 @@ export class DescricaoServicoPage implements OnInit {
         localStorage.removeItem("endereco");
         localStorage.removeItem("solicitacao");
 
-        this.navCl.back();
+        this.navCl.navigateBack("inicial");
     }
 
     acharNomeControl(control: FormControl) {

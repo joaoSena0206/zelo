@@ -17,6 +17,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class ConfirmacaoTrabalhadorPage implements OnInit {
     tempo: any;
+    id: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -31,13 +32,13 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
                 this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
             }
             else {
-                this.cancelar();
+                this.cancelar(this.id);
             }
         });
 
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
-                min: 5,
+                min: 1,
                 seg: 0
             };
 
@@ -60,7 +61,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             this.tempo.seg = "0" + this.tempo.seg.toString();
         }
 
-        let id = setInterval(() => {
+        this.id = setInterval(() => {
             if (Number(this.tempo.seg) == 0) {
                 this.tempo.seg = 60;
                 this.tempo.min -= 1;
@@ -79,9 +80,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             localStorage.setItem("confirmacao", JSON.stringify(this.tempo));
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
-                this.cancelar();
-
-                clearInterval(id);
+                this.cancelar(this.id);
             }
         }, 1000);
     }
@@ -112,8 +111,12 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         }
     }
 
-    cancelar() {
+    cancelar(id: any) {
         localStorage.removeItem("confirmacao");
-        this.navCl.navigateBack("/escolher-trabalhador");
+        localStorage.removeItem("trabalhadorEscolhido");
+
+        clearInterval(id);
+
+        this.navCl.navigateRoot("/escolher-trabalhador");
     }
 }
