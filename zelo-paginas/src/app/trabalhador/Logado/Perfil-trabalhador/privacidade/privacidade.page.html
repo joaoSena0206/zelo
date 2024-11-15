@@ -44,7 +44,7 @@
 
                             <span
                                 [ngClass]="formDados.controls['nomeCaixa'].invalid && (formDados.controls['nomeCaixa'].touched || formDados.controls['nomeCaixa'].dirty) ? 'erro' : 'escondido'">{{
-                                erro.nomeCaixa }}
+                                erro.nomeCaixa}}
                             </span>
 
                             <div class="area_dado">
@@ -64,6 +64,8 @@
                                     [ngClass]="formDados.controls['email'].invalid && (formDados.controls['email'].touched || formDados.controls['email'].dirty) ? 'erro' : 'escondido'">{{
                                     erro.email }}
                                 </span>
+
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpan">Email já cadastrado!</span>
                             </div>
 
                             <div class="area_dado">
@@ -135,6 +137,8 @@
                                     [ngClass]="form.controls['senhas'].controls['senhaAtual'].invalid && (form.controls['senhas'].controls['senhaAtual'].touched || form.controls['senhas'].controls['senhaAtual'].dirty) ? 'erro' : 'escondido'">{{
                                     erro.senhaAtual }}
                                 </span>
+
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual incorreta!</span>
 
                                 <p class="txt">Nova senha</p>
 

@@ -234,6 +234,8 @@ export class PrivacidadePage implements OnInit {
         }, 100);
     }
 
+    mostrarSpan: boolean = false;
+    mostrarSpanSenha: boolean = false;
     situacao1: boolean = false;
     situacao2: boolean = false;
 
@@ -268,9 +270,12 @@ export class PrivacidadePage implements OnInit {
         else {
             if (this.situacao2 == true) {
                 this.situacaoBotao = true;
+                this.mostrarSpanSenha = false;
             }
             else {
                 this.situacaoBotao = false;
+                this.mostrarSpan = false;
+                this.mostrarSpanSenha = false;
             }
         }
     }
@@ -285,13 +290,16 @@ export class PrivacidadePage implements OnInit {
         let link;
 
         if (novaSenha.value != "") {
-            link = dominio + `/Trabalhador/VerificarSenha?cpf=${trabalhador.Cpf}&senha=${senhaAtual.value?.toString()}`;
+
+            link = dominio + `/Trabalhador/VerificarSenha`;
+            dadosForm.append("cpf", trabalhador.Cpf);
+            dadosForm.append("senha", senhaAtual.value?.toString()!);
 
             try {
                 this.carregar = true;
-                let resposta = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+                let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }));
 
-                if (resposta == 1) {
+                if (resposta == "1") {
                     link = dominio + "/Trabalhador/AlterarSenha";
                     dadosForm.append("cpf", trabalhador.Cpf);
                     dadosForm.append("novaSenha", novaSenha.value?.toString()!);
@@ -299,7 +307,8 @@ export class PrivacidadePage implements OnInit {
                     let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
                 }
                 else {
-                    console.log("erro na senha atual");
+                    this.mostrarSpanSenha = true;
+                    this.situacaoBotao = true;
                     return;
                 }
             }
@@ -314,9 +323,40 @@ export class PrivacidadePage implements OnInit {
         }
 
         if (email.value != trabalhador.Email) {
-            
-            localStorage.setItem('TrocaEmail', email.value?.toString()!)
-            this.navCl.navigateForward("/trabalhador/confirmar-celular");
+
+            let link = dominio + "/Trabalhador/ChecarExistencia";
+            let dadosForm = new FormData();
+            dadosForm.append("cpf", "Não Checar");
+            dadosForm.append("email", email.value?.toString()!);
+
+            try {
+                this.carregar = true;
+    
+                let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+    
+                this.carregar = false;
+    
+                let objRes = res as any;
+    
+                if (objRes.cadastrado.length == 0) {
+                    localStorage.setItem('TrocaEmail', email.value?.toString()!);
+                    this.navCl.navigateForward("/trabalhador/confirmar-celular");
+                }
+                else {
+                    this.mostrarSpan = true;
+                    this.situacaoBotao = true;
+                }
+            }
+            catch 
+            {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+            finally 
+            {
+                this.carregar = false;
+            }
 
             /* dadosForm.append("cpf", trabalhador.Cpf);
             dadosForm.append("nome", nome.value?.toString()!);

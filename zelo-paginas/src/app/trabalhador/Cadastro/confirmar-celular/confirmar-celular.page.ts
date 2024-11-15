@@ -156,8 +156,27 @@ export class ConfirmarCelularPage implements OnInit {
                     res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
 
                     if (localStorage.getItem("TrocaEmail") !== null) {
+                        let emailTrocado = localStorage.getItem("TrocaEmail");
                         localStorage.removeItem("TrocaEmail");
-                        this.navCl.navigateRoot("/trabalhador/privacidade");
+
+                        link = dominio + "/Trabalhador/AlterarEmail";
+                        let dadosForm = new FormData();
+                        dadosForm.append("cpf", trabalhador.Cpf);
+                        dadosForm.append("nome", null!);
+                        dadosForm.append("email", emailTrocado!);
+
+                        try{
+                            let res2 = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                            trabalhador.Email = emailTrocado;
+                            localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+                            this.navCl.navigateRoot("/trabalhador/privacidade");
+                        }
+                        catch (erro: any) {
+                            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                            alert.message = "Erro ao conectar-se ao servidor";
+                            alert.present();
+                        }
+
                     } 
                     else {
                         this.navCl.navigateRoot("/tipo-saque");

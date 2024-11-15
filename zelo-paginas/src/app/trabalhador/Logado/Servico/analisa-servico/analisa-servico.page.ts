@@ -29,7 +29,6 @@ export class AnalisaServicoPage implements OnInit {
         this.clienteServico = JSON.parse(localStorage.getItem('cliente')!);
         this.enderecoServico = JSON.parse(localStorage.getItem('endereco')!);
         this.solicitacaoServico = JSON.parse(localStorage.getItem('solicitacao')!);
-        this.ImagensServico = JSON.parse(localStorage.getItem('imagens')!);
 
         this.cdSolicitacao = this.solicitacaoServico.CdSolicitacaoServico;
         this.carregarServicos();
