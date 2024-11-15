@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { cpf } from 'cpf-cnpj-validator';
+import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 
 @Component({
     selector: 'app-analisa-servico',
@@ -34,6 +35,16 @@ export class AnalisaServicoPage implements OnInit {
         this.carregarServicos();
         this.pegarTokenCliente();
         this.carregarImgPerfilCliente();
+
+        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            if (notification.data.situacaoServico) {
+                localStorage.removeItem("cliente");
+                localStorage.removeItem("endereco");
+                localStorage.removeItem("solicitacao");
+
+                this.navCl.navigateRoot("/trabalhador/inicial");
+            }
+        });
     }
 
     async pegarTokenCliente() {
@@ -116,6 +127,10 @@ export class AnalisaServicoPage implements OnInit {
 
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+            localStorage.removeItem("cliente");
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
+
             this.navCl.navigateRoot("/trabalhador/inicial");
         }
         catch (erro: any) {
