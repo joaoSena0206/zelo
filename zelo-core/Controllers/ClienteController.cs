@@ -248,6 +248,35 @@ public class ClienteController : ControllerBase
         }
     }
 
+    [HttpPost("CancelarSolicitacao")]
+    async public Task<IActionResult> CancelarSolicitacao([FromForm] string situacaoServico, [FromForm] string token, [FromForm] string nmCliente)
+    {
+        try
+        {
+            var msg = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = "Serviço cancelado",
+                    Body = $"Enviado por {nmCliente}"
+                },
+                Data = new Dictionary<string, string>()
+                {
+                    {"situacaoServico", situacaoServico}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
+
     [HttpPost("AdicionarTokenFCM")]
     public IActionResult AdicionarTokenFCM([FromForm] string cpf, [FromForm] string token)
     {
