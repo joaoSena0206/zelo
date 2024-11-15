@@ -39,6 +39,7 @@ export class InicialPage implements OnInit {
     enderecoServico: any;
     modal: any;
     dominio = dominio;
+    situacaoServico: any;
 
     constructor(private http: HttpClient, private navCl: NavController) {
 
@@ -59,23 +60,37 @@ export class InicialPage implements OnInit {
         });
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            this.result = notification;
-            this.clienteServico = JSON.parse(this.result.data.cliente);
-            
-            this.enderecoServico = this.result.data.endereco;
-            this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
+            if (!notification.data.situacaoServico && this.situacaoServico != false) {
+                this.result = notification;
+                this.clienteServico = JSON.parse(this.result.data.cliente);
 
-            this.modal.present();
+                this.enderecoServico = this.result.data.endereco;
+                this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
+
+                this.modal.present();
+            }
+            else {
+                this.modal.dismiss();
+
+                this.situacaoServico = notification.data.situacaoServico;
+            }
         });
 
         PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
-            this.result = res.notification;
+            if (!res.notification.data.situacaoServico && this.situacaoServico != false) {
+                this.result = res.notification;
 
-            this.clienteServico = JSON.parse(this.result.data.cliente);
-            this.enderecoServico = this.result.data.endereco;
-            this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
+                this.clienteServico = JSON.parse(this.result.data.cliente);
+                this.enderecoServico = this.result.data.endereco;
+                this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
 
-            this.modal.present();
+                this.modal.present();
+            }
+            else {
+                this.modal.dismiss();
+
+                this.situacaoServico = res.notification.data.situacaoServico
+            }
         });
     }
 
@@ -331,7 +346,7 @@ export class InicialPage implements OnInit {
         finally {
             this.carregar = false;
         }
-        
+
         this.historico = res;
     }
 
@@ -423,9 +438,8 @@ export class InicialPage implements OnInit {
         dadosForm.append("codigoResultado", this.resultado!);
         dadosForm.append("cpf", this.trabalhador.Cpf);
 
-        try
-        {
-            this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => {})
+        try {
+            this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => { })
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
