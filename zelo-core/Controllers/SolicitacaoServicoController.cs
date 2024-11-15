@@ -164,6 +164,34 @@ public class SolicitacaoServicoController : ControllerBase
 
     }
 
+    [HttpPost("ExcluirSolicitacao")]
+    public IActionResult ExcluirSolicitacao([FromForm] int cdSolicitacao)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = $@"DELETE FROM img_solicitacao
+            WHERE cd_solicitacao_servico = {cdSolicitacao}";
+            banco.Executar(comando);
+
+            comando = $@"DELETE FROM solicitacao_servico
+            WHERE cd_solicitacao_servico = {cdSolicitacao}";
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
     async public Task AdicionarImgs(int cdSolicitacao, IFormFileCollection files)
     {
         try
