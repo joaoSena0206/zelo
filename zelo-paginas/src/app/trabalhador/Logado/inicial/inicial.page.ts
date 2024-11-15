@@ -209,7 +209,7 @@ export class InicialPage implements OnInit {
 
                 // The minimum number of metres between subsequent locations. Defaults
                 // to 0.
-                distanceFilter: 10
+                distanceFilter: 200
             },
             async (location, error) => {
                 if (error) {
