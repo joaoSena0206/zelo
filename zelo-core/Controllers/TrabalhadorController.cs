@@ -89,22 +89,27 @@ public class TrabalhadorController : ControllerBase
             #region Checa a existência do email e do cpf
 
             string json = "{'cadastrado': [ ";
+            string comando;
+            MySqlDataReader dados;
 
-            string comando = $"SELECT COUNT(cd_cpf_trabalhador) FROM trabalhador WHERE cd_cpf_trabalhador = '{cpf}'";
-            MySqlDataReader dados = banco.Consultar(comando);
-
-            if (dados != null)
+            if (cpf != "Não Checar")
             {
-                if (dados.Read())
+                comando = $"SELECT COUNT(cd_cpf_trabalhador) FROM trabalhador WHERE cd_cpf_trabalhador = '{cpf}'";
+                dados = banco.Consultar(comando);
+
+                if (dados != null)
                 {
-                    if (dados.GetInt32(0) >= 1)
+                    if (dados.Read())
                     {
-                        json += "'cpf',";
+                        if (dados.GetInt32(0) >= 1)
+                        {
+                            json += "'cpf',";
+                        }
                     }
                 }
-            }
 
-            dados.Close();
+                dados.Close();
+            }
 
             comando = $"SELECT COUNT(nm_email_trabalhador) FROM trabalhador WHERE nm_email_trabalhador = '{email}'";
             dados = banco.Consultar(comando);
@@ -559,8 +564,8 @@ public class TrabalhadorController : ControllerBase
         }
     }
 
-    [HttpPost("AlterarDados")]
-    public IActionResult AlterarDados([FromForm] string cpf, [FromForm] string nome, [FromForm] string email)
+    [HttpPost("AlterarEmail")]
+    public IActionResult AlterarEmail([FromForm] string cpf, [FromForm] string nome, [FromForm] string email)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -569,10 +574,18 @@ public class TrabalhadorController : ControllerBase
         {
             string comando = "";
 
-            comando = $@"UPDATE trabalhador 
-                        SET nm_trabalhador = '{nome}', 
-                            nm_email_trabalhador = '{email}'
+            if(nome == "null")
+            {
+                comando = $@"UPDATE trabalhador 
+                        SET nm_email_trabalhador = '{email}'
                         WHERE cd_cpf_trabalhador = '{cpf}'";
+            }
+            else
+            {
+                comando = $@"UPDATE trabalhador 
+                        SET nm_trabalhador = '{nome}'
+                        WHERE cd_cpf_trabalhador = '{cpf}'";
+            }
             
             banco.Executar(comando);
 
@@ -588,8 +601,8 @@ public class TrabalhadorController : ControllerBase
         }
     }
 
-    [HttpGet("VerificarSenha")]
-    public IActionResult VerificarSenha([FromQuery] string cpf, [FromQuery] string senha)
+    [HttpPost("VerificarSenha")]
+    public IActionResult VerificarSenha([FromForm] string cpf, [FromForm] string senha)
     {
         Banco banco = new Banco();
         banco.Conectar();
