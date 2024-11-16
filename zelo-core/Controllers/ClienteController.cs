@@ -277,6 +277,35 @@ public class ClienteController : ControllerBase
         }
     }
 
+    [HttpPost("EnviarPagamentoCancelado")]
+    async public Task<IActionResult> EnviarPagamentoCancelado([FromForm] string pago, [FromForm] string token, [FromForm] string nmCliente)
+    {
+        try
+        {
+            var msg = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = "Pagamento cancelado",
+                    Body = $"Enviado por {nmCliente}"
+                },
+                Data = new Dictionary<string, string>()
+                {
+                    {"pago", pago}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
+
     [HttpPost("AdicionarTokenFCM")]
     public IActionResult AdicionarTokenFCM([FromForm] string cpf, [FromForm] string token)
     {
