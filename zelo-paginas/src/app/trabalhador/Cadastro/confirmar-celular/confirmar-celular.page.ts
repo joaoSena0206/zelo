@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-confirmar-celular-trabalhador',
@@ -23,7 +25,7 @@ export class ConfirmarCelularPage implements OnInit {
     codigoAleatorio: string;
     carregar: boolean = false;
 
-    constructor(private navCl: NavController, private http: HttpClient) { }
+    constructor(private navCl: NavController, private http: HttpClient, private toastController: ToastController, private router: Router) { }
 
     ngOnInit() {
 
@@ -79,6 +81,23 @@ export class ConfirmarCelularPage implements OnInit {
         }, 1000);
 
         this.gerarCodigo(null);
+
+
+    }
+
+    ionViewDidLeave() {
+        this.showTemporaryToast();
+    }
+
+    async showTemporaryToast() {
+        const toast = await this.toastController.create({
+          message: 'Dado(s) alterado com sucesso!',
+          duration: 2000,
+          color: 'light shade',
+          cssClass: 'custom-toast',
+        });
+    
+        await toast.present();
     }
 
     gerarCodigo(event: any) {
