@@ -16,6 +16,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
     constructor(private navCl: NavController) { }
 
     ngOnInit() {
+        localStorage.removeItem("idPagamento");
+        localStorage.removeItem("tempoPagamento");
     }
 
     ionViewDidEnter() {
