@@ -26,16 +26,24 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            let cpf = "53890618880";
+            let cpf = this.trabalhador.Cpf;
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
 
             let situacao = notification.data.situacaoServico;
 
             if (situacao == "true") {
+                clearInterval(this.id);
+
                 this.adicionarTrabalhadorSolicitacao(cpf, solicitacao.CdSolicitacaoServico);
             }
             else {
-                this.cancelar(this.id);
+                localStorage.removeItem("confirmacao");
+                localStorage.removeItem("trabalhadorEscolhido");
+                localStorage.removeItem("endereco");
+
+                clearInterval(this.id);
+
+                this.navCl.navigateRoot("/escolher-trabalhador");
             }
         });
 
@@ -53,7 +61,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         }
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            if (notification.data.situacaoServico) {
+            if (notification.data.situacaoServico == "false") {
                 localStorage.removeItem("confirmacao");
                 localStorage.removeItem("trabalhadorEscolhido");
 
@@ -64,7 +72,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
         });
 
         PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
-            if (res.notification.data.situacaoServico) {
+            if (res.notification.data.situacaoServico == "false") {
                 localStorage.removeItem("confirmacao");
                 localStorage.removeItem("trabalhadorEscolhido");
 
@@ -127,7 +135,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
             localStorage.removeItem("confirmacao");
 
-            this.navCl.navigateForward("/pagamento");
+            this.navCl.navigateRoot("/pagamento");
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
