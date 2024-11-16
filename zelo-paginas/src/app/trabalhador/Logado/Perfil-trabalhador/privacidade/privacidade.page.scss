@@ -340,3 +340,14 @@ ion-content {
 .escondido {
     display: none;
 }
+
+::ng-deep .custom-toast {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    width: 300px;
+    position: fixed; 
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+}
