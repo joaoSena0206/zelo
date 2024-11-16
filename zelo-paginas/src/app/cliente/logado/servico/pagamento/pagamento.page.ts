@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Clipboard } from '@capacitor/clipboard';
@@ -18,6 +18,7 @@ export class PagamentoPage implements OnInit {
     qrCode: any;
     carregar: boolean = false;
     inputPix: any;
+    id: any;
 
     constructor(private navCl: NavController, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
@@ -30,12 +31,64 @@ export class PagamentoPage implements OnInit {
 
             this.tempo = tempo;
             localStorage.setItem("tempoPagamento", JSON.stringify(tempo));
+
+            this.fazerPagamentoMp();
         }
         else {
             this.tempo = JSON.parse(localStorage.getItem("tempoPagamento")!);
-        }
 
-        this.fazerPagamentoMp();
+            let id = localStorage.getItem("idPagamento");
+            let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+
+            try {
+                this.carregar = true;
+                let res: any = await firstValueFrom(this.http.get(link));
+
+                if (res.status != "cancelled") {
+                    this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
+                    this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
+
+                    this.temporizador();
+                }
+                else {
+                    localStorage.removeItem("idPagamento");
+                    localStorage.removeItem("trabalhadorEscolhido");
+                    localStorage.removeItem("tempoPagamento");
+
+                    clearInterval(this.id);
+                    this.enviarCancelamento();
+
+                    this.navCl.navigateRoot("inicial");
+                }
+            }
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+            finally {
+                this.carregar = false;
+            }
+        }
+    }
+
+    async enviarCancelamento() {
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let link = dominio + "/EnviarPagamentoCancelado";
+        let dadosForm = new FormData();
+        dadosForm.append("pago", "false");
+        dadosForm.append("token", trabalhador.TokenFCM);
+        dadosForm.append("nmCliente", cliente.Nome);
+
+        try {
+            await firstValueFrom(this.http.post(link, dadosForm));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     async fazerPagamentoMp() {
@@ -94,6 +147,16 @@ export class PagamentoPage implements OnInit {
 
                 this.navCl.navigateRoot("trabalhador-caminho");
             }
+            else if (res.status == "cancelled") {
+                localStorage.removeItem("idPagamento");
+                localStorage.removeItem("trabalhadorEscolhido");
+                localStorage.removeItem("tempoPagamento");
+
+                this.enviarCancelamento();
+                clearInterval(this.id);
+
+                this.navCl.navigateRoot("inicial");
+            }
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -117,7 +180,7 @@ export class PagamentoPage implements OnInit {
             this.tempo.seg = "0" + this.tempo.seg.toString();
         }
 
-        let id = setInterval(() => {
+        this.id = setInterval(() => {
             this.checarPagamento();
 
             if (Number(this.tempo.seg) == 0) {
@@ -138,7 +201,8 @@ export class PagamentoPage implements OnInit {
             localStorage.setItem("tempoPagamento", JSON.stringify(this.tempo));
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
-                clearInterval(id);
+                clearInterval(this.id);
+
                 let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
                 if (solicitacao.Trabalhador != null) {
                     solicitacao.Trabalhador.Cpf = null;
