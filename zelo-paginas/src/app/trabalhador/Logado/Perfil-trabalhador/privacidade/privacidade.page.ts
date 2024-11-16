@@ -3,13 +3,17 @@ import * as moment from 'moment';
 import { ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { first, firstValueFrom } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import validator from 'cpf-cnpj-validator';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Capacitor } from '@capacitor/core';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
+
 
 @Component({
     selector: 'app-privacidade',
@@ -30,14 +34,14 @@ export class PrivacidadePage implements OnInit {
 
     form = new FormGroup({
         senhas: new FormGroup({
-            senhaAtual: new FormControl("", Validators.required),
+            Senha_Atual: new FormControl("", Validators.required),
             senha: new FormControl("", [Validators.required, validadorSenha()]),
             confirmarSenha: new FormControl("")
         }, validadorSenhaConfere()),
     });
 
     formDados = new FormGroup({
-        nomeCaixa: new FormControl({ value: this.trabalhador.Nome, disabled: true }, [Validators.required]),
+        Nome: new FormControl({ value: this.trabalhador.Nome, disabled: true }, [Validators.required]),
         email: new FormControl({ value: this.trabalhador.Email, disabled: true }, [Validators.required, Validators.email])
     });
 
@@ -46,11 +50,11 @@ export class PrivacidadePage implements OnInit {
         formDados: "",
         email: "Email obrigatório",
         senha: "Senha obrigatório",
-        senhaAtual: "Digite sua senha atual",
-        nomeCaixa: "Nome obrigatório"
+        Senha_Atual: "Digite sua senha atual",
+        Nome: "Nome obrigatório"
     };
 
-    constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef) { }
+    constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef, private toastController: ToastController, private sanitizer: DomSanitizer) { }
 
     ngOnInit() { }
 
@@ -145,7 +149,7 @@ export class PrivacidadePage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.back();
+        this.navCl.navigateBack("/trabalhador/perfil")
     }
 
     ngAfterViewInit() {
@@ -156,7 +160,7 @@ export class PrivacidadePage implements OnInit {
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
 
-                if (input.id != "senha" && input.id != "senhaAtual" && input.id != "senhaNova") {
+                if (input.id != "senha" && input.id != "Senha_Atual" && input.id != "senhaNova") {
                     input.disabled = true;
                     input.style.border = 'none';
                 }
@@ -168,7 +172,7 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionFocus", function () {
-                if (input.id == "senha" || input.id == "senhaAtual" || input.id == "senhaNova") {
+                if (input.id == "senha" || input.id == "Senha_Atual" || input.id == "senhaNova") {
                     input.style.border = 'black 1px solid';
                 }
             });
@@ -221,7 +225,7 @@ export class PrivacidadePage implements OnInit {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
 
         if (input.placeholder == "Nome") {
-            this.formDados.controls['nomeCaixa'].enable();
+            this.formDados.controls['Nome'].enable();
         }
         else {
             this.formDados.controls['email'].enable();
@@ -283,7 +287,7 @@ export class PrivacidadePage implements OnInit {
     async salvar() {
         let nome = document.querySelector("#inputNome") as HTMLIonInputElement;
         let email = document.querySelector("#inputEmail") as HTMLIonInputElement;
-        let senhaAtual = document.querySelector("#senhaAtual") as HTMLIonInputElement;
+        let Senha_Atual = document.querySelector("#Senha_Atual") as HTMLIonInputElement;
         let novaSenha = document.querySelector("#senhaNova") as HTMLIonInputElement;
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let dadosForm = new FormData();
@@ -293,7 +297,7 @@ export class PrivacidadePage implements OnInit {
 
             link = dominio + `/Trabalhador/VerificarSenha`;
             dadosForm.append("cpf", trabalhador.Cpf);
-            dadosForm.append("senha", senhaAtual.value?.toString()!);
+            dadosForm.append("senha", Senha_Atual.value?.toString()!);
 
             try {
                 this.carregar = true;
@@ -319,6 +323,26 @@ export class PrivacidadePage implements OnInit {
             }
             finally {
                 this.carregar = false;
+            }
+        }
+
+        if(nome.value != trabalhador.Nome)
+        {
+            link = dominio + "/Trabalhador/AlterarEmail";
+            let dadosForm = new FormData();
+            dadosForm.append("cpf", trabalhador.Cpf);
+            dadosForm.append("nome", nome.value?.toString()!);
+            dadosForm.append("email", null!);
+
+            try{
+                let res2 = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+                trabalhador.Nome = nome.value;
+                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
+            }
+            catch (erro: any) {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
             }
         }
 
@@ -357,29 +381,83 @@ export class PrivacidadePage implements OnInit {
             {
                 this.carregar = false;
             }
-
-            /* dadosForm.append("cpf", trabalhador.Cpf);
-            dadosForm.append("nome", nome.value?.toString()!);
-            dadosForm.append("email", email.value?.toString()!);
-            link = dominio + "/Trabalhador/AlterarDados";
-
-            try {
-                this.carregar = true;
-                let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-                trabalhador.Nome = nome.value;
-    
-                localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
-            }
-            catch (erro: any) {
-                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                alert.message = "Erro ao conectar-se ao servidor";
-                alert.present();
-            }
-            finally {
-                this.carregar = false;
-            } */
         }
 
+        this.situacaoBotao = true;
+        this.showTemporaryToast();
+
+    }
+
+    async showTemporaryToast() {
+        const toast = await this.toastController.create({
+          message: 'Dado(s) alterado com sucesso!',
+          duration: 2000,
+          color: 'light shade',
+          cssClass: 'custom-toast',
+        });
+    
+        await toast.present();
+    }
+
+    arquivos: any = [];
+    imgSrc: any;
+
+    abrirArquivo() {
+        const pegarArquivos = async () => {
+            const resultado = await FilePicker.pickFiles({
+                types: ['image/png', 'image/jpeg', 'application/pdf'],
+                limit: 1
+            });
+            const arquivo = resultado.files[0];
+            let caminho = Capacitor.convertFileSrc(arquivo.path!);
+            let resposta = await fetch(caminho);
+            let arquivoBlob = await resposta.blob();
+
+            interface objSafeUrl {
+                id: any,
+                arquivo: any,
+                img: any,
+                pdf: any
+            }
+
+            let obj: objSafeUrl = {
+                id: null,
+                arquivo: null,
+                img: null,
+                pdf: null
+            };
+
+            obj.arquivo = arquivo;
+
+            if (arquivoBlob) {
+                const reader = new FileReader();
+
+                reader.onload = (e: any) => {
+                    if (arquivoBlob.type == "image/png" || arquivoBlob.type == "image/jpeg") {
+                        obj.img = e.target.result;
+                    }
+                    else {
+                        obj.pdf = this.sanitizer.bypassSecurityTrustResourceUrl(e.target.result)!;
+                    }
+                };
+
+                reader.readAsDataURL(arquivoBlob);
+            }
+
+            this.arquivos.push(obj)
+        };
+
+        pegarArquivos();
+    }
+
+    removerArquivo(event: any) {
+        let nomeArquivo = event.parentElement.children[0].children[1].textContent;
+
+        for (let i = 0; i < this.arquivos.length; i++) {
+            if (nomeArquivo == this.arquivos[i].arquivo.name) {
+                this.arquivos.splice(i, 1);
+            }
+        }
     }
 
 }
