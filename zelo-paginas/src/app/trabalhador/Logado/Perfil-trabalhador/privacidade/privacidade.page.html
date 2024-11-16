@@ -32,9 +32,9 @@
                                     <ion-input id="inputNome" (keyup)="AtivarBotaoSalvar($event)"
                                         [disabled]="isDisabled" class="input" placeholder="Nome"
                                         value="{{trabalhador.Nome}}"
-                                        (ionInput)="validacaoInput(formDados.controls['nomeCaixa'])"
-                                        [class.inputErro]="formDados.controls['nomeCaixa'].invalid && (formDados.controls['nomeCaixa'].touched || formDados.controls['nomeCaixa'].dirty)"
-                                        formControlName="nomeCaixa">
+                                        (ionInput)="validacaoInput(formDados.controls['Nome'])"
+                                        [class.inputErro]="formDados.controls['Nome'].invalid && (formDados.controls['Nome'].touched || formDados.controls['Nome'].dirty)"
+                                        formControlName="Nome">
                                     </ion-input>
                                     <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
                                         name="create-outline">
@@ -43,8 +43,8 @@
                             </div>
 
                             <span
-                                [ngClass]="formDados.controls['nomeCaixa'].invalid && (formDados.controls['nomeCaixa'].touched || formDados.controls['nomeCaixa'].dirty) ? 'erro' : 'escondido'">{{
-                                erro.nomeCaixa}}
+                                [ngClass]="formDados.controls['Nome'].invalid && (formDados.controls['Nome'].touched || formDados.controls['Nome'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.Nome}}
                             </span>
 
                             <div class="area_dado">
@@ -90,23 +90,28 @@
                         </ion-item>
 
                         <div slot="content" class="geral">
-                            <div class="imgCertificado">
-                                <ion-icon class="icone_lixo" name="trash-outline"
-                                    id="abrir_modal_remover_certificado"></ion-icon>
-                                <img src="../../../../../assets/icon/Trabalhador/imagens/certificado1.webp" alt="">
-                            </div>
 
-                            <div class="imgCertificado">
-                                <ion-icon class="icone_lixo" name="trash-outline"
-                                    id="abrir_modal_remover_certificado"></ion-icon>
-                                <img src="../../../../../assets/icon/Trabalhador/imagens/certificado2.webp" alt="">
+                            <div *ngFor="let arquivo of arquivos">
+                                <div *ngIf="arquivo.img" class="imgCertificado">
+                                    <ion-icon class="icone_lixo" name="trash-outline"
+                                        id="abrir_modal_remover_certificado"></ion-icon>
+                                    <p>{{ arquivo.arquivo.name }}</p>
+                                </div>
+    
+                                <div *ngIf="arquivo.pdf" class="imgCertificado">
+                                    <ion-icon class="icone_lixo" name="trash-outline"
+                                        id="abrir_modal_remover_certificado"></ion-icon>
+                                    <p>{{ arquivo.arquivo.name }}</p>
+                                </div>
                             </div>
 
                             <div class="add_certificado">
-                                <ion-button>
+                                <ion-button (click)="abrirArquivo()">
                                     <ion-icon fill="clear" name="add-circle-outline"></ion-icon>
                                 </ion-button>
                             </div>
+                            
+                            
                         </div>
                     </ion-accordion>
                 </ion-accordion-group>
@@ -123,9 +128,9 @@
 
                                 <p class="txt">Senha atual</p>
 
-                                <ion-input id="senhaAtual" formControlName="senhaAtual" (keyup)="AtivarBotaoSalvar2($event)"
-                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senhaAtual'])"
-                                    [class.inputErro]="form.controls['senhas'].controls['senhaAtual'].invalid && (form.controls['senhas'].controls['senhaAtual'].touched || form.controls['senhas'].controls['senhaAtual'].dirty)"
+                                <ion-input id="Senha_Atual" formControlName="Senha_Atual" (keyup)="AtivarBotaoSalvar2($event)"
+                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['Senha_Atual'])"
+                                    [class.inputErro]="form.controls['senhas'].controls['Senha_Atual'].invalid && (form.controls['senhas'].controls['Senha_Atual'].touched || form.controls['senhas'].controls['Senha_Atual'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
 
                                     <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
@@ -134,8 +139,8 @@
                                 </ion-input>
 
                                 <span
-                                    [ngClass]="form.controls['senhas'].controls['senhaAtual'].invalid && (form.controls['senhas'].controls['senhaAtual'].touched || form.controls['senhas'].controls['senhaAtual'].dirty) ? 'erro' : 'escondido'">{{
-                                    erro.senhaAtual }}
+                                    [ngClass]="form.controls['senhas'].controls['Senha_Atual'].invalid && (form.controls['senhas'].controls['Senha_Atual'].touched || form.controls['senhas'].controls['Senha_Atual'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.Senha_Atual }}
                                 </span>
 
                                 <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual incorreta!</span>
@@ -227,7 +232,7 @@
 
             <div class="area_branca">
                 <h1 class="h1_denuncia">Tem certeza que deseja remover este certificado?</h1>
-                <ion-button class="form__btn">Confirmar</ion-button>
+                <ion-button (click)="removerArquivo($event.target)" class="form__btn">Confirmar</ion-button>
             </div>
 
         </ion-card>
