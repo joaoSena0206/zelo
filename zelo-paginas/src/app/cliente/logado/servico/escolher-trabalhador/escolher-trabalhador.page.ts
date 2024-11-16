@@ -205,7 +205,10 @@ export class EscolherTrabalhadorPage implements OnInit {
             }
         }
         else if (permissoes.location === "granted" || permissoes.location === "prompt") {
-            coordenadas = await Geolocation.getCurrentPosition();
+            const options: PositionOptions = {
+                enableHighAccuracy: true
+            }
+            coordenadas = await Geolocation.getCurrentPosition(options);
 
             return L.latLng(coordenadas.coords.latitude, coordenadas.coords.longitude);
         }
