@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -12,6 +13,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
     constructor() { }
 
     ngOnInit() {
+        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            let codigo = notification.data.codigo;
+            localStorage.setItem("codigo", codigo);
+        });
     }
 
     ionViewDidEnter() {
@@ -21,25 +26,25 @@ export class TrabalhadorCaminhoPage implements OnInit {
         let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
         let btnProsseguir = document.querySelector(".form__btn") as HTMLIonButtonElement;
         let modalCancelar = document.querySelector("#modal_cancelar") as HTMLIonModalElement;
-    
+
         txtAdvertenciaCancelar.style.display = "none";
-    
+
         this.msgPoupopCancelar = 'Pedido cancelado!';
-    
+
         btnProsseguir.textContent = "Ok";
         btnProsseguir.addEventListener("click", function () {
             modalCancelar.dismiss();
         });
     }
 
-    limpar(){
+    limpar() {
         this.msg = 'Informe o motivo da denuncia'
         this.msgPoupopCancelar = 'Quer realmente cancelar o pedido?';
     }
 
     mostrarBtnDenuncia() {
         const btn = document.querySelector(".btn_denunciar") as HTMLIonButtonElement;
-    
+
         if (btn.style.display == "none") {
             btn.style.display = "block";
         }
@@ -62,21 +67,21 @@ export class TrabalhadorCaminhoPage implements OnInit {
         const accordion = document.querySelector(".grupo_selecao") as HTMLIonAccordionGroupElement;
         const btn = document.querySelector("#btnDenuncia") as HTMLIonButtonElement;
         const modal = document.querySelector("#modal_denuncia") as HTMLIonModalElement;
-    
+
         accordion.style.display = "none";
         const popup = document.querySelector(".fundoPopup") as HTMLIonTextareaElement;
         popup.style.display = "none";
-    
+
         this.msg = 'Denúncia enviada com sucesso. Iremos avaliar a sua denúncia.';
         btn.textContent = "Ok";
-        btn.addEventListener("click", function() {
+        btn.addEventListener("click", function () {
             modal.dismiss();
         });
     }
 
     //-----------------------------------------------------------------------------------------------------------//
 
-    abrirDivCodigo(){
+    abrirDivCodigo() {
 
         let div1 = document.querySelector('.div_1') as HTMLDivElement;
         let div2 = document.querySelector('.div_2') as HTMLDivElement;
@@ -90,10 +95,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
         div2.style.display = 'none';
         div3.style.display = 'none';
         div4.style.display = 'none';
-        
+
     }
 
-    fecharDivCodigo(){
+    fecharDivCodigo() {
 
         let div1 = document.querySelector('.div_1') as HTMLDivElement;
         let div2 = document.querySelector('.div_2') as HTMLDivElement;
@@ -111,7 +116,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     //-----------------------------------------------------------------------------------------------------------//
 
-    verificarCodigo(){
+    verificarCodigo() {
 
         let div1 = document.querySelector('.div_1') as HTMLDivElement;
         let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
