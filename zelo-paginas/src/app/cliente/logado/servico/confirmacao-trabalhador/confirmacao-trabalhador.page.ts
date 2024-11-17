@@ -39,7 +39,6 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             else {
                 localStorage.removeItem("confirmacao");
                 localStorage.removeItem("trabalhadorEscolhido");
-                localStorage.removeItem("endereco");
 
                 clearInterval(this.id);
 
