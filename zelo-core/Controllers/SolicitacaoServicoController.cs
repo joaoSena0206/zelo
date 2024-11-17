@@ -103,7 +103,7 @@ public class SolicitacaoServicoController : ControllerBase
             Cliente cliente = new Cliente();
             Servico servico = new Servico();
 
-            #region Adiciona a solicitação no banco e no servidor
+            #region Adiciona a solicitaï¿½ï¿½o no banco e no servidor
 
             #region Pega o maior cd
 
@@ -351,17 +351,19 @@ public class SolicitacaoServicoController : ControllerBase
             List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
 
             string comando = $@"SELECT 
-                                        cliente.nm_cliente,
-                                        solicitacao_servico.dt_solicitacao_servico,
-                                        solicitacao_servico.ds_servico,
-                                        solicitacao_servico.qt_estrelas_avaliacao_servico,
-                                        solicitacao_servico.cd_solicitacao_servico
-                                    FROM 
-                                        cliente
-                                    JOIN 
-                                        solicitacao_servico
-                                    ON 
-                                        cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente
+                            cliente.nm_cliente,
+                            solicitacao_servico.dt_solicitacao_servico,
+                            solicitacao_servico.ds_servico,
+                            solicitacao_servico.qt_estrelas_avaliacao_servico,
+                            solicitacao_servico.cd_solicitacao_servico,
+                            solicitacao_servico.nm_codigo_aleatorio,
+                            cliente.cd_cpf_cliente
+                        FROM 
+                            cliente
+                        JOIN 
+                            solicitacao_servico
+                        ON 
+                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente
             where solicitacao_servico.cd_cpf_trabalhador = '{cpf}' and nm_codigo_aleatorio != ''
             order by solicitacao_servico.dt_solicitacao_servico desc;";
 
@@ -375,11 +377,13 @@ public class SolicitacaoServicoController : ControllerBase
                     Cliente cliente = new Cliente();
 
                     cliente.Nome = dados.GetString("nm_cliente");
+                    cliente.Cpf = dados.GetString(6);
                     solicitacaoServico.Cliente = cliente;
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
                     solicitacaoServico.DsServico = dados.GetString("ds_servico");
                     solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
                     solicitacaoServico.CdSolicitacaoServico = dados.GetInt16(4);
+                    solicitacaoServico.NmCodigoAleatorio = dados.GetString(5);
 
                     listahistoricotrabalhador.Add(solicitacaoServico);
                 }

@@ -18,6 +18,10 @@ import { firstValueFrom } from 'rxjs';
 export class ConfirmacaoClientePage implements OnInit {
 
     tempo: any;
+    id: any;
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
+    clienteServico: any = JSON.parse(localStorage.getItem("cliente")!);
+
     constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
@@ -29,7 +33,7 @@ export class ConfirmacaoClientePage implements OnInit {
                 this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
             }
             else {
-                this.cancelar();
+                this.cancelar(this.id);
             }
 
         });
@@ -59,7 +63,7 @@ export class ConfirmacaoClientePage implements OnInit {
             this.tempo.seg = "0" + this.tempo.seg.toString();
         }
 
-        let id = setInterval(() => {
+        this.id = setInterval(() => {
             if (Number(this.tempo.seg) == 0) {
                 this.tempo.seg = 60;
                 this.tempo.min -= 1;
@@ -78,15 +82,28 @@ export class ConfirmacaoClientePage implements OnInit {
             localStorage.setItem("confirmacao", JSON.stringify(this.tempo));
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
-                this.cancelar();
+                this.cancelar(this.id);
 
-                clearInterval(id);
+                clearInterval(this.id);
             }
         }, 1000);
     }
 
-    cancelar() {
-        localStorage.removeItem("confirmacao");
+    async cancelar(id: any) {
+        let link = dominio + "/Trabalhador/CancelarSolicitacao";
+        let dadosForm = new FormData();
+        dadosForm.append("token", this.clienteServico.TokenFCM);
+        dadosForm.append("situacaoServico", "false");
+        dadosForm.append("nmTrabalhador", this.trabalhador.Nome);
+
+        await firstValueFrom(this.http.post(link, dadosForm));
+
+        localStorage.removeItem("cliente");
+        localStorage.removeItem("endereco");
+        localStorage.removeItem("solicitacao");
+
+        clearInterval(this.id);
+
         this.navCl.navigateBack("/trabalhador/inicial");
     }
 

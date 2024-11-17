@@ -14,7 +14,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 
-
 @Component({
     selector: 'app-privacidade',
     templateUrl: './privacidade.page.html',
@@ -393,6 +392,7 @@ export class PrivacidadePage implements OnInit {
           message: 'Dado(s) alterado com sucesso!',
           duration: 2000,
           color: 'light shade',
+          position: 'middle',
           cssClass: 'custom-toast',
         });
     

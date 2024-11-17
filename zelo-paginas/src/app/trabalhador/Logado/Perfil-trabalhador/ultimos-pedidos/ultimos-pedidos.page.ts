@@ -69,8 +69,6 @@ export class UltimosPedidosPage implements OnInit {
       this.carregar = false;
     }
 
-    console.log(this.historico)
-
     for (let i = 0; i < this.historico.length; i++) {
       
       const dateString: string = this.historico[i].DtSolicitacaoServico;
@@ -128,18 +126,6 @@ export class UltimosPedidosPage implements OnInit {
                         return -1;
                     }
                     else if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
-                        return 1;
-                    }
-
-                    return 0;
-                });
-            }
-            else {
-                this.historico.sort((a: any, b: any) => {
-                    if (a.QtEstrelasAvaliacaoCliente < b.QtEstrelasAvaliacaoCliente) {
-                        return -1;
-                    }
-                    else if (a.QtEstrelasAvaliacaoCliente > b.QtEstrelasAvaliacaoCliente) {
                         return 1;
                     }
 
