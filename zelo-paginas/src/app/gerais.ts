@@ -4,4 +4,4 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://interference-lenses-accessory-linear.trycloudflare.com";
+export const dominio = "https://wu-obviously-phpbb-le.trycloudflare.com";
