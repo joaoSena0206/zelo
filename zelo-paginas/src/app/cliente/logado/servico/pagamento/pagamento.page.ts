@@ -30,8 +30,8 @@ export class PagamentoPage implements OnInit {
 
         if (!localStorage.getItem("tempoPagamento")) {
             let tempo = {
-                min: 0,
-                seg: 10
+                min: 10,
+                seg: 0
             }
 
             this.tempo = tempo;
@@ -50,7 +50,7 @@ export class PagamentoPage implements OnInit {
             let minutosPassados = Math.floor(diferencaSegundos / 60);
             let segundosPassados = diferencaSegundos % 60
 
-            let minutosRestantes = 9 - minutosPassados;
+            let minutosRestantes = 0 - minutosPassados;
             let segundosRestantes = 59 - segundosPassados;
 
             if ((minutosRestantes == 0 && segundosRestantes == 0) || (minutosRestantes < 0)) {
@@ -61,58 +61,61 @@ export class PagamentoPage implements OnInit {
                     solicitacao.Trabalhador.Cpf = null;
                 }
 
+                this.enviarCancelamento();
+
                 localStorage.removeItem("tempoPagamento");
                 localStorage.removeItem("tempoAtual");
                 localStorage.removeItem("trabalhadorEscolhido");
                 localStorage.removeItem("idPagamento");
 
-                this.navCl.navigateBack("/escolher-trabalhador");
+                this.navCl.navigateRoot("/escolher-trabalhador");
             }
-
-            if (segundosRestantes < 0) {
-                segundosRestantes = 59;
-                minutosRestantes -= 1;
-            }
-
-            this.tempo = {
-                min: minutosRestantes,
-                seg: segundosRestantes
-            };
-
-            let id = localStorage.getItem("idPagamento");
-            let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
-
-            try {
-                this.temporizador();
-
-                this.carregar = true;
-                let res: any = await firstValueFrom(this.http.get(link));
-
-                if (res.status != "cancelled") {
-                    this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
-                    this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
+            else {
+                if (segundosRestantes < 0) {
+                    segundosRestantes = 59;
+                    minutosRestantes -= 1;
                 }
-                else {
-                    localStorage.removeItem("idPagamento");
-                    localStorage.removeItem("trabalhadorEscolhido");
-                    localStorage.removeItem("tempoPagamento");
-                    localStorage.removeItem("tempoAtual");
 
-                    clearInterval(this.id);
-                    this.enviarCancelamento();
+                this.tempo = {
+                    min: minutosRestantes,
+                    seg: segundosRestantes
+                };
 
-                    this.navCl.navigateRoot("inicial");
+                let id = localStorage.getItem("idPagamento");
+                let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+
+                try {
+                    this.temporizador();
+
+                    this.carregar = true;
+                    let res: any = await firstValueFrom(this.http.get(link));
+
+                    if (res.status != "cancelled") {
+                        this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
+                        this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
+                    }
+                    else {
+                        localStorage.removeItem("idPagamento");
+                        localStorage.removeItem("trabalhadorEscolhido");
+                        localStorage.removeItem("tempoPagamento");
+                        localStorage.removeItem("tempoAtual");
+
+                        clearInterval(this.id);
+                        this.enviarCancelamento();
+
+                        this.navCl.navigateRoot("inicial");
+                    }
                 }
-            }
-            catch (erro: any) {
-                console.error(erro);
+                catch (erro: any) {
+                    console.error(erro);
 
-                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                alert.message = "Erro ao conectar-se ao servidor";
-                alert.present();
-            }
-            finally {
-                this.carregar = false;
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
+                }
             }
         }
 
