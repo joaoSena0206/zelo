@@ -57,8 +57,6 @@ export class CategoriaPage implements OnInit {
             this.carregar = true;
             let res = await firstValueFrom(this.http.get(dominio + '/Servico/CarregarServicos', {headers: headerNgrok}));
             this.listaCategorias = res;
-
-            console.log(this.listaCategorias)
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;

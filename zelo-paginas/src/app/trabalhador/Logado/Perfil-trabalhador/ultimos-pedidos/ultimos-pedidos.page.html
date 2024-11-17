@@ -17,27 +17,21 @@
         <div class="btns_filtro">
             <ion-button class="btn_filtro btn_filtro--ativado" (click)="mudarFiltro($event.target)">Recentes</ion-button>
             <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Antigos</ion-button>
-            <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Melhor avaliados</ion-button>
         </div>
       </div>
 
       <ion-card class="area_pedido" *ngFor="let historico of historico let i = index">
         <div class="area_sobre_cliente">
           <div>
-            <img src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
+            <img [src]="dominio + '/Imgs/Perfil/Cliente/' + historico.Cliente.Cpf + '.jpg'" alt="Foto Cliente">
           </div>
           <div style="padding: 10px;">
             <h3 style="font-weight: bold; font-size: 22px;">{{historico.Cliente.Nome}}</h3>
             <p style="margin: 3px 0;">{{historico.DtSolicitacaoServico}}</p>
-            <p><ion-icon name="star-outline"></ion-icon>{{historico.QtEstrelasAvaliacaoCliente}}</p>
           </div>
           <div class="txt-ver-perfil">
             <ion-text>Ver perfil</ion-text>
           </div>
-        </div>
-
-        <div class="area_img">
-          <img [src]="dominio + '/Imgs/Solicitacao/' + historico.CdSolicitacaoServico + '/1.jpeg'">
         </div>
 
         <div class="area_descricao_pedido">
@@ -50,6 +44,10 @@
           <p class="txt_descricao">
             {{historico.DsServico}}
           </p>
+        </div>
+
+        <div class="area_img">
+          <img [src]="dominio + '/Imgs/Solicitacao/' + historico.CdSolicitacaoServico + '/1.jpeg'">
         </div>
       </ion-card>
 
