@@ -20,7 +20,9 @@ public class SolicitacaoServicoController : ControllerBase
 
             if (tipo == "trabalhador")
             {
-                comando = $"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) where cd_cpf_trabalhador = {cpf} ORDER BY dt_solicitacao_servico DESC LIMIT 5";
+                comando = $@"select SS.ds_servico, C.nm_cliente, SS.cd_solicitacao_servico from solicitacao_servico SS join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente)
+                where cd_cpf_trabalhador = '{cpf}' AND nm_codigo_aleatorio != ''
+                ORDER BY dt_solicitacao_servico DESC LIMIT 5;";
             }
 
             MySqlDataReader dados = banco.Consultar(comando);
@@ -101,7 +103,7 @@ public class SolicitacaoServicoController : ControllerBase
             Cliente cliente = new Cliente();
             Servico servico = new Servico();
 
-            #region Adiciona a solicitação no banco e no servidor
+            #region Adiciona a solicitaï¿½ï¿½o no banco e no servidor
 
             #region Pega o maior cd
 
@@ -361,7 +363,9 @@ public class SolicitacaoServicoController : ControllerBase
                         JOIN 
                             solicitacao_servico
                         ON 
-                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente where solicitacao_servico.cd_cpf_trabalhador = '{cpf}' order by solicitacao_servico.dt_solicitacao_servico desc";
+                            cliente.cd_cpf_cliente = solicitacao_servico.cd_cpf_cliente
+            where solicitacao_servico.cd_cpf_trabalhador = '{cpf}' and nm_codigo_aleatorio != ''
+            order by solicitacao_servico.dt_solicitacao_servico desc;";
 
             MySqlDataReader dados = banco.Consultar(comando);
 
