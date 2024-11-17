@@ -54,6 +54,8 @@ export class AnalisaServicoPage implements OnInit {
 
         try {
             this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+            this.clienteServico.TokenFCM = this.tokenCliente;
+            localStorage.setItem("cliente", JSON.stringify(this.clienteServico));
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
