@@ -280,6 +280,11 @@ public class SolicitacaoServicoController : ControllerBase
                 comando = $"select ds_comentario_avaliacao_servico, qt_estrelas_avaliacao_servico from solicitacao_servico where cd_cpf_trabalhador = {cpf} AND ds_comentario_avaliacao_servico IS NOT NULL ORDER BY RAND() LIMIT 5";
             }
 
+            if(tipo == "perfilTrabalhador")
+            {
+                comando = $"select ROUND(AVG(qt_estrelas_avaliacao_servico)) from solicitacao_servico where cd_cpf_trabalhador = '53890618880'";
+            }
+
             MySqlDataReader dados = banco.Consultar(comando);
 
             List<SolicitacaoServico> listaHistorico = new List<SolicitacaoServico>();
@@ -305,6 +310,58 @@ public class SolicitacaoServicoController : ControllerBase
             }
 
             return Ok(listaHistorico);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpGet("pegarEstrelasTrabalhador")]
+    public IActionResult pegarEstrelasTrabalhador([FromQuery] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+            int estrelas = 0;
+            int QtAvaliacoes = 0;
+            int QtServicos = 0;
+
+            comando = $"select ROUND(AVG(qt_estrelas_avaliacao_servico)), count(qt_estrelas_avaliacao_servico), count(nm_codigo_aleatorio) from solicitacao_servico where cd_cpf_trabalhador = '{cpf}' and nm_codigo_aleatorio != ''";
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            if (dados != null)
+            {
+                if (dados.Read())
+                {
+                    estrelas = dados.GetInt32(0);
+                    QtAvaliacoes = dados.GetInt32(1);
+                    QtServicos = dados.GetInt32(2);
+                }
+            }
+
+            if (!dados.IsClosed)
+            {
+                dados.Close();
+            }
+
+            var jsonResult = new
+            {
+                MediaEstrelas = estrelas,
+                TotalAvaliacoes = QtAvaliacoes,
+                TotalServicos = QtServicos
+            };
+
+      
+            return Ok(jsonResult);
         }
         catch (Exception erro)
         {
