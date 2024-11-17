@@ -5,6 +5,7 @@ import { first, firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Clipboard } from '@capacitor/clipboard';
+import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
 
 @Component({
     selector: 'app-pagamento',
@@ -19,6 +20,8 @@ export class PagamentoPage implements OnInit {
     carregar: boolean = false;
     inputPix: any;
     id: any;
+    result: any;
+    situacao: any;
 
     constructor(private navCl: NavController, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
@@ -70,6 +73,28 @@ export class PagamentoPage implements OnInit {
                 this.carregar = false;
             }
         }
+
+        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            this.result = notification;
+            this.situacao = this.result.data.situacaoServico;
+
+            if (this.situacao == "false") {
+                localStorage.removeItem("confirmacao");
+                localStorage.removeItem("trabalhadorEscolhido");
+                this.navCl.navigateRoot("escolher-trabalhador");
+            }
+        });
+
+        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
+            this.result = res;
+            this.situacao = this.result.data.situacaoServico;
+
+            if (this.situacao == "false") {
+                localStorage.removeItem("confirmacao");
+                localStorage.removeItem("trabalhadorEscolhido");
+                this.navCl.navigateRoot("escolher-trabalhador");
+            }
+        });
     }
 
     async enviarCancelamento() {
