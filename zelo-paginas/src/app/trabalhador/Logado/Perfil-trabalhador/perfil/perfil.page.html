@@ -10,18 +10,24 @@
                 
                 <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.JPG'" alt="">
 
+                <!-- <div class="estrelas">
+                    <ion-icon class="estrela" name="star"></ion-icon>
+                    <ion-icon class="estrela" name="star"></ion-icon>
+                    <ion-icon class="estrela" name="star"></ion-icon>
+                </div> -->
+
                 <div class="estrelas">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
+                    <ion-icon class="estrela"
+                        *ngFor="let estrela of gerarArrayEstrelas(MediaEstrelas)"
+                        name="star"></ion-icon>
                 </div>
             </div>
             <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">{{trabalhador.Nome}}</p>
 
             <div style="display: flex; gap: 10px; align-items: center;">
-                <p style="font-size: 15px; color: white;">100 avaliações</p>
+                <p style="font-size: 15px; color: white;">{{TotalAvaliacao}} avaliações</p>
                 <p style="font-size: 17px; color: white;">|</p>
-                <p style="font-size: 15px; color: white;">150 serviços realizados</p>
+                <p style="font-size: 15px; color: white;">{{TotalServico}} serviços realizados</p>
             </div>
 
         </ion-header>
