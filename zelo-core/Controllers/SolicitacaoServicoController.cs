@@ -353,7 +353,9 @@ public class SolicitacaoServicoController : ControllerBase
                             solicitacao_servico.dt_solicitacao_servico,
                             solicitacao_servico.ds_servico,
                             solicitacao_servico.qt_estrelas_avaliacao_servico,
-                            solicitacao_servico.cd_solicitacao_servico
+                            solicitacao_servico.cd_solicitacao_servico,
+                            solicitacao_servico.nm_codigo_aleatorio,
+                            cliente.cd_cpf_cliente
                         FROM 
                             cliente
                         JOIN 
@@ -371,11 +373,13 @@ public class SolicitacaoServicoController : ControllerBase
                     Cliente cliente = new Cliente();
 
                     cliente.Nome = dados.GetString("nm_cliente");
+                    cliente.Cpf = dados.GetString(6);
                     solicitacaoServico.Cliente = cliente;
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
                     solicitacaoServico.DsServico = dados.GetString("ds_servico");
                     solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
                     solicitacaoServico.CdSolicitacaoServico = dados.GetInt16(4);
+                    solicitacaoServico.NmCodigoAleatorio = dados.GetString(5);
 
                     listahistoricotrabalhador.Add(solicitacaoServico);
                 }
