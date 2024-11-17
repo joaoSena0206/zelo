@@ -275,8 +275,13 @@ export class InicialPage implements OnInit {
                 (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
             }
             else if (estrelas.length == 4) {
-                (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-15px";
-                (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-15px";
+                (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-10px";
+                (estrelas[2] as HTMLIonIconElement).style.marginBottom = "-10px";
+                (estrelas[0] as HTMLIonIconElement).style.marginBottom = "10px";
+                (estrelas[3] as HTMLIonIconElement).style.marginBottom = "10px";
+
+                (estrelas[0] as HTMLIonIconElement).style.marginLeft = "-45px";
+                (estrelas[3] as HTMLIonIconElement).style.marginRight = "-45px";
             }
             else if (estrelas.length == 5) {
 
