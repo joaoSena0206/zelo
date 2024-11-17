@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { dominio } from 'src/app/gerais';
+import { HttpClient } from '@angular/common/http';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -12,15 +14,64 @@ export class TrabalhadorCaminhoPage implements OnInit {
     msg: any = "Informe o motivo da denúncia";
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
     dominio: any = dominio;
+    solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
+    codigo: any;
+    carregar: boolean = false;
 
-    constructor(private navCl: NavController) { }
+    constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
         localStorage.removeItem("idPagamento");
         localStorage.removeItem("tempoPagamento");
+        localStorage.removeItem("tempoAtual");
+
+        if (!localStorage.getItem("codigo")) {
+            this.gerarCodigo();
+        }
+        else {
+            this.codigo = localStorage.getItem("codigo");
+        }
     }
 
     ionViewDidEnter() {
+    }
+
+    async gerarCodigo() {
+        let link = dominio + "/SolicitacaoServico/GerarCodigoAleatorio";
+        let dadosForm = new FormData();
+        dadosForm.append("cdSolicitacao", this.solicitacao.CdSolicitacaoServico);
+
+        try {
+            this.carregar = true;
+            this.codigo = await firstValueFrom(this.http.post(link, dadosForm));
+            localStorage.setItem("codigo", this.codigo);
+
+            this.enviarCodigo(this.trabalhador.TokenFCM, this.codigo);
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
+    }
+
+    async enviarCodigo(token: any, codigo: any) {
+        let link = dominio + "/SolicitacaoServico/EnviarCodigo";
+        let dadosForm = new FormData();
+        dadosForm.append("token", token);
+        dadosForm.append("codigo", codigo);
+
+        try {
+            await firstValueFrom(this.http.post(link, dadosForm));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     mudartxtCancelar() {
@@ -73,13 +124,12 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         this.msg = 'Denúncia enviada com sucesso. Iremos avaliar a sua denúncia.';
         btn.textContent = "Ok";
-        btn.addEventListener("click", function() {
+        btn.addEventListener("click", function () {
             modal.dismiss();
         });
     }
 
-    voltarPag()
-    {
+    voltarPag() {
         this.navCl.navigateRoot("/inicial");
     }
 }
