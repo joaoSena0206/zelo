@@ -60,7 +60,13 @@ public class SolicitacaoServico
 		set;
     }
 
-	public SolicitacaoServico(int cdSolicitacaoServico, Trabalhador trabalhador, Cliente cliente, DateTime dtSolicitacaoServico, string dsServico, string dsComentarioAvaliacaoServico, int qtEstrelasAvaliacaoServico, string dsComentarioAvaliacaoCliente, int qtEstrelasAvaliacaoCliente, Servico servico)
+    public string NmCodigoAleatorio
+    {
+        get;
+        set;
+    }
+
+    public SolicitacaoServico(int cdSolicitacaoServico, Trabalhador trabalhador, Cliente cliente, DateTime dtSolicitacaoServico, string dsServico, string dsComentarioAvaliacaoServico, int qtEstrelasAvaliacaoServico, string dsComentarioAvaliacaoCliente, int qtEstrelasAvaliacaoCliente, Servico servico, string nmCodigoAleatorio)
     {
         CdSolicitacaoServico = cdSolicitacaoServico;
         Trabalhador = trabalhador;
@@ -72,6 +78,7 @@ public class SolicitacaoServico
         DsComentarioAvaliacaoCliente = dsComentarioAvaliacaoCliente;
         QtEstrelasAvaliacaoCliente = qtEstrelasAvaliacaoCliente;
 		Servico = servico;
+		NmCodigoAleatorio = nmCodigoAleatorio;
     }
 
     public SolicitacaoServico()

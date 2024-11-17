@@ -364,7 +364,7 @@ public class TrabalhadorController : ControllerBase
                 string comando = $@"INSERT INTO servico_trabalhador VALUES
                 (
 	                '{cpf}',
-	                {listaServico[i].Codigo}
+	                1
                 );";
 
                 banco.Executar(comando);
@@ -661,6 +661,35 @@ public class TrabalhadorController : ControllerBase
         finally
         {
             banco.Desconectar();
+        }
+    }
+
+    [HttpPost("CancelarSolicitacao")]
+    async public Task<IActionResult> CancelarSolicitacao([FromForm] string situacaoServico, [FromForm] string token, [FromForm] string nmTrabalhador)
+    {
+        try
+        {
+            var msg = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = "Serviço cancelado",
+                    Body = $"Enviado por {nmTrabalhador}"
+                },
+                Data = new Dictionary<string, string>()
+                {
+                    {"situacaoServico", situacaoServico}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
         }
     }
 }
