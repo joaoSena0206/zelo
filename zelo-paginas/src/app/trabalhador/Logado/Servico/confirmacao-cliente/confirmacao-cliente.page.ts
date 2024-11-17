@@ -101,6 +101,7 @@ export class ConfirmacaoClientePage implements OnInit {
         localStorage.removeItem("cliente");
         localStorage.removeItem("endereco");
         localStorage.removeItem("solicitacao");
+        localStorage.removeItem("confirmacao");
 
         clearInterval(this.id);
 
