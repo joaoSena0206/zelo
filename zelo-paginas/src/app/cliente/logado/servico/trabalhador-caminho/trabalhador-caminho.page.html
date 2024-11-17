@@ -1,4 +1,9 @@
 <ion-content [fullscreen]="true">
+    <ion-alert header="Erro" [buttons]="['Ok']"></ion-alert>
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
+    </div>
+
     <div class="content">
         <div class="mapa">
             <iframe
@@ -77,7 +82,7 @@
 
             <div>
                 <ion-icon src="../../../../../assets/icon/cliente/bloqueio.svg"></ion-icon>
-                <p>Código de verificação: <ion-text>98352</ion-text></p>
+                <p>Código de verificação: <ion-text>{{ codigo }}</ion-text></p>
             </div>
 
             <div>
