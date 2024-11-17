@@ -46,6 +46,8 @@ export class InicialPage implements OnInit {
     }
 
     ngOnInit() {
+        PushNotifications.removeAllListeners();
+
         PushNotifications.requestPermissions().then(result => {
             if (result.receive === "granted") {
                 PushNotifications.register();
