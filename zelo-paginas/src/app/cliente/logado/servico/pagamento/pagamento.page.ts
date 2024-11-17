@@ -28,6 +28,9 @@ export class PagamentoPage implements OnInit {
     async ngOnInit() {
         PushNotifications.removeAllListeners();
 
+        const toast = document.querySelector("ion-toast") as HTMLIonToastElement;
+        toast.present();
+
         if (!localStorage.getItem("tempoPagamento")) {
             let tempo = {
                 min: 10,
@@ -247,9 +250,13 @@ export class PagamentoPage implements OnInit {
     }
 
     async copiarPix() {
+        const toast = document.querySelector("#toastPix") as HTMLIonToastElement;
+
         await Clipboard.write({
             string: this.copiaCola
         });
+
+        toast.present();
     }
 
     temporizador() {
