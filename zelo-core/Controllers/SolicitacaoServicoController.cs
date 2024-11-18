@@ -1,6 +1,7 @@
 using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using FirebaseAdmin.Messaging;
 
 [ApiController]
 [Route("SolicitacaoServico")]
@@ -464,7 +465,7 @@ public class SolicitacaoServicoController : ControllerBase
 
     }
 
-    [HttpPost]
+    [HttpPost("GerarCodigoAleatorio")]
     public IActionResult GerarCodigoAleatorio([FromForm] int cdSolicitacao)
     {
         Banco banco = new Banco();
@@ -475,11 +476,11 @@ public class SolicitacaoServicoController : ControllerBase
             Random random = new Random();
             string codigo = random.Next(10000, 99999).ToString();
 
-            string comando = $@"UPDATE solicitacao_servico SET nm_codigo_aleatorio = '98212'
+            string comando = $@"UPDATE solicitacao_servico SET nm_codigo_aleatorio = '{codigo}'
             WHERE cd_solicitacao_servico = {cdSolicitacao}";
             banco.Executar(comando);
 
-            return Ok();
+            return Ok(codigo);
         }
         catch (Exception erro)
         {
@@ -491,15 +492,21 @@ public class SolicitacaoServicoController : ControllerBase
         }
     }
 
-    [HttpPost("AdicionarAvaliacao")]
-    async public Task<IActionResult> AdicionarAvaliacao([FromForm] string cpf)
+    [HttpPost("EnviarCodigo")]
+    async public Task<IActionResult> EnviarCodigo([FromForm] string token, [FromForm] string codigo)
     {
-        Banco banco = new Banco();
-        banco.Conectar();
         try
         {
-            string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
-            banco.Executar(comando);
+            var msg = new Message()
+            {
+                Data = new Dictionary<string, string>()
+                {
+                    {"codigo", codigo}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
 
             return Ok();
         }
@@ -507,11 +514,29 @@ public class SolicitacaoServicoController : ControllerBase
         {
             return BadRequest(erro.Message);
         }
-        finally
-        {
-            banco.Desconectar();
-        }
-
     }
 
+    [HttpPost("EnviarIdPagamento")]
+    async public Task<IActionResult> EnviarIdPagamento([FromForm] string token, [FromForm] string id)
+    {
+        try
+        {
+            var msg = new Message()
+            {
+                Data = new Dictionary<string, string>()
+                {
+                    {"id", id}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
 }

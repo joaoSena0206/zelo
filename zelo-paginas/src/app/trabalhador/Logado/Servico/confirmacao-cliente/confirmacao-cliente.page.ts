@@ -16,27 +16,29 @@ import { firstValueFrom } from 'rxjs';
     styleUrls: ['./confirmacao-cliente.page.scss'],
 })
 export class ConfirmacaoClientePage implements OnInit {
-
     tempo: any;
     id: any;
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     clienteServico: any = JSON.parse(localStorage.getItem("cliente")!);
+    idPagamento: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-
-            let situacao = notification.data.pago;
-
-            if (situacao == "true") {
-                this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
-            }
-            else {
-                this.cancelar(this.id);
-            }
-
+            this.idPagamento = notification.data.id;
         });
+
+        // PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
+        //     let situacao = res.notification.data.pago;
+
+        //     if (situacao == "true") {
+        //         this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+        //     }
+        //     else {
+        //         this.cancelar(this.id);
+        //     }
+        // });
 
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
@@ -54,6 +56,52 @@ export class ConfirmacaoClientePage implements OnInit {
         this.temporizador();
     }
 
+    async checarPagamento() {
+        console.log(this.idPagamento);
+
+        if (this.idPagamento) {
+            let id = this.idPagamento;
+            let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+
+            try {
+                let res: any = await firstValueFrom(this.http.get(link));
+
+                if (res.status == "approved") {
+                    clearInterval(this.id);
+
+                    this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+                }
+                else if (res.status == "cancelled") {
+
+                }
+            }
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+        }
+    }
+
+    async enviarCancelamento() {
+        let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+        let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let link = dominio + "/Cliente/EnviarPagamentoCancelado";
+        let dadosForm = new FormData();
+        dadosForm.append("pago", "false");
+        dadosForm.append("token", trabalhador.TokenFCM);
+        dadosForm.append("nmCliente", cliente.Nome);
+
+        try {
+            await firstValueFrom(this.http.post(link, dadosForm));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+    }
+
     temporizador() {
         if (this.tempo.min.toString().length == 1) {
             this.tempo.min = "0" + this.tempo.min.toString();
@@ -64,6 +112,8 @@ export class ConfirmacaoClientePage implements OnInit {
         }
 
         this.id = setInterval(() => {
+            this.checarPagamento();
+
             if (Number(this.tempo.seg) == 0) {
                 this.tempo.seg = 60;
                 this.tempo.min -= 1;

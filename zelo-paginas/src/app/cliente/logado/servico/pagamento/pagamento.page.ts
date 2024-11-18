@@ -26,6 +26,11 @@ export class PagamentoPage implements OnInit {
     constructor(private navCl: NavController, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     async ngOnInit() {
+        PushNotifications.removeAllListeners();
+
+        const toast = document.querySelector("ion-toast") as HTMLIonToastElement;
+        toast.present();
+
         if (!localStorage.getItem("tempoPagamento")) {
             let tempo = {
                 min: 10,
@@ -35,42 +40,85 @@ export class PagamentoPage implements OnInit {
             this.tempo = tempo;
             localStorage.setItem("tempoPagamento", JSON.stringify(tempo));
 
+            this.temporizador();
+            let tempoAtual = new Date();
+            localStorage.setItem("tempoAtual", tempoAtual.getTime().toString());
+
             this.fazerPagamentoMp();
         }
         else {
-            this.tempo = JSON.parse(localStorage.getItem("tempoPagamento")!);
+            let tempoDepois = new Date();
+            let milisegundos = tempoDepois.getTime() - Number(localStorage.getItem("tempoAtual"));
+            let diferencaSegundos = Math.floor(milisegundos / 1000);
+            let minutosPassados = Math.floor(diferencaSegundos / 60);
+            let segundosPassados = diferencaSegundos % 60
 
-            let id = localStorage.getItem("idPagamento");
-            let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+            let minutosRestantes = 0 - minutosPassados;
+            let segundosRestantes = 59 - segundosPassados;
 
-            try {
-                this.carregar = true;
-                let res: any = await firstValueFrom(this.http.get(link));
+            if ((minutosRestantes == 0 && segundosRestantes == 0) || (minutosRestantes < 0)) {
+                clearInterval(this.id);
 
-                if (res.status != "cancelled") {
-                    this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
-                    this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
+                let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+                if (solicitacao.Trabalhador != null) {
+                    solicitacao.Trabalhador.Cpf = null;
+                }
 
+                this.enviarCancelamento();
+
+                localStorage.removeItem("tempoPagamento");
+                localStorage.removeItem("tempoAtual");
+                localStorage.removeItem("trabalhadorEscolhido");
+                localStorage.removeItem("idPagamento");
+
+                this.navCl.navigateRoot("/escolher-trabalhador");
+            }
+            else {
+                if (segundosRestantes < 0) {
+                    segundosRestantes = 59;
+                    minutosRestantes -= 1;
+                }
+
+                this.tempo = {
+                    min: minutosRestantes,
+                    seg: segundosRestantes
+                };
+
+                let id = localStorage.getItem("idPagamento");
+                let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+
+                try {
                     this.temporizador();
-                }
-                else {
-                    localStorage.removeItem("idPagamento");
-                    localStorage.removeItem("trabalhadorEscolhido");
-                    localStorage.removeItem("tempoPagamento");
 
-                    clearInterval(this.id);
-                    this.enviarCancelamento();
+                    this.carregar = true;
+                    let res: any = await firstValueFrom(this.http.get(link));
 
-                    this.navCl.navigateRoot("inicial");
+                    if (res.status != "cancelled") {
+                        this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
+                        this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
+                    }
+                    else {
+                        localStorage.removeItem("idPagamento");
+                        localStorage.removeItem("trabalhadorEscolhido");
+                        localStorage.removeItem("tempoPagamento");
+                        localStorage.removeItem("tempoAtual");
+
+                        clearInterval(this.id);
+                        this.enviarCancelamento();
+
+                        this.navCl.navigateRoot("inicial");
+                    }
                 }
-            }
-            catch {
-                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                alert.message = "Erro ao conectar-se ao servidor";
-                alert.present();
-            }
-            finally {
-                this.carregar = false;
+                catch (erro: any) {
+                    console.error(erro);
+
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
+                }
+                finally {
+                    this.carregar = false;
+                }
             }
         }
 
@@ -81,6 +129,12 @@ export class PagamentoPage implements OnInit {
             if (this.situacao == "false") {
                 localStorage.removeItem("confirmacao");
                 localStorage.removeItem("trabalhadorEscolhido");
+                localStorage.removeItem("idPagamento");
+                localStorage.removeItem("tempoPagamento");
+                localStorage.removeItem("tempoAtual");
+
+                clearInterval(this.id);
+
                 this.navCl.navigateRoot("escolher-trabalhador");
             }
         });
@@ -92,6 +146,12 @@ export class PagamentoPage implements OnInit {
             if (this.situacao == "false") {
                 localStorage.removeItem("confirmacao");
                 localStorage.removeItem("trabalhadorEscolhido");
+                localStorage.removeItem("idPagamento");
+                localStorage.removeItem("tempoPagamento");
+                localStorage.removeItem("tempoAtual");
+
+                clearInterval(this.id);
+
                 this.navCl.navigateRoot("escolher-trabalhador");
             }
         });
@@ -100,7 +160,7 @@ export class PagamentoPage implements OnInit {
     async enviarCancelamento() {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = dominio + "/EnviarPagamentoCancelado";
+        let link = dominio + "/Cliente/EnviarPagamentoCancelado";
         let dadosForm = new FormData();
         dadosForm.append("pago", "false");
         dadosForm.append("token", trabalhador.TokenFCM);
@@ -140,7 +200,12 @@ export class PagamentoPage implements OnInit {
             this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
             localStorage.setItem("idPagamento", res.id);
 
-            this.temporizador();
+            link = dominio + "/SolicitacaoServico/EnviarIdPagamento";
+            dadosForm = new FormData();
+            dadosForm.append("token", trabalhador.TokenFCM);
+            dadosForm.append("id", res.id);
+
+            await firstValueFrom(this.http.post(link, dadosForm));
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -161,6 +226,7 @@ export class PagamentoPage implements OnInit {
 
             if (res.status == "approved") {
                 link = dominio + "/Cliente/EnviarConfirmacao";
+                clearInterval(this.id);
 
                 let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
                 let dadosForm = new FormData();
@@ -176,6 +242,7 @@ export class PagamentoPage implements OnInit {
                 localStorage.removeItem("idPagamento");
                 localStorage.removeItem("trabalhadorEscolhido");
                 localStorage.removeItem("tempoPagamento");
+                localStorage.removeItem("tempoAtual");
 
                 this.enviarCancelamento();
                 clearInterval(this.id);
@@ -191,9 +258,13 @@ export class PagamentoPage implements OnInit {
     }
 
     async copiarPix() {
+        const toast = document.querySelector("#toastPix") as HTMLIonToastElement;
+
         await Clipboard.write({
             string: this.copiaCola
         });
+
+        toast.present();
     }
 
     temporizador() {
@@ -233,7 +304,13 @@ export class PagamentoPage implements OnInit {
                     solicitacao.Trabalhador.Cpf = null;
                 }
 
+                this.enviarCancelamento();
+
                 localStorage.removeItem("tempoPagamento");
+                localStorage.removeItem("tempoAtual");
+                localStorage.removeItem("trabalhadorEscolhido");
+                localStorage.removeItem("idPagamento");
+
                 this.navCl.navigateBack("/escolher-trabalhador");
             }
         }, 1000);

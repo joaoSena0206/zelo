@@ -3,6 +3,8 @@
     <div *ngIf="carregar" class="divCarregamento">
         <div class="carregamento"></div>
     </div>
+    <ion-toast message="Serviço aceito!" position="top" style="--background: rgb(3, 199, 3); --border-radius: 20px;" [duration]="2000"></ion-toast>
+    <ion-toast id="toastPix" message="Pix copiado" position="bottom" style="--border-radius: 20px;" [duration]="2000"></ion-toast>
 
     <div class="wrapper">
         <div class="divMin">
@@ -10,8 +12,6 @@
         </div>
 
         <div class="content">
-
-
             <div class="divFundo">
                 <div class="iconCheck">
                     <ion-icon src="../../../../../assets/icon/cliente/check.svg"></ion-icon>

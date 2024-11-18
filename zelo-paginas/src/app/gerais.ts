@@ -4,4 +4,5 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://wu-obviously-phpbb-le.trycloudflare.com";
+export const dominio = "https://absent-truly-resumes-media.trycloudflare.com";
+export const apiGoogle = "AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM";
