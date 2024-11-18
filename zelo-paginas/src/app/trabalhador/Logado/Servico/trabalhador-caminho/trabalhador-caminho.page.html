@@ -89,7 +89,9 @@
             <div class="div_3">
                 <p><ion-icon name="location-outline"></ion-icon> {{ distancia }}</p>
                 <p><ion-icon name="time-outline"></ion-icon> {{ duracao }}</p>
-                <p><ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/dinheiro.svg"></ion-icon> R$50,00
+                <p><ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/dinheiro.svg"></ion-icon> R$ {{
+                    trabalhador.ValorVisita.toFixed(2).replace(".",
+                    ",") }}
                 </p>
             </div>
 
