@@ -515,4 +515,28 @@ public class SolicitacaoServicoController : ControllerBase
             return BadRequest(erro.Message);
         }
     }
+
+    [HttpPost("EnviarIdPagamento")]
+    async public Task<IActionResult> EnviarIdPagamento([FromForm] string token, [FromForm] string id)
+    {
+        try
+        {
+            var msg = new Message()
+            {
+                Data = new Dictionary<string, string>()
+                {
+                    {"id", id}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
 }
