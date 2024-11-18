@@ -1,5 +1,10 @@
+/// <reference types="google.maps" />
 import { Component, OnInit } from '@angular/core';
 import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
+import { Geolocation } from '@capacitor/geolocation';
+import { apiGoogle } from 'src/app/gerais';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -9,8 +14,16 @@ import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notif
 export class TrabalhadorCaminhoPage implements OnInit {
     msgPoupopCancelar: any = 'Quer realmente cancelar o pedido?';
     msg: any = "Informe o motivo da denúncia";
+    mapa: google.maps.Map;
+    servicoDirecoes: google.maps.DirectionsService;
+    renderizadorDirecoes: google.maps.DirectionsRenderer;
+    distancia: any;
+    duracao: any;
+    endereco: any = localStorage.getItem("endereco")?.replace("\"", "")?.replace("\"", "");
+    tempoAtual: any;
+    tempoTermino: any;
 
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
@@ -19,7 +32,98 @@ export class TrabalhadorCaminhoPage implements OnInit {
         });
     }
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
+        await this.carregarScriptGoogleMaps();
+        this.carregarMapa();
+    }
+
+    async carregarScriptGoogleMaps(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // Verifica se o objeto `google` já está disponível
+            if (typeof google !== 'undefined') {
+                resolve();
+                return;
+            }
+
+            // Cria o script para carregar a API do Google Maps
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places`;
+            script.async = true;
+            script.defer = true;
+
+            // Resolve a promessa quando o script é carregado
+            script.onload = () => {
+                console.log('Google Maps API carregada.');
+                resolve();
+            };
+
+            // Rejeita a promessa se houver um erro ao carregar o script
+            script.onerror = (error) => {
+                console.error('Erro ao carregar o script da API do Google Maps:', error);
+                reject(error);
+            };
+
+            // Adiciona o script ao documento
+            document.head.appendChild(script);
+        });
+    }
+
+    async carregarMapa() {
+        const posicao = await Geolocation.getCurrentPosition();
+        const localizacaoAtual = new google.maps.LatLng(
+            posicao.coords.latitude,
+            posicao.coords.longitude
+        );
+
+        const opcoesMapa = {
+            center: localizacaoAtual,
+            zoom: 14
+        };
+
+        const mapa = document.querySelector("#mapa") as HTMLDivElement;
+        this.mapa = new google.maps.Map(mapa, opcoesMapa);
+        this.servicoDirecoes = new google.maps.DirectionsService();
+        this.renderizadorDirecoes = new google.maps.DirectionsRenderer();
+        this.renderizadorDirecoes.setMap(this.mapa);
+
+        this.calcularRota(localizacaoAtual);
+    }
+
+    async pegarCoords(endereco: string) {
+        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM`;
+        let res: any = await firstValueFrom(this.http.get(link));
+        let coords = res.results[0].geometry.location;
+
+        return coords;
+    }
+
+    async calcularRota(origem: google.maps.LatLng) {
+        let destino: google.maps.LatLng = await this.pegarCoords(localStorage.getItem("endereco")!);
+
+        const request: google.maps.DirectionsRequest = {
+            origin: origem,
+            destination: destino,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        this.servicoDirecoes.route(request, (result, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                this.renderizadorDirecoes.setDirections(result);
+
+                this.distancia = result?.routes[0].legs[0].distance?.text;
+                this.duracao = result?.routes[0].legs[0].duration?.text;
+
+                let data = new Date();
+                this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
+
+                let duracaoMs = result?.routes[0].legs[0].duration?.value! * 1000;
+                let dataTermino = new Date(data.getTime() + duracaoMs);
+                this.tempoTermino = dataTermino.toLocaleTimeString().substring(0, dataTermino.toLocaleTimeString().length - 3);
+            }
+            else {
+                console.error("Erro ao calcular rota: ", status);
+            }
+        });
     }
 
     mudartxtCancelar() {
