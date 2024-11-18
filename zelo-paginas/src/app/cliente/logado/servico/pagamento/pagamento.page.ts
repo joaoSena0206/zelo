@@ -199,6 +199,13 @@ export class PagamentoPage implements OnInit {
             this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
             this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
             localStorage.setItem("idPagamento", res.id);
+
+            link = dominio + "/SolicitacaoServico/EnviarIdPagamento";
+            dadosForm = new FormData();
+            dadosForm.append("token", trabalhador.TokenFCM);
+            dadosForm.append("id", res.id);
+
+            await firstValueFrom(this.http.post(link, dadosForm));
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -219,6 +226,7 @@ export class PagamentoPage implements OnInit {
 
             if (res.status == "approved") {
                 link = dominio + "/Cliente/EnviarConfirmacao";
+                clearInterval(this.id);
 
                 let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
                 let dadosForm = new FormData();
