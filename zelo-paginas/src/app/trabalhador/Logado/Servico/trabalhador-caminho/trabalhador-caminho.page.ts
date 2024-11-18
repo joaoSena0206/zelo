@@ -1,11 +1,12 @@
 /// <reference types="google.maps" />
 import { Component, OnInit } from '@angular/core';
 import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
-import { Geolocation } from '@capacitor/geolocation';
+import { ClearWatchOptions, Geolocation, Position } from '@capacitor/geolocation';
 import { apiGoogle } from 'src/app/gerais';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
+import { ChangeDetectorRef } from '@angular/core';
+import { Network } from '@capacitor/network';
 @Component({
     selector: 'app-trabalhador-caminho',
     templateUrl: './trabalhador-caminho.page.html',
@@ -22,8 +23,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
     endereco: any = localStorage.getItem("endereco")?.replace("\"", "")?.replace("\"", "");
     tempoAtual: any;
     tempoTermino: any;
+    ultimaPosicao: google.maps.LatLng;
+    watchId: string;
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
@@ -69,7 +73,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async carregarMapa() {
-        const posicao = await Geolocation.getCurrentPosition();
+        const options: PositionOptions = {
+            enableHighAccuracy: true
+        };
+        const posicao = await Geolocation.getCurrentPosition(options);
         const localizacaoAtual = new google.maps.LatLng(
             posicao.coords.latitude,
             posicao.coords.longitude
@@ -86,7 +93,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.renderizadorDirecoes = new google.maps.DirectionsRenderer();
         this.renderizadorDirecoes.setMap(this.mapa);
 
-        this.calcularRota(localizacaoAtual);
+        this.rastrearTempoReal();
     }
 
     async pegarCoords(endereco: string) {
@@ -95,6 +102,53 @@ export class TrabalhadorCaminhoPage implements OnInit {
         let coords = res.results[0].geometry.location;
 
         return coords;
+    }
+
+    async rastrearTempoReal() {
+        this.watchId = await Geolocation.watchPosition({
+            enableHighAccuracy: true
+        }, async (posicao: Position | null) => {
+            if (posicao) {
+                const localizacao = new google.maps.LatLng(posicao.coords.latitude, posicao.coords.longitude);
+                const precisao = posicao.coords.accuracy;
+                const status = await Network.getStatus();
+
+                if (precisao <= 20) {
+                    if (!this.ultimaPosicao) {
+                        this.ultimaPosicao = localizacao;
+                        console.log(this.ultimaPosicao);
+
+                        this.calcularRota(localizacao);
+                    }
+                    else if (status.connectionType !== "wifi") {
+                        let distanciaPercorrida = this.calcularDistancia(this.ultimaPosicao, localizacao);
+
+                        if (distanciaPercorrida >= 5) {
+                            this.calcularRota(localizacao);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    calcularDistancia(pos1: google.maps.LatLng, pos2: google.maps.LatLng): number {
+        const R = 6371e3;
+        const lat1 = pos1.lat() * (Math.PI / 180);
+        const lat2 = pos2.lat() * (Math.PI / 180);
+        const deltaLat = (pos2.lat() - pos1.lat()) * (Math.PI / 180);
+        const deltaLng = (pos2.lng() - pos1.lng()) * (Math.PI / 180);
+
+        const a =
+            Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const distancia = R * c;
+
+        return distancia;
     }
 
     async calcularRota(origem: google.maps.LatLng) {
@@ -119,6 +173,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 let duracaoMs = result?.routes[0].legs[0].duration?.value! * 1000;
                 let dataTermino = new Date(data.getTime() + duracaoMs);
                 this.tempoTermino = dataTermino.toLocaleTimeString().substring(0, dataTermino.toLocaleTimeString().length - 3);
+
+                this.cdr.detectChanges();
             }
             else {
                 console.error("Erro ao calcular rota: ", status);
