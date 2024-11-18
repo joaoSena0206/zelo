@@ -1,8 +1,10 @@
+/// <reference types="google.maps" />
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { dominio } from 'src/app/gerais';
+import { apiGoogle, dominio } from 'src/app/gerais';
 import { HttpClient } from '@angular/common/http';
 import { first, firstValueFrom } from 'rxjs';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -17,6 +19,9 @@ export class TrabalhadorCaminhoPage implements OnInit {
     solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
     codigo: any;
     carregar: boolean = false;
+    mapa: google.maps.Map;
+    servicoDirecoes: google.maps.DirectionsService;
+    renderizadorDirecoes: google.maps.DirectionsRenderer;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -33,7 +38,59 @@ export class TrabalhadorCaminhoPage implements OnInit {
         }
     }
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
+        await this.carregarScriptGoogleMaps();
+        this.carregarMapa();
+    }
+
+    async carregarScriptGoogleMaps(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // Verifica se o objeto `google` já está disponível
+            if (typeof google !== 'undefined') {
+                resolve();
+                return;
+            }
+
+            // Cria o script para carregar a API do Google Maps
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places`;
+            script.async = true;
+            script.defer = true;
+
+            // Resolve a promessa quando o script é carregado
+            script.onload = () => {
+                console.log('Google Maps API carregada.');
+                resolve();
+            };
+
+            // Rejeita a promessa se houver um erro ao carregar o script
+            script.onerror = (error) => {
+                console.error('Erro ao carregar o script da API do Google Maps:', error);
+                reject(error);
+            };
+
+            // Adiciona o script ao documento
+            document.head.appendChild(script);
+        });
+    }
+
+    async carregarMapa() {
+        const posicao = await Geolocation.getCurrentPosition();
+        const localizacaoAtual = new google.maps.LatLng(
+            posicao.coords.latitude,
+            posicao.coords.longitude
+        );
+
+        const opcoesMapa = {
+            center: localizacaoAtual,
+            zoom: 14
+        };
+
+        const mapa = document.querySelector("#mapa") as HTMLDivElement;
+        this.mapa = new google.maps.Map(mapa, opcoesMapa);
+        this.servicoDirecoes = new google.maps.DirectionsService();
+        this.renderizadorDirecoes = new google.maps.DirectionsRenderer();
+        this.renderizadorDirecoes.setMap(this.mapa);
     }
 
     async gerarCodigo() {
