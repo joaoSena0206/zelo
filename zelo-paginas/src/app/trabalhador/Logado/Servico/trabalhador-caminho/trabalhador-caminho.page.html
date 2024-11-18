@@ -1,10 +1,7 @@
 <ion-content [fullscreen]="true">
     <div class="content">
-        <div class="mapa">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14581.823249239871!2d-46.303420896389625!3d-23.979676155413543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-PT!2sbr!4v1724359747538!5m2!1spt-PT!2sbr"
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="mapa" id="mapa">
+
         </div>
 
         <div class="area_informacao">
@@ -15,7 +12,7 @@
                 </div>
                 <div class="area_endereco">
                     <div class="txt_endereco2">
-                        <p>Para</p>Rua Floriano Peixoto 12 Macuco
+                        <p>Para</p>{{ endereco }}
                     </div>
                 </div>
                 <div class="area_icone_mensagem">
@@ -23,7 +20,9 @@
                     <!-- <ion-icon id="click-trigger" class="icone_denuncia" name="information-circle-outline"></ion-icon> -->
 
                     <div class="divDenuncia">
-                        <ion-icon (click)="mostrarBtnDenuncia()" src="../../../../../assets/icon/Trabalhador/Icone Serviço/denuncia.svg" id="denuncia"></ion-icon>
+                        <ion-icon (click)="mostrarBtnDenuncia()"
+                            src="../../../../../assets/icon/Trabalhador/Icone Serviço/denuncia.svg"
+                            id="denuncia"></ion-icon>
                         <ion-button id="abrir_modal_denuncia" class="btn_denunciar">Denunciar</ion-button>
 
                         <ion-modal id="modal_denuncia" #modal_denuncia trigger="abrir_modal_denuncia">
@@ -59,7 +58,8 @@
                                             </ion-accordion>
                                         </ion-accordion-group>
 
-                                        <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="mudarOutro2()">Enviar</ion-button>
+                                        <ion-button class="form__btn nm_btn" id="btnDenuncia"
+                                            (click)="mudarOutro2()">Enviar</ion-button>
                                     </div>
 
                                 </ion-card>
@@ -73,7 +73,7 @@
             <div class="div_2">
                 <div class="area_txt_inicio">
                     <p style="font-size: 14px;">Inicio</p>
-                    <p class="hora">14:00 PM</p>
+                    <p class="hora">{{ tempoAtual }}</p>
                 </div>
 
                 <div class="icone_carro">
@@ -82,13 +82,13 @@
 
                 <div class="area_txt_termino">
                     <p style="font-size: 14px;">Termino</p>
-                    <p class="hora">14:12 PM</p>
+                    <p class="hora">{{ tempoTermino }}</p>
                 </div>
             </div>
 
             <div class="div_3">
-                <p><ion-icon name="location-outline"></ion-icon> 22,2KM</p>
-                <p><ion-icon name="time-outline"></ion-icon> 10 Minutos</p>
+                <p><ion-icon name="location-outline"></ion-icon> {{ distancia }}</p>
+                <p><ion-icon name="time-outline"></ion-icon> {{ duracao }}</p>
                 <p><ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/dinheiro.svg"></ion-icon> R$50,00
                 </p>
             </div>
@@ -143,7 +143,8 @@
 
             <ion-popover trigger="click-trigger" triggerAction="click">
                 <ng-template>
-                    <ion-button (click)="limpar();" id="abrir_modal_denuncia" class="btn_denunciar">Denunciar</ion-button>
+                    <ion-button (click)="limpar();" id="abrir_modal_denuncia"
+                        class="btn_denunciar">Denunciar</ion-button>
                 </ng-template>
             </ion-popover>
 
@@ -157,7 +158,8 @@
         <ion-card class="poupop">
 
             <div class="area_vermelha">
-                <ion-icon (click)="modal_finalizar.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <ion-icon (click)="modal_finalizar.dismiss();" class="iconeFechar2"
+                    name="close-circle-outline"></ion-icon>
                 <div class="circulo_branca">
                     <ion-icon class="iconeInterrogacao"
                         src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
@@ -219,7 +221,8 @@
         <ion-card class="poupop">
 
             <div class="area_vermelha">
-                <ion-icon (click)="modal_cancelar.dismiss(); limpar()" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <ion-icon (click)="modal_cancelar.dismiss(); limpar()" class="iconeFechar2"
+                    name="close-circle-outline"></ion-icon>
                 <div class="circulo_branca">
                     <ion-icon class="iconeInterrogacao"
                         src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
@@ -228,7 +231,8 @@
 
             <div class="area_branca">
                 <h1>{{msgPoupopCancelar}}</h1>
-                <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text class="text_cancelar_poupop">10%</ion-text> </p>
+                <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text
+                        class="text_cancelar_poupop">10%</ion-text> </p>
                 <ion-button class="form__btn" (click)="mudartxtCancelar();">Prosseguir</ion-button>
             </div>
 
