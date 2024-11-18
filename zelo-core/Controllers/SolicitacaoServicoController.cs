@@ -491,4 +491,27 @@ public class SolicitacaoServicoController : ControllerBase
         }
     }
 
+    [HttpPost("AdicionarAvaliacao")]
+    async public Task<IActionResult> AdicionarAvaliacao([FromForm] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+        try
+        {
+            string comando = "SELECT IFNULL(MAX(cd_solicitacao_servico) + 1, 1) FROM solicitacao_servico";
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+
+    }
+
 }
