@@ -31,6 +31,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
     destino: google.maps.LatLng;
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     carregar: boolean = false;
+    marcadorA: google.maps.Marker;
+    marcadorB: google.maps.Marker;
 
     constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController) { }
 
@@ -44,6 +46,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
     async ionViewDidEnter() {
         await this.carregarScriptGoogleMaps();
         await this.pegarCoords();
+
+        let data = new Date();
+        this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
+
         this.carregarMapa();
     }
 
@@ -57,7 +63,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             // Cria o script para carregar a API do Google Maps
             const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places`;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places,marker`;
             script.async = true;
             script.defer = true;
 
@@ -90,13 +96,17 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         const opcoesMapa = {
             center: localizacaoAtual,
-            zoom: 14
+            zoom: 30,
+            mapId: "5a663e7e574598f5"
         };
 
         const mapa = document.querySelector("#mapa") as HTMLDivElement;
         this.mapa = new google.maps.Map(mapa, opcoesMapa);
         this.servicoDirecoes = new google.maps.DirectionsService();
-        this.renderizadorDirecoes = new google.maps.DirectionsRenderer();
+        this.renderizadorDirecoes = new google.maps.DirectionsRenderer({
+            map: this.mapa,
+            suppressMarkers: true
+        });
         this.renderizadorDirecoes.setMap(this.mapa);
 
         this.rastrearTempoReal();
@@ -112,43 +122,52 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async rastrearTempoReal() {
-        this.watchId = await Geolocation.watchPosition({
-            enableHighAccuracy: true
-        }, async (posicao: Position | null) => {
-            if (posicao) {
-                const localizacao = new google.maps.LatLng(posicao.coords.latitude, posicao.coords.longitude);
-                const precisao = posicao.coords.accuracy;
-                const status = await Network.getStatus();
+        this.watchId = setInterval(async () => {
+            const posicao = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+            const localizacao = new google.maps.LatLng(posicao.coords.latitude, posicao.coords.longitude);
+            const precisao = posicao.coords.accuracy;
+            const status = await Network.getStatus();
 
-                if (!this.ultimaPosicao) {
-                    this.ultimaPosicao = localizacao;
+            if (!this.ultimaPosicao) {
+                this.ultimaPosicao = localizacao;
 
-                    this.calcularRota(localizacao);
-                }
-                else if (status.connectionType !== "wifi") {
-                    this.calcularRota(localizacao);
-                }
+                this.calcularRota(localizacao);
             }
-        });
-    }
+            else {
+                const distancia = this.calcularDistancia(this.ultimaPosicao, localizacao);
 
-    calcularDistancia(pos1: google.maps.LatLng, pos2: google.maps.LatLng): number {
-        const R = 6371e3;
-        const lat1 = pos1.lat() * (Math.PI / 180);
-        const lat2 = pos2.lat() * (Math.PI / 180);
-        const deltaLat = (pos2.lat() - pos1.lat()) * (Math.PI / 180);
-        const deltaLng = (pos2.lng() - pos1.lng()) * (Math.PI / 180);
+                if (distancia >= 1) {
+                    this.calcularRota(localizacao);
+                }
 
-        const a =
-            Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-            Math.cos(lat1) * Math.cos(lat2) *
-            Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+                this.ultimaPosicao = localizacao;
+            }
+        }, 500);
 
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        // this.watchId = await Geolocation.watchPosition({
+        //     enableHighAccuracy: true
+        // }, async (posicao: Position | null) => {
+        //     if (posicao) {
+        //         const localizacao = new google.maps.LatLng(posicao.coords.latitude, posicao.coords.longitude);
+        //         const precisao = posicao.coords.accuracy;
+        //         const status = await Network.getStatus();
 
-        const distancia = R * c;
+        //         if (!this.ultimaPosicao) {
+        //             this.ultimaPosicao = localizacao;
 
-        return distancia;
+        //             this.calcularRota(localizacao);
+        //         }
+        //         else {
+        //             const distancia = google.maps.geometry.spherical.computeDistanceBetween(
+        //                 this.ultimaPosicao,
+        //                 localizacao
+        //             );
+
+        //             this.calcularRota(localizacao);
+        //             this.ultimaPosicao = localizacao;
+        //         }
+        //     }
+        // });
     }
 
     async calcularRota(origem: google.maps.LatLng) {
@@ -165,13 +184,35 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.distancia = result?.routes[0].legs[0].distance?.text;
                 this.duracao = result?.routes[0].legs[0].duration?.text;
 
-                console.log(result?.routes[0].legs[0].distance?.value);
-
                 this.renderizadorDirecoes.setDirections(result);
 
-                let data = new Date();
-                this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
+                const legs = result?.routes[0].legs[0];
+                const inicio = legs?.start_location;
+                const fim = legs?.end_location;
 
+                if (!this.marcadorA) {
+                    this.marcadorA = new google.maps.Marker({
+                        map: this.mapa,
+                        position: inicio,
+                        label: "A",
+                        title: "Origem",
+                    });
+                } else {
+                    this.moverMarcadorSuavemente(this.marcadorA, this.marcadorA.getPosition()!, inicio!, 500);
+                }
+
+                if (!this.marcadorB) {
+                    this.marcadorB = new google.maps.Marker({
+                        map: this.mapa,
+                        position: fim,
+                        label: "B",
+                        title: "Destino",
+                    });
+                } else {
+                    this.moverMarcadorSuavemente(this.marcadorB, this.marcadorB.getPosition()!, fim!, 500);
+                }
+
+                let data = new Date();
                 let duracaoMs = result?.routes[0].legs[0].duration?.value! * 1000;
                 let dataTermino = new Date(data.getTime() + duracaoMs);
                 this.tempoTermino = dataTermino.toLocaleTimeString().substring(0, dataTermino.toLocaleTimeString().length - 3);
@@ -182,6 +223,43 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 console.error("Erro ao calcular rota: ", status);
             }
         });
+    }
+
+    calcularDistancia(pos1: google.maps.LatLng, pos2: google.maps.LatLng): number {
+        const R = 6371e3; // Raio da Terra em metros
+        const lat1 = pos1.lat() * (Math.PI / 180);
+        const lat2 = pos2.lat() * (Math.PI / 180);
+        const deltaLat = (pos2.lat() - pos1.lat()) * (Math.PI / 180);
+        const deltaLng = (pos2.lng() - pos1.lng()) * (Math.PI / 180);
+
+        const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // Distância em metros
+    }
+
+    moverMarcadorSuavemente(marker: google.maps.Marker, inicio: google.maps.LatLng, fim: google.maps.LatLng, duracao: number) {
+        const deltaLat = (fim.lat() - inicio.lat()) / duracao;
+        const deltaLng = (fim.lng() - inicio.lng()) / duracao;
+
+        let lat = inicio.lat();
+        let lng = inicio.lng();
+        const intervalo = 10;
+        const passos = duracao / intervalo;
+        let contador = 0;
+
+        const animacao = setInterval(() => {
+            lat += deltaLat * intervalo;
+            lng += deltaLng * intervalo;
+            const novaPosicao = new google.maps.LatLng(lat, lng);
+            marker.setPosition(novaPosicao);
+
+            contador++;
+            if (contador >= passos) {
+                clearInterval(animacao);
+            }
+        }, intervalo);
     }
 
     mudartxtCancelar() {
