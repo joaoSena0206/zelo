@@ -462,4 +462,59 @@ public class ClienteController : ControllerBase
     {
         return "Marco viado";
     }
+
+    [HttpPost("CarregarDadosPerfil")]
+    async public Task<IActionResult> CarregarDadosPerfil()
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            #region Busca os dados no banco
+
+            string comando = $@"
+            select T.nm_trabalhador, SS.qt_estrelas_avaliacao_cliente, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
+            from solicitacao_servico SS 
+            join trabalhador T on(SS.cd_cpf_trabalhador = T.cd_cpf_trabalhador) 
+            where nm_codigo_aleatorio != ''";
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            List<SolicitacaoServico> listaSolicitacaoServico = new List<SolicitacaoServico>();
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    SolicitacaoServico servicoTrabalhador = new SolicitacaoServico();
+                    Trabalhador trabalhador = new Trabalhador();
+
+                    trabalhador.Nome = dados.GetString(0);
+
+                    servicoTrabalhador.QtEstrelasAvaliacaoServico = dados.GetDecimal(1);
+                    servicoTrabalhador.DtSolicitacaoServico = dados.GetDateTime(2);
+                    servicoTrabalhador.DsComentarioAvaliacaoCliente = dados.GetString(3);
+
+                    servicoTrabalhador.Trabalhador = trabalhador;
+
+                    listaSolicitacaoServico.Add(servicoTrabalhador);
+                }
+            }
+
+            dados.Close();
+
+            return Ok(listaSolicitacaoServico);
+
+            #endregion
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
 }

@@ -2,6 +2,7 @@ using MySql.Data.MySqlClient;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using FirebaseAdmin.Messaging;
+using System.Runtime.Intrinsics.X86;
 
 [ApiController]
 [Route("SolicitacaoServico")]
@@ -323,7 +324,7 @@ public class SolicitacaoServicoController : ControllerBase
     }
 
     [HttpGet("pegarEstrelasTrabalhador")]
-    public IActionResult pegarEstrelasTrabalhador([FromQuery] string cpf)
+    public IActionResult pegarEstrelasTrabalhador([FromQuery] string cpf, [FromQuery] string tipo)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -335,7 +336,14 @@ public class SolicitacaoServicoController : ControllerBase
             int QtAvaliacoes = 0;
             int QtServicos = 0;
 
-            comando = $"select ROUND(AVG(qt_estrelas_avaliacao_servico)), count(qt_estrelas_avaliacao_servico), count(nm_codigo_aleatorio) from solicitacao_servico where cd_cpf_trabalhador = '{cpf}' and nm_codigo_aleatorio != ''";
+            if(tipo == "trabalhador")
+            {
+                comando = $"select ROUND(AVG(qt_estrelas_avaliacao_servico)), count(qt_estrelas_avaliacao_servico), count(nm_codigo_aleatorio) from solicitacao_servico where cd_cpf_trabalhador = '{cpf}' and nm_codigo_aleatorio != ''";
+            }
+            else
+            {
+                comando = $"select ROUND(AVG(qt_estrelas_avaliacao_cliente)), count(qt_estrelas_avaliacao_cliente), count(nm_codigo_aleatorio) from solicitacao_servico where cd_cpf_cliente = '{cpf}' and nm_codigo_aleatorio != ''";
+            }
 
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -537,6 +545,31 @@ public class SolicitacaoServicoController : ControllerBase
         catch (Exception erro)
         {
             return BadRequest(erro.Message);
+        }
+    }
+
+    [HttpPost("AtualizarAvaliacao")]
+    public IActionResult AtualizarAvaliacao([FromForm] string tipo, [FromForm] string comentario, [FromForm] int estrelas, [FromForm] int cdServico)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = $@"UPDATE solicitacao_servico SET ds_comentario_avaliacao_{tipo} = '{comentario}', qt_estrelas_avaliacao_{tipo} = {estrelas}
+                            WHERE cd_solicitacao_servico = {cdServico}";
+            
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
         }
     }
 }

@@ -692,4 +692,60 @@ public class TrabalhadorController : ControllerBase
             return BadRequest(erro.Message);
         }
     }
+
+    [HttpPost("CarregarDadosPerfil")]
+    async public Task<IActionResult> CarregarDadosPerfil([FromForm] string cpfTrabalhador)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            #region Busca os dados no banco
+
+            string comando = $@"
+            select SS.cd_cpf_trabalhador, C.nm_trabalhador, SS.qt_estrelas_avaliacao_servico, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
+            from solicitacao_servico SS 
+            join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) 
+            where SS.cd_cpf_trabalhador = '{cpfTrabalhador}' and nm_codigo_aleatorio != ''";
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            List<SolicitacaoServico> listaSolicitacaoServico = new List<SolicitacaoServico>();
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    SolicitacaoServico servicoTrabalhador = new SolicitacaoServico();
+                    Cliente cliente = new Cliente();
+
+                    cliente.Cpf = dados.GetString(0);
+                    cliente.Nome = dados.GetString(1);
+
+                    servicoTrabalhador.QtEstrelasAvaliacaoServico = dados.GetDecimal(2);
+                    servicoTrabalhador.DtSolicitacaoServico = dados.GetDateTime(3);
+                    servicoTrabalhador.DsComentarioAvaliacaoCliente = dados.GetString(4);
+
+                    servicoTrabalhador.Cliente = cliente;
+
+                    listaSolicitacaoServico.Add(servicoTrabalhador);
+                }
+            }
+
+            dados.Close();
+
+            return Ok(listaSolicitacaoServico);
+
+            #endregion
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
 }
