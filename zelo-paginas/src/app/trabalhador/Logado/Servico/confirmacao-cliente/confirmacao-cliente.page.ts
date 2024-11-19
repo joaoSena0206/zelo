@@ -25,6 +25,8 @@ export class ConfirmacaoClientePage implements OnInit {
     constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
+        PushNotifications.removeAllListeners();
+
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             this.idPagamento = notification.data.id;
         });
@@ -57,8 +59,6 @@ export class ConfirmacaoClientePage implements OnInit {
     }
 
     async checarPagamento() {
-        console.log(this.idPagamento);
-
         if (this.idPagamento) {
             let id = this.idPagamento;
             let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
