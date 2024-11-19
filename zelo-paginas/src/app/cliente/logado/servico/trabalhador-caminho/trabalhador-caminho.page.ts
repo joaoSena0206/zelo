@@ -5,6 +5,7 @@ import { apiGoogle, dominio } from 'src/app/gerais';
 import { HttpClient } from '@angular/common/http';
 import { first, firstValueFrom } from 'rxjs';
 import { Geolocation } from '@capacitor/geolocation';
+import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -36,6 +37,32 @@ export class TrabalhadorCaminhoPage implements OnInit {
         else {
             this.codigo = localStorage.getItem("codigo");
         }
+
+        PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            let situacao = notification.data.situacaoServico;
+
+            if (situacao == "false") {
+                localStorage.removeItem("codigo");
+                localStorage.removeItem("endereco");
+                localStorage.removeItem("solicitacao");
+                localStorage.removeItem("trabalhador");
+
+                this.navCl.navigateRoot("inicial");
+            }
+        });
+
+        PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {
+            let situacao = action.notification.data.situacaoServico;
+
+            if (situacao == "false") {
+                localStorage.removeItem("codigo");
+                localStorage.removeItem("endereco");
+                localStorage.removeItem("solicitacao");
+                localStorage.removeItem("trabalhador");
+
+                this.navCl.navigateRoot("inicial");
+            }
+        });
     }
 
     async ionViewDidEnter() {
