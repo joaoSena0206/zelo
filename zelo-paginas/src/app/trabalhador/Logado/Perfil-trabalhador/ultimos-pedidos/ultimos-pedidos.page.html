@@ -30,7 +30,7 @@
             <p style="margin: 3px 0;">{{historico.DtSolicitacaoServico}}</p>
           </div>
           <div class="txt-ver-perfil">
-            <ion-text>Ver perfil</ion-text>
+            <ion-text (click)="VerPerfil(historico.Cliente.Cpf);">Ver perfil</ion-text>
           </div>
         </div>
 

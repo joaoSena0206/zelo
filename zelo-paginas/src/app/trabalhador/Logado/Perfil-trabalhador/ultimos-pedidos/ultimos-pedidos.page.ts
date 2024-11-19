@@ -136,6 +136,11 @@ export class UltimosPedidosPage implements OnInit {
     }
 }
 
+VerPerfil(Cpf: any){
+  localStorage.setItem('VerPerfilCliente', Cpf);
+  this.navCl.navigateBack("/trabalhador/perfil-cliente")
+}
+
   /* async carregarImgServico(cdSolicitacao: any) {
     try {
       this.carregar = true;
