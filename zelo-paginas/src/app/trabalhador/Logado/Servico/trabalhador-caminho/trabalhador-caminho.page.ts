@@ -2,11 +2,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { ClearWatchOptions, Geolocation, Position } from '@capacitor/geolocation';
-import { apiGoogle } from 'src/app/gerais';
+import { apiGoogle, dominio } from 'src/app/gerais';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
 import { Network } from '@capacitor/network';
+import { NavController } from '@ionic/angular';
+
 @Component({
     selector: 'app-trabalhador-caminho',
     templateUrl: './trabalhador-caminho.page.html',
@@ -24,10 +26,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
     tempoAtual: any;
     tempoTermino: any;
     ultimaPosicao: google.maps.LatLng;
-    watchId: string;
-    trabalhador: any = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+    watchId: any;
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
+    destino: google.maps.LatLng;
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    carregar: boolean = false;
 
-    constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+    constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController) { }
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
@@ -38,6 +43,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     async ionViewDidEnter() {
         await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
         this.carregarMapa();
     }
 
@@ -96,12 +102,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.rastrearTempoReal();
     }
 
-    async pegarCoords(endereco: string) {
+    async pegarCoords() {
+        let endereco = localStorage.getItem("endereco");
         let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM`;
         let res: any = await firstValueFrom(this.http.get(link));
         let coords = res.results[0].geometry.location;
 
-        return coords;
+        this.destino = new google.maps.LatLng(coords.lat, coords.lng);
     }
 
     async rastrearTempoReal() {
@@ -113,20 +120,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 const precisao = posicao.coords.accuracy;
                 const status = await Network.getStatus();
 
-                if (precisao <= 20) {
-                    if (!this.ultimaPosicao) {
-                        this.ultimaPosicao = localizacao;
-                        console.log(this.ultimaPosicao);
+                if (!this.ultimaPosicao) {
+                    this.ultimaPosicao = localizacao;
 
-                        this.calcularRota(localizacao);
-                    }
-                    else if (status.connectionType !== "wifi") {
-                        let distanciaPercorrida = this.calcularDistancia(this.ultimaPosicao, localizacao);
-
-                        if (distanciaPercorrida >= 5) {
-                            this.calcularRota(localizacao);
-                        }
-                    }
+                    this.calcularRota(localizacao);
+                }
+                else if (status.connectionType !== "wifi") {
+                    this.calcularRota(localizacao);
                 }
             }
         });
@@ -152,7 +152,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async calcularRota(origem: google.maps.LatLng) {
-        let destino: google.maps.LatLng = await this.pegarCoords(localStorage.getItem("endereco")!);
+        let destino: google.maps.LatLng = this.destino;
 
         const request: google.maps.DirectionsRequest = {
             origin: origem,
@@ -162,10 +162,12 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         this.servicoDirecoes.route(request, (result, status) => {
             if (status === google.maps.DirectionsStatus.OK) {
-                this.renderizadorDirecoes.setDirections(result);
-
                 this.distancia = result?.routes[0].legs[0].distance?.text;
                 this.duracao = result?.routes[0].legs[0].duration?.text;
+
+                console.log(result?.routes[0].legs[0].distance?.value);
+
+                this.renderizadorDirecoes.setDirections(result);
 
                 let data = new Date();
                 this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
@@ -184,7 +186,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     mudartxtCancelar() {
         let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
-        let btnProsseguir = document.querySelector(".form__btn") as HTMLIonButtonElement;
+        let btnProsseguir = document.querySelector("#btnProsseguir") as HTMLIonButtonElement;
         let modalCancelar = document.querySelector("#modal_cancelar") as HTMLIonModalElement;
 
         txtAdvertenciaCancelar.style.display = "none";
@@ -192,7 +194,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.msgPoupopCancelar = 'Pedido cancelado!';
 
         btnProsseguir.textContent = "Ok";
-        btnProsseguir.addEventListener("click", function () {
+        btnProsseguir.addEventListener("click", () => {
+            this.cancelar();
             modalCancelar.dismiss();
         });
     }
@@ -289,4 +292,24 @@ export class TrabalhadorCaminhoPage implements OnInit {
         div1.style.display = "flex";
     }
 
+    async cancelar() {
+        await Geolocation.clearWatch({ id: this.watchId });
+
+        let link = dominio + "/Trabalhador/CancelarSolicitacao";
+        let dadosForm = new FormData();
+        dadosForm.append("situacaoServico", "false");
+        dadosForm.append("token", this.cliente.TokenFCM);
+        dadosForm.append("nmTrabalhador", this.trabalhador.Nome);
+
+        try {
+            await firstValueFrom(this.http.post(link, dadosForm));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+
+        this.navCl.navigateRoot("trabalhador/inicial");
+    }
 }
