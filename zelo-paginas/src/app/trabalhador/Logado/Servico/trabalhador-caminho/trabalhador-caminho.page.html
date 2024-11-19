@@ -1,4 +1,9 @@
 <ion-content [fullscreen]="true">
+    <ion-alert header="Erro" [buttons]="['Ok']"></ion-alert>
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
+    </div>
+
     <div class="content">
         <div class="mapa" id="mapa">
 
@@ -235,7 +240,7 @@
                 <h1>{{msgPoupopCancelar}}</h1>
                 <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text
                         class="text_cancelar_poupop">10%</ion-text> </p>
-                <ion-button class="form__btn" (click)="mudartxtCancelar();">Prosseguir</ion-button>
+                <ion-button class="form__btn" id="btnProsseguir" (click)="mudartxtCancelar();">Prosseguir</ion-button>
             </div>
 
         </ion-card>
