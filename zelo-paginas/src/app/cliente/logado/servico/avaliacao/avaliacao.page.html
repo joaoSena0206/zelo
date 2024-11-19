@@ -1,22 +1,28 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento--trabalhador"></div>
+</div>
+
 <ion-content [fullscreen]="true">
     <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
 
     <div class="content">
+        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
         <ion-text>
             <h1 class="content__h1">Avaliação</h1>
         </ion-text>
 
         <ion-card>
-            <img class="img_perfil" src="../../../../../assets/icon/cliente/foto_trabalhador.png" alt="">
+            <img draggable="false" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.jpg'">
 
-            <h1>Breno Santos</h1>
+            <h1>{{trabalhador.Nome}}</h1>
 
             <div class="estrelas_avaliações">
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
+                <!-- <ion-icon id="{{i}}" *ngFor="let estrela of [1, 2, 3, 4, 5] let i = index" (click)="SelecionarEstrela(i)" name="{{NomeEstrela}}"></ion-icon> -->
+                <!-- <ion-icon id="1" (click)="SelecionarEstrela($event.target)" name="{}"></ion-icon>
+                <ion-icon id="2" (click)="SelecionarEstrela($event.target)" name="{}"></ion-icon>
+                <ion-icon id="3" (click)="SelecionarEstrela($event.target)" name="{}"></ion-icon>
+                <ion-icon id="4" (click)="SelecionarEstrela($event.target)" name="{}"></ion-icon> -->
+                <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" (click)="carregarEstrelas(i + 1)" name="{{nomeIconeEstrela[i]}}"></ion-icon>
             </div>
 
             <p class="txt_comentario">Comentário</p>
@@ -25,6 +31,6 @@
             </ion-textarea>
         </ion-card>
 
-        <ion-button class="btn">Enviar</ion-button>
+        <ion-button class="btn" (click)="enviar()">Enviar</ion-button>
     </div>
 </ion-content>
