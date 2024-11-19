@@ -10,20 +10,26 @@
             </div>
             <div class="area_foto_perfil">
                 <ion-icon class="icone_editar" src="../../../../assets/icon/cliente/editar.svg"></ion-icon>
-                <img class="foto_perfil" src="../../../assets/icon/cliente/foto_perfil.png" alt="">
+                <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.JPG'" alt="">
+
+                <!-- <div class="estrelas">
+                    <ion-icon class="estrela" name="star"></ion-icon>
+                    <ion-icon class="estrela" name="star"></ion-icon>
+                    <ion-icon class="estrela" name="star"></ion-icon>
+                </div> -->
 
                 <div class="estrelas">
-                    <ion-icon class="estrela" name="star"></ion-icon>
-                    <ion-icon class="estrela" name="star"></ion-icon>
-                    <ion-icon class="estrela" name="star"></ion-icon>
+                    <ion-icon class="estrela_perfil"
+                        *ngFor="let estrela of gerarArrayEstrelas(MediaEstrelas)"
+                        name="star"></ion-icon>
                 </div>
             </div>
-            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">Maria Oliveira</p>
+            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">{{cliente.Nome}}</p>
 
             <div style="display: flex; gap: 10px; align-items: center;">
-                <p style="font-size: 15px; color: white;">2 avaliações</p>
+                <p style="font-size: 15px; color: white;">{{TotalAvaliacao}} avaliações</p>
                 <p style="font-size: 17px; color: white;">|</p>
-                <p style="font-size: 15px; color: white;">4 chamados</p>
+                <p style="font-size: 15px; color: white;">{{TotalChamado}} chamados</p>
             </div>
 
         </ion-header>

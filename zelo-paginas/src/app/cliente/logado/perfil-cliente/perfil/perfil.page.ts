@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { dominio, headerNgrok } from 'src/app/gerais';
+import { first, firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-perfil',
@@ -8,17 +11,25 @@ import { NavController } from '@ionic/angular';
 })
 export class PerfilPage implements OnInit {
 
-    constructor(private navCl: NavController) { }
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+
+    constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
+        this.carregarQtAvaliacao();
+    }
+
+    ngAfterViewChecked(){
+        this.formatarEstrelas();
     }
 
     ngAfterViewInit() {
-        const estrelas = document.querySelectorAll(".estrela");
+    }
+
+    formatarEstrelas(){
+        const estrelas = document.querySelectorAll(".estrela_perfil");
         
         if (estrelas.length == 3) {
-            console.log("a");
-
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
         }
         else if (estrelas.length == 4) {
@@ -37,5 +48,57 @@ export class PerfilPage implements OnInit {
         localStorage.removeItem("trabalhador");
 
         this.navCl.navigateRoot("");
+    }
+
+    gerarArrayEstrelas(numEstrelas: any) {
+        let array = [];
+
+        for (let i = 0; i < numEstrelas; i++) {
+            array.push(0);
+        }
+
+        return array;
+    }
+
+    dominio = dominio;
+    historico: any;
+    QtAvaliacao: any;
+    lista: any;
+    carregar: boolean = false;
+    watcherId: any;
+    result: any;
+    clienteServico: any;
+    solicitacaoServico: any;
+    imgs: any;
+    enderecoServico: any;
+    modal: any;
+    situacaoServico: any;
+
+    MediaEstrelas: any;
+    TotalAvaliacao: any;
+    TotalChamado: any;
+
+    async carregarQtAvaliacao() {
+        let link = dominio + `/SolicitacaoServico/pegarEstrelasTrabalhador?cpf=${this.cliente.Cpf}&tipo=cliente`;
+
+        let res;
+
+        try {
+            this.carregar = true;
+            res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
+            this.lista = res;
+
+            this.MediaEstrelas = this.lista.MediaEstrelas;
+            this.TotalAvaliacao = this.lista.TotalAvaliacoes;
+            this.TotalChamado = this.lista.TotalServicos;
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
     }
 }
