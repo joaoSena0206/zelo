@@ -98,7 +98,15 @@ Create Table cliente
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
+CREATE TABLE favoritos
+(
+	cd_cpf_cliente CHAR(11),
+	cd_cpf_trabalhador CHAR(11),
 
+	CONSTRAINT pk_favoritos PRIMARY KEY (cd_cpf_cliente, cd_cpf_trabalhador),
+	CONSTRAINT fk_favoritos_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
+	CONSTRAINT fk_favoritos_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
+);
 
 
 CREATE TABLE confirmacao
