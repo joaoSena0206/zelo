@@ -35,16 +35,19 @@ export class PerfilPage implements OnInit {
     constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
+        this.carregarQtAvaliacao();
+        this.formatarEstrelas();
     }
 
-    ionViewDidEnter() {
-        this.carregarQtAvaliacao();
+    ngAfterViewChecked(){
         this.formatarEstrelas();
     }
 
     formatarEstrelas()
     {
-        const estrelas = document.querySelectorAll(".estrela");
+        const estrelas = document.querySelectorAll(".estrela_perfil");
+
+        console.log(estrelas)
         
         if (estrelas.length == 3) {
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
@@ -78,7 +81,7 @@ export class PerfilPage implements OnInit {
     }
 
     async carregarQtAvaliacao() {
-        let link = dominio + `/SolicitacaoServico/pegarEstrelasTrabalhador?cpf=${this.trabalhador.Cpf}`;
+        let link = dominio + `/SolicitacaoServico/pegarEstrelasTrabalhador?cpf=${this.trabalhador.Cpf}&tipo=trabalhador`;
 
         let res;
 
@@ -90,8 +93,6 @@ export class PerfilPage implements OnInit {
             this.MediaEstrelas = this.lista.MediaEstrelas;
             this.TotalAvaliacao = this.lista.TotalAvaliacoes;
             this.TotalServico = this.lista.TotalServicos;
-
-            console.log(this.lista)
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -101,9 +102,5 @@ export class PerfilPage implements OnInit {
         finally {
             this.carregar = false;
         }
-
-
     }
-
-
 }
