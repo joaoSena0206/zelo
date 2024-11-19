@@ -204,7 +204,7 @@ ion-modal {
 .area_comentario ion-row {
     display: flex;
     flex-direction: row;
-    margin: 20px;
+    margin: 20px 20px 20px 20px;
     text-align: center;
     align-items: center;
     justify-content: space-between;
@@ -225,7 +225,7 @@ ion-modal {
 }
 
 .txt_avaliacao {
-    margin: 0 20px 10px 20px;
+    margin: 0 20px 20px 20px;
     font-size: 14px;
 }
 
@@ -260,3 +260,23 @@ ion-modal {
     padding: 0;
     margin: auto;
 }
+
+.escondido{
+    display: none;
+}
+
+.barra {
+    background-color: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 10px;
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .progresso {
+    background-color: orange;
+    height: 100%;
+    transition: width 0.3s;
+  }
+  

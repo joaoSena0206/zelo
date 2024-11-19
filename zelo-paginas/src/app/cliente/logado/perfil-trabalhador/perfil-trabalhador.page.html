@@ -7,20 +7,20 @@
                 <h1 style="font-size: 32px; font-weight: bold; color: black;">Perfil</h1>
             </div>
             <div class="area_foto_perfil">
-                <img class="foto_perfil" src="../../../../assets/icon/cliente/foto_trabalhador.png" alt="">
+                <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.JPG'" alt="">
 
                 <div class="estrelas">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
+                    <ion-icon class="estrela"
+                        *ngFor="let estrelas of gerarArrayEstrelas(mediaEstrela)" name="star">
+                    </ion-icon>
                 </div>
             </div>
-            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">Breno Santos</p>
+            <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">{{trabalhador.Nome}}</p>
 
             <div style="display: flex; gap: 10px; align-items: center;">
-                <p style="font-size: 15px; color: white;">10 avaliações</p>
+                <p style="font-size: 15px; color: white;">{{TotalAvaliacao}} avaliações</p>
                 <p style="font-size: 17px; color: white;">|</p>
-                <p style="font-size: 15px; color: white;">150 serviços realizados</p>
+                <p style="font-size: 15px; color: white;">{{TotalServico}} serviços realizados</p>
             </div>
 
         </ion-header>
@@ -69,14 +69,9 @@
                         <h1>Avaliações de Clientes</h1>
 
                         <div class="estrelas_avaliações">
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star-half-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
-
-                            <p>3,5 de 5,0</p>
-                            <p style="font-size: 12px;">(10 avaliações)</p>
+                            <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" name="{{nomeIconeEstrela[i]}}"></ion-icon>
+                            <p>{{MediaEstrelas}} de 5,0</p>
+                            <p style="font-size: 12px;">({{TotalAvaliacao}} avaliações)</p>
                         </div>
                     </div>
                 </ion-item>
@@ -84,40 +79,46 @@
                 <div slot="content" class="geral">
                     <div class="wrapper">
                         <div class="btns_filtro">
-                            <ion-button class="btn_filtro btn_filtro--ativado">Todas</ion-button>
-                            <ion-button class="btn_filtro">
+                            <ion-button class="btn_filtro btn_filtro--ativado" (click)="mudarFiltro('Todas')" [ngClass]="{ 'btn_filtro--ativado': botaoAtivo === 'Todas' }">Todas</ion-button>
+                            <ion-button class="btn_filtro" (click)="mudarFiltro('5')" [ngClass]="{ 'btn_filtro--ativado': botaoAtivo === '5' }">
                                 5 <ion-icon name="star-outline"></ion-icon>
                             </ion-button>
-                            <ion-button class="btn_filtro">
+                            <ion-button class="btn_filtro" (click)="mudarFiltro('4')" [ngClass]="{ 'btn_filtro--ativado': botaoAtivo === '4' }">
                                 4 <ion-icon name="star-outline"></ion-icon>
                             </ion-button>
-                            <ion-button class="btn_filtro">
+                            <ion-button class="btn_filtro" (click)="mudarFiltro('3')" [ngClass]="{ 'btn_filtro--ativado': botaoAtivo === '3' }">
                                 3 <ion-icon name="star-outline"></ion-icon>
                             </ion-button>
-                            <ion-button class="btn_filtro">
+                            <ion-button class="btn_filtro" (click)="mudarFiltro('2')" [ngClass]="{ 'btn_filtro--ativado': botaoAtivo === '2' }">
                                 2 <ion-icon name="star-outline"></ion-icon>
                             </ion-button>
-                            <ion-button class="btn_filtro">
+                            <ion-button class="btn_filtro" (click)="mudarFiltro('1')" [ngClass]="{ 'btn_filtro--ativado': botaoAtivo === '1' }">
                                 1 <ion-icon name="star-outline"></ion-icon>
                             </ion-button>
                         </div>
+
+                        
+                        
                         <ion-card class="card_grafico">
                             <h1 class="txt_titulo_grafico">Avaliações de Clientes</h1>
 
                             <div class="estrelas_avaliações_grafico">
-                                <ion-icon name="star"></ion-icon>
-                                <ion-icon name="star"></ion-icon>
+
+                                <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" name="{{nomeIconeEstrela[i]}}"></ion-icon>
+
+                                <!-- <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star"></ion-icon>
                                 <ion-icon name="star-half-outline"></ion-icon>
-                                <ion-icon name="star-outline"></ion-icon>
-                                <p>3,5 de 5,0</p>
+                                <ion-icon name="star-outline"></ion-icon> -->
+
+                                <p>{{MediaEstrelas}} de 5,0</p>
                             </div>
 
                             <div class="div_grafico">
                                 <ion-row class="linha_grafico">
                                     <p>5 estrelas</p>
                                     <div class="div_branca">
-                                        <div style="width: 70%;" class="div_vermelha">
+                                        <div [style.width.%]="Porcentagem5" class="div_vermelha">
 
                                         </div>
                                     </div>
@@ -128,7 +129,7 @@
                                 <ion-row class="linha_grafico">
                                     <p>4 estrelas</p>
                                     <div class="div_branca">
-                                        <div style="width: 60%;" class="div_vermelha">
+                                        <div [style.width.%]="Porcentagem4" class="div_vermelha">
 
                                         </div>
                                     </div>
@@ -139,7 +140,7 @@
                                 <ion-row class="linha_grafico">
                                     <p>3 estrelas</p>
                                     <div class="div_branca">
-                                        <div style="width: 40%;" class="div_vermelha">
+                                        <div [style.width.%]="Porcentagem3" class="div_vermelha">
 
                                         </div>
                                     </div>
@@ -150,7 +151,7 @@
                                 <ion-row class="linha_grafico">
                                     <p>2 estrelas</p>
                                     <div class="div_branca">
-                                        <div style="width: 30%;" class="div_vermelha">
+                                        <div [style.width.%]="Porcentagem2" class="div_vermelha">
 
                                         </div>
                                     </div>
@@ -161,7 +162,7 @@
                                 <ion-row class="linha_grafico">
                                     <p>1 estrelas</p>
                                     <div class="div_branca">
-                                        <div style="width: 10%;" class="div_vermelha">
+                                        <div [style.width.%]="Porcentagem1" class="div_vermelha">
 
                                         </div>
                                     </div>
@@ -174,108 +175,28 @@
             </ion-accordion>
         </ion-accordion-group>
 
-        <div class="area_comentario">
+        <div class="area_comentario" *ngFor="let avaliacao of avaliacoesFiltradas let i = index">
             <ion-row>
 
                 <div style="display: flex; align-items: center;">
-                    <img class="foto_comentario" src="../../../../assets/icon/cliente/foto_perfil.png" alt="">
-                    <p style="margin-left: 10px;">Sandra Rodrigues</p>
+                    <img class="foto_comentario" [src]="dominio + '/Imgs/Perfil/Cliente/' + listaDadosPerfil[i].Cliente.Cpf + '.jpg'" alt="Foto Cliente">
+                    <p style="margin-left: 10px;">{{avaliacao.Cliente.Nome}}</p>
                 </div>
 
                 <div style="display: flex;">
                     <ion-icon name="star"></ion-icon>
-                    <p style="margin-left: 5px;">3.5</p>
+                    <p style="margin-left: 5px;">{{avaliacao.QtEstrelasAvaliacaoServico.toFixed(1)}}</p>
                 </div>
 
             </ion-row>
 
-            <p class="txt_avaliacao">Avaliado em 22/06/2024</p>
+            <p class="txt_avaliacao">Avaliado em {{listaData[i]}}</p>
 
-            <p class="txt_avaliacao">O cliente expressou um alto nível de satisfação com o serviço prestado,
-                destacando
-                a eficiência e o profissionalismo da equipe. Além disso, apreciou a rapidez na resolução de
-                problemas e
-                a atenção aos detalhes durante o processo. Em geral, o cliente ficou impressionado com a qualidade
-                do
-                atendimento e demonstrou interesse em continuar a parceria no futuro.</p>
-
-            <div class="div_util">
-                <p class="txt_avaliacao_util">Esse comentário foi útil?</p>
-
-                <ion-text>
-                    <p>Útil</p>
-                </ion-text>
-            </div>
+            <p class="txt_avaliacao">{{avaliacao.DsComentarioAvaliacaoCliente}}</p>
 
         </div>
 
-        <div class="area_comentario">
-            <ion-row>
-
-                <div style="display: flex; align-items: center;">
-                    <img class="foto_comentario" src="../../../../assets/icon/cliente/foto_perfil.png" alt="">
-                    <p style="margin-left: 10px;">Sandra Rodrigues</p>
-                </div>
-
-                <div style="display: flex;">
-                    <ion-icon name="star"></ion-icon>
-                    <p style="margin-left: 5px;">3.5</p>
-                </div>
-
-            </ion-row>
-
-            <p class="txt_avaliacao">Avaliado em 22/06/2024</p>
-
-            <p class="txt_avaliacao">O cliente expressou um alto nível de satisfação com o serviço prestado,
-                destacando
-                a eficiência e o profissionalismo da equipe. Além disso, apreciou a rapidez na resolução de
-                problemas e
-                a atenção aos detalhes durante o processo. Em geral, o cliente ficou impressionado com a qualidade
-                do
-                atendimento e demonstrou interesse em continuar a parceria no futuro.</p>
-
-            <div class="div_util">
-                <p class="txt_avaliacao_util">Esse comentário foi útil?</p>
-                <ion-text>
-                    <p>Útil</p>
-                </ion-text>
-            </div>
-
-        </div>
-
-        <div class="area_comentario">
-            <ion-row>
-
-                <div style="display: flex; align-items: center;">
-                    <img class="foto_comentario" src="../../../../assets/icon/cliente/foto_perfil.png" alt="">
-                    <p style="margin-left: 10px;">Sandra Rodrigues</p>
-                </div>
-
-                <div style="display: flex;">
-                    <ion-icon name="star"></ion-icon>
-                    <p style="margin-left: 5px;">3.5</p>
-                </div>
-
-            </ion-row>
-
-            <p class="txt_avaliacao">Avaliado em 22/06/2024</p>
-
-            <p class="txt_avaliacao">O cliente expressou um alto nível de satisfação com o serviço prestado,
-                destacando
-                a eficiência e o profissionalismo da equipe. Além disso, apreciou a rapidez na resolução de
-                problemas e
-                a atenção aos detalhes durante o processo. Em geral, o cliente ficou impressionado com a qualidade
-                do
-                atendimento e demonstrou interesse em continuar a parceria no futuro.</p>
-
-            <div class="div_util">
-                <p class="txt_avaliacao_util">Esse comentário foi útil?</p>
-                <ion-text>
-                    <p>Útil</p>
-                </ion-text>
-            </div>
-
-        </div>
+        
 
     </div>
 </ion-content>
