@@ -705,7 +705,7 @@ public class TrabalhadorController : ControllerBase
             #region Busca os dados no banco
 
             string comando = $@"
-            select SS.cd_cpf_trabalhador, C.nm_trabalhador, SS.qt_estrelas_avaliacao_servico, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
+            select SS.cd_cpf_cliente, C.nm_cliente, SS.qt_estrelas_avaliacao_servico, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
             from solicitacao_servico SS 
             join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) 
             where SS.cd_cpf_trabalhador = '{cpfTrabalhador}' and nm_codigo_aleatorio != ''";
