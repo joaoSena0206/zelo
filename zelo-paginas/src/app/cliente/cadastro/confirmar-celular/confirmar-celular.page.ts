@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { first, firstValueFrom } from 'rxjs';
 import { dominio } from 'src/app/gerais';
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-confirmar-celular',
@@ -23,7 +25,7 @@ export class ConfirmarCelularPage implements OnInit {
     codigoAleatorio: string;
     carregar: boolean = false;
 
-    constructor(private navCl: NavController, private http: HttpClient) { }
+    constructor(private navCl: NavController, private http: HttpClient, private toastController: ToastController, private router: Router) { }
 
     ngOnInit() {
 
@@ -81,6 +83,25 @@ export class ConfirmarCelularPage implements OnInit {
         this.gerarCodigo(null);
     }
 
+    ionViewDidLeave() {
+        const nextUrl = this.router.url;
+
+        if (nextUrl === '/privacidade') {
+            this.showTemporaryToast();
+        }
+    }
+
+    async showTemporaryToast() {
+        const toast = await this.toastController.create({
+          message: 'Dado(s) alterado com sucesso!',
+          duration: 2000,
+          position: 'top',
+          cssClass: 'custom-toast',
+        });
+    
+        await toast.present();
+    }
+
     async gerarCodigo(event: any) {
         if (event != null) {
             this.tempo = 60;
@@ -96,10 +117,18 @@ export class ConfirmarCelularPage implements OnInit {
 
         let link = dominio + "/Confirmacao/GerarCodigo";
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
+        let emailTroca = localStorage.getItem("TrocaEmail")!;
 
         let dadosForm = new FormData();
         dadosForm.append("cpf", cliente.Cpf);
         dadosForm.append("tipo", "cliente");
+
+        if (localStorage.getItem("TrocaEmail") !== null) {
+            dadosForm.append("trocarEmail", emailTroca);
+        } 
+        else {
+            dadosForm.append("trocarEmail", null!);
+        }
 
         try {
             let res = await firstValueFrom(this.http.post(link, dadosForm));
@@ -144,7 +173,33 @@ export class ConfirmarCelularPage implements OnInit {
 
                     res = await firstValueFrom(this.http.post(link, dadosForm));
 
-                    this.navCl.navigateRoot("/endereco", { animated: true, animationDirection: 'forward' });
+                    if (localStorage.getItem("TrocaEmail") !== null) {
+                        let emailTrocado = localStorage.getItem("TrocaEmail");
+                        localStorage.removeItem("TrocaEmail");
+
+                        link = dominio + "/Cliente/AlterarEmail";
+                        let dadosForm = new FormData();
+                        dadosForm.append("cpf", cliente.Cpf);
+                        dadosForm.append("nome", null!);
+                        dadosForm.append("email", emailTrocado!);
+
+                        try{
+                            let res2 = await firstValueFrom(this.http.post(link, dadosForm));
+                            cliente.Email = emailTrocado;
+                            localStorage.setItem("cliente", JSON.stringify(cliente));
+                            this.navCl.navigateRoot("/privacidade");
+                        }
+                        catch (erro: any) {
+                            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                            alert.message = "Erro ao conectar-se ao servidor";
+                            alert.present();
+                        }
+
+                    } 
+                    else {
+                        this.navCl.navigateRoot("/endereco", { animated: true, animationDirection: 'forward' });
+                    }
+
                 }
                 catch {
                     const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
