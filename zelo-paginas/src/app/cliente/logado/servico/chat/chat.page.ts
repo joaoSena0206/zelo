@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Renderer2 } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-chat',
@@ -11,16 +13,21 @@ export class ChatPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
+    msgOuvida: Subscription;
 
-    constructor(private renderer: Renderer2, private firestore: AngularFirestore) { }
+    constructor(private renderer: Renderer2, private firestore: AngularFirestore, private navCl: NavController) { }
 
     ngOnInit() {
 
 
     }
 
+    voltarPag() {
+        this.navCl.navigateRoot("/trabalhador-caminho");
+    }
+
     ionViewDidEnter() {
-        this.firestore.collection("chats").doc(this.solicitacao.CdSolicitacaoServico.toString()).collection("msgs", (ref) => ref.orderBy('data', 'asc')).stateChanges(['added']).subscribe((res: any) => {
+        this.msgOuvida = this.firestore.collection("chats").doc(this.solicitacao.CdSolicitacaoServico.toString()).collection("msgs", (ref) => ref.orderBy('data', 'asc')).stateChanges(['added']).subscribe((res: any) => {
             res.forEach((dado: any) => {
                 let data = new Date().getTime();
                 let cdSolicitacao = this.solicitacao.CdSolicitacaoServico;
@@ -65,6 +72,10 @@ export class ChatPage implements OnInit {
                 }
             });
         });
+    }
+
+    ngOnDestroy() {
+        this.msgOuvida.unsubscribe();
     }
 
     enviarMsg(valor: any) {

@@ -67,7 +67,7 @@ export class ChatPage implements OnInit {
             });
         });
 
-    }
+    }       
 
     ngOnDestroy() {
         this.msgOuvida.unsubscribe();

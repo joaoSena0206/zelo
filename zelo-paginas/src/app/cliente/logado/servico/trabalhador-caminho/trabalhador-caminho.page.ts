@@ -162,7 +162,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             else {
                 const distancia = this.calcularDistancia(this.ultimaPosicao, localizacaoAjustada);
 
-                if (distancia >= 1) {
+                if (distancia >= 3) {
                     this.calcularRota(localizacaoAjustada);
                 }
 
