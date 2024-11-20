@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
 import { Network } from '@capacitor/network';
 import { NavController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -34,7 +35,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     marcadorA: google.maps.Marker;
     marcadorB: google.maps.Marker;
 
-    constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController) { }
+    constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController, private firestore: AngularFirestore) { }
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
@@ -63,7 +64,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             // Cria o script para carregar a API do Google Maps
             const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places,marker`;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places,marker,geometry`;
             script.async = true;
             script.defer = true;
 
@@ -98,7 +99,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
             mapId: "20efc0a42b57f656",
             center: localizacaoAtual,
             zoom: 12,
-            tilt: 45,
             heading: 0,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
@@ -150,7 +150,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             const posicao = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
             const localizacao = new google.maps.LatLng(posicao.coords.latitude, posicao.coords.longitude);
             const status = await Network.getStatus();
-
+            const distanciaDestino = this.calcularDistancia(localizacao, this.destino);
             const coordsSnap = await this.chamarRoadsAPI([localizacao]);
 
             if (coordsSnap.length > 0) {
@@ -159,12 +159,24 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 if (!this.ultimaPosicao) {
                     this.ultimaPosicao = localizacaoAjustada;
 
+                    let objSnap = {
+                        latitude: localizacaoAjustada.lat(),
+                        longitude: localizacaoAjustada.lng()
+                    };
+
+                    this.firestore.collection("localizacoes").doc(this.trabalhador.Cpf).set(objSnap);
                     this.calcularRota(localizacaoAjustada);
                 }
-                else {
+                else{
                     const distancia = this.calcularDistancia(this.ultimaPosicao, localizacaoAjustada);
 
                     if (distancia >= 1) {
+                        let objSnap = {
+                            latitude: localizacaoAjustada.lat(),
+                            longitude: localizacaoAjustada.lng()
+                        };
+
+                        this.firestore.collection("localizacoes").doc(this.trabalhador.Cpf).set(objSnap);
                         this.calcularRota(localizacaoAjustada);
                     }
 
@@ -212,9 +224,16 @@ export class TrabalhadorCaminhoPage implements OnInit {
                     this.marcadorB = new google.maps.Marker({
                         map: this.mapa,
                         position: fim,
-                        label: "B",
                         title: "Destino",
                     });
+                }
+
+                let distanciaDestino = this.calcularDistancia(origem, this.destino);
+
+                if (distanciaDestino <= 1) {
+                    this.marcadorA.setMap(null);
+                    this.renderizadorDirecoes.set("directions", null);
+                    this.mapa.panTo(this.destino);
                 }
 
                 let data = new Date();
@@ -263,7 +282,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             marker.setPosition(novaPosicao);
             this.mapa.setHeading(heading);
-            this.mapa.panTo(novaPosicao)
+            this.mapa.panTo(novaPosicao);
 
             contador++;
             if (contador >= passos) {
