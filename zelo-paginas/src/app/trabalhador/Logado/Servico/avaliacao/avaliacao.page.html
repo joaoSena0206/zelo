@@ -1,23 +1,28 @@
+<div *ngIf="carregar" class="divCarregamento">
+  <div class="carregamento"></div>
+</div>
 
 <ion-content [fullscreen]="true">
-  <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+  <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
   
   <div class="content">
+    <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
     <ion-text>
       <h1 class="content__h1">Avaliação</h1>
     </ion-text>
 
     <ion-card>
-      <img class="img_perfil" src="../../../../../assets/icon/Trabalhador/imagens/fotomulher.avif" alt="">
+      <img draggable="false" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.jpg'">
 
-      <h1>Mariana Oliveira</h1>
+      <h1>{{cliente.Nome}}</h1>
 
       <div class="estrelas_avaliações">
+        <!-- <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon> -->
+        <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" (click)="carregarEstrelas(i + 1)" name="{{nomeIconeEstrela[i]}}"></ion-icon>
       </div>
 
       <p class="txt_comentario">Comentário</p>
