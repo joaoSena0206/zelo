@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { first, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
+import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-avaliacao',
@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AvaliacaoPage implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private navCl: NavController) { }
 
   ngOnInit() {
     this.carregarEstrelas(5);
@@ -67,6 +67,10 @@ export class AvaliacaoPage implements OnInit {
     finally {
         this.carregar = false;
     }
+  }
+
+  voltarPag() {
+    this.navCl.navigateBack("/inicial")
   }
 
 }

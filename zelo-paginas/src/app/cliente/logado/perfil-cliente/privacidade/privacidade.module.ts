@@ -8,12 +8,18 @@ import { PrivacidadePageRoutingModule } from './privacidade-routing.module';
 
 import { PrivacidadePage } from './privacidade.page';
 
+import { MaskitoDirective } from '@maskito/angular';
+
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PrivacidadePageRoutingModule
+    MaskitoDirective,
+    PrivacidadePageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [PrivacidadePage]
 })

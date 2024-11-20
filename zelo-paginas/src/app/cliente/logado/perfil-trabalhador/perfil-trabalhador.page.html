@@ -1,8 +1,13 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento"></div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="content">
+        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
         <ion-header class="header ion-no-border" [translucent]="true">
             <div class="titulo">
-                <ion-icon class="titulo__voltar"
+                <ion-icon (click)="voltarPag();" class="titulo__voltar"
                     src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 <h1 style="font-size: 32px; font-weight: bold; color: black;">Perfil</h1>
             </div>

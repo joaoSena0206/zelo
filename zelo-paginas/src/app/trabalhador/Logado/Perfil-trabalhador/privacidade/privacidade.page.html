@@ -91,7 +91,16 @@
 
                         <div slot="content" class="geral">
 
-                            <div *ngFor="let arquivo of arquivos">
+                            <div class="imgCertificado" *ngFor="let imagens of [1, 2] let i = index">
+                                <img class="img_servico" [src]="dominio + '/Imgs/Certificados/' + trabalhador.Cpf + '/' + '1' +'.JPG'" alt="">
+                            </div>
+
+                            <div *ngFor="let arquivo of arquivos"> 
+                                <div *ngIf="arquivo.img" class="imgCertificado">
+                                    <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
+                                    <p>{{ arquivo.arquivo.name }}</p>
+                                </div>
+
                                 <div *ngIf="arquivo.img" class="imgCertificado">
                                     <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
                                     <p>{{ arquivo.arquivo.name }}</p>

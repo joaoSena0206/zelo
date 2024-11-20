@@ -1,9 +1,9 @@
 <div *ngIf="carregar" class="divCarregamento">
-    <div class="carregamento--trabalhador"></div>
+    <div class="carregamento"></div>
 </div>
 
 <ion-content [fullscreen]="true">
-    <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+    <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
 
     <div class="content">
         <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>

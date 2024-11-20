@@ -23,6 +23,7 @@ export class InicialPage implements OnInit {
     carregar: boolean = false;
     mostrar: boolean = true;
     dominio: any = dominio;
+    listaEndereco: any = [];
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -30,6 +31,7 @@ export class InicialPage implements OnInit {
         this.carregarCategorias();
         this.carregarPatrocinados();
         this.carregarHistorico();
+        this.buscarEndereco();
 
         PushNotifications.requestPermissions().then(result => {
             if (result.receive === "granted") {
@@ -58,6 +60,31 @@ export class InicialPage implements OnInit {
             localStorage.removeItem("endereco");
         }
     }
+
+    async buscarEndereco()
+    { 
+    let link = dominio + "/Cliente/BuscarEndereco";
+    let dadosForm = new FormData();
+    dadosForm.append("cpf", this.cliente.Cpf);
+
+    try {
+        this.carregar = true;
+
+        let res = await firstValueFrom(this.http.post(link, dadosForm));
+
+        this.carregar = false;
+
+        this.listaEndereco = res;
+
+        localStorage.setItem('endereco', JSON.stringify(this.listaEndereco))
+    }
+    catch 
+    {
+        const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+        alert.message = "Erro ao conectar-se ao servidor";
+        alert.present();
+    }
+  }
 
     async enviarToken(token: any) {
         let link = dominio + "/Cliente/AdicionarTokenFCM";

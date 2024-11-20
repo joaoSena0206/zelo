@@ -43,6 +43,10 @@ export class PerfilPage implements OnInit {
         this.formatarEstrelas();
     }
 
+    voltarPag() {
+        this.navCl.back();
+      }
+
     formatarEstrelas()
     {
         const estrelas = document.querySelectorAll(".estrela_perfil");
@@ -103,4 +107,6 @@ export class PerfilPage implements OnInit {
             this.carregar = false;
         }
     }
+
+    
 }

@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class PerfilClientePage implements OnInit {
 
     dominio = dominio;
-    cliente: any = JSON.parse(localStorage.getItem("VerPerfilCliente")!);
+    cliente: any = JSON.parse(localStorage.getItem("perfil")!);
     QtAvaliacao: any;
     lista: any;
     carregar: boolean = false;
@@ -56,6 +56,11 @@ export class PerfilClientePage implements OnInit {
         this.avaliacoesFiltradas = [...this.listaDadosPerfil];
     }
 
+    voltarPag() {
+        localStorage.removeItem('perfil');
+        this.navCl.back();
+    }
+
     ngAfterViewChecked(){
         const estrelas = document.querySelectorAll(".estrela");
         
@@ -84,7 +89,7 @@ export class PerfilClientePage implements OnInit {
     }
 
     async carregarQtAvaliacao() {
-        let link = dominio + `/SolicitacaoServico/pegarEstrelasTrabalhador?cpf=${this.cliente}&tipo=cliente`;
+        let link = dominio + `/SolicitacaoServico/pegarEstrelasTrabalhador?cpf=${this.cliente.Cpf}&tipo=cliente`;
 
         let res;
 
@@ -115,6 +120,7 @@ export class PerfilClientePage implements OnInit {
     {
         let link = dominio + `/Cliente/CarregarDadosPerfil`;
         let dadosForm = new FormData();
+        dadosForm.append("cpfCliente", this.cliente.Cpf);
 
         try {
             this.carregar = true;
@@ -143,7 +149,6 @@ export class PerfilClientePage implements OnInit {
                 this.listaData.push(this.DataFormatada);
                 
             }
-            console.log(this.listaDadosPerfil)
 
             this.mudarFiltro('Todas');
             this.calcularPorcentagem(this.listaDadosPerfil);
@@ -215,6 +220,27 @@ export class PerfilClientePage implements OnInit {
         this.Porcentagem3 = (this.nPorcentagem3 / listaDadosPerfil.length) * 100;
         this.Porcentagem4 = (this.nPorcentagem4 / listaDadosPerfil.length) * 100;
         this.Porcentagem5 = (this.nPorcentagem5 / listaDadosPerfil.length) * 100;
+
+        if(Number.isNaN(this.Porcentagem1))
+        {
+            this.Porcentagem1 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem2))
+        {
+            this.Porcentagem2 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem3))
+        {
+            this.Porcentagem3 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem4))
+        {
+            this.Porcentagem4 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem5))
+        {
+            this.Porcentagem5 = 0;
+        }
     }
 
 }

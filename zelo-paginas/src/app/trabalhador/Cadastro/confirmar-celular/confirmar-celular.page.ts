@@ -86,14 +86,18 @@ export class ConfirmarCelularPage implements OnInit {
     }
 
     ionViewDidLeave() {
-        this.showTemporaryToast();
+        const nextUrl = this.router.url;
+
+        if (nextUrl === '/trabalhador/privacidade') {
+            this.showTemporaryToast();
+        }
     }
 
     async showTemporaryToast() {
         const toast = await this.toastController.create({
           message: 'Dado(s) alterado com sucesso!',
           duration: 2000,
-          color: 'light shade',
+          position: 'top',
           cssClass: 'custom-toast',
         });
     
@@ -141,9 +145,6 @@ export class ConfirmarCelularPage implements OnInit {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
-        }
-        finally {
-            this.carregar = false;
         }
     }
 

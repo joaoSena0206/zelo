@@ -13,8 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class PerfilTrabalhadorPage implements OnInit {
 
     dominio = dominio;
-    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
-    Nome: any = this.trabalhador.Nome;
+    trabalhador: any = JSON.parse(localStorage.getItem("perfil")!);
     QtAvaliacao: any;
     lista: any;
     carregar: boolean = false;
@@ -56,6 +55,11 @@ export class PerfilTrabalhadorPage implements OnInit {
     ionViewWillEnter() {
         this.carregarDadosPerfil();
         this.avaliacoesFiltradas = [...this.listaDadosPerfil];
+    }
+
+    voltarPag() {
+        localStorage.removeItem('perfil');
+        this.navCl.back();
     }
 
     ngAfterViewChecked(){
@@ -117,7 +121,6 @@ export class PerfilTrabalhadorPage implements OnInit {
     {
         let link = dominio + `/Trabalhador/CarregarDadosPerfil`;
         let dadosForm = new FormData();
-
         dadosForm.append("cpfTrabalhador", this.trabalhador.Cpf);
 
         try {
@@ -145,7 +148,7 @@ export class PerfilTrabalhadorPage implements OnInit {
                 }
     
                 this.listaData.push(this.DataFormatada);
-                    
+                
             }
 
             this.mudarFiltro('Todas');
@@ -218,5 +221,26 @@ export class PerfilTrabalhadorPage implements OnInit {
         this.Porcentagem3 = (this.nPorcentagem3 / listaDadosPerfil.length) * 100;
         this.Porcentagem4 = (this.nPorcentagem4 / listaDadosPerfil.length) * 100;
         this.Porcentagem5 = (this.nPorcentagem5 / listaDadosPerfil.length) * 100;
+
+        if(Number.isNaN(this.Porcentagem1))
+        {
+            this.Porcentagem1 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem2))
+        {
+            this.Porcentagem2 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem3))
+        {
+            this.Porcentagem3 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem4))
+        {
+            this.Porcentagem4 = 0;
+        }
+        if(Number.isNaN(this.Porcentagem5))
+        {
+            this.Porcentagem5 = 0;
+        }
     }
 }

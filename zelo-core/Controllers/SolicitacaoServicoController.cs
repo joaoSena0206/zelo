@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using FirebaseAdmin.Messaging;
 using System.Runtime.Intrinsics.X86;
+using MySqlX.XDevAPI;
 
 [ApiController]
 [Route("SolicitacaoServico")]
@@ -338,11 +339,11 @@ public class SolicitacaoServicoController : ControllerBase
 
             if(tipo == "trabalhador")
             {
-                comando = $"select ROUND(AVG(qt_estrelas_avaliacao_servico)), count(qt_estrelas_avaliacao_servico), count(nm_codigo_aleatorio) from solicitacao_servico where cd_cpf_trabalhador = '{cpf}' and nm_codigo_aleatorio != ''";
+                comando = $"SELECT COALESCE(ROUND(AVG(qt_estrelas_avaliacao_servico)), 5) AS avg_estrelas, COUNT(qt_estrelas_avaliacao_servico) AS count_estrelas, COUNT(nm_codigo_aleatorio) AS count_codigos FROM solicitacao_servico WHERE cd_cpf_trabalhador = '{cpf}' AND nm_codigo_aleatorio != ''";
             }
             else
             {
-                comando = $"select ROUND(AVG(qt_estrelas_avaliacao_cliente)), count(qt_estrelas_avaliacao_cliente), count(nm_codigo_aleatorio) from solicitacao_servico where cd_cpf_cliente = '{cpf}' and nm_codigo_aleatorio != ''";
+                comando = $"SELECT COALESCE(ROUND(AVG(qt_estrelas_avaliacao_cliente)), 5) AS avg_estrelas, COUNT(qt_estrelas_avaliacao_cliente) AS count_estrelas, COUNT(nm_codigo_aleatorio) AS count_codigos FROM solicitacao_servico WHERE cd_cpf_cliente = '{cpf}' AND nm_codigo_aleatorio != ''";
             }
 
             MySqlDataReader dados = banco.Consultar(comando);
@@ -445,12 +446,116 @@ public class SolicitacaoServicoController : ControllerBase
                     cliente.Nome = dados.GetString("nm_cliente");
                     cliente.Cpf = dados.GetString(6);
                     solicitacaoServico.Cliente = cliente;
+
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
                     solicitacaoServico.DsServico = dados.GetString("ds_servico");
                     solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
                     solicitacaoServico.CdSolicitacaoServico = dados.GetInt16(4);
                     solicitacaoServico.NmCodigoAleatorio = dados.GetString(5);
 
+                    listahistoricotrabalhador.Add(solicitacaoServico);
+                }
+            }
+
+            if (!dados.IsClosed)
+            {
+                dados.Close();
+            }
+
+            return Ok(listahistoricotrabalhador);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+
+    }
+
+    [HttpGet("CarregarHistoricoCliente")]
+    public IActionResult CarregarHisotricoCliente([FromQuery] string cpf, [FromQuery] string tipo)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
+
+            string comando = "";
+
+            if(tipo == "favoritos")
+            {
+                comando = $@"SELECT 
+                                    S.nm_servico, 
+                                    F.cd_cpf_trabalhador, 
+                                    T.nm_trabalhador, 
+                                    T.vl_visita_trabalhador,
+                                    COALESCE(
+                                        (SELECT ROUND(AVG(SS.qt_estrelas_avaliacao_servico)) 
+                                         FROM solicitacao_servico SS 
+                                         WHERE SS.cd_cpf_trabalhador = T.cd_cpf_trabalhador and SS.nm_codigo_aleatorio != '' ), 
+                                        5
+                                    ) AS mediaestrelas
+                                FROM 
+                                    trabalhador T
+                                JOIN 
+                                    favoritos F ON T.cd_cpf_trabalhador = F.cd_cpf_trabalhador
+                                JOIN 
+                                    servico_trabalhador ST ON F.cd_cpf_trabalhador = ST.cd_cpf_trabalhador
+                                JOIN 
+                                    servico S ON ST.cd_servico = S.cd_servico
+                                WHERE 
+                                    F.cd_cpf_cliente = '{cpf}' 
+                                ORDER BY 
+                                    S.nm_servico;";
+            }
+            else
+            {
+                comando = $@"select S.nm_servico, T.cd_cpf_trabalhador, T.nm_trabalhador, SS.dt_solicitacao_servico, T.vl_visita_trabalhador,
+                                (select ROUND(AVG(SS.qt_estrelas_avaliacao_servico)) from solicitacao_servico SS) as mediaestrelas
+                                from solicitacao_servico SS 
+                                join trabalhador T on ( SS.cd_cpf_trabalhador = T.cd_cpf_trabalhador) 
+                                join servico_trabalhador ST on ( T.cd_cpf_trabalhador = ST.cd_cpf_trabalhador )
+                                join servico S on ( ST.cd_servico = S.cd_servico ) where cd_cpf_cliente = '{cpf}' and nm_codigo_aleatorio != ''";
+            }
+
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+
+                    Trabalhador trabalhador = new Trabalhador();
+                    Servico servico = new Servico();
+
+                    servico.Nome = dados.GetString(0);
+
+                    trabalhador.Cpf = dados.GetString(1);
+                    trabalhador.Nome = dados.GetString(2);
+                    
+
+                    if (tipo == "favoritos")
+                    {
+                        trabalhador.ValorVisita = dados.GetDecimal(3);
+                        solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(4);
+                    }
+                    else
+                    {
+                        solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime(3);
+                        trabalhador.ValorVisita = dados.GetDecimal(4);
+                        solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(5);
+                    }
+                    
+                    solicitacaoServico.Servico = servico;
+                    solicitacaoServico.Trabalhador = trabalhador;
+                    
                     listahistoricotrabalhador.Add(solicitacaoServico);
                 }
             }

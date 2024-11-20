@@ -13,7 +13,6 @@ INSERT INTO trabalhador VALUES
 ('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'dasdads', TRUE, TRUE, 32.65, -23.9336, -46.3221, ""),
 ('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'dasdads', TRUE, TRUE, 25.50, -23.9560, -46.3305, "");
 
-
 INSERT INTO patrocinio VALUE(
 	'56787654567', 2, 2, 200, '2024-09-21'
 );
@@ -62,6 +61,15 @@ INSERT INTO cliente VALUES('12345218909', 'Roberto', '2023-09-08', 'joao.silva@g
 INSERT INTO cliente VALUES('12345674322', 'Julio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
 INSERT INTO cliente VALUES('12345678909', 'Alberto', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
 INSERT INTO cliente VALUES('12345672469', 'Fabio', '2023-09-08', 'joao.silva@gmail.com', md5('Jo@1234Silva!'), 1, "");
+
+INSERT INTO favoritos (cd_cpf_cliente, cd_cpf_trabalhador)
+VALUES
+('50082480818', '53890618880'),
+('50082480818', '56787654567'),
+('50082480818', '50082480818'),
+('50082480818', '78901234567'),
+('50082480818', '56789012345'),
+('50082480818', '34567890123');
 
 INSERT INTO solicitacao_servico VALUES
 (

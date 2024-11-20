@@ -20,7 +20,7 @@
 
         <div class="título_ultimos_pedidos" *ngIf="historico?.length > 0">
             <h3>Últimos Pedidos</h3>
-            <p>Ver Todos</p>
+            <p [routerLink]="['/ultimos-pedidos']">Ver Todos</p>
         </div>
 
         <div class="local_ultimos_trabalhos">

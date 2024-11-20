@@ -136,42 +136,11 @@ export class UltimosPedidosPage implements OnInit {
     }
 }
 
-VerPerfil(Cpf: any){
-  localStorage.setItem('VerPerfilCliente', Cpf);
+VerPerfil(Cpf: any, Nome: any){
+  let clienteVerPerfil = {Cpf: Cpf, Nome: Nome}
+  localStorage.setItem('perfil', JSON.stringify(clienteVerPerfil))
   this.navCl.navigateBack("/trabalhador/perfil-cliente")
 }
-
-  /* async carregarImgServico(cdSolicitacao: any) {
-    try {
-      this.carregar = true;
-
-      let link = dominio + `/ImgSolicitacao/CarregarImgs?cdSolicitacao=${cdSolicitacao}&quantidade=1`;
-      let res: any = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
-
-      if (res.length > 0) {
-        link = dominio + `/Imgs/Solicitacao/${cdSolicitacao}/1${res[0].tipoArquivo}`;
-      }
-      else {
-        link = "../../../../assets/icon/geral/sem-foto.jpg";
-      }
-
-      res = await firstValueFrom(this.http.get(link, { headers: headerNgrok, responseType: "blob" }));
-
-      const urlImg = URL.createObjectURL(res);
-
-      return urlImg;
-    }
-    catch (erro: any) {
-      const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-      alert.message = "Erro ao conectar-se ao servidor";
-      alert.present();
-    }
-    finally {
-      this.carregar = false;
-    }
-
-    return null;
-  } */
 
   ngAfterViewInit() {
     this.carregarHistorico();
