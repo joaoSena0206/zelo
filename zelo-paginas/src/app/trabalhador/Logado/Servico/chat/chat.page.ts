@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NavController } from '@ionic/angular';
 import { Renderer2 } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-chat',
@@ -12,21 +14,19 @@ export class ChatPage implements OnInit {
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
     msgAnterior: any;
+    msgOuvida: Subscription;
 
-    constructor(private firestore: AngularFirestore, private renderer: Renderer2) { }
+    constructor(private firestore: AngularFirestore, private renderer: Renderer2, private navCl: NavController) { }
 
     ngOnInit() {
-    }
+        const divMsgs = this.renderer.selectRootElement(".divMsgs", true);
 
-    ionViewDidEnter() {
-        this.firestore.collection("chats").doc(this.solicitacao.CdSolicitacaoServico.toString()).collection("msgs", (ref) => ref.orderBy('data', 'asc')).stateChanges(['added']).subscribe((res: any) => {
+
+        this.msgOuvida = this.firestore.collection("chats").doc(this.solicitacao.CdSolicitacaoServico.toString()).collection("msgs", (ref) => ref.orderBy('data', 'asc')).stateChanges(['added']).subscribe((res: any) => {
             res.forEach((dado: any) => {
                 let dados = dado.payload.doc.data();
 
-
                 if (dados.tipo == "cliente") {
-                    const divMsgs = this.renderer.selectRootElement(".divMsgs", true);
-
                     const divGeral = this.renderer.createElement("div");
                     this.renderer.addClass(divGeral, "geral");
 
@@ -66,6 +66,19 @@ export class ChatPage implements OnInit {
                 }
             });
         });
+
+    }
+
+    ngOnDestroy() {
+        this.msgOuvida.unsubscribe();
+    }
+
+    ionViewDidEnter() {
+
+    }
+
+    voltarPag() {
+        this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
     }
 
     enviarMsg(valor: any) {
