@@ -10,6 +10,22 @@ ion-content {
     --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
 }
 
+.btnRecorte {
+    font-size: 16px;
+    --border-radius: 20px;
+    width: 150px;
+    --padding-top: 5px;
+    --padding-bottom: 5px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --background: #F66701;
+    text-transform: none;
+    position: absolute;
+    left: 50%;
+    bottom: -60px;
+    transform: translateX(-50%);
+}
+
 .header {
     display: flex;
     justify-content: center;
@@ -67,8 +83,7 @@ h1 {
     right: 0;
 }
 
-.ion_item__icon
-{
+.ion_item__icon {
     position: absolute;
     top: 50%;
     bottom: 50%;
@@ -102,9 +117,10 @@ h1 {
     --padding-end: 25px;
     font-size: 15px;
 }
-  
+
 ion-input {
---highlight-height: 0px; /* remove a linha azul padrão */
+    --highlight-height: 0px;
+    /* remove a linha azul padrão */
 }
 
 .txt {
@@ -208,25 +224,25 @@ ion-input {
     padding: 30px;
 }
 
-.imgCertificado{
+.imgCertificado {
     margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.add_certificado ion-button{
+.add_certificado ion-button {
     width: 100%;
     margin-top: 15px;
     --background: #BABABA;
     color: black;
 }
 
-.imgCertificado{
+.imgCertificado {
     position: relative;
 }
 
-.icone_lixo{
+.icone_lixo {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -257,14 +273,16 @@ ion-input {
 }
 
 
-#modal_dados, #modal_certificado{
+#modal_dados,
+#modal_certificado {
     --width: fit-content;
     --height: fit-content;
     --border-radius: 25px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
 }
 
-#modal_dados, #modal_certificado{
+#modal_dados,
+#modal_certificado {
     padding: 0 10px;
 }
 
@@ -290,7 +308,7 @@ ion-input {
     position: relative;
 }
 
-.area_branca{
+.area_branca {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -325,8 +343,7 @@ ion-input {
 
 //---------------------------------------------------//
 
-.form__text
-{
+.form__text {
     color: #CB2316;
     font-weight: 700;
 }
@@ -352,7 +369,7 @@ ion-input {
     font-size: 16px;
     line-height: 1.5;
     width: 300px;
-    position: fixed; 
+    position: fixed;
     left: 50%;
     transform: translateX(-50%);
 }

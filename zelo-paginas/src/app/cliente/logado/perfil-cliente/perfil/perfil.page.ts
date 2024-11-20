@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { first, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
     selector: 'app-perfil',
@@ -10,7 +11,6 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
 
     constructor(private navCl: NavController, private http: HttpClient) { }
@@ -19,20 +19,20 @@ export class PerfilPage implements OnInit {
         this.carregarQtAvaliacao();
     }
 
-    ngAfterViewChecked(){
+    ngAfterViewChecked() {
         this.formatarEstrelas();
     }
 
     voltarPag() {
         this.navCl.back();
-      }
+    }
 
     ngAfterViewInit() {
     }
 
-    formatarEstrelas(){
+    formatarEstrelas() {
         const estrelas = document.querySelectorAll(".estrela_perfil");
-        
+
         if (estrelas.length == 3) {
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
         }
