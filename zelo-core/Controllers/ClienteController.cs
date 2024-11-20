@@ -464,7 +464,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("CarregarDadosPerfil")]
-    async public Task<IActionResult> CarregarDadosPerfil()
+    async public Task<IActionResult> CarregarDadosPerfil([FromForm] string cpfCliente)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -474,10 +474,10 @@ public class ClienteController : ControllerBase
             #region Busca os dados no banco
 
             string comando = $@"
-            select T.nm_trabalhador, SS.qt_estrelas_avaliacao_cliente, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
+            select T.cd_cpf_trabalhador, T.nm_trabalhador, SS.qt_estrelas_avaliacao_cliente, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
             from solicitacao_servico SS 
             join trabalhador T on(SS.cd_cpf_trabalhador = T.cd_cpf_trabalhador) 
-            where nm_codigo_aleatorio != ''";
+            where nm_codigo_aleatorio != '' and SS.cd_cpf_cliente = '{cpfCliente}';";
 
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -490,11 +490,12 @@ public class ClienteController : ControllerBase
                     SolicitacaoServico servicoTrabalhador = new SolicitacaoServico();
                     Trabalhador trabalhador = new Trabalhador();
 
-                    trabalhador.Nome = dados.GetString(0);
+                    trabalhador.Cpf = dados.GetString(0);
+                    trabalhador.Nome = dados.GetString(1);
 
-                    servicoTrabalhador.QtEstrelasAvaliacaoServico = dados.GetDecimal(1);
-                    servicoTrabalhador.DtSolicitacaoServico = dados.GetDateTime(2);
-                    servicoTrabalhador.DsComentarioAvaliacaoCliente = dados.GetString(3);
+                    servicoTrabalhador.QtEstrelasAvaliacaoServico = dados.GetDecimal(2);
+                    servicoTrabalhador.DtSolicitacaoServico = dados.GetDateTime(3);
+                    servicoTrabalhador.DsComentarioAvaliacaoCliente = dados.GetString(4);
 
                     servicoTrabalhador.Trabalhador = trabalhador;
 
@@ -517,4 +518,183 @@ public class ClienteController : ControllerBase
             banco.Desconectar();
         }
     }
+
+    [HttpPost("AlterarEmail")]
+    public IActionResult AlterarEmail([FromForm] string cpf, [FromForm] string nome, [FromForm] string email)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+
+            if (nome == "null")
+            {
+                comando = $@"UPDATE cliente 
+                        SET nm_email_cliente = '{email}'
+                        WHERE cd_cpf_cliente = '{cpf}'";
+            }
+            else
+            {
+                comando = $@"UPDATE cliente 
+                        SET nm_cliente = '{nome}'
+                        WHERE cd_cpf_cliente = '{cpf}'";
+            }
+
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpPost("VerificarSenha")]
+    public IActionResult VerificarSenha([FromForm] string cpf, [FromForm] string senha)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+            int? SenhaConfere = null;
+
+            comando = $@"SELECT EXISTS  ( SELECT 1 FROM cliente WHERE nm_senha_cliente = md5('{senha}') AND cd_cpf_cliente = '{cpf}' ) AS ExisteIgualdade";
+
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    SenhaConfere = dados.GetInt16(0);
+                }
+            }
+
+            dados.Close();
+
+            return Ok(SenhaConfere);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpPost("AlterarSenha")]
+    public IActionResult AlterarSenha([FromForm] string cpf, [FromForm] string novaSenha)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+
+            comando = $@"UPDATE cliente SET nm_senha_cliente = md5('{novaSenha}') WHERE cd_cpf_cliente = '{cpf}'";
+
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpPost("BuscarEndereco")]
+    public IActionResult BuscarEndereco([FromForm] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+
+            string comando = $@"select cd_cep_endereco, nm_identificacao_endereco, cd_numero_endereco, ds_complemento_endereco, nm_referencia_endereco from endereco where cd_cpf_cliente = '{cpf}'";
+
+            MySqlDataReader dados = banco.Consultar(comando);
+            List<Endereco> listaEndereco = new List<Endereco>();
+
+            if (dados != null)
+            {
+                while (dados.Read())
+                {
+                    Endereco endereco = new Endereco();
+
+                    endereco.Cep = dados.GetString(0);
+                    endereco.Identificacao = dados.GetString(1);
+                    endereco.Numero = dados.GetInt16(2);
+                    endereco.Complemento = dados.GetString(3);
+                    endereco.Referencia = dados.GetString(4);
+
+                    listaEndereco.Add(endereco);
+                }
+            }
+
+            dados.Close();
+
+            return Ok(listaEndereco);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpPost("AlterarEndereco")]
+    public IActionResult AlterarEndereco([FromForm] string cpf, [FromForm] string identificacao, [FromForm] string cep, [FromForm] int numero, [FromForm] string complemento, [FromForm] string referencia)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = "";
+
+            comando = $@"UPDATE endereco
+                            SET 
+                                cd_cep_endereco = '{cep}',
+                                nm_identificacao_endereco = '{identificacao}',
+                                cd_numero_endereco = {numero},
+                                ds_complemento_endereco = '{complemento}',
+                                nm_referencia_endereco = '{referencia}'
+                            WHERE 
+                                cd_cpf_cliente = '{cpf}'";
+
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
 }
