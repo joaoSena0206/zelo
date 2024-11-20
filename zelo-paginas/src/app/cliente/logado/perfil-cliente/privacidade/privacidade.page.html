@@ -1,57 +1,84 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento"></div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="wrapper">
         <div class="grupo">
             <ion-header class="header ion-no-border" [translucent]="true">
                 <div class="titulo">
-                    <ion-icon class="titulo__voltar"
+                    <ion-icon class="titulo__voltar" (click)="voltarPag()"
                         src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 </div>
                 <div class="area_foto_perfil">
                     <ion-icon class="icone_editar" src="../../../assets/icon/cliente/editar.svg"></ion-icon>
-                    <img class="foto_perfil" src="../../../assets/icon/cliente/foto_perfil.png" alt="">
+                    <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.JPG'"
+                        alt="Foto de Perfil">
                 </div>
             </ion-header>
 
             <div class="content">
+
+                <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
                 <ion-accordion-group class="ion_accordion_group">
                     <ion-accordion value="first">
                         <ion-item slot="header" class="div_titulo">
                             <h1>Meus dados</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral">
+                        <div [formGroup]="formDados" slot="content" class="geral">
                             <div class="area_dado">
                                 <p class="txt">Nome</p>
-                                <ion-input class="input" [disabled]="true" placeholder="Nome" value="Maria Oliveira">
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                </ion-input>
+                                <div style="position: relative;">
+                                    <ion-input id="inputNome" (keyup)="AtivarBotaoSalvar($event)"
+                                        [disabled]="isDisabled" class="input" placeholder="Nome"
+                                        value="{{cliente.Nome}}"
+                                        (ionInput)="validacaoInput(formDados.controls['Nome'])"
+                                        [class.inputErro]="formDados.controls['Nome'].invalid && (formDados.controls['Nome'].touched || formDados.controls['Nome'].dirty)"
+                                        formControlName="Nome">
+                                    </ion-input>
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline">
+                                    </ion-icon>
+                                </div>
                             </div>
+
+                            <span
+                                [ngClass]="formDados.controls['Nome'].invalid && (formDados.controls['Nome'].touched || formDados.controls['Nome'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.Nome}}
+                            </span>
 
                             <div class="area_dado">
                                 <p class="txt">Email</p>
-                                <ion-input class="input" [disabled]="true" placeholder="Email" value="maria@gmail.com">
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                </ion-input>
-                            </div>
+                                <div style="position: relative; margin-bottom: 10px;">
+                                    <ion-input id="inputEmail" (keyup)="AtivarBotaoSalvar($event)"
+                                        (ionInput)="validacaoInput(formDados.controls['email'])" class="input"
+                                        [class.inputErro]="formDados.controls['email'].invalid && (formDados.controls['email'].touched || formDados.controls['email'].dirty)"
+                                        formControlName="email" placeholder="Email" value="{{cliente.Email}}">
+                                    </ion-input>
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline">
+                                    </ion-icon>
+                                </div>
 
-                            <div class="area_dado">
-                                <p class="txt">Telefone</p>
-                                <ion-input class="input" [disabled]="true" placeholder="Telefone"
-                                    value="(13) 98566-7453">
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                </ion-input>
+                                <span
+                                    [ngClass]="formDados.controls['email'].invalid && (formDados.controls['email'].touched || formDados.controls['email'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.email }}
+                                </span>
+
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpan">Email já cadastrado!</span>
                             </div>
 
                             <div class="area_dado">
                                 <p class="txt">Data de Nascimento</p>
                                 <ion-input class="input" [disabled]="true" placeholder="Data de nascimento"
-                                    value="27/08/1999"></ion-input>
+                                    value="{{novoTexto}}"></ion-input>
                             </div>
 
                             <div class="area_dado">
                                 <p class="txt">CPF</p>
                                 <ion-input class="input" [disabled]="true" placeholder="CPF"
-                                    value="324.193.529-83"></ion-input>
+                                    value="{{cpfFormatado}}"></ion-input>
                             </div>
                         </div>
                     </ion-accordion>
@@ -62,70 +89,98 @@
                             <h1>Endereço</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral">
-                            <div class="div_lado">
-                                <div class="area_dado identificacao_cep">
+                        <div slot="content" class="geral" [formGroup]="endereco">
+                            <div class="div_lado" >
+                                <div style="position: relative;" class="area_dado identificacao_cep">
                                     <p class="txt">Identificação</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="Identificação" value="Casa">
-                                        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                    </ion-input>
+
+                                    <ion-input (keyup)="AtivarBotaoSalvar3($event)" formControlName="identificacao" class="input"
+                                    (ionInput)="validarControl(endereco.controls['identificacao'])"
+                                    [class.inputErro]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty)"
+                                    placeholder="{{listaEndereco[0].Identificacao}}" id="Identificacao" value=""></ion-input>
+
+                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                                 </div>
 
-                                <div class="area_dado identificacao_cep">
+                                <div style="position: relative;" class="area_dado identificacao_cep">
                                     <p class="txt">CEP</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="CEP" value="11360-400">
-                                        <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                    </ion-input>
+
+                                    <ion-input formControlName="cep" (keyup)="AtivarBotaoSalvar3($event)" id="cep"
+                                    [class.inputErro]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty)"
+                                    (ionInput)="buscarCep(endereco.controls['cep']); validarControl(endereco.controls['cep'])"
+                                    [maskito]="cepMask" [maskitoElement]="maskPredicate" class="input"
+                                    placeholder="{{listaEndereco[0].Cep}}" value="{{listaEndereco[0].Cep}}"></ion-input>
+
+                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="div_lado">
                                 <div class="area_dado cep_bairro estado">
                                     <p class="txt">Estado</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="Estado"
-                                        value="SP"></ion-input>
+                                    <ion-input [disabled]="true" formControlName="estado" class="input" placeholder="SP"></ion-input>
                                 </div>
 
                                 <div class="area_dado input_padrao">
                                     <p class="txt">Cidade</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="Cidade"
-                                        value="Santos"></ion-input>
+                                    <ion-input [disabled]="true" formControlName="cidade" class="input" placeholder="Santos"></ion-input>
                                 </div>
 
                                 <div class="area_dado input_padrao">
                                     <p class="txt">Bairro</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="Bairro"
-                                        value="Jockey Club"></ion-input>
+                                    <ion-input formControlName="bairro" [disabled]="true" class="input" placeholder="Bairro"></ion-input>
                                 </div>
                             </div>
 
                             <div class="div_lado">
                                 <div class="area_dado input_padrao">
                                     <p class="txt">Rua</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="Rua"
-                                        value="Rua Anadir Dias de Carvalho"></ion-input>
+                                    <ion-input formControlName="rua" type="text" [disabled]="true" placeholder="Rua Godofredo Fraga" class="input"></ion-input>
                                 </div>
 
                                 <div class="area_dado numero">
                                     <p class="txt">Número</p>
-                                    <ion-input class="input" [disabled]="true" placeholder="Número"
-                                        value="342"></ion-input>
+
+                                    <ion-input id="numero" (keyup)="AtivarBotaoSalvar3($event)" formControlName="numero" (ionInput)="validarControl(endereco.controls['numero'])"
+                                    [class.inputErro]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty)"
+                                    class="input" value="" placeholder="{{listaEndereco[0].Numero}}"></ion-input>
                                 </div>
                             </div>
 
-                            <div class="area_dado">
+                            <div class="area_dado" style="position: relative;">
                                 <p class="txt">Complemento</p>
-                                <ion-input class="input" [disabled]="true" placeholder="Complemento" value="">
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                </ion-input>
+                                <ion-input formControlName="complemento" id="complemento" class="input" value="" placeholder="Complemento"></ion-input>
+
+                                <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                             </div>
 
-                            <div class="area_dado">
+                            <div class="area_dado" style="position: relative; margin-bottom: 10px;">
                                 <p class="txt">Ponto de Referência</p>
-                                <ion-input class="input" [disabled]="true" placeholder="Referência" value="">
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
-                                </ion-input>
+                                <ion-input formControlName="pontoReferencia" id="referencia" class="input"
+                                placeholder="{{listaEndereco[0].Referencia}}"></ion-input>
+
+                                <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
                             </div>
+
+                            <div style="width: 100vh; margin-bottom: 5px;">
+                                <span style="width: 100%; margin-top: 10px;"
+                                [ngClass]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.identificacao }}</span>
+                            </div>
+                            
+                            <div style="width: 100vh; margin-bottom: 5px;">
+                                <span style="width: 100%; margin-top: 10px;"
+                                [ngClass]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.cep }}</span>
+                            </div>
+                            
+                            <div style="width: 100vh; margin-bottom: 5px;">
+                                <span style="width: 100%; margin-top: 10px;"
+                                [ngClass]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty) ? 'erro' : 'escondido'">{{
+                                erro.numero }}</span>
+                            </div>
+                            
+
                         </div>
                     </ion-accordion>
                 </ion-accordion-group>
@@ -135,38 +190,96 @@
                             <h1>Alterar Senha</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral">
-                            <div class="area_dado">
+                        <div [formGroup]="form" slot="content" class="geral">
+
+                            <div formGroupName="senhas" style="display: flex; flex-direction: column;">
+
                                 <p class="txt">Senha atual</p>
-                                <ion-input class="input" [disabled]="true" type="password" placeholder="Senha atual"
-                                    value="">
-                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
-                                </ion-input>
-                            </div>
 
-                            <div class="area_dado">
+                                <ion-input id="Senha_Atual" formControlName="Senha_Atual" (keyup)="AtivarBotaoSalvar2($event)"
+                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['Senha_Atual'])"
+                                    [class.inputErro]="form.controls['senhas'].controls['Senha_Atual'].invalid && (form.controls['senhas'].controls['Senha_Atual'].touched || form.controls['senhas'].controls['Senha_Atual'].dirty)"
+                                    type="password" class="input" placeholder="Crie sua senha">
+
+                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                        name="eye-off-outline" aria-hidden="true">
+                                    </ion-icon>
+                                </ion-input>
+
+                                <span
+                                    [ngClass]="form.controls['senhas'].controls['Senha_Atual'].invalid && (form.controls['senhas'].controls['Senha_Atual'].touched || form.controls['senhas'].controls['Senha_Atual'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.Senha_Atual }}
+                                </span>
+
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual incorreta!</span>
+
                                 <p class="txt">Nova senha</p>
-                                <ion-input class="input" [disabled]="true" type="password" placeholder="Nova senha"
-                                    value="">
-                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
+
+                                <ion-input id="senhaNova" formControlName="senha" (keyup)="AtivarBotaoSalvar2($event)"
+                                    (ionInput)="validacaoInput(form.controls['senhas'].controls['senha'])"
+                                    [class.inputErro]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty)"
+                                    type="password" class="input" placeholder="Crie sua senha">
+
+                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                        name="eye-off-outline" aria-hidden="true">
+                                    </ion-icon>
                                 </ion-input>
+
+                                <span
+                                    [ngClass]="form.controls['senhas'].controls['senha'].invalid && (form.controls['senhas'].controls['senha'].touched || form.controls['senhas'].controls['senha'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.senha }}
+                                </span>
+
+                                <p class="txt">Confirmar nova senha</p>
+
+                                <ion-input id="senha" (keyup)="AtivarBotaoSalvar2($event)"
+                                    formControlName="confirmarSenha"
+                                    [class.inputErro]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty)"
+                                    type="password" class="input" placeholder="Confirme sua senha">
+
+                                    <ion-icon (click)="estadoSenha($event)" class="ion_item__icon" slot="icon-only"
+                                        name="eye-off-outline" aria-hidden="true">
+                                    </ion-icon>
+                                </ion-input>
+
+                                <span
+                                    [ngClass]="form.controls['senhas'].hasError('confere') && (form.controls['senhas'].touched || form.controls['senhas'].dirty) ? 'erro' : 'escondido'">{{
+                                    form.controls['senhas'].errors?.['confere'].msg }}
+                                </span>
                             </div>
 
-                            <div class="area_dado">
-                                <p class="txt">Confirmar nova senha</p>
-                                <ion-input class="input" [disabled]="true" type="password"
-                                    placeholder="Confirmar nova senha" value="">
-                                    <ion-icon class="iconeEditar" name="eye-off-outline"></ion-icon>
-                                </ion-input>
-                            </div>
                         </div>
                     </ion-accordion>
                 </ion-accordion-group>
 
                 <div class="divBtn">
-                    <ion-button disabled="true" class="btn">Salvar</ion-button>
+                    <ion-button id="abrir_modal_confirmar_dados" [disabled]="situacaoBotao" class="btn">Salvar
+                    </ion-button>
                 </div>
             </div>
         </div>
     </div>
 </ion-content>
+
+<ion-modal id="modal_dados" #modal_dados trigger="abrir_modal_confirmar_dados">
+    <ng-template>
+
+        <ion-card class="poupop">
+
+            <div class="area_vermelha">
+                <ion-icon (click)="modal_dados.dismiss();" class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <div class="circulo_branca">
+                    <ion-icon class="iconeInterrogacao"
+                        src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+                </div>
+            </div>
+
+            <div class="area_branca">
+                <h1 class="h1_denuncia">Confirmar mudança de dados?</h1>
+                <ion-button class="form__btn" (click)="salvar(); modal_dados.dismiss();">Confirmar</ion-button>
+            </div>
+
+        </ion-card>
+
+    </ng-template>
+</ion-modal>
