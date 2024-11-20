@@ -1,7 +1,7 @@
 import { HtmlTagDefinition } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
-
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-suporte',
@@ -14,7 +14,7 @@ export class SuportePage implements OnInit {
 
   @ViewChild('modal_enviado_com_sucesso', { static: true }) modal: IonModal;
 
-  constructor() { }
+  constructor(private navCl: NavController) { }
 
   abrirModal() {
     this.modal.present();
@@ -23,6 +23,10 @@ export class SuportePage implements OnInit {
     setTimeout(() => {
       this.modal.dismiss();
     }, tempo_em_ms);
+  }
+
+  voltarPag() {
+    this.navCl.back();
   }
   
   validarcampos(){
