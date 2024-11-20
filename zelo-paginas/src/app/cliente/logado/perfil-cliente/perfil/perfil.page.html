@@ -1,15 +1,17 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento"></div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="content">
-
-
+        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
         <ion-header class="header ion-no-border" [translucent]="true">
             <div class="titulo">
-                <ion-icon class="titulo__voltar"
+                <ion-icon (click)="voltarPag()" class="titulo__voltar"
                     src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 <h1 style="font-size: 32px; font-weight: bold;">Perfil</h1>
             </div>
             <div class="area_foto_perfil">
-                <ion-icon class="icone_editar" src="../../../../assets/icon/cliente/editar.svg"></ion-icon>
                 <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.JPG'" alt="">
 
                 <!-- <div class="estrelas">
@@ -37,7 +39,7 @@
         <ion-list class="ion_list">
 
             <div>
-                <div class="area_btn">
+                <div class="area_btn" [routerLink]="['/privacidade']">
                     <div class="txt_icon">
                         <ion-icon class="iconeIdentificacao" name="lock-closed-outline"></ion-icon>
                         <p class="txt">Privacidade</p>
@@ -47,7 +49,7 @@
                         src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 </div>
 
-                <div class="area_btn">
+                <div class="area_btn" [routerLink]="['/historico']">
                     <div class="txt_icon">
                         <ion-icon class="iconeIdentificacao" src="../../../../../assets/icon/cliente/HISTORICOAsset 1.svg"></ion-icon>
                         <p class="txt">Histórico</p>
@@ -57,7 +59,7 @@
                         src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 </div>
 
-                <div class="area_btn">
+                <div class="area_btn" [routerLink]="['/favoritos']">
                     <div class="txt_icon">
                         <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/Heart.svg"></ion-icon>
                         <p class="txt">Favoritos</p>
@@ -67,7 +69,7 @@
                         src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 </div>
 
-                <div class="area_btn">
+                <div class="area_btn" [routerLink]="['/suporte']">
                     <div class="txt_icon">
                         <ion-icon class="iconeIdentificacao" src="../../../assets/icon/cliente/ajuda.svg"></ion-icon>
                         <p class="txt">Ajuda e suporte</p>
@@ -77,7 +79,7 @@
                         src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 </div>
 
-                <div class="area_btn">
+                <div class="area_btn" [routerLink]="['/termos']">
                     <div class="txt_icon">
                         <ion-icon class="iconeIdentificacao" src="../../../../../assets/icon/cliente/termos.svg"></ion-icon>
                         <p class="txt">Termos</p>
