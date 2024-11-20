@@ -175,6 +175,11 @@ const routes: Routes = [
         path: 'trabalhador/chat',
         loadChildren: () => import('./trabalhador/Logado/Servico/chat/chat.module').then(m => m.ChatPageModule)
     },
+    {
+        path: 'cliente/chat',
+        loadChildren: () => import('./cliente/logado/servico/chat/chat.module').then(m => m.ChatPageModule)
+    },
+
 
 
 ];

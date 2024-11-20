@@ -294,7 +294,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     
     abrirChat()
     {
-        this.navCl.navigateForward("chat");
+        this.navCl.navigateForward("/cliente/chat");
     }
 
     async gerarCodigo() {

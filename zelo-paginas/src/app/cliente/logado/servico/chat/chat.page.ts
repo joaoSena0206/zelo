@@ -11,20 +11,22 @@ export class ChatPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
-    msgAnterior: any;
 
-    constructor(private firestore: AngularFirestore, private renderer: Renderer2) { }
+    constructor(private renderer: Renderer2, private firestore: AngularFirestore) { }
 
     ngOnInit() {
+
+
     }
 
     ionViewDidEnter() {
         this.firestore.collection("chats").doc(this.solicitacao.CdSolicitacaoServico.toString()).collection("msgs", (ref) => ref.orderBy('data', 'asc')).stateChanges(['added']).subscribe((res: any) => {
             res.forEach((dado: any) => {
+                let data = new Date().getTime();
+                let cdSolicitacao = this.solicitacao.CdSolicitacaoServico;
                 let dados = dado.payload.doc.data();
 
-
-                if (dados.tipo == "cliente") {
+                if (dados.tipo != "cliente") {
                     const divMsgs = this.renderer.selectRootElement(".divMsgs", true);
 
                     const divGeral = this.renderer.createElement("div");
@@ -51,9 +53,6 @@ export class ChatPage implements OnInit {
                     this.renderer.appendChild(divMsgs, divGeral);
                 }
                 else {
-                    let data = new Date().getTime();
-                    let cdSolicitacao = this.solicitacao.CdSolicitacaoServico;
-
                     const divMsgs = this.renderer.selectRootElement(".divMsgs", true);
                     const div = this.renderer.createElement("div");
                     this.renderer.addClass(div, "msgMinha");
@@ -73,11 +72,10 @@ export class ChatPage implements OnInit {
         let cdSolicitacao = this.solicitacao.CdSolicitacaoServico;
         let msg = {
             texto: valor,
-            remetente: this.trabalhador.Cpf,
+            remetente: this.cliente.Cpf,
             data: data,
-            tipo: "trabalhador"
+            tipo: "cliente"
         };
-        this.msgAnterior = msg;
 
         this.firestore.collection("chats").doc(cdSolicitacao.toString()).collection("msgs").add(msg);
     }
