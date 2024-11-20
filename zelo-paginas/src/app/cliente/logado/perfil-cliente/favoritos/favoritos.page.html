@@ -1,69 +1,41 @@
+<div *ngIf="carregar" class="divCarregamento">
+    <div class="carregamento"></div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="content">
-        <ion-icon class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
+
+        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
+        <ion-icon (click)="voltarPag()" class="titulo__voltar" src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
 
         <div class="areaPedidos">
             <h1>Favoritos</h1>
 
-            <div class="wrapper">
-                <div class="btns_filtro">
-                    <ion-button class="btn_filtro btn_filtro--ativado">Recentes</ion-button>
-                    <ion-button class="btn_filtro">Antigos</ion-button>
-                    <ion-button class="btn_filtro">Agrupar por tipo</ion-button>
-                </div>
-            </div>
-
             <div class="UltimosPedidosDiv">
-                <div class="areaUltimoPedido">
+                <div class="areaUltimoPedido" *ngFor="let historico of historico let i = index">
                     <div class="infoTrabalhorPedido">
                         <figure class="fotoTrabalhadorPedido">
-                            <img draggable="false" src="../../../../assets/icon/cliente/foto_trabalhador.png">
+                            <img draggable="false" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + historico.Trabalhador.Cpf + '.jpg'" alt="Foto Trabalhador">
                         </figure>
 
                         <div>
                             <div>
 
-                                <h3 class="titulo tituloPedido">Eletricista</h3>    
-                                <h3 class="titulo tituloPedido">Breno Santos</h3>
+                                <h3 class="titulo tituloPedido">{{historico.Servico.Nome}}</h3>
+                                <h3 class="titulo tituloPedido">{{historico.Trabalhador.Nome}}</h3>
                               
 
                                 <div class="estrelaPreco">
                                     <ion-icon name="star"></ion-icon>
-                                    <p class="titulo">3.5</p>
+                                    <p class="titulo">{{historico.QtEstrelasAvaliacaoServico.toFixed(1).replace('.', ',')}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <p class="titulo precoPedido">R$ 45,00</p>
+                    <p class="titulo precoPedido">R$ {{historico.Trabalhador.ValorVisita.toFixed(2).replace('.', ',')}}</p>
 
-                    <p class="verPerfil">Ver perfil</p>
-                </div>
-
-                <div class="areaUltimoPedido">
-                    <div class="infoTrabalhorPedido">
-                        <figure class="fotoTrabalhadorPedido">
-                            <img draggable="false" src="../../../../assets/icon/cliente/trabalhador_sandro.png">
-                        </figure>
-
-                        <div>
-                            <div>
-
-                                <h3 class="titulo tituloPedido">Encanador</h3>
-                                <h3 class="titulo tituloPedido">Sandro Oliveira</h3>
-                        
-
-                                <div class="estrelaPreco">
-                                    <ion-icon name="star"></ion-icon>
-                                    <p class="titulo">2.5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="titulo precoPedido">R$ 35,00</p>
-
-                    <p class="verPerfil">Ver perfil</p>
+                    <p (click)="VerPerfil(historico.Trabalhador.Cpf, historico.Trabalhador.Nome);" class="verPerfil">Ver perfil</p>
                 </div>
             </div>
         </div>
