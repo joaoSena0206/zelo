@@ -303,6 +303,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             await firstValueFrom(this.http.post(link, dadosForm));
+            localStorage.removeItem("cliente");
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("confirmacao");
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
