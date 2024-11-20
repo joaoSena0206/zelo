@@ -167,10 +167,15 @@ const routes: Routes = [
         path: 'comercial',
         loadChildren: () => import('./trabalhador/Logado/comercial/comercial.module').then(m => m.ComercialPageModule)
     },
-  {
-    path: 'confirmacao-cliente',
-    loadChildren: () => import('./trabalhador/Logado/Servico/confirmacao-cliente/confirmacao-cliente.module').then( m => m.ConfirmacaoClientePageModule)
-  },
+    {
+        path: 'confirmacao-cliente',
+        loadChildren: () => import('./trabalhador/Logado/Servico/confirmacao-cliente/confirmacao-cliente.module').then(m => m.ConfirmacaoClientePageModule)
+    },
+    {
+        path: 'trabalhador/chat',
+        loadChildren: () => import('./trabalhador/Logado/Servico/chat/chat.module').then(m => m.ChatPageModule)
+    },
+
 
 ];
 

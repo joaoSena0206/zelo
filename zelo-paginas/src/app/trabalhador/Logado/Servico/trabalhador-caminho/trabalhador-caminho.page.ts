@@ -145,6 +145,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.destino = new google.maps.LatLng(coords.lat, coords.lng);
     }
 
+    abrirChat() {
+        this.navCl.navigateForward("/trabalhador/chat");
+    }
+
     async rastrearTempoReal() {
         this.watchId = setInterval(async () => {
             const posicao = await Geolocation.getCurrentPosition({ enableHighAccuracy: true });
@@ -152,8 +156,9 @@ export class TrabalhadorCaminhoPage implements OnInit {
             const status = await Network.getStatus();
             const distanciaDestino = this.calcularDistancia(localizacao, this.destino);
             const coordsSnap = await this.chamarRoadsAPI([localizacao]);
+            const precisao = posicao.coords.accuracy;
 
-            if (coordsSnap.length > 0) {
+            if (coordsSnap.length > 0 && precisao <= 30) {
                 const localizacaoAjustada = coordsSnap[0];
 
                 if (!this.ultimaPosicao) {
@@ -167,10 +172,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
                     this.firestore.collection("localizacoes").doc(this.trabalhador.Cpf).set(objSnap);
                     this.calcularRota(localizacaoAjustada);
                 }
-                else{
+                else {
                     const distancia = this.calcularDistancia(this.ultimaPosicao, localizacaoAjustada);
 
-                    if (distancia >= 1) {
+                    if (distancia >= 3) {
                         let objSnap = {
                             latitude: localizacaoAjustada.lat(),
                             longitude: localizacaoAjustada.lng()
