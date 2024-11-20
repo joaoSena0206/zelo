@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { first, firstValueFrom } from 'rxjs';
 import { Geolocation } from '@capacitor/geolocation';
 import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -23,8 +24,19 @@ export class TrabalhadorCaminhoPage implements OnInit {
     mapa: google.maps.Map;
     servicoDirecoes: google.maps.DirectionsService;
     renderizadorDirecoes: google.maps.DirectionsRenderer;
+    distancia: any;
+    duracao: any;
+    endereco: any = localStorage.getItem("endereco")?.replace("\"", "")?.replace("\"", "");
+    tempoAtual: any;
+    tempoTermino: any;
+    ultimaPosicao: google.maps.LatLng;
+    watchId: any;
+    destino: google.maps.LatLng;
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    marcadorA: google.maps.Marker;
+    marcadorB: google.maps.Marker;
 
-    constructor(private navCl: NavController, private http: HttpClient) { }
+    constructor(private navCl: NavController, private http: HttpClient, private firestore: AngularFirestore) { }
 
     ngOnInit() {
         localStorage.removeItem("idPagamento");
@@ -67,6 +79,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     async ionViewDidEnter() {
         await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
         this.carregarMapa();
     }
 
@@ -101,23 +114,182 @@ export class TrabalhadorCaminhoPage implements OnInit {
         });
     }
 
-    async carregarMapa() {
-        const posicao = await Geolocation.getCurrentPosition();
-        const localizacaoAtual = new google.maps.LatLng(
-            posicao.coords.latitude,
-            posicao.coords.longitude
-        );
+    async pegarCoords() {
+        let endereco = localStorage.getItem("endereco");
+        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM`;
+        let res: any = await firstValueFrom(this.http.get(link));
+        let coords = res.results[0].geometry.location;
 
-        const opcoesMapa = {
-            center: localizacaoAtual,
-            zoom: 14
+        this.destino = new google.maps.LatLng(coords.lat, coords.lng);
+    }
+
+    async carregarMapa() {
+        const options: PositionOptions = {
+            enableHighAccuracy: true
+        };
+
+        const opcoesMapa: google.maps.MapOptions = {
+            mapId: "20efc0a42b57f656",
+            center: this.destino,
+            zoom: 12,
+            heading: 0,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
         };
 
         const mapa = document.querySelector("#mapa") as HTMLDivElement;
         this.mapa = new google.maps.Map(mapa, opcoesMapa);
+
         this.servicoDirecoes = new google.maps.DirectionsService();
-        this.renderizadorDirecoes = new google.maps.DirectionsRenderer();
-        this.renderizadorDirecoes.setMap(this.mapa);
+
+        this.renderizadorDirecoes = new google.maps.DirectionsRenderer({
+            map: this.mapa,
+            suppressMarkers: true
+        });
+
+        this.pegarLocalizacaoTrabalhador();
+    }
+
+    pegarLocalizacaoTrabalhador() {
+        this.firestore.collection("localizacoes").doc(this.trabalhador.Cpf).valueChanges().subscribe(async (coords: any) => {
+            let posicao = coords;
+            const localizacaoAjustada = new google.maps.LatLng(posicao.latitude, posicao.longitude);
+
+            if (!this.ultimaPosicao) {
+                this.ultimaPosicao = localizacaoAjustada;
+
+                this.calcularRota(localizacaoAjustada);
+            }
+            else {
+                const distancia = this.calcularDistancia(this.ultimaPosicao, localizacaoAjustada);
+
+                if (distancia >= 1) {
+                    this.calcularRota(localizacaoAjustada);
+                }
+
+                this.ultimaPosicao = localizacaoAjustada;
+            }
+        });
+    }
+
+    async chamarRoadsAPI(coords: google.maps.LatLng[]) {
+        const coordsSnap: google.maps.LatLng[] = [];
+        const caminho = coords.map(coord => `${coord.lat()},${coord.lng()}`).join('|');
+
+        const link = `https://roads.googleapis.com/v1/snapToRoads?path=${caminho}&interpolate=true&key=${apiGoogle}`;
+
+        try {
+            let res: any = await firstValueFrom(this.http.get(link));
+            res.snappedPoints.forEach((ponto: any) => {
+                coordsSnap.push(new google.maps.LatLng(ponto.location.latitude, ponto.location.longitude))
+            });
+        }
+        catch {
+            console.error("Erro ao pegar as rotas")
+        }
+
+        return coordsSnap;
+    }
+
+    async calcularRota(origem: google.maps.LatLng) {
+        let destino: google.maps.LatLng = this.destino;
+
+        const request: google.maps.DirectionsRequest = {
+            origin: origem,
+            destination: destino,
+            travelMode: google.maps.TravelMode.DRIVING,
+        };
+
+        this.servicoDirecoes.route(request, (result, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                this.distancia = result?.routes[0].legs[0].distance?.text;
+                this.duracao = result?.routes[0].legs[0].duration?.text;
+
+                this.renderizadorDirecoes.setDirections(result);
+
+                const legs = result?.routes[0].legs[0];
+                const inicio = legs?.start_location;
+                const fim = legs?.end_location;
+
+                if (!this.marcadorA) {
+                    this.marcadorA = new google.maps.Marker({
+                        map: this.mapa,
+                        position: inicio,
+                        title: "Origem",
+                        icon: {
+                            url: "../../../../../assets/icon/Trabalhador/Icone Serviço/seta_trabalhador.svg",
+                            scaledSize: new google.maps.Size(30, 30),
+                        }
+                    });
+                } else {
+                    this.moverMarcadorSuavemente(this.marcadorA, this.marcadorA.getPosition()!, inicio!, 500);
+                }
+
+                if (!this.marcadorB) {
+                    this.marcadorB = new google.maps.Marker({
+                        map: this.mapa,
+                        position: this.destino,
+                        title: "Destino",
+                    });
+                }
+
+                let distanciaDestino = this.calcularDistancia(origem, this.destino);
+
+                if (distanciaDestino <= 5) {
+                    this.renderizadorDirecoes.set('directions', null);
+                    this.marcadorA.setMap(null);
+                    this.mapa.setZoom(20);
+                    this.mapa.panTo(this.destino);
+                }
+                else {
+                    this.renderizadorDirecoes.setDirections(result);
+                    this.marcadorA.setMap(this.mapa);
+                }
+            }
+            else {
+                console.error("Erro ao calcular rota: ", status);
+            }
+        });
+    }
+
+    calcularDistancia(pos1: google.maps.LatLng, pos2: google.maps.LatLng): number {
+        const R = 6371e3; // Raio da Terra em metros
+        const lat1 = pos1.lat() * (Math.PI / 180);
+        const lat2 = pos2.lat() * (Math.PI / 180);
+        const deltaLat = (pos2.lat() - pos1.lat()) * (Math.PI / 180);
+        const deltaLng = (pos2.lng() - pos1.lng()) * (Math.PI / 180);
+
+        const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+
+    moverMarcadorSuavemente(marker: google.maps.Marker, inicio: google.maps.LatLng, fim: google.maps.LatLng, duracao: number) {
+        const deltaLat = (fim.lat() - inicio.lat()) / duracao;
+        const deltaLng = (fim.lng() - inicio.lng()) / duracao;
+
+        let lat = inicio.lat();
+        let lng = inicio.lng();
+        const intervalo = 10;
+        const passos = duracao / intervalo;
+        let contador = 0;
+
+        const animacao = setInterval(() => {
+            lat += deltaLat * intervalo;
+            lng += deltaLng * intervalo;
+            const novaPosicao = new google.maps.LatLng(lat, lng);
+
+            let heading = google.maps.geometry.spherical.computeHeading(inicio, fim);
+
+            marker.setPosition(novaPosicao);
+
+            contador++;
+            if (contador >= passos) {
+                clearInterval(animacao);
+            }
+        }, intervalo);
     }
 
     async gerarCodigo() {
