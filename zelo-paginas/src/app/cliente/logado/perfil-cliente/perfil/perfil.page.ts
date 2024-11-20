@@ -23,6 +23,10 @@ export class PerfilPage implements OnInit {
         this.formatarEstrelas();
     }
 
+    voltarPag() {
+        this.navCl.back();
+      }
+
     ngAfterViewInit() {
     }
 
