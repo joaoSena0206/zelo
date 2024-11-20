@@ -5,7 +5,7 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://zelo-server.com.br";
+export const dominio = "https://julie-even-dallas-expression.trycloudflare.com";
 export const apiGoogle = "AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM";
 export const ambient_firebase = {
     apiKey: "AIzaSyBYK20Z_BR4TnpM27C1Hm-M-aI7o51oEIg",
