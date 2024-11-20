@@ -9,6 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Network } from '@capacitor/network';
 import { NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -34,6 +35,14 @@ export class TrabalhadorCaminhoPage implements OnInit {
     carregar: boolean = false;
     marcadorA: google.maps.Marker;
     marcadorB: google.maps.Marker;
+    form = new FormGroup({
+        input1: new FormControl("", Validators.required),
+        input2: new FormControl("", Validators.required),
+        input3: new FormControl("", Validators.required),
+        input4: new FormControl("", Validators.required),
+        input5: new FormControl("", Validators.required)
+    });
+    erro: string = "Código obrigatório!";
 
     constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController, private firestore: AngularFirestore) { }
 
@@ -357,7 +366,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
     //-----------------------------------------------------------------------------------------------------------//
 
     abrirDivCodigo() {
-
         let div1 = document.querySelector('.div_1') as HTMLDivElement;
         let div2 = document.querySelector('.div_2') as HTMLDivElement;
         let div3 = document.querySelector('.div_3') as HTMLDivElement;
@@ -371,6 +379,28 @@ export class TrabalhadorCaminhoPage implements OnInit {
         div3.style.display = 'none';
         div4.style.display = 'none';
 
+        const inputs = document.querySelectorAll("ion-input");
+
+        for (let i = 0; i < inputs.length; i++) {
+            let todosPreenchidos = false;
+
+            inputs[i].addEventListener("ionInput", function () {
+                let apagado = false;
+
+                if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
+                    apagado = true;
+                }
+
+                inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
+
+                if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
+                    inputs[i + 1].setFocus();
+                }
+                else if (inputs[i].value == "" && i != 0 && apagado == false) {
+                    inputs[i - 1].setFocus();
+                }
+            });
+        }
     }
 
     fecharDivCodigo() {

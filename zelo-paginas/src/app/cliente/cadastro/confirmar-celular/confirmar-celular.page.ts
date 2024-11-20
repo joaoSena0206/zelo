@@ -194,7 +194,6 @@ export class ConfirmarCelularPage implements OnInit {
                             alert.message = "Erro ao conectar-se ao servidor";
                             alert.present();
                         }
-
                     } 
                     else {
                         this.navCl.navigateRoot("/endereco", { animated: true, animationDirection: 'forward' });
