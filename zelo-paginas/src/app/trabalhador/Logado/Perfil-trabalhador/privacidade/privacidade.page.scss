@@ -342,6 +342,7 @@ ion-content {
 }
 
 ::ng-deep .custom-toast {
+    --background: rgb(3, 199, 3);
     text-align: center;
     font-size: 16px;
     line-height: 1.5;

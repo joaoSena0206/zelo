@@ -391,8 +391,7 @@ export class PrivacidadePage implements OnInit {
         const toast = await this.toastController.create({
           message: 'Dado(s) alterado com sucesso!',
           duration: 2000,
-          color: 'light shade',
-          position: 'middle',
+          position: 'top',
           cssClass: 'custom-toast',
         });
     
