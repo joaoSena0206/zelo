@@ -185,3 +185,11 @@ h3.titulo:nth-child(2) {
     color: black;
     margin: 5px 0px ;
 }
+
+figure img{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
+}
