@@ -7,7 +7,7 @@
 }
 
 ion-content {
-    --background: black;
+    --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
 }
 
 .header {
@@ -23,14 +23,15 @@ ion-content {
 .titulo {
     display: flex;
     justify-content: center;
-    padding-top: 31px;
+    padding-top: 30px;
 }
 
 .titulo__voltar {
     position: absolute;
-    top: 31px;
-    left: 31px;
+    top: 30px;
+    left: 30px;
     font-size: 30px;
+    color: black;
 }
 
 .div_titulo {
@@ -40,7 +41,7 @@ ion-content {
 
 h1 {
     margin: 0;
-    font-size: 22px;
+    font-size: 17px;
 }
 
 .area_foto_perfil {
@@ -53,6 +54,9 @@ h1 {
 .foto_perfil {
     height: 140px;
     width: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px black;
 }
 
 .icone_editar {
@@ -61,6 +65,17 @@ h1 {
     color: black;
     top: 10px;
     right: 0;
+}
+
+.ion_item__icon
+{
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%);
+    right: 19px;
+    font-size: 18px;
+    z-index: 100;
 }
 
 .geral {
@@ -83,11 +98,13 @@ h1 {
     border-radius: 23px;
 
     opacity: 1;
-    --padding-start: 15px;
-    --padding-end: 15px;
-    --padding-top: 10px;
-    --padding-bottom: 10px;
+    --padding-start: 25px;
+    --padding-end: 25px;
     font-size: 15px;
+}
+  
+ion-input {
+--highlight-height: 0px; /* remove a linha azul padrão */
 }
 
 .txt {
@@ -102,6 +119,15 @@ h1 {
     bottom: 12px;
     height: 20px;
     width: 20px;
+    z-index: 2;
+}
+
+.icone_editar {
+    position: absolute;
+    font-size: 30px;
+    color: black;
+    top: 10px;
+    right: 0;
 }
 
 .area_dado:last-of-type {
@@ -149,6 +175,7 @@ h1 {
     --padding-bottom: 18px;
     --padding-start: 66px;
     --padding-end: 66px;
+    text-transform: none;
 
     font-size: 22px;
     text-transform: none;
@@ -178,9 +205,154 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    padding: 30px;
 }
 
-ion-content {
-    --background: linear-gradient(-89.218deg, #F66701 38%, #FFD572 120%);
+.imgCertificado{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add_certificado ion-button{
+    width: 100%;
+    margin-top: 15px;
+    --background: #BABABA;
+    color: black;
+}
+
+.imgCertificado{
+    position: relative;
+}
+
+.icone_lixo{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+    background-color: #BABABA;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding: 3px;
+    border: 1px solid black;
+}
+
+//---------------------------------------------------//
+
+.poupop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin: auto;
+}
+
+.poupop h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+
+#modal_dados, #modal_certificado{
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+#modal_dados, #modal_certificado{
+    padding: 0 10px;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #F66701;
+    font-size: 22px;
+    text-transform: none;
+}
+
+.area_vermelha {
+    width: 100%;
+    background-color: #F66701;
+    height: 110px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    position: relative;
+}
+
+.area_branca{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.iconeFechar2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+.iconeInterrogacao {
+    height: 67px;
+    width: 65px;
+}
+
+.circulo_branca {
+    height: 102px;
+    width: 102px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -20px;
+}
+
+//---------------------------------------------------//
+
+.form__text
+{
+    color: #CB2316;
+    font-weight: 700;
+}
+
+.erro {
+    color: red;
+    font-size: 14px;
+    margin: 5px 10px 5px 10px;
+    width: 100%;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
+.escondido {
+    display: none;
+}
+
+::ng-deep .custom-toast {
+    --background: rgb(3, 199, 3);
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    width: 300px;
+    position: fixed; 
+    left: 50%;
+    transform: translateX(-50%);
 }
