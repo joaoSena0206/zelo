@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="wrapper">
     <div class="contente">
-      <ion-icon class="content__seta" name="chevron-back-outline"></ion-icon>
+      <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
         <ion-text>
           <h1 class="content__h1">Gerenciador de anúncio</h1>
         </ion-text>
@@ -24,24 +24,6 @@
         <div class="div_btn">
           <ion-button class="form__btn">Ativar</ion-button>
         </div>
-        
-      </ion-card>
-
-      <ion-card class="card_estatistica">
-        <h3 class="titulo_card">Estatística</h3>
-
-        <div class="div_estatistica">
-          <div class="div2">
-            <p>Pessoas Alcançadas</p>
-            <h1>12</h1>
-          </div>
-  
-          <div class="div2">
-            <p>Período de duração</p>
-            <h1>2 mês</h1>
-          </div>
-        </div>
-        
         
       </ion-card>
 
