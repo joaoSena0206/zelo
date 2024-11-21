@@ -1,36 +1,39 @@
 <div *ngIf="carregar" class="divCarregamento">
-  <div class="carregamento"></div>
+    <div class="carregamento--trabalhador"></div>
 </div>
 
 <ion-content [fullscreen]="true">
-  <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
-  
-  <div class="content">
-    <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
-    <ion-text>
-      <h1 class="content__h1">Avaliação</h1>
-    </ion-text>
+    <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
 
-    <ion-card>
-      <img draggable="false" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.jpg'">
+    <div class="content">
+        <ion-alert header="Erro" [buttons]="['Ok']"
+            message="A message should be a short, complete sentence."></ion-alert>
+        <ion-text>
+            <h1 class="content__h1">Avaliação</h1>
+        </ion-text>
 
-      <h1>{{cliente.Nome}}</h1>
+        <ion-card>
+            <img style="border-radius: 100px;" draggable="false"
+                [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.jpg'">
 
-      <div class="estrelas_avaliações">
-        <!-- <ion-icon name="star"></ion-icon>
+            <h1>{{cliente.Nome}}</h1>
+
+            <div class="estrelas_avaliações">
+                <!-- <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star-outline"></ion-icon> -->
-        <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" (click)="carregarEstrelas(i + 1)" name="{{nomeIconeEstrela[i]}}"></ion-icon>
-      </div>
+                <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" (click)="carregarEstrelas(i + 1)"
+                    name="{{nomeIconeEstrela[i]}}"></ion-icon>
+            </div>
 
-      <p class="txt_comentario">Comentário</p>
+            <p class="txt_comentario">Comentário</p>
 
-      <ion-textarea class="area_texto">
-      </ion-textarea>
-    </ion-card>
+            <ion-textarea class="area_texto">
+            </ion-textarea>
+        </ion-card>
 
-    <ion-button class="btn">Enviar</ion-button>
-  </div>
+        <ion-button (click)="enviar()" class="btn">Enviar</ion-button>
+    </div>
 </ion-content>
