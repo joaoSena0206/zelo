@@ -11,16 +11,18 @@ import { PrivacidadePage } from './privacidade.page';
 import { MaskitoDirective } from '@maskito/angular';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularCropperjsModule } from 'angular-cropperjs';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MaskitoDirective,
-    PrivacidadePageRoutingModule,
-    ReactiveFormsModule
-  ],
-  declarations: [PrivacidadePage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MaskitoDirective,
+        PrivacidadePageRoutingModule,
+        ReactiveFormsModule,
+        AngularCropperjsModule
+    ],
+    declarations: [PrivacidadePage]
 })
-export class PrivacidadePageModule {}
+export class PrivacidadePageModule { }

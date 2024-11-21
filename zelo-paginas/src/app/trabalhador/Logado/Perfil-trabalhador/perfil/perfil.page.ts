@@ -31,6 +31,7 @@ export class PerfilPage implements OnInit {
     MediaEstrelas: any;
     TotalAvaliacao: any;
     TotalServico: any;
+    fotoPerfil: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -39,20 +40,23 @@ export class PerfilPage implements OnInit {
         this.formatarEstrelas();
     }
 
-    ngAfterViewChecked(){
+    ngAfterViewChecked() {
         this.formatarEstrelas();
+    }
+
+    ionViewDidEnter() {
+        this.fotoPerfil = dominio + '/Imgs/Perfil/Trabalhador/' + this.trabalhador.Cpf + '.jpg?time=' + new Date().getTime();
     }
 
     voltarPag() {
         this.navCl.back();
-      }
+    }
 
-    formatarEstrelas()
-    {
+    formatarEstrelas() {
         const estrelas = document.querySelectorAll(".estrela_perfil");
 
         console.log(estrelas)
-        
+
         if (estrelas.length == 3) {
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
         }
@@ -108,5 +112,5 @@ export class PerfilPage implements OnInit {
         }
     }
 
-    
+
 }

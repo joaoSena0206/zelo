@@ -13,6 +13,8 @@ import validator from 'cpf-cnpj-validator';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CropperComponent } from 'angular-cropperjs';
 
 @Component({
     selector: 'app-privacidade',
@@ -20,6 +22,7 @@ import { FilePicker } from '@capawesome/capacitor-file-picker';
     styleUrls: ['./privacidade.page.scss'],
 })
 export class PrivacidadePage implements OnInit {
+    @ViewChild('angularCropper') public angularCropper: CropperComponent;
 
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     novoTexto: any;
@@ -30,6 +33,19 @@ export class PrivacidadePage implements OnInit {
     dominio = dominio;
     carregar: boolean = false;
     situacaoBotao: boolean = true;
+    fotoPerfil: any;
+    config: any = {
+        aspectRatio: 1,
+        movable: true,
+        zoomable: true,
+        scalable: true,
+        viewMode: 1,
+        cropBoxResizable: false,
+        autoCropArea: 1,
+        minCropBoxWidth: 140,
+        minCropBoxHeight: 140
+    };
+    perfilFoto: any = dominio + '/Imgs/Perfil/Trabalhador/' + this.trabalhador.Cpf + '.jpg?time=' + new Date().getTime();
 
     form = new FormGroup({
         senhas: new FormGroup({
@@ -52,6 +68,7 @@ export class PrivacidadePage implements OnInit {
         Senha_Atual: "Digite sua senha atual",
         Nome: "Nome obrigatório"
     };
+    situacao4: any;
 
     constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef, private toastController: ToastController, private sanitizer: DomSanitizer) { }
 
@@ -98,6 +115,58 @@ export class PrivacidadePage implements OnInit {
                 this.erro[nome] = "";
             }
         }
+    }
+
+    async pegarFoto(div: any) {
+        div.style.display = "flex";
+
+        const img = await Camera.getPhoto({
+            quality: 90,
+            resultType: CameraResultType.DataUrl,
+            source: CameraSource.Photos
+        });
+
+        this.fotoPerfil = img.dataUrl;
+    }
+
+    recortarImg() {
+        const imgCrop = this.angularCropper.cropper.getCroppedCanvas({
+            width: 140,
+            height: 140
+        }).toDataURL("image/jpeg");
+
+        this.perfilFoto = imgCrop;
+
+        this.situacao4 = false;
+        this.isFormValid();
+    }
+
+    fecharDiv(div: any) {
+        div.style.display = "none";
+    }
+
+    // Converte Base64 para FormData
+    private base64ToFormData(base64String: string, fileName: string): FormData {
+        // Remove o prefixo (se existir)
+        const base64Data = base64String.includes(',')
+            ? base64String.split(',')[1]
+            : base64String;
+
+        // Converter Base64 para array de bytes
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
+            byteCharacters.charCodeAt(i)
+        );
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Criar um Blob
+        const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+
+        // Adicionar ao FormData
+        const formData = new FormData();
+        formData.append('file', blob, fileName);
+
+        return formData;
     }
 
     filtroInput(event: any, regex: RegExp) {
@@ -148,7 +217,7 @@ export class PrivacidadePage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.navigateBack("/trabalhador/perfil")
+        this.navCl.navigateRoot("/trabalhador/perfil")
     }
 
     ngAfterViewInit() {
@@ -276,11 +345,26 @@ export class PrivacidadePage implements OnInit {
                 this.mostrarSpanSenha = false;
             }
             else {
-                this.situacaoBotao = false;
-                this.mostrarSpan = false;
-                this.mostrarSpanSenha = false;
+                if (this.situacao4 == true) {
+                    this.situacaoBotao = true;
+                }
+                else {
+                    this.situacaoBotao = false;
+                    this.mostrarSpan = false;
+                    this.mostrarSpanSenha = false;
+                }
             }
         }
+    }
+
+    async uploadFile(base64String: string, fileName: string) {
+        let link = dominio + "/Trabalhador/AdicionarFotoPerfil";
+        const formData = this.base64ToFormData(base64String, fileName);
+        formData.append("cpf", this.trabalhador.Cpf);
+
+        this.carregar = true;
+        await firstValueFrom(this.http.post(link, formData));
+        this.carregar = false;
     }
 
     async salvar() {
@@ -325,15 +409,14 @@ export class PrivacidadePage implements OnInit {
             }
         }
 
-        if(nome.value != trabalhador.Nome)
-        {
+        if (nome.value != trabalhador.Nome) {
             link = dominio + "/Trabalhador/AlterarEmail";
             let dadosForm = new FormData();
             dadosForm.append("cpf", trabalhador.Cpf);
             dadosForm.append("nome", nome.value?.toString()!);
             dadosForm.append("email", null!);
 
-            try{
+            try {
                 let res2 = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
                 trabalhador.Nome = nome.value;
                 localStorage.setItem("trabalhador", JSON.stringify(trabalhador));
@@ -354,13 +437,13 @@ export class PrivacidadePage implements OnInit {
 
             try {
                 this.carregar = true;
-    
+
                 let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-    
+
                 this.carregar = false;
-    
+
                 let objRes = res as any;
-    
+
                 if (objRes.cadastrado.length == 0) {
                     localStorage.setItem('TrocaEmail', email.value?.toString()!);
                     this.navCl.navigateForward("/trabalhador/confirmar-celular");
@@ -370,31 +453,37 @@ export class PrivacidadePage implements OnInit {
                     this.situacaoBotao = true;
                 }
             }
-            catch 
-            {
+            catch {
                 const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
                 alert.message = "Erro ao conectar-se ao servidor";
                 alert.present();
             }
-            finally 
-            {
+            finally {
                 this.carregar = false;
             }
         }
 
+        try {
+            this.uploadFile(this.perfilFoto, this.trabalhador.Cpf + ".jpg");
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+
         this.situacaoBotao = true;
         this.showTemporaryToast();
-
     }
 
     async showTemporaryToast() {
         const toast = await this.toastController.create({
-          message: 'Dado(s) alterado com sucesso!',
-          duration: 2000,
-          position: 'top',
-          cssClass: 'custom-toast',
+            message: 'Dado(s) alterado com sucesso!',
+            duration: 2000,
+            position: 'top',
+            cssClass: 'custom-toast',
         });
-    
+
         await toast.present();
     }
 
