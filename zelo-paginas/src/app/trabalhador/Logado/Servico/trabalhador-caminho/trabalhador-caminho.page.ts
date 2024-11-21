@@ -181,7 +181,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                     this.firestore.collection("localizacoes").doc(this.trabalhador.Cpf).set(objSnap);
                     this.calcularRota(localizacaoAjustada);
                 }
-                else {
+                else if (status.connectionType != "wifi") {
                     const distancia = this.calcularDistancia(this.ultimaPosicao, localizacaoAjustada);
 
                     if (distancia >= 3) {
