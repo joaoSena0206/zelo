@@ -89,6 +89,18 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.setItem("temporizador", JSON.stringify(temporizador));
         }
         else {
+            this.abrirDivCodigo();
+
+            let div1 = document.querySelector('.div_1') as HTMLDivElement;
+            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+            let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
+            let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
+
+            divRelogio.style.display = 'flex';
+            divTrabalhoIniciado.style.display = 'flex';
+            divCodigo.style.display = 'none';
+            div1.style.display = "flex";
+
             this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
         }
 
@@ -104,6 +116,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.navCl.navigateRoot("inicial");
             }
         });
+        this.temporizador();
     }
 
     ngAfterViewInit() {
@@ -274,7 +287,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                     this.firestore.collection("localizacoes").doc(this.trabalhador.Cpf).set(objSnap);
                     this.calcularRota(localizacaoAjustada);
                 }
-                else {
+                else if (status.connectionType != "wifi") {
                     const distancia = this.calcularDistancia(this.ultimaPosicao, localizacaoAjustada);
 
                     if (distancia >= 3) {
@@ -398,7 +411,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         }, intervalo);
     }
 
-    
+
 
     codigoAleatorio: string;
 
@@ -533,14 +546,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
         let codigoAleatorio = localStorage.getItem('codigo');
 
         let codigo = "";
-            codigo += this.form.controls["input1"].value;
-            codigo += this.form.controls["input2"].value;
-            codigo += this.form.controls["input3"].value;
-            codigo += this.form.controls["input4"].value;
-            codigo += this.form.controls["input5"].value;
+        codigo += this.form.controls["input1"].value;
+        codigo += this.form.controls["input2"].value;
+        codigo += this.form.controls["input3"].value;
+        codigo += this.form.controls["input4"].value;
+        codigo += this.form.controls["input5"].value;
 
-        if(codigo == codigoAleatorio)
-        {
+        if (codigo == codigoAleatorio) {
             let div1 = document.querySelector('.div_1') as HTMLDivElement;
             let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
             let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
@@ -551,22 +563,18 @@ export class TrabalhadorCaminhoPage implements OnInit {
             divCodigo.style.display = 'none';
             div1.style.display = "flex";
         }
-        else
-        {
+        else {
             let erro = document.querySelector('#spanCodigo');
             erro?.classList.remove('escondido');
         }
-
-        
     }
 
-    AtivarBotaoSalvar(botao: any)
-    {
+    AtivarBotaoSalvar(botao: any) {
         let erro = document.querySelector('#spanCodigo');
         erro?.classList.add('escondido');
     }
 
-    async finalizar(){
+    async finalizar() {
         let dadosForm = new FormData();
         dadosForm.append("token", this.tokenCliente);
         dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
@@ -636,16 +644,16 @@ export class TrabalhadorCaminhoPage implements OnInit {
         }
 
         this.id = setInterval(() => {
-            if (Number(this.tempo.seg) == 0) {
-                this.tempo.seg = 60;
-                this.tempo.min += 1;
+            if (Number(this.tempo.seg) == 60) {
+                this.tempo.seg = 0;
+                this.tempo.min = Number(this.tempo.min) + 1;
             }
 
             if (this.tempo.min.toString().length == 1) {
                 this.tempo.min = "0" + this.tempo.min.toString();
             }
 
-            this.tempo.seg += 1;
+            this.tempo.seg = Number(this.tempo.seg) + 1;
 
             if (this.tempo.seg.toString().length == 1) {
                 this.tempo.seg = "0" + this.tempo.seg.toString();
