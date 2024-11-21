@@ -11,6 +11,9 @@ import { NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 @Component({
     selector: 'app-trabalhador-caminho',
     templateUrl: './trabalhador-caminho.page.html',
@@ -43,6 +46,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         input5: new FormControl("", Validators.required)
     });
     erro: string = "Código obrigatório!";
+    modalCancelar: any;
 
     constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController, private firestore: AngularFirestore) { }
 
@@ -51,6 +55,46 @@ export class TrabalhadorCaminhoPage implements OnInit {
             let codigo = notification.data.codigo;
             localStorage.setItem("codigo", codigo);
         });
+
+        this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
+
+        if (!localStorage.getItem("temporizador")) {
+            let temporizador = {
+                min: 0,
+                seg: 0
+            };
+
+            this.tempo = temporizador;
+            localStorage.setItem("temporizador", JSON.stringify(temporizador));
+        }
+        else {
+            this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
+        }
+    }
+
+    ngAfterViewInit() {
+        const inputs = document.querySelectorAll("ion-input");
+
+        for (let i = 0; i < inputs.length; i++) {
+            let todosPreenchidos = false;
+
+            inputs[i].addEventListener("ionInput", function () {
+                let apagado = false;
+
+                if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
+                    apagado = true;
+                }
+
+                inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
+
+                if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
+                    inputs[i + 1].setFocus();
+                }
+                else if (inputs[i].value == "" && i != 0 && apagado == false) {
+                    inputs[i - 1].setFocus();
+                }
+            });
+        }
     }
 
     async ionViewDidEnter() {
@@ -61,6 +105,21 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
 
         this.carregarMapa();
+
+        const btns = document.querySelectorAll(".form__btn");
+        const btnReenviar = document.querySelector(".form__btn--reenviar");
+
+        if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+            (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        }
+
+        window.addEventListener("resize", function () {
+            const btns = document.querySelectorAll(".form__btn");
+
+            if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+                (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+            }
+        });
     }
 
     async carregarScriptGoogleMaps(): Promise<void> {
@@ -305,20 +364,34 @@ export class TrabalhadorCaminhoPage implements OnInit {
         }, intervalo);
     }
 
-    mudartxtCancelar() {
-        let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
-        let btnProsseguir = document.querySelector("#btnProsseguir") as HTMLIonButtonElement;
-        let modalCancelar = document.querySelector("#modal_cancelar") as HTMLIonModalElement;
+    
 
-        txtAdvertenciaCancelar.style.display = "none";
+    codigoAleatorio: string;
 
-        this.msgPoupopCancelar = 'Pedido cancelado!';
+    tokenCliente: any = this.cliente.TokenFCM;
 
-        btnProsseguir.textContent = "Ok";
-        btnProsseguir.addEventListener("click", () => {
-            this.cancelar();
-            modalCancelar.dismiss();
-        });
+    async ignorarServico() {
+        let dadosForm = new FormData();
+        dadosForm.append("token", this.tokenCliente);
+        dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
+        dadosForm.append("situacaoServico", "false");
+        let link = dominio + "/Trabalhador/EnviarServicoAceito";
+
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            localStorage.removeItem("cliente");
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("confirmacao");
+
+            this.navCl.navigateRoot("/trabalhador/inicial");
+            this.modalCancelar.dismiss();
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     limpar() {
@@ -421,17 +494,60 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     //-----------------------------------------------------------------------------------------------------------//
 
-    verificarCodigo() {
+    async verificarCodigo() {
 
-        let div1 = document.querySelector('.div_1') as HTMLDivElement;
-        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
-        let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
-        let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
+        let codigoAleatorio = localStorage.getItem('codigo');
 
-        divRelogio.style.display = 'flex';
-        divTrabalhoIniciado.style.display = 'flex';
-        divCodigo.style.display = 'none';
-        div1.style.display = "flex";
+        let codigo = "";
+            codigo += this.form.controls["input1"].value;
+            codigo += this.form.controls["input2"].value;
+            codigo += this.form.controls["input3"].value;
+            codigo += this.form.controls["input4"].value;
+            codigo += this.form.controls["input5"].value;
+
+        if(codigo == codigoAleatorio)
+        {
+            let div1 = document.querySelector('.div_1') as HTMLDivElement;
+            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+            let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
+            let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
+
+            divRelogio.style.display = 'flex';
+            divTrabalhoIniciado.style.display = 'flex';
+            divCodigo.style.display = 'none';
+            div1.style.display = "flex";
+        }
+        else
+        {
+            let erro = document.querySelector('#spanCodigo');
+            erro?.classList.remove('escondido');
+        }
+
+        
+    }
+
+    AtivarBotaoSalvar(botao: any)
+    {
+        let erro = document.querySelector('#spanCodigo');
+        erro?.classList.add('escondido');
+    }
+
+    async finalizar(){
+        let dadosForm = new FormData();
+        dadosForm.append("token", this.tokenCliente);
+        dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
+        dadosForm.append("trabalhoFinalizado", "true");
+        let link = dominio + "/Trabalhador/FinalizarServico";
+
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            this.navCl.navigateRoot("/trabalhador/avaliacao");
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     async cancelar() {
@@ -457,5 +573,39 @@ export class TrabalhadorCaminhoPage implements OnInit {
         }
 
         this.navCl.navigateRoot("trabalhador/inicial");
+    }
+
+    tempo: any;
+    id: any;
+    solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
+
+    temporizador() {
+        if (this.tempo.min.toString().length == 1) {
+            this.tempo.min = "0" + this.tempo.min.toString();
+        }
+
+        if (this.tempo.seg.toString().length == 1) {
+            this.tempo.seg = "0" + this.tempo.seg.toString();
+        }
+
+        this.id = setInterval(() => {
+            if (Number(this.tempo.seg) == 0) {
+                this.tempo.seg = 60;
+                this.tempo.min += 1;
+            }
+
+            if (this.tempo.min.toString().length == 1) {
+                this.tempo.min = "0" + this.tempo.min.toString();
+            }
+
+            this.tempo.seg += 1;
+
+            if (this.tempo.seg.toString().length == 1) {
+                this.tempo.seg = "0" + this.tempo.seg.toString();
+            }
+
+            localStorage.setItem("temporizador", JSON.stringify(this.tempo));
+
+        }, 1000);
     }
 }

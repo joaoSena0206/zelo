@@ -541,6 +541,37 @@ public class TrabalhadorController : ControllerBase
         }
     }
 
+    [HttpPost("FinalizarServico")]
+    public async Task<IActionResult> EnviarSituacaoCodigo([FromForm] string token, [FromForm] string trabalhoFinalizado)
+    {
+        try
+        {
+            Trabalhador trababalhador = JsonSerializer.Deserialize<Trabalhador>(Request.Form["Trabalhador"]);
+
+            var msg = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = "Situação do serviço",
+                    Body = $"Enviada por {trababalhador.Nome}"
+                },
+                Data = new Dictionary<string, string>()
+                {
+                    {"trabalhoFinalizado", trabalhoFinalizado}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
+
     [HttpPost("AdicionarTokenFCM")]
     public IActionResult AdicionarTokenFCM([FromForm] string cpf, [FromForm] string token)
     {

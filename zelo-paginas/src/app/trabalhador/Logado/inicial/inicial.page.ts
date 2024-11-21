@@ -65,6 +65,8 @@ export class InicialPage implements OnInit {
             if (!notification.data.situacaoServico && this.situacaoServico != false) {
                 this.result = notification;
                 this.clienteServico = JSON.parse(this.result.data.cliente);
+                localStorage.setItem('cliente', JSON.stringify(this.clienteServico));
+                this.pegarTokenCliente();
 
                 this.enderecoServico = this.result.data.endereco;
                 this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
@@ -81,8 +83,10 @@ export class InicialPage implements OnInit {
         PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
             if (!res.notification.data.situacaoServico && this.situacaoServico != false) {
                 this.result = res.notification;
-
                 this.clienteServico = JSON.parse(this.result.data.cliente);
+                localStorage.setItem('cliente', JSON.stringify(this.clienteServico));
+                this.pegarTokenCliente();
+
                 this.enderecoServico = this.result.data.endereco;
                 this.solicitacaoServico = JSON.parse(this.result.data.solicitacao);
 
@@ -103,6 +107,49 @@ export class InicialPage implements OnInit {
 
         this.navCl.navigateForward("/analisa-servico");
         this.modal.dismiss();
+    }
+
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    tokenCliente: any;
+
+    async pegarTokenCliente() {
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", this.cliente.Cpf);
+        let link = dominio + "/Cliente/PegarTokenFCM";
+
+        try {
+            this.tokenCliente = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+            this.clienteServico.TokenFCM = this.tokenCliente;
+            localStorage.setItem("cliente", JSON.stringify(this.clienteServico));
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+    }
+
+    async ignorarServico() {
+        let dadosForm = new FormData();
+        dadosForm.append("token", this.tokenCliente);
+        dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
+        dadosForm.append("situacaoServico", "false");
+        let link = dominio + "/Trabalhador/EnviarServicoAceito";
+
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
+            localStorage.removeItem("cliente");
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("confirmacao");
+
+            this.modal.dismiss();
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 
     ngAfterViewInit() {
