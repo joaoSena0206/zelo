@@ -112,33 +112,53 @@
 
                 <h4 style="margin-bottom: 10px;">Digite o código que o usuário informar</h4>
 
-                <div style="display: flex; margin-bottom: 20px" [formGroup]="form">
-                    <ion-item class="ion_item">
-                        <ion-input formControlName="input1"
-                            [class.inputErro]="form.controls['input1'].invalid && (form.controls['input1'].touched || form.controls['input1'].dirty)"
-                            maxlength="1" class="form__input"></ion-input>
-                    </ion-item>
+                <div style="display: flex; flex-direction: column; margin-bottom: 20px" [formGroup]="form">
+                    
+                        <div style="display: flex;">
+                            <ion-item class="ion_item">
+                                <ion-input
+                                    (keyup)="AtivarBotaoSalvar($event)"
+                                    [class.inputErro]="form.controls['input1'].invalid && (form.controls['input1'].touched || form.controls['input1'].dirty)"
+                                    formControlName="input1" class="form__input" maxlength="1"></ion-input>
+                            </ion-item>
+        
+                            <ion-item class="ion_item">
+                                <ion-input
+                                    (keyup)="AtivarBotaoSalvar($event)"
+                                    [class.inputErro]="form.controls['input2'].invalid && (form.controls['input2'].touched || form.controls['input2'].dirty)"
+                                    formControlName="input2" class="form__input" maxlength="1"></ion-input>
+                            </ion-item>
+        
+                            <ion-item class="ion_item">
+                                <ion-input
+                                    (keyup)="AtivarBotaoSalvar($event)"
+                                    [class.inputErro]="form.controls['input3'].invalid && (form.controls['input3'].touched || form.controls['input3'].dirty)"
+                                    formControlName="input3" class="form__input" maxlength="1"></ion-input>
+                            </ion-item>
+        
+                            <ion-item class="ion_item">
+                                <ion-input
+                                    (keyup)="AtivarBotaoSalvar($event)"
+                                    [class.inputErro]="form.controls['input4'].invalid && (form.controls['input4'].touched || form.controls['input4'].dirty)"
+                                    formControlName="input4" class="form__input" maxlength="1"></ion-input>
+                            </ion-item>
+        
+                            <ion-item class="ion_item">
+                                <ion-input
+                                    (keyup)="AtivarBotaoSalvar($event)"
+                                    [class.inputErro]="form.controls['input5'].invalid && (form.controls['input5'].touched || form.controls['input5'].dirty)"
+                                    formControlName="input5" class="form__input" maxlength="1"></ion-input>
+                            </ion-item>
+                        </div>
 
-                    <ion-item class="ion_item">
-                        <ion-input formControlName="input2" maxlength="1" class="form__input"></ion-input>
-                    </ion-item>
+                        <span
+                            [ngClass]="form.invalid && (form.controls['input1'].touched || form.controls['input1'].dirty) && (form.controls['input2'].touched || form.controls['input2'].dirty) && (form.controls['input3'].touched || form.controls['input3'].dirty) && (form.controls['input4'].touched || form.controls['input4'].dirty) && (form.controls['input5'].touched || form.controls['input5'].dirty) ? 'erro' : 'escondido'">{{
+                            erro
+                            }}</span>
 
-                    <ion-item class="ion_item">
-                        <ion-input formControlName="input3" maxlength="1" class="form__input"></ion-input>
-                    </ion-item>
-
-                    <ion-item class="ion_item">
-                        <ion-input formControlName="input4" maxlength="1" class="form__input"></ion-input>
-                    </ion-item>
-
-                    <ion-item class="ion_item">
-                        <ion-input formControlName="input5" maxlength="1" class="form__input"></ion-input>
-                    </ion-item>
+                        <span id="spanCodigo" class="erro escondido">Código inválido!</span>
                 </div>
-                <span
-                    [ngClass]="form.invalid && (form.controls['input1'].touched || form.controls['input1'].dirty) && (form.controls['input2'].touched || form.controls['input2'].dirty) && (form.controls['input3'].touched || form.controls['input3'].dirty) && (form.controls['input4'].touched || form.controls['input4'].dirty) && (form.controls['input5'].touched || form.controls['input5'].dirty) ? 'erro' : 'escondido'">{{
-                    erro
-                    }}</span>
+                
 
                 <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="verificarCodigo();">Enviar</ion-button>
 
@@ -147,7 +167,7 @@
             <div class="div_trabalho_iniciado">
                 <div class="div_relogio">
                     <ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/relogio.svg"></ion-icon>
-                    <h1>00:00</h1>
+                    <h1 class="tempo">{{ tempo.min + ':' + tempo.seg }}</h1>
                 </div>
 
                 <div>
@@ -182,7 +202,7 @@
 
             <div class="area_branca">
                 <h1>Quer realmente finalizar o serviço?</h1>
-                <ion-button class="form__btn">Prosseguir</ion-button>
+                <ion-button class="form__btn" (click)="finalizar();">Prosseguir</ion-button>
             </div>
 
         </ion-card>
@@ -244,10 +264,10 @@
             </div>
 
             <div class="area_branca">
-                <h1>{{msgPoupopCancelar}}</h1>
+                <h1>Quer realmente cancelar o pedido?</h1>
                 <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text
                         class="text_cancelar_poupop">10%</ion-text> </p>
-                <ion-button class="form__btn" id="btnProsseguir" (click)="mudartxtCancelar();">Prosseguir</ion-button>
+                <ion-button class="form__btn" id="btnProsseguir" (click)="ignorarServico();">Prosseguir</ion-button>
             </div>
 
         </ion-card>
