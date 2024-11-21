@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { Capacitor } from '@capacitor/core';
+import { Filesystem } from '@capacitor/filesystem';
 
 @Component({
     selector: 'app-documento',
@@ -82,7 +83,6 @@ export class DocumentoPage implements OnInit {
         dadosForm.append("cpf", trabalhador.Cpf);
         dadosForm.append("pix", trabalhador.pix);
         dadosForm.append("valor", trabalhador.valor);
-
         try {
             this.carregar = true;
 
@@ -104,7 +104,40 @@ export class DocumentoPage implements OnInit {
                         dadosForm.append("cpf", trabalhador.Cpf);
 
                         for (let i = 0; i < this.arquivos.length; i++) {
-                            dadosForm.append("files", this.arquivos[i].arquivo, this.arquivos[i].arquivo.name);
+                            const fileData = this.arquivos[i].arquivo;
+
+                            // Valida se o arquivo tem um caminho
+                            if (!fileData.path) {
+                                console.error(`Arquivo ${i} não possui um caminho válido`);
+                                continue;
+                            }
+
+                            // Lê o arquivo usando o Capacitor Filesystem
+                            const fileResult = await Filesystem.readFile({
+                                path: fileData.path,
+                            });
+
+                            // Verifica se os dados do arquivo foram lidos corretamente
+                            if (!fileResult.data) {
+                                console.error(`Erro ao ler o arquivo ${fileData.path}`);
+                                continue;
+                            }
+
+                            // Converte para Blob
+                            const byteCharacters = atob(fileResult.data.toString()); // Decodifica Base64
+                            const byteNumbers = [];
+                            for (let j = 0; j < byteCharacters.length; j++) {
+                                byteNumbers.push(byteCharacters.charCodeAt(j));
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], { type: fileData.mimeType });
+
+                            if (this.arquivos[i].arquivo.mimeType.includes("image")) {
+                                dadosForm.append("files", blob, i + ".jpg");
+                            }
+                            else {
+                                dadosForm.append("files", blob, i + ".pdf");
+                            }
                         }
 
                         res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
@@ -125,6 +158,7 @@ export class DocumentoPage implements OnInit {
             }
         }
         catch (erro: any) {
+            console.error(erro);
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
@@ -142,12 +176,12 @@ export class DocumentoPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("categorias", JSON.stringify(trabalhador.categorias));
 
-        try
-        {
+        try {
             this.carregar = true;
             let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text", headers: headerNgrok }));
         }
         catch (erro: any) {
+            console.error(erro);
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
