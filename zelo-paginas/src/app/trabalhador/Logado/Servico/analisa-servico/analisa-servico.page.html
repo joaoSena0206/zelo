@@ -14,7 +14,7 @@
         <img [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.jpg'" alt="Foto Cliente">
         <ion-text class="area_titulo_perfil">
           <h1>{{clienteServico.Nome}}</h1>
-          <p (click)="VerPerfil(cliente.Cpf, cliente.Nome);" style="text-decoration: underline;">Ver perfil</p>
+          <p (click)="VerPerfil(clienteServico.Cpf, clienteServico.Nome);" style="text-decoration: underline;">Ver perfil</p>
         </ion-text>
       </div>
   
