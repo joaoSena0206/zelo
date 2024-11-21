@@ -10,7 +10,7 @@ import { Network } from '@capacitor/network';
 import { NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActionPerformed} from '@capacitor/push-notifications';
+import { ActionPerformed } from '@capacitor/push-notifications';
 
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -102,6 +102,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             div1.style.display = "flex";
 
             this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
+
+            this.temporizador();
         }
 
         PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {
@@ -116,7 +118,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.navCl.navigateRoot("inicial");
             }
         });
-        this.temporizador();
     }
 
     ngAfterViewInit() {
@@ -562,6 +563,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             divTrabalhoIniciado.style.display = 'flex';
             divCodigo.style.display = 'none';
             div1.style.display = "flex";
+
+            this.temporizador();
         }
         else {
             let erro = document.querySelector('#spanCodigo');
@@ -574,7 +577,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         erro?.classList.add('escondido');
     }
 
-    async finalizar() {
+    async finalizar(modal: any) {
         let dadosForm = new FormData();
         dadosForm.append("token", this.tokenCliente);
         dadosForm.append("trabalhador", localStorage.getItem("trabalhador")!);
@@ -590,6 +593,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
         }
+
+        modal.dismiss();
     }
 
     async cancelar() {
