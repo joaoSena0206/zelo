@@ -483,12 +483,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-            localStorage.removeItem("cliente");
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
 
-            this.navCl.navigateRoot("/trabalhador/inicial");
+            this.navCl.navigateRoot("inicial");
             this.modalCancelar.dismiss();
         }
         catch (erro: any) {

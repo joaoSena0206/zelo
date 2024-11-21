@@ -6,7 +6,7 @@ export const headerNgrok = new HttpHeaders({
 });
 
 export const dominio = "https://zelo-server.com.br";
-export const apiGoogle = "AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM";
+export const apiGoogle = "AIzaSyCQvbNhFUQJI31Zflx_h3wxLqTd70GE13o";
 export const ambient_firebase = {
     apiKey: "AIzaSyBYK20Z_BR4TnpM27C1Hm-M-aI7o51oEIg",
     authDomain: "zelo-dfe99.firebaseapp.com",
