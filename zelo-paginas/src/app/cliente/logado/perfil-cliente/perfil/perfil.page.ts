@@ -12,6 +12,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 })
 export class PerfilPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    fotoPerfil: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -25,6 +26,10 @@ export class PerfilPage implements OnInit {
 
     voltarPag() {
         this.navCl.back();
+    }
+
+    ionViewDidEnter() {
+        this.fotoPerfil = dominio + '/Imgs/Perfil/Cliente/' + this.cliente.Cpf + '.jpg?time=' + new Date().getTime();
     }
 
     ngAfterViewInit() {

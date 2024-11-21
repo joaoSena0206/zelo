@@ -46,7 +46,7 @@ export class PrivacidadePage implements OnInit {
         minCropBoxWidth: 140,
         minCropBoxHeight: 140
     };
-    perfilFoto: any = dominio + '/Imgs/Perfil/Cliente/' + this.cliente.Cpf + '.jpg';
+    perfilFoto: any = dominio + '/Imgs/Perfil/Cliente/' + this.cliente.Cpf + '.jpg?time=' + new Date().getTime();
 
     form = new FormGroup({
         senhas: new FormGroup({
@@ -72,6 +72,7 @@ export class PrivacidadePage implements OnInit {
         cep: "Cep obrigatório",
         numero: "Numero obrigatório"
     };
+    situacao4: any;
 
     constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef, private toastController: ToastController, private sanitizer: DomSanitizer) {
         this.endereco.controls['estado'].disable();
@@ -107,24 +108,43 @@ export class PrivacidadePage implements OnInit {
         }).toDataURL("image/jpeg");
 
         this.perfilFoto = imgCrop;
+
+        this.situacao4 = false;
+        this.isFormValid();
     }
 
     fecharDiv(div: any) {
         div.style.display = "none";
     }
 
-    base64ToFormData(base64String: string, fileName: string): FormData {
+    async uploadFile(base64String: string, fileName: string) {
+        let link = dominio + "/Cliente/AdicionarFotoPerfil";
+        const formData = this.base64ToFormData(base64String, fileName);
+        formData.append("cpf", this.cliente.Cpf);
+
+        this.carregar = true;
+        await firstValueFrom(this.http.post(link, formData));
+        this.carregar = false;
+    }
+
+    // Converte Base64 para FormData
+    private base64ToFormData(base64String: string, fileName: string): FormData {
+        // Remove o prefixo (se existir)
         const base64Data = base64String.includes(',')
             ? base64String.split(',')[1]
             : base64String;
 
+        // Converter Base64 para array de bytes
         const byteCharacters = atob(base64Data);
         const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
             byteCharacters.charCodeAt(i)
         );
         const byteArray = new Uint8Array(byteNumbers);
+
+        // Criar um Blob
         const blob = new Blob([byteArray], { type: 'application/octet-stream' });
 
+        // Adicionar ao FormData
         const formData = new FormData();
         formData.append('file', blob, fileName);
 
@@ -357,15 +377,22 @@ export class PrivacidadePage implements OnInit {
             if (this.situacao2 == true) {
                 this.situacaoBotao = true;
                 this.mostrarSpanSenha = false;
-            } else
+            }
+            else {
                 if (this.situacao3 == true) {
                     this.situacaoBotao = true;
                 }
                 else {
-                    this.situacaoBotao = false;
-                    this.mostrarSpan = false;
-                    this.mostrarSpanSenha = false;
+                    if (this.situacao4 == true) {
+                        this.situacaoBotao = true;
+                    }
+                    else {
+                        this.situacaoBotao = false;
+                        this.mostrarSpan = false;
+                        this.mostrarSpanSenha = false;
+                    }
                 }
+            }
         }
     }
 
@@ -505,6 +532,15 @@ export class PrivacidadePage implements OnInit {
             finally {
                 this.carregar = false;
             }
+        }
+
+        try {
+            this.uploadFile(this.perfilFoto, this.cliente.Cpf + ".jpg");
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
 
         this.situacaoBotao = true;
