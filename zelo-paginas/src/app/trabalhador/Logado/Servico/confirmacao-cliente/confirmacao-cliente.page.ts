@@ -31,20 +31,9 @@ export class ConfirmacaoClientePage implements OnInit {
             this.idPagamento = notification.data.id;
         });
 
-        // PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {
-        //     let situacao = res.notification.data.pago;
-
-        //     if (situacao == "true") {
-        //         this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
-        //     }
-        //     else {
-        //         this.cancelar(this.id);
-        //     }
-        // });
-
         if (!localStorage.getItem("confirmacao")) {
             let confirmacao = {
-                min: 10,
+                min: 5,
                 seg: 0
             };
 
@@ -69,10 +58,19 @@ export class ConfirmacaoClientePage implements OnInit {
                 if (res.status == "approved") {
                     clearInterval(this.id);
 
+                    localStorage.removeItem("confirmacao");
+
                     this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
                 }
                 else if (res.status == "cancelled") {
+                    clearInterval(this.id);
 
+                    localStorage.removeItem("cliente");
+                    localStorage.removeItem("endereco");
+                    localStorage.removeItem("solicitacao");
+                    localStorage.removeItem("confirmacao");
+
+                    this.navCl.navigateRoot("trabalhador/inicial");
                 }
             }
             catch {
@@ -133,8 +131,6 @@ export class ConfirmacaoClientePage implements OnInit {
 
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
                 this.cancelar(this.id);
-
-                clearInterval(this.id);
             }
         }, 1000);
     }

@@ -88,7 +88,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             this.tempo = temporizador;
             localStorage.setItem("temporizador", JSON.stringify(temporizador));
         }
-        else {
+        else if (localStorage.getItem("codigoConfirmado") == "true") {
             this.abrirDivCodigo();
 
             let div1 = document.querySelector('.div_1') as HTMLDivElement;
@@ -174,6 +174,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         return new Promise((resolve, reject) => {
             // Verifica se o objeto `google` já está disponível
             if (typeof google !== 'undefined') {
+                console.log('Google Maps API já carregada.');
                 resolve();
                 return;
             }
@@ -254,7 +255,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     async pegarCoords() {
         let endereco = localStorage.getItem("endereco");
-        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM`;
+        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=${apiGoogle}`;
         let res: any = await firstValueFrom(this.http.get(link));
         let coords = res.results[0].geometry.location;
 
@@ -431,6 +432,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
+            localStorage.removeItem("temporizador");
+            localStorage.removeItem("codigo");
 
             this.navCl.navigateRoot("/trabalhador/inicial");
             this.modalCancelar.dismiss();
@@ -564,6 +567,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             divCodigo.style.display = 'none';
             div1.style.display = "flex";
 
+            localStorage.setItem("codigoConfirmado", "true");
+
             this.temporizador();
         }
         else {
@@ -586,6 +591,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            clearInterval(this.id);
+
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("confirmacao");
+            localStorage.removeItem("temporizador");
+            localStorage.removeItem("codigo");
+
             this.navCl.navigateRoot("/trabalhador/avaliacao");
         }
         catch (erro: any) {
@@ -608,10 +620,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             await firstValueFrom(this.http.post(link, dadosForm));
+            clearInterval(this.id);
+
             localStorage.removeItem("cliente");
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
+            localStorage.removeItem("codigo");
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
