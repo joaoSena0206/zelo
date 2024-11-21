@@ -158,4 +158,10 @@ export class AnalisaServicoPage implements OnInit {
         }
     }
 
+    VerPerfil(Cpf: any, Nome: any){
+        let clienteVerPerfil = {Cpf: Cpf, Nome: Nome}
+        localStorage.setItem('perfil', JSON.stringify(clienteVerPerfil))
+        this.navCl.navigateBack("/trabalhador/perfil-cliente")
+    }
+
 }
