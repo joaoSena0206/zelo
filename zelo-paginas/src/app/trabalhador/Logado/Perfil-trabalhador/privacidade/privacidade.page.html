@@ -2,6 +2,14 @@
     <div class="carregamento--trabalhador"></div>
 </div>
 
+<div #div class="divCarregamento" (click)="fecharDiv(div)" style="display: none;">
+    <div style="display: flex; flex-direction: column; gap: 20px; position: relative;">
+        <angular-cropper style="width: 80%;" #angularCropper [cropperOptions]="config"
+            [imageUrl]="fotoPerfil"></angular-cropper>
+        <ion-button class="btnRecorte" (click)="recortarImg()">Recortar</ion-button>
+    </div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="wrapper">
         <div class="grupo">
@@ -10,15 +18,15 @@
                     <ion-icon class="titulo__voltar" (click)="voltarPag()" name="chevron-back-outline"></ion-icon>
                 </div>
                 <div class="area_foto_perfil">
-                    <ion-icon class="icone_editar"
+                    <ion-icon (click)="pegarFoto(div)" class="icone_editar"
                         src="../../../assets/icon/Trabalhador/icone perfil/editar.svg"></ion-icon>
-                    <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + trabalhador.Cpf + '.JPG'"
-                        alt="Foto de Perfil">
+                    <img class="foto_perfil" [src]="perfilFoto" alt="Foto de Perfil">
                 </div>
             </ion-header>
 
             <div class="content">
-                <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
+                <ion-alert header="Erro" [buttons]="['Ok']"
+                    message="A message should be a short, complete sentence."></ion-alert>
                 <ion-accordion-group class="ion_accordion_group">
                     <ion-accordion value="first">
                         <ion-item slot="header" class="div_titulo">
@@ -65,7 +73,8 @@
                                     erro.email }}
                                 </span>
 
-                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpan">Email já cadastrado!</span>
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpan">Email já
+                                    cadastrado!</span>
                             </div>
 
                             <div class="area_dado">
@@ -92,22 +101,27 @@
                         <div slot="content" class="geral">
 
                             <div class="imgCertificado" *ngFor="let imagens of [1, 2] let i = index">
-                                <img class="img_servico" [src]="dominio + '/Imgs/Certificados/' + trabalhador.Cpf + '/' + '1' +'.JPG'" alt="">
+                                <img class="img_servico"
+                                    [src]="dominio + '/Imgs/Certificados/' + trabalhador.Cpf + '/' + '1' +'.JPG'"
+                                    alt="">
                             </div>
 
-                            <div *ngFor="let arquivo of arquivos"> 
+                            <div *ngFor="let arquivo of arquivos">
                                 <div *ngIf="arquivo.img" class="imgCertificado">
-                                    <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
+                                    <ion-icon class="icone_lixo" name="trash-outline"
+                                        id="abrir_modal_remover_certificado"></ion-icon>
                                     <p>{{ arquivo.arquivo.name }}</p>
                                 </div>
 
                                 <div *ngIf="arquivo.img" class="imgCertificado">
-                                    <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
+                                    <ion-icon class="icone_lixo" name="trash-outline"
+                                        id="abrir_modal_remover_certificado"></ion-icon>
                                     <p>{{ arquivo.arquivo.name }}</p>
                                 </div>
-    
+
                                 <div *ngIf="arquivo.pdf" class="imgCertificado">
-                                    <ion-icon class="icone_lixo" name="trash-outline" id="abrir_modal_remover_certificado"></ion-icon>
+                                    <ion-icon class="icone_lixo" name="trash-outline"
+                                        id="abrir_modal_remover_certificado"></ion-icon>
                                     <p>{{ arquivo.arquivo.name }}</p>
                                 </div>
                             </div>
@@ -133,7 +147,8 @@
 
                                 <p class="txt">Senha atual</p>
 
-                                <ion-input id="Senha_Atual" formControlName="Senha_Atual" (keyup)="AtivarBotaoSalvar2($event)"
+                                <ion-input id="Senha_Atual" formControlName="Senha_Atual"
+                                    (keyup)="AtivarBotaoSalvar2($event)"
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['Senha_Atual'])"
                                     [class.inputErro]="form.controls['senhas'].controls['Senha_Atual'].invalid && (form.controls['senhas'].controls['Senha_Atual'].touched || form.controls['senhas'].controls['Senha_Atual'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
@@ -148,7 +163,8 @@
                                     erro.Senha_Atual }}
                                 </span>
 
-                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual incorreta!</span>
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual
+                                    incorreta!</span>
 
                                 <p class="txt">Nova senha</p>
 

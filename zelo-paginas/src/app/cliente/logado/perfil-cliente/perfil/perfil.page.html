@@ -4,15 +4,16 @@
 
 <ion-content [fullscreen]="true">
     <div class="content">
-        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
+        <ion-alert header="Erro" [buttons]="['Ok']"
+            message="A message should be a short, complete sentence."></ion-alert>
         <ion-header class="header ion-no-border" [translucent]="true">
             <div class="titulo">
                 <ion-icon (click)="voltarPag()" class="titulo__voltar"
                     src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 <h1 style="font-size: 32px; font-weight: bold;">Perfil</h1>
-            </div>
+            </div>  
             <div class="area_foto_perfil">
-                <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.JPG'" alt="">
+                <img class="foto_perfil" [src]="fotoPerfil" alt="">
 
                 <!-- <div class="estrelas">
                     <ion-icon class="estrela" name="star"></ion-icon>
@@ -21,8 +22,7 @@
                 </div> -->
 
                 <div class="estrelas">
-                    <ion-icon class="estrela_perfil"
-                        *ngFor="let estrela of gerarArrayEstrelas(MediaEstrelas)"
+                    <ion-icon class="estrela_perfil" *ngFor="let estrela of gerarArrayEstrelas(MediaEstrelas)"
                         name="star"></ion-icon>
                 </div>
             </div>
@@ -51,7 +51,8 @@
 
                 <div class="area_btn" [routerLink]="['/historico']">
                     <div class="txt_icon">
-                        <ion-icon class="iconeIdentificacao" src="../../../../../assets/icon/cliente/HISTORICOAsset 1.svg"></ion-icon>
+                        <ion-icon class="iconeIdentificacao"
+                            src="../../../../../assets/icon/cliente/HISTORICOAsset 1.svg"></ion-icon>
                         <p class="txt">Histórico</p>
                     </div>
 
@@ -81,7 +82,8 @@
 
                 <div class="area_btn" [routerLink]="['/termos']">
                     <div class="txt_icon">
-                        <ion-icon class="iconeIdentificacao" src="../../../../../assets/icon/cliente/termos.svg"></ion-icon>
+                        <ion-icon class="iconeIdentificacao"
+                            src="../../../../../assets/icon/cliente/termos.svg"></ion-icon>
                         <p class="txt">Termos</p>
                     </div>
 
@@ -123,28 +125,28 @@
     </ng-template>
 </ion-modal>
 
-<ion-footer class="footer" style="position: fixed;" >
+<ion-footer class="footer" style="position: fixed;">
     <ion-tabs class="ion_tabs">
-      <ion-tab-bar class="ion_tab_bar" slot="bottom">
-    
-        <ion-tab-button [routerLink]="['/inicial']">
-          <ion-icon class="imgFooter" name="home-outline"></ion-icon>
-        </ion-tab-button>
+        <ion-tab-bar class="ion_tab_bar" slot="bottom">
 
-        <ion-tab-button [routerLink]="['/favoritos']">
-            <ion-icon class="imgFooter" src="../../../../../assets/icon/cliente/Heart.svg" alt="">
-            </ion-icon>
-        </ion-tab-button>
-    
-        <ion-tab-button [routerLink]="['/historico']">
-          <ion-icon style="color: black;" class="imgFooter" name="time-outline"></ion-icon>
-        </ion-tab-button>
-    
-        <ion-tab-button [routerLink]="['/perfil']">
-          <ion-icon  class="imgFooter Clicado" src="../../../../../assets/icon/cliente/perfil_branco.svg">
-          </ion-icon>
-        </ion-tab-button>
-  
-      </ion-tab-bar>
+            <ion-tab-button [routerLink]="['/inicial']">
+                <ion-icon class="imgFooter" name="home-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/favoritos']">
+                <ion-icon class="imgFooter" src="../../../../../assets/icon/cliente/Heart.svg" alt="">
+                </ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/historico']">
+                <ion-icon style="color: black;" class="imgFooter" name="time-outline"></ion-icon>
+            </ion-tab-button>
+
+            <ion-tab-button [routerLink]="['/perfil']">
+                <ion-icon class="imgFooter Clicado" src="../../../../../assets/icon/cliente/perfil_branco.svg">
+                </ion-icon>
+            </ion-tab-button>
+
+        </ion-tab-bar>
     </ion-tabs>
-  </ion-footer>
+</ion-footer>

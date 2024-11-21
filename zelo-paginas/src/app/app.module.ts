@@ -11,7 +11,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from '@angular/fire/compat'
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { ambient_firebase } from './gerais';
 
 @NgModule({
@@ -20,7 +19,5 @@ import { ambient_firebase } from './gerais';
     providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
     bootstrap: [AppComponent],
 })
-
-
 
 export class AppModule { }

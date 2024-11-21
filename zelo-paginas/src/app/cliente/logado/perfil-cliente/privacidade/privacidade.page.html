@@ -2,6 +2,14 @@
     <div class="carregamento"></div>
 </div>
 
+<div #div class="divCarregamento" (click)="fecharDiv(div)" style="display: none;">
+    <div style="display: flex; flex-direction: column; gap: 20px; position: relative;">
+        <angular-cropper style="width: 80%;" #angularCropper [cropperOptions]="config"
+            [imageUrl]="fotoPerfil"></angular-cropper>
+        <ion-button class="btnRecorte" (click)="recortarImg()">Recortar</ion-button>
+    </div>
+</div>
+
 <ion-content [fullscreen]="true">
     <div class="wrapper">
         <div class="grupo">
@@ -11,15 +19,16 @@
                         src="../../../../assets/icon/cliente/down-removebg-preview 8.svg"></ion-icon>
                 </div>
                 <div class="area_foto_perfil">
-                    <ion-icon class="icone_editar" src="../../../assets/icon/cliente/editar.svg"></ion-icon>
-                    <img class="foto_perfil" [src]="dominio + '/Imgs/Perfil/Cliente/' + cliente.Cpf + '.JPG'"
-                        alt="Foto de Perfil">
+                    <ion-icon class="icone_editar" (click)="pegarFoto(div)"
+                        src="../../../assets/icon/cliente/editar.svg"></ion-icon>
+                    <img class="foto_perfil" [src]="perfilFoto" alt="Foto de Perfil">
                 </div>
             </ion-header>
 
             <div class="content">
 
-                <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
+                <ion-alert header="Erro" [buttons]="['Ok']"
+                    message="A message should be a short, complete sentence."></ion-alert>
                 <ion-accordion-group class="ion_accordion_group">
                     <ion-accordion value="first">
                         <ion-item slot="header" class="div_titulo">
@@ -32,8 +41,7 @@
                                 <div style="position: relative;">
                                     <ion-input id="inputNome" (keyup)="AtivarBotaoSalvar($event)"
                                         [disabled]="isDisabled" class="input" placeholder="Nome"
-                                        value="{{cliente.Nome}}"
-                                        (ionInput)="validacaoInput(formDados.controls['Nome'])"
+                                        value="{{cliente.Nome}}" (ionInput)="validacaoInput(formDados.controls['Nome'])"
                                         [class.inputErro]="formDados.controls['Nome'].invalid && (formDados.controls['Nome'].touched || formDados.controls['Nome'].dirty)"
                                         formControlName="Nome">
                                     </ion-input>
@@ -66,7 +74,8 @@
                                     erro.email }}
                                 </span>
 
-                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpan">Email já cadastrado!</span>
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpan">Email já
+                                    cadastrado!</span>
                             </div>
 
                             <div class="area_dado">
@@ -89,97 +98,112 @@
                             <h1>Endereço</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral" [formGroup]="endereco">
-                            <div class="div_lado" >
+                        <div slot="content" class="geral" [formGroup]="endereco" id="endereco">
+                            <div class="div_lado">
                                 <div style="position: relative;" class="area_dado identificacao_cep">
                                     <p class="txt">Identificação</p>
 
-                                    <ion-input (keyup)="AtivarBotaoSalvar3($event)" formControlName="identificacao" class="input"
-                                    (ionInput)="validarControl(endereco.controls['identificacao'])"
-                                    [class.inputErro]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty)"
-                                    placeholder="{{listaEndereco[0].Identificacao}}" id="Identificacao" value=""></ion-input>
+                                    <ion-input [disabled]="true" (keyup)="AtivarBotaoSalvar3($event)"
+                                        formControlName="identificacao" class="input"
+                                        (ionInput)="validarControl(endereco.controls['identificacao'])"
+                                        [class.inputErro]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty)"
+                                        placeholder="{{listaEndereco[0].Identificacao}}" id="Identificacao"
+                                        value=""></ion-input>
 
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
                                 </div>
 
                                 <div style="position: relative;" class="area_dado identificacao_cep">
                                     <p class="txt">CEP</p>
 
                                     <ion-input formControlName="cep" (keyup)="AtivarBotaoSalvar3($event)" id="cep"
-                                    [class.inputErro]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty)"
-                                    (ionInput)="buscarCep(endereco.controls['cep']); validarControl(endereco.controls['cep'])"
-                                    [maskito]="cepMask" [maskitoElement]="maskPredicate" class="input"
-                                    placeholder="{{listaEndereco[0].Cep}}" value="{{listaEndereco[0].Cep}}"></ion-input>
+                                        [class.inputErro]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty)"
+                                        (ionInput)="buscarCep(endereco.controls['cep']); validarControl(endereco.controls['cep'])"
+                                        [maskito]="cepMask" [maskitoElement]="maskPredicate" class="input"
+                                        placeholder="{{listaEndereco[0].Cep}}"
+                                        value="{{listaEndereco[0].Cep}}"></ion-input>
 
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="div_lado">
                                 <div class="area_dado cep_bairro estado">
                                     <p class="txt">Estado</p>
-                                    <ion-input [disabled]="true" formControlName="estado" class="input" placeholder="SP"></ion-input>
+                                    <ion-input [disabled]="true" formControlName="estado" class="input"
+                                        placeholder="SP"></ion-input>
                                 </div>
 
                                 <div class="area_dado input_padrao">
                                     <p class="txt">Cidade</p>
-                                    <ion-input [disabled]="true" formControlName="cidade" class="input" placeholder="Santos"></ion-input>
+                                    <ion-input [disabled]="true" formControlName="cidade" class="input"
+                                        placeholder="Santos"></ion-input>
                                 </div>
 
                                 <div class="area_dado input_padrao">
                                     <p class="txt">Bairro</p>
-                                    <ion-input formControlName="bairro" [disabled]="true" class="input" placeholder="Bairro"></ion-input>
+                                    <ion-input formControlName="bairro" [disabled]="true" class="input"
+                                        placeholder="Bairro"></ion-input>
                                 </div>
                             </div>
 
                             <div class="div_lado">
                                 <div class="area_dado input_padrao">
                                     <p class="txt">Rua</p>
-                                    <ion-input formControlName="rua" type="text" [disabled]="true" placeholder="Rua Godofredo Fraga" class="input"></ion-input>
+                                    <ion-input formControlName="rua" type="text" [disabled]="true"
+                                        placeholder="Rua Godofredo Fraga" class="input"></ion-input>
                                 </div>
 
-                                <div class="area_dado numero">
+                                <div class="area_dado numero" style="position: relative;">
                                     <p class="txt">Número</p>
 
-                                    <ion-input id="numero" (keyup)="AtivarBotaoSalvar3($event)" formControlName="numero" (ionInput)="validarControl(endereco.controls['numero'])"
-                                    [class.inputErro]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty)"
-                                    class="input" value="" placeholder="{{listaEndereco[0].Numero}}"></ion-input>
+                                    <ion-input id="numero" (keyup)="AtivarBotaoSalvar3($event)" formControlName="numero"
+                                        (ionInput)="validarControl(endereco.controls['numero'])"
+                                        [class.inputErro]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty)"
+                                        class="input" value="" placeholder="{{listaEndereco[0].Numero}}"></ion-input>
+
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
                                 </div>
                             </div>
 
                             <div class="area_dado" style="position: relative;">
                                 <p class="txt">Complemento</p>
-                                <ion-input formControlName="complemento" id="complemento" class="input" value="" placeholder="Complemento"></ion-input>
+                                <ion-input formControlName="complemento" id="complemento" class="input" value=""
+                                    placeholder="Complemento"></ion-input>
 
-                                <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                    name="create-outline"></ion-icon>
                             </div>
 
                             <div class="area_dado" style="position: relative; margin-bottom: 10px;">
                                 <p class="txt">Ponto de Referência</p>
                                 <ion-input formControlName="pontoReferencia" id="referencia" class="input"
-                                placeholder="{{listaEndereco[0].Referencia}}"></ion-input>
-
-                                <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                    placeholder="{{listaEndereco[0].Referencia}}"></ion-input>
+                                <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                    name="create-outline"></ion-icon>
                             </div>
 
                             <div style="width: 100vh; margin-bottom: 5px;">
                                 <span style="width: 100%; margin-top: 10px;"
-                                [ngClass]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty) ? 'erro' : 'escondido'">{{
-                                erro.identificacao }}</span>
+                                    [ngClass]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.identificacao }}</span>
                             </div>
-                            
+
                             <div style="width: 100vh; margin-bottom: 5px;">
                                 <span style="width: 100%; margin-top: 10px;"
-                                [ngClass]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty) ? 'erro' : 'escondido'">{{
-                                erro.cep }}</span>
+                                    [ngClass]="endereco.controls['cep'].invalid && (endereco.controls['cep'].touched || endereco.controls['cep'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.cep }}</span>
                             </div>
-                            
+
                             <div style="width: 100vh; margin-bottom: 5px;">
                                 <span style="width: 100%; margin-top: 10px;"
-                                [ngClass]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty) ? 'erro' : 'escondido'">{{
-                                erro.numero }}</span>
+                                    [ngClass]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty) ? 'erro' : 'escondido'">{{
+                                    erro.numero }}</span>
                             </div>
-                            
+
 
                         </div>
                     </ion-accordion>
@@ -196,7 +220,8 @@
 
                                 <p class="txt">Senha atual</p>
 
-                                <ion-input id="Senha_Atual" formControlName="Senha_Atual" (keyup)="AtivarBotaoSalvar2($event)"
+                                <ion-input id="Senha_Atual" formControlName="Senha_Atual"
+                                    (keyup)="AtivarBotaoSalvar2($event)"
                                     (ionInput)="validacaoInput(form.controls['senhas'].controls['Senha_Atual'])"
                                     [class.inputErro]="form.controls['senhas'].controls['Senha_Atual'].invalid && (form.controls['senhas'].controls['Senha_Atual'].touched || form.controls['senhas'].controls['Senha_Atual'].dirty)"
                                     type="password" class="input" placeholder="Crie sua senha">
@@ -211,7 +236,8 @@
                                     erro.Senha_Atual }}
                                 </span>
 
-                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual incorreta!</span>
+                                <span class="erro" style="margin-top: 10px;" *ngIf="mostrarSpanSenha">Senha atual
+                                    incorreta!</span>
 
                                 <p class="txt">Nova senha</p>
 

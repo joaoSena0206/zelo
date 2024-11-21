@@ -13,15 +13,18 @@ import validator from 'cpf-cnpj-validator';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CropperComponent } from 'angular-cropperjs';
 
 @Component({
-  selector: 'app-privacidade',
-  templateUrl: './privacidade.page.html',
-  styleUrls: ['./privacidade.page.scss'],
+    selector: 'app-privacidade',
+    templateUrl: './privacidade.page.html',
+    styleUrls: ['./privacidade.page.scss'],
 })
 export class PrivacidadePage implements OnInit {
+    @ViewChild('angularCropper') public angularCropper: CropperComponent;
 
-  cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     novoTexto: any;
     isDisabled = true;
     isDisabled2 = true;
@@ -31,7 +34,20 @@ export class PrivacidadePage implements OnInit {
     carregar: boolean = false;
     situacaoBotao: boolean = true;
     listaEndereco: any = JSON.parse(localStorage.getItem('endereco')!);
-    
+    fotoPerfil: any;
+    config: any = {
+        aspectRatio: 1,
+        movable: true,
+        zoomable: true,
+        scalable: true,
+        viewMode: 1,
+        cropBoxResizable: false,
+        autoCropArea: 1,
+        minCropBoxWidth: 140,
+        minCropBoxHeight: 140
+    };
+    perfilFoto: any = dominio + '/Imgs/Perfil/Cliente/' + this.cliente.Cpf + '.jpg?time=' + new Date().getTime();
+
     form = new FormGroup({
         senhas: new FormGroup({
             Senha_Atual: new FormControl("", Validators.required),
@@ -56,15 +72,83 @@ export class PrivacidadePage implements OnInit {
         cep: "Cep obrigatório",
         numero: "Numero obrigatório"
     };
+    situacao4: any;
 
     constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef, private toastController: ToastController, private sanitizer: DomSanitizer) {
-      this.endereco.controls['estado'].disable();
-      this.endereco.controls['cidade'].disable();
-      this.endereco.controls['bairro'].disable();
-      this.endereco.controls['rua'].disable();
-     }
+        this.endereco.controls['estado'].disable();
+        this.endereco.controls['cidade'].disable();
+        this.endereco.controls['bairro'].disable();
+        this.endereco.controls['rua'].disable();
+        this.endereco.controls['identificacao'].disable();
+        this.endereco.controls['cep'].disable();
+        this.endereco.controls['numero'].disable();
+        this.endereco.controls['complemento'].disable();
+        this.endereco.controls['pontoReferencia'].disable();
+    }
 
     ngOnInit() {
+    }
+
+    async pegarFoto(div: any) {
+        div.style.display = "flex";
+
+        const img = await Camera.getPhoto({
+            quality: 90,
+            resultType: CameraResultType.DataUrl,
+            source: CameraSource.Photos
+        });
+
+        this.fotoPerfil = img.dataUrl;
+    }
+
+    recortarImg() {
+        const imgCrop = this.angularCropper.cropper.getCroppedCanvas({
+            width: 140,
+            height: 140
+        }).toDataURL("image/jpeg");
+
+        this.perfilFoto = imgCrop;
+
+        this.situacao4 = false;
+        this.isFormValid();
+    }
+
+    fecharDiv(div: any) {
+        div.style.display = "none";
+    }
+
+    async uploadFile(base64String: string, fileName: string) {
+        let link = dominio + "/Cliente/AdicionarFotoPerfil";
+        const formData = this.base64ToFormData(base64String, fileName);
+        formData.append("cpf", this.cliente.Cpf);
+
+        this.carregar = true;
+        await firstValueFrom(this.http.post(link, formData));
+        this.carregar = false;
+    }
+
+    // Converte Base64 para FormData
+    private base64ToFormData(base64String: string, fileName: string): FormData {
+        // Remove o prefixo (se existir)
+        const base64Data = base64String.includes(',')
+            ? base64String.split(',')[1]
+            : base64String;
+
+        // Converter Base64 para array de bytes
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
+            byteCharacters.charCodeAt(i)
+        );
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Criar um Blob
+        const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+
+        // Adicionar ao FormData
+        const formData = new FormData();
+        formData.append('file', blob, fileName);
+
+        return formData;
     }
 
     validacaoInput(control: FormControl) {
@@ -168,8 +252,7 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
-
-                if (input.id != "senha" && input.id != "Senha_Atual" && input.id != "senhaNova" && input.id != "Identificacao" && input.id != "cep" && input.id != "numero") {
+                if (input.id != "senha" && input.id != "Senha_Atual" && input.id != "senhaNova") {
                     input.disabled = true;
                     input.style.border = 'none';
                 }
@@ -187,13 +270,6 @@ export class PrivacidadePage implements OnInit {
             });
         });
 
-        inputs.forEach((input: HTMLIonInputElement) => {
-            input.addEventListener("ionFocus", function () {
-                if (input.id == "senha") {
-                    input.style.border = 'black 1px solid';
-                }
-            });
-        });
 
         this.formatCPF(this.cpf);
     }
@@ -222,11 +298,10 @@ export class PrivacidadePage implements OnInit {
         if (mes < 10 && dia < 10) {
             DataFormatada = "0" + dia + "/" + "0" + mes + "/" + ano;
         }
-        else if(mes < 10){
-          DataFormatada = dia + "/" + "0" + mes + "/" + ano;
-        } else
-        {
-          DataFormatada = dia + "/" + mes + "/" + ano;
+        else if (mes < 10) {
+            DataFormatada = dia + "/" + "0" + mes + "/" + ano;
+        } else {
+            DataFormatada = dia + "/" + mes + "/" + ano;
         }
 
         this.novoTexto = DataFormatada;
@@ -235,11 +310,14 @@ export class PrivacidadePage implements OnInit {
     abilitarInput(inputElement: any) {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
 
-        if (input.placeholder == "Nome") {
-            this.formDados.controls['Nome'].enable();
+        if (input.classList.contains("txt")) {
+            input = inputElement.parentElement.children[1] as HTMLIonInputElement;
         }
-        else {
-            this.formDados.controls['email'].enable();
+
+        let controlName = input.getAttribute("formControlName");
+
+        if (input.id == "Identificacao" || input.id == "numero" || input.id == "complemento" || input.id == "referencia" || input.id == "cep") {
+            this.endereco.controls[controlName as keyof typeof this.endereco.controls].enable();
         }
 
         input.style.border = 'black 1px solid';
@@ -280,15 +358,15 @@ export class PrivacidadePage implements OnInit {
     }
 
     AtivarBotaoSalvar3(event: KeyboardEvent) {
-      if (this.endereco.invalid) {
-          this.endereco.markAllAsTouched();
-          this.situacao3 = true;
-          this.isFormValid();
-      }
-      else {
-          this.situacao3 = false;
-          this.isFormValid();
-      }
+        if (this.endereco.invalid) {
+            this.endereco.markAllAsTouched();
+            this.situacao3 = true;
+            this.isFormValid();
+        }
+        else {
+            this.situacao3 = false;
+            this.isFormValid();
+        }
     }
 
     isFormValid() {
@@ -299,14 +377,21 @@ export class PrivacidadePage implements OnInit {
             if (this.situacao2 == true) {
                 this.situacaoBotao = true;
                 this.mostrarSpanSenha = false;
-            } else 
-            if(this.situacao3 == true){
-              this.situacaoBotao = true;
             }
-            else{
-                this.situacaoBotao = false;
-                this.mostrarSpan = false;
-                this.mostrarSpanSenha = false;
+            else {
+                if (this.situacao3 == true) {
+                    this.situacaoBotao = true;
+                }
+                else {
+                    if (this.situacao4 == true) {
+                        this.situacaoBotao = true;
+                    }
+                    else {
+                        this.situacaoBotao = false;
+                        this.mostrarSpan = false;
+                        this.mostrarSpanSenha = false;
+                    }
+                }
             }
         }
     }
@@ -353,15 +438,14 @@ export class PrivacidadePage implements OnInit {
             }
         }
 
-        if(nome.value != this.cliente.Nome)
-        {
+        if (nome.value != this.cliente.Nome) {
             link = dominio + "/Cliente/AlterarEmail";
             let dadosForm = new FormData();
             dadosForm.append("cpf", this.cliente.Cpf);
             dadosForm.append("nome", nome.value?.toString()!);
             dadosForm.append("email", null!);
 
-            try{
+            try {
                 let res2 = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
                 this.cliente.Nome = nome.value;
                 localStorage.setItem("cliente", JSON.stringify(this.cliente));
@@ -383,13 +467,13 @@ export class PrivacidadePage implements OnInit {
 
             try {
                 this.carregar = true;
-    
+
                 let res = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
-    
+
                 this.carregar = false;
-    
+
                 let objRes = res as any;
-    
+
                 if (objRes.cadastrado.length == 0) {
                     localStorage.setItem('TrocaEmail', email.value?.toString()!);
                     this.navCl.navigateForward("/confirmar-celular");
@@ -399,14 +483,12 @@ export class PrivacidadePage implements OnInit {
                     this.situacaoBotao = true;
                 }
             }
-            catch 
-            {
+            catch {
                 const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
                 alert.message = "Erro ao conectar-se ao servidor";
                 alert.present();
             }
-            finally 
-            {
+            finally {
                 this.carregar = false;
             }
         }
@@ -417,18 +499,15 @@ export class PrivacidadePage implements OnInit {
         let complemento = document.querySelector('#complemento') as HTMLIonInputElement;
         let referencia = document.querySelector('#referencia') as HTMLIonInputElement;
 
-        if(identificacao.value != "" && cep.value != "" && numero.value != "")
-        {
+        if (identificacao.value != "" && cep.value != "" && numero.value != "") {
 
-          if(complemento.value == "")
-          {
-            complemento.value = "-"
-          }
-          
-          if(referencia.value == "")
-          {
-            referencia.value = "-"
-          }
+            if (complemento.value == "") {
+                complemento.value = "-"
+            }
+
+            if (referencia.value == "") {
+                referencia.value = "-"
+            }
 
             link = dominio + "/Cliente/AlterarEndereco";
             let dadosForm = new FormData();
@@ -440,7 +519,7 @@ export class PrivacidadePage implements OnInit {
             dadosForm.append("complemento", complemento.value?.toString()!);
             dadosForm.append("referencia", referencia.value?.toString()!);
 
-            try{
+            try {
                 this.carregar = true;
                 let res2 = await firstValueFrom(this.http.post(link, dadosForm));
                 this.showTemporaryToast();
@@ -450,10 +529,18 @@ export class PrivacidadePage implements OnInit {
                 alert.message = "Erro ao conectar-se ao servidor";
                 alert.present();
             }
-            finally 
-            {
+            finally {
                 this.carregar = false;
             }
+        }
+
+        try {
+            this.uploadFile(this.perfilFoto, this.cliente.Cpf + ".jpg");
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
         }
 
         this.situacaoBotao = true;
@@ -461,82 +548,82 @@ export class PrivacidadePage implements OnInit {
 
     async showTemporaryToast() {
         const toast = await this.toastController.create({
-          message: 'Dado(s) alterado com sucesso!',
-          duration: 2000,
-          position: 'top',
-          cssClass: 'custom-toast',
+            message: 'Dado(s) alterado com sucesso!',
+            duration: 2000,
+            position: 'top',
+            cssClass: 'custom-toast',
         });
-    
+
         await toast.present();
     }
 
     endereco = new FormGroup({
-      identificacao: new FormControl("", Validators.required),
-      cep: new FormControl("", [Validators.required, validadorTamanhoMinimo()]),
-      estado: new FormControl(""),
-      cidade: new FormControl(""),
-      bairro: new FormControl(""),
-      rua: new FormControl(""),
-      numero: new FormControl("", Validators.required),
-      complemento: new FormControl(""),
-      pontoReferencia: new FormControl("")
+        identificacao: new FormControl("", Validators.required),
+        cep: new FormControl("", [Validators.required, validadorTamanhoMinimo()]),
+        estado: new FormControl(""),
+        cidade: new FormControl(""),
+        bairro: new FormControl(""),
+        rua: new FormControl(""),
+        numero: new FormControl("", Validators.required),
+        complemento: new FormControl(""),
+        pontoReferencia: new FormControl("")
     });
 
-  readonly cepMask: MaskitoOptions = {
-      mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]
-  };
+    readonly cepMask: MaskitoOptions = {
+        mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]
+    };
 
-  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+    readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
-  validarControl(control: FormControl) {
-      let nome = this.acharNomeControl(control);
+    validarControl(control: FormControl) {
+        let nome = this.acharNomeControl(control);
 
-      if (control.hasError("required")) {
-          this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
-      }
-      else {
-          let erros = control.errors;
+        if (control.hasError("required")) {
+            this.erro[nome] = `${nome[0].toUpperCase() + nome.replace(nome[0], "")} obrigatório!`;
+        }
+        else {
+            let erros = control.errors;
 
-          if (erros != null) {
-              Object.keys(erros).forEach(erro => {
-                  this.erro[nome] = erros![erro].msg;
-              });
-          }
-          else {
-              this.erro[nome] = "";
-          }
-      }
-  }
+            if (erros != null) {
+                Object.keys(erros).forEach(erro => {
+                    this.erro[nome] = erros![erro].msg;
+                });
+            }
+            else {
+                this.erro[nome] = "";
+            }
+        }
+    }
 
-  buscarCep(cepControl: FormControl) {
-      let cep = cepControl.value;
+    buscarCep(cepControl: FormControl) {
+        let cep = cepControl.value;
 
-      if (cep.length == 9) {
-          const link = `https://viacep.com.br/ws/${cep.replace("-", "")}/json/`;
+        if (cep.length == 9) {
+            const link = `https://viacep.com.br/ws/${cep.replace("-", "")}/json/`;
 
-          try {
-              this.http.get(link).subscribe(res => {
-                  let dados: any = res;
+            try {
+                this.http.get(link).subscribe(res => {
+                    let dados: any = res;
 
-                  if (dados.erro == "true") {
-                      this.endereco.controls['cep'].setErrors({ invalido: { msg: "Cep inválido" } });
+                    if (dados.erro == "true") {
+                        this.endereco.controls['cep'].setErrors({ invalido: { msg: "Cep inválido" } });
 
-                      this.validarControl(this.endereco.controls['cep']);
-                  }
+                        this.validarControl(this.endereco.controls['cep']);
+                    }
 
-                  this.endereco.controls['estado'].setValue(dados.uf);
-                  this.endereco.controls['cidade'].setValue(dados.localidade);
-                  this.endereco.controls['bairro'].setValue(dados.bairro);
-                  this.endereco.controls['rua'].setValue(dados.logradouro);
-              });
-          }
-          catch {
-              const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-              alert.message = "Erro ao puxar os dados do CEP";
-              alert.present();
-          }
-      }
-  }
+                    this.endereco.controls['estado'].setValue(dados.uf);
+                    this.endereco.controls['cidade'].setValue(dados.localidade);
+                    this.endereco.controls['bairro'].setValue(dados.bairro);
+                    this.endereco.controls['rua'].setValue(dados.logradouro);
+                });
+            }
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao puxar os dados do CEP";
+                alert.present();
+            }
+        }
+    }
 
 }
 
@@ -571,13 +658,13 @@ export function validadorSenhaConfere(): ValidatorFn {
 };
 
 export function validadorTamanhoMinimo(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-      let vl = control.value.replace(/[^/\d/ ]+/g, "");
+    return (control: AbstractControl): ValidationErrors | null => {
+        let vl = control.value.replace(/[^/\d/ ]+/g, "");
 
-      if (vl.length < 8) {
-          return { tamanhoMinimo: { msg: "Cep deve ter 08 dígitos!" } };
-      }
+        if (vl.length < 8) {
+            return { tamanhoMinimo: { msg: "Cep deve ter 08 dígitos!" } };
+        }
 
-      return null;
-  };
+        return null;
+    };
 };
