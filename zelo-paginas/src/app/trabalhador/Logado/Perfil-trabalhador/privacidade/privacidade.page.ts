@@ -198,7 +198,6 @@ export class PrivacidadePage implements OnInit {
         return cpf;
     }
 
-
     FormatarData() {
         const dateString: string = this.trabalhador.DataNascimento;
         const timestamp: number = Date.parse(dateString);

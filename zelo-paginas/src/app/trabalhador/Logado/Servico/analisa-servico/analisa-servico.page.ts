@@ -41,6 +41,7 @@ export class AnalisaServicoPage implements OnInit {
                 localStorage.removeItem("cliente");
                 localStorage.removeItem("endereco");
                 localStorage.removeItem("solicitacao");
+                localStorage.removeItem("confirmacao");
 
                 this.navCl.navigateRoot("/trabalhador/inicial");
             }
@@ -62,7 +63,6 @@ export class AnalisaServicoPage implements OnInit {
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
         }
-
     }
 
     async carregarServicos() {
