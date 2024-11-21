@@ -259,7 +259,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     async pegarCoords() {
         let endereco = localStorage.getItem("endereco");
-        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM`;
+        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=${apiGoogle}`;
         let res: any = await firstValueFrom(this.http.get(link));
         let coords = res.results[0].geometry.location;
 
