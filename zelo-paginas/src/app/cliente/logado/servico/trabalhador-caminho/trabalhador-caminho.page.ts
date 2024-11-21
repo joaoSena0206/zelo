@@ -61,6 +61,16 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
                 this.navCl.navigateRoot("inicial");
             }
+
+            let cpf = this.trabalhador.Cpf;
+            let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+
+            let trabalhoFinalizado = notification.data.trabalhoFinalizado;
+
+            if (trabalhoFinalizado == "true") {
+                this.navCl.navigateRoot("/avaliacao");
+            }
+
         });
 
         PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {

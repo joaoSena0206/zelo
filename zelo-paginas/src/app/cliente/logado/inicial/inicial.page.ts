@@ -76,7 +76,7 @@ export class InicialPage implements OnInit {
 
         this.listaEndereco = res;
 
-        localStorage.setItem('endereco', JSON.stringify(this.listaEndereco))
+        localStorage.setItem('endereco', JSON.stringify(this.listaEndereco));
     }
     catch 
     {
