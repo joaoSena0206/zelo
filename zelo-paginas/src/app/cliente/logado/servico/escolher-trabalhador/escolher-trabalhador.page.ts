@@ -221,6 +221,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     VerPerfil(Cpf: any, Nome: any){
         let clienteVerPerfil = {Cpf: Cpf, Nome: Nome}
         localStorage.setItem('perfil', JSON.stringify(clienteVerPerfil))
+        this.dismissModal(Cpf);
         this.navCl.navigateBack("perfil-trabalhador")
       }
 }
