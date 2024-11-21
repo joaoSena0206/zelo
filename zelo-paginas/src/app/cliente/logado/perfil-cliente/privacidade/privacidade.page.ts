@@ -33,7 +33,7 @@ export class PrivacidadePage implements OnInit {
     dominio = dominio;
     carregar: boolean = false;
     situacaoBotao: boolean = true;
-    listaEndereco: any = localStorage.getItem('endereco');
+    listaEndereco: any = JSON.parse(localStorage.getItem('endereco')!);
     fotoPerfil: any;
     config: any = {
         aspectRatio: 1,
@@ -45,7 +45,7 @@ export class PrivacidadePage implements OnInit {
         autoCropArea: 1,
         minCropBoxWidth: 140,
         minCropBoxHeight: 140
-    };;
+    };
     perfilFoto: any = dominio + '/Imgs/Perfil/Cliente/' + this.cliente.Cpf + '.jpg';
 
     form = new FormGroup({
@@ -78,6 +78,11 @@ export class PrivacidadePage implements OnInit {
         this.endereco.controls['cidade'].disable();
         this.endereco.controls['bairro'].disable();
         this.endereco.controls['rua'].disable();
+        this.endereco.controls['identificacao'].disable();
+        this.endereco.controls['cep'].disable();
+        this.endereco.controls['numero'].disable();
+        this.endereco.controls['complemento'].disable();
+        this.endereco.controls['pontoReferencia'].disable();
     }
 
     ngOnInit() {
@@ -106,6 +111,24 @@ export class PrivacidadePage implements OnInit {
 
     fecharDiv(div: any) {
         div.style.display = "none";
+    }
+
+    base64ToFormData(base64String: string, fileName: string): FormData {
+        const base64Data = base64String.includes(',')
+            ? base64String.split(',')[1]
+            : base64String;
+
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) =>
+            byteCharacters.charCodeAt(i)
+        );
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+
+        const formData = new FormData();
+        formData.append('file', blob, fileName);
+
+        return formData;
     }
 
     validacaoInput(control: FormControl) {
@@ -209,8 +232,7 @@ export class PrivacidadePage implements OnInit {
 
         inputs.forEach((input: HTMLIonInputElement) => {
             input.addEventListener("ionBlur", function () {
-
-                if (input.id != "senha" && input.id != "Senha_Atual" && input.id != "senhaNova" && input.id != "Identificacao" && input.id != "cep" && input.id != "numero") {
+                if (input.id != "senha" && input.id != "Senha_Atual" && input.id != "senhaNova") {
                     input.disabled = true;
                     input.style.border = 'none';
                 }
@@ -228,13 +250,6 @@ export class PrivacidadePage implements OnInit {
             });
         });
 
-        inputs.forEach((input: HTMLIonInputElement) => {
-            input.addEventListener("ionFocus", function () {
-                if (input.id == "senha") {
-                    input.style.border = 'black 1px solid';
-                }
-            });
-        });
 
         this.formatCPF(this.cpf);
     }
@@ -275,11 +290,14 @@ export class PrivacidadePage implements OnInit {
     abilitarInput(inputElement: any) {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
 
-        if (input.placeholder == "Nome") {
-            this.formDados.controls['Nome'].enable();
+        if (input.classList.contains("txt")) {
+            input = inputElement.parentElement.children[1] as HTMLIonInputElement;
         }
-        else {
-            this.formDados.controls['email'].enable();
+
+        let controlName = input.getAttribute("formControlName");
+
+        if (input.id == "Identificacao" || input.id == "numero" || input.id == "complemento" || input.id == "referencia" || input.id == "cep") {
+            this.endereco.controls[controlName as keyof typeof this.endereco.controls].enable();
         }
 
         input.style.border = 'black 1px solid';

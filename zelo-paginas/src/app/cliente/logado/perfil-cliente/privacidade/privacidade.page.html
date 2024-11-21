@@ -98,18 +98,20 @@
                             <h1>Endereço</h1>
                         </ion-item>
 
-                        <div slot="content" class="geral" [formGroup]="endereco">
+                        <div slot="content" class="geral" [formGroup]="endereco" id="endereco">
                             <div class="div_lado">
                                 <div style="position: relative;" class="area_dado identificacao_cep">
                                     <p class="txt">Identificação</p>
 
-                                    <ion-input (keyup)="AtivarBotaoSalvar3($event)" formControlName="identificacao"
-                                        class="input" (ionInput)="validarControl(endereco.controls['identificacao'])"
+                                    <ion-input [disabled]="true" (keyup)="AtivarBotaoSalvar3($event)"
+                                        formControlName="identificacao" class="input"
+                                        (ionInput)="validarControl(endereco.controls['identificacao'])"
                                         [class.inputErro]="endereco.controls['identificacao'].invalid && (endereco.controls['identificacao'].touched || endereco.controls['identificacao'].dirty)"
                                         placeholder="{{listaEndereco[0].Identificacao}}" id="Identificacao"
                                         value=""></ion-input>
 
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
                                 </div>
 
                                 <div style="position: relative;" class="area_dado identificacao_cep">
@@ -122,7 +124,8 @@
                                         placeholder="{{listaEndereco[0].Cep}}"
                                         value="{{listaEndereco[0].Cep}}"></ion-input>
 
-                                    <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
                                 </div>
                             </div>
 
@@ -153,13 +156,16 @@
                                         placeholder="Rua Godofredo Fraga" class="input"></ion-input>
                                 </div>
 
-                                <div class="area_dado numero">
+                                <div class="area_dado numero" style="position: relative;">
                                     <p class="txt">Número</p>
 
                                     <ion-input id="numero" (keyup)="AtivarBotaoSalvar3($event)" formControlName="numero"
                                         (ionInput)="validarControl(endereco.controls['numero'])"
                                         [class.inputErro]="endereco.controls['numero'].invalid && (endereco.controls['numero'].touched || endereco.controls['numero'].dirty)"
                                         class="input" value="" placeholder="{{listaEndereco[0].Numero}}"></ion-input>
+
+                                    <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                        name="create-outline"></ion-icon>
                                 </div>
                             </div>
 
@@ -168,15 +174,16 @@
                                 <ion-input formControlName="complemento" id="complemento" class="input" value=""
                                     placeholder="Complemento"></ion-input>
 
-                                <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                    name="create-outline"></ion-icon>
                             </div>
 
                             <div class="area_dado" style="position: relative; margin-bottom: 10px;">
                                 <p class="txt">Ponto de Referência</p>
                                 <ion-input formControlName="pontoReferencia" id="referencia" class="input"
                                     placeholder="{{listaEndereco[0].Referencia}}"></ion-input>
-
-                                <ion-icon class="iconeEditar" name="create-outline"></ion-icon>
+                                <ion-icon class="iconeEditar" (click)="abilitarInput($event.target)"
+                                    name="create-outline"></ion-icon>
                             </div>
 
                             <div style="width: 100vh; margin-bottom: 5px;">
