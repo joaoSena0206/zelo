@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { ClearWatchOptions, Geolocation, Position } from '@capacitor/geolocation';
 import { apiGoogle, dominio } from 'src/app/gerais';
-import { first, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
 import { Network } from '@capacitor/network';
@@ -53,16 +53,18 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
+            let codigo = notification.data.codigo;
+            localStorage.setItem("codigo", codigo);
+
             let situacao = notification.data.situacaoServico;
 
             if (situacao == "false") {
-                clearInterval(this.watchId)
-
                 localStorage.removeItem("codigo");
                 localStorage.removeItem("endereco");
                 localStorage.removeItem("solicitacao");
                 localStorage.removeItem("trabalhador");
-                localStorage.removeItem("codigoConfirmado");
+
+                clearInterval(this.watchId);
 
                 this.navCl.navigateRoot("trabalhador/inicial");
             }
@@ -76,8 +78,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.navCl.navigateRoot("/avaliacao");
             }
         });
-
-        this.pegarCodigo();
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
 
@@ -112,24 +112,16 @@ export class TrabalhadorCaminhoPage implements OnInit {
             let situacao = action.notification.data.situacaoServico;
 
             if (situacao == "false") {
-                clearInterval(this.watchId);
-
                 localStorage.removeItem("codigo");
                 localStorage.removeItem("endereco");
                 localStorage.removeItem("solicitacao");
                 localStorage.removeItem("trabalhador");
-                localStorage.removeItem("codigoConfirmado");
+
+                clearInterval(this.watchId);
 
                 this.navCl.navigateRoot("inicial");
             }
         });
-    }
-
-    async pegarCodigo() {
-        let link = dominio + "/SolicitacaoServico/PegarCodigo?cdSolicitacao=" + this.solicitacao.CdSolicitacaoServico;
-        let res: any = await firstValueFrom(this.http.get(link));
-
-        this.codigoAleatorio = res;
     }
 
     ngAfterViewInit() {
@@ -267,7 +259,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     async pegarCoords() {
         let endereco = localStorage.getItem("endereco");
-        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=${apiGoogle}`;
+        let link = `https://maps.googleapis.com/maps/api/geocode/json?address=${endereco}&key=AIzaSyDLQuCu8-clWnemW9ey9s5Hpz2vulxMEzM`;
         let res: any = await firstValueFrom(this.http.get(link));
         let coords = res.results[0].geometry.location;
 
@@ -446,7 +438,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("confirmacao");
             localStorage.removeItem("temporizador");
             localStorage.removeItem("codigo");
-            localStorage.removeItem("codigoConfirmado");
 
             clearInterval(this.watchId);
 
@@ -606,14 +597,15 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-            clearInterval(this.watchId);
 
+            localStorage.removeItem("cliente");
             localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
             localStorage.removeItem("temporizador");
             localStorage.removeItem("codigo");
-            localStorage.removeItem("codigoConfirmado");
 
+            clearInterval(this.watchId);
 
             this.navCl.navigateRoot("/trabalhador/avaliacao");
         }
@@ -637,14 +629,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             await firstValueFrom(this.http.post(link, dadosForm));
-            clearInterval(this.watchId);
+            clearInterval(this.id);
 
             localStorage.removeItem("cliente");
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
             localStorage.removeItem("codigo");
-            localStorage.removeItem("codigoConfirmado");
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
