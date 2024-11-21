@@ -629,6 +629,38 @@ public class SolicitacaoServicoController : ControllerBase
         }
     }
 
+    [HttpGet("PegarCodigo")]
+    public IActionResult PegarCodigo([FromQuery] int cdSolicitacao)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = $"SELECT nm_codigo_aleatorio FROM solicitacao_servico WHERE cd_solicitacao_servico = ${cdSolicitacao}";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            string codigo = "";
+
+            if (dados != null && dados.Read())
+            {
+                codigo = dados.GetString(0);
+            }
+
+            dados.Close();
+
+            return Ok(codigo);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
     [HttpPost("EnviarIdPagamento")]
     async public Task<IActionResult> EnviarIdPagamento([FromForm] string token, [FromForm] string id)
     {

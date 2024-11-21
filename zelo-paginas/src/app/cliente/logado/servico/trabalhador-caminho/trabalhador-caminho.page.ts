@@ -486,6 +486,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
+            localStorage.removeItem("codigo")
 
             this.navCl.navigateRoot("inicial");
             this.modalCancelar.dismiss();
