@@ -164,7 +164,7 @@
 
             </div>
 
-            <div class="div_trabalho_iniciado">
+            <div class="div_trabalho_iniciado" *ngIf="tempo">
                 <div class="div_relogio">
                     <ion-icon src="../../../../../assets/icon/Trabalhador/Icone Serviço/relogio.svg"></ion-icon>
                     <h1 class="tempo">{{ tempo.min + ':' + tempo.seg }}</h1>

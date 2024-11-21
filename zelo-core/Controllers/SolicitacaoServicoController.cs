@@ -448,8 +448,24 @@ public class SolicitacaoServicoController : ControllerBase
                     solicitacaoServico.Cliente = cliente;
 
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
-                    solicitacaoServico.DsServico = dados.GetString("ds_servico");
-                    solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
+                    try
+                    {
+                        solicitacaoServico.DsServico = dados.GetString("ds_servico");
+                    }
+                    catch
+                    {
+                        solicitacaoServico.DsServico = "";
+                    }
+
+                    try
+                    {
+                        solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(3);
+                    }
+                    catch
+                    {
+                        solicitacaoServico.QtEstrelasAvaliacaoServico = 0;
+                    }
+                    
                     solicitacaoServico.CdSolicitacaoServico = dados.GetInt16(4);
                     solicitacaoServico.NmCodigoAleatorio = dados.GetString(5);
 

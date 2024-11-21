@@ -54,7 +54,9 @@ export class TrabalhadorCaminhoPage implements OnInit {
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let codigo = notification.data.codigo;
-            localStorage.setItem("codigo", codigo);
+            if (notification.data.codigo) {
+                localStorage.setItem("codigo", codigo);
+            }
 
             let situacao = notification.data.situacaoServico;
 
@@ -598,9 +600,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
-            localStorage.removeItem("cliente");
             localStorage.removeItem("endereco");
-            localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
             localStorage.removeItem("temporizador");
             localStorage.removeItem("codigo");
