@@ -98,7 +98,7 @@
             </div>
 
             <div>
-                <ion-button (click)="voltarPag()" class="btnCancelar" id="abrir_modal_cancelar">Cancelar</ion-button>
+                <ion-button class="btnCancelar" id="abrir_modal_cancelar">Cancelar</ion-button>
                 <ion-modal id="modal_cancelar" #modal_cancelar trigger="abrir_modal_cancelar">
                     <ng-template>
 
@@ -114,10 +114,10 @@
                             </div>
 
                             <div class="area_branca">
-                                <h1>{{msgPoupopCancelar}}</h1>
+                                <h1>Quer realmente cancelar o pedido?</h1>
                                 <p class="txt_cancelar_poupop">Estará sujeito a uma taxa de <ion-text
                                         class="text_cancelar_poupop">10%</ion-text> </p>
-                                <ion-button class="form__btn" (click)="mudartxtCancelar()">Prosseguir</ion-button>
+                                <ion-button class="form__btn" (click)="ignorarServico();">Prosseguir</ion-button>
                             </div>
                         </ion-card>
                     </ng-template>

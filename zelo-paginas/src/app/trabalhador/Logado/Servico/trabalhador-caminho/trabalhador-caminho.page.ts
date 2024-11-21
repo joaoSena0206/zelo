@@ -10,6 +10,7 @@ import { Network } from '@capacitor/network';
 import { NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActionPerformed} from '@capacitor/push-notifications';
 
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -54,6 +55,26 @@ export class TrabalhadorCaminhoPage implements OnInit {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let codigo = notification.data.codigo;
             localStorage.setItem("codigo", codigo);
+
+            let situacao = notification.data.situacaoServico;
+
+            if (situacao == "false") {
+                localStorage.removeItem("codigo");
+                localStorage.removeItem("endereco");
+                localStorage.removeItem("solicitacao");
+                localStorage.removeItem("trabalhador");
+
+                this.navCl.navigateRoot("trabalhador/inicial");
+            }
+
+            let cpf = this.trabalhador.Cpf;
+            let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
+
+            let trabalhoFinalizado = notification.data.trabalhoFinalizado;
+
+            if (trabalhoFinalizado == "true") {
+                this.navCl.navigateRoot("/avaliacao");
+            }
         });
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
@@ -83,6 +104,18 @@ export class TrabalhadorCaminhoPage implements OnInit {
             this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
         }
 
+        PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {
+            let situacao = action.notification.data.situacaoServico;
+
+            if (situacao == "false") {
+                localStorage.removeItem("codigo");
+                localStorage.removeItem("endereco");
+                localStorage.removeItem("solicitacao");
+                localStorage.removeItem("trabalhador");
+
+                this.navCl.navigateRoot("inicial");
+            }
+        });
         this.temporizador();
     }
 
@@ -574,6 +607,19 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+
+        link = dominio + "/Solicitacao/ExcluirSolicitacao";
+        dadosForm = new FormData();
+        dadosForm.append("cdSolicitacao", "false");
+
+        try {
+            await firstValueFrom(this.http.post(link, dadosForm));
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
