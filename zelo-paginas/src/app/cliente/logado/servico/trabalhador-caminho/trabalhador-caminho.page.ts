@@ -43,6 +43,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
         localStorage.removeItem("tempoPagamento");
         localStorage.removeItem("tempoAtual");
 
+        this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
+
         if (!localStorage.getItem("codigo")) {
             this.gerarCodigo();
         }
@@ -467,5 +469,32 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     voltarPag() {
         this.navCl.navigateRoot("/inicial");
+    }
+
+    tokenTrabalhador: any = this.trabalhador.TokenFCM;
+    modalCancelar: any;
+
+    async ignorarServico() {
+        let dadosForm = new FormData();
+        dadosForm.append("token", this.tokenTrabalhador);
+        dadosForm.append("trabalhador", localStorage.getItem("cliente")!);
+        dadosForm.append("situacaoServico", "false");
+        let link = dominio + "/Trabalhador/EnviarServicoAceito";
+
+        try {
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            localStorage.removeItem("cliente");
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("confirmacao");
+
+            this.navCl.navigateRoot("/trabalhador/inicial");
+            this.modalCancelar.dismiss();
+        }
+        catch (erro: any) {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 }

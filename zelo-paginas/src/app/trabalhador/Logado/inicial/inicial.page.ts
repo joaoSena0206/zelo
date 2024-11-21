@@ -98,6 +98,20 @@ export class InicialPage implements OnInit {
                 this.situacaoServico = res.notification.data.situacaoServico
             }
         });
+
+        if (localStorage.getItem("confirmacao")) {
+            this.navCl.navigateRoot("confirmacao-trabalhador");
+        }
+        else if (localStorage.getItem("idPagamento"))
+        {
+            this.navCl.navigateRoot("pagamento");
+        }
+        else
+        {
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("servico");
+            localStorage.removeItem("endereco");
+        }
     }
 
     analisarServico() {
