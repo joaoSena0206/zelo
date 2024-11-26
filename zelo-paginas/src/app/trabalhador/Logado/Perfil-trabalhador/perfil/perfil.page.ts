@@ -33,6 +33,8 @@ export class PerfilPage implements OnInit {
     TotalServico: any;
     fotoPerfil: any;
 
+    nomeIconeEstrela: any = ['', '', '', '', ''];
+
     constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
@@ -54,8 +56,6 @@ export class PerfilPage implements OnInit {
 
     formatarEstrelas() {
         const estrelas = document.querySelectorAll(".estrela_perfil");
-
-        console.log(estrelas)
 
         if (estrelas.length == 3) {
             (estrelas[1] as HTMLIonIconElement).style.marginBottom = "-40px";
@@ -88,6 +88,24 @@ export class PerfilPage implements OnInit {
         return array;
     }
 
+    carregarEstrelas(MediaEstrela: any){
+        for (let i = 1; i < 6; i++) {
+            if(i <= MediaEstrela)
+            {
+                this.nomeIconeEstrela[i - 1] = 'star';
+            }
+            else{
+                if(i - MediaEstrela < 1)
+                {
+                    this.nomeIconeEstrela[i - 1] = 'star-half-outline';
+                }
+                else{
+                    this.nomeIconeEstrela[i - 1] = 'star-outline';
+                }
+            }
+        }
+    }
+
     async carregarQtAvaliacao() {
         let link = dominio + `/SolicitacaoServico/pegarEstrelasTrabalhador?cpf=${this.trabalhador.Cpf}&tipo=trabalhador`;
 
@@ -98,9 +116,11 @@ export class PerfilPage implements OnInit {
             res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             this.lista = res;
 
-            this.MediaEstrelas = this.lista.MediaEstrelas;
+            this.MediaEstrelas = Number(this.lista.MediaEstrelas).toFixed(1);
             this.TotalAvaliacao = this.lista.TotalAvaliacoes;
             this.TotalServico = this.lista.TotalServicos;
+
+            this.carregarEstrelas(this.MediaEstrelas.replace(',', '.'));
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
