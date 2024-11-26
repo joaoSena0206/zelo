@@ -224,7 +224,7 @@ export class PagamentoPage implements OnInit {
         try {
             let res: any = await firstValueFrom(this.http.get(link));
 
-            if (res.status == "approved") {
+            if (res.status != "approved") {
                 link = dominio + "/Cliente/EnviarConfirmacao";
                 clearInterval(this.id);
 
