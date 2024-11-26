@@ -11,7 +11,6 @@ import { NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActionPerformed } from '@capacitor/push-notifications';
-
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -53,11 +52,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     ngOnInit() {
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            let codigo = notification.data.codigo;
-            if (notification.data.codigo) {
-                localStorage.setItem("codigo", codigo);
-            }
-
             let situacao = notification.data.situacaoServico;
 
             if (situacao == "false") {
@@ -67,6 +61,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 localStorage.removeItem("trabalhador");
 
                 clearInterval(this.watchId);
+                clearInterval(this.id);
 
                 this.navCl.navigateRoot("trabalhador/inicial");
             }
@@ -81,6 +76,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
             }
         });
 
+        let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
+            if (res.codigo) {
+                localStorage.setItem("codigo", res.codigo);
+                esperarCodigo.unsubscribe();
+            }
+        });
+
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
 
         if (!localStorage.getItem("temporizador")) {
@@ -92,7 +94,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             this.tempo = temporizador;
             localStorage.setItem("temporizador", JSON.stringify(temporizador));
         }
-        else if (localStorage.getItem("codigoConfirmado") == "true") {
+        if (localStorage.getItem("codigoConfirmado") == "true") {
             this.abrirDivCodigo();
 
             let div1 = document.querySelector('.div_1') as HTMLDivElement;
@@ -120,6 +122,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 localStorage.removeItem("trabalhador");
 
                 clearInterval(this.watchId);
+                clearInterval(this.id);
 
                 this.navCl.navigateRoot("inicial");
             }
@@ -152,13 +155,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        await this.carregarScriptGoogleMaps();
-        await this.pegarCoords();
+        // await this.carregarScriptGoogleMaps();
+        // await this.pegarCoords();
 
         let data = new Date();
         this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
 
-        this.carregarMapa();
+        // this.carregarMapa();
 
         const btns = document.querySelectorAll(".form__btn");
         const btnReenviar = document.querySelector(".form__btn--reenviar");
@@ -351,7 +354,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 if (!this.marcadorB) {
                     this.marcadorB = new google.maps.Marker({
                         map: this.mapa,
-                        position: fim,
+                        position: this.destino,
                         title: "Destino",
                     });
                 }
@@ -361,6 +364,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 if (distanciaDestino <= 1) {
                     this.marcadorA.setMap(null);
                     this.renderizadorDirecoes.set("directions", null);
+                    this.mapa.setZoom(20);
                     this.mapa.panTo(this.destino);
                 }
 
@@ -442,6 +446,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("codigo");
 
             clearInterval(this.watchId);
+            clearInterval(this.id);
 
             this.navCl.navigateRoot("/trabalhador/inicial");
             this.modalCancelar.dismiss();
@@ -604,8 +609,10 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("confirmacao");
             localStorage.removeItem("temporizador");
             localStorage.removeItem("codigo");
+            localStorage.removeItem("codigoConfirmado");
 
             clearInterval(this.watchId);
+            clearInterval(this.id);
 
             this.navCl.navigateRoot("/trabalhador/avaliacao");
         }
@@ -619,8 +626,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async cancelar() {
-        await Geolocation.clearWatch({ id: this.watchId });
-
         let link = dominio + "/Trabalhador/CancelarSolicitacao";
         let dadosForm = new FormData();
         dadosForm.append("situacaoServico", "false");
@@ -629,6 +634,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         try {
             await firstValueFrom(this.http.post(link, dadosForm));
+            clearInterval(this.watchId);
             clearInterval(this.id);
 
             localStorage.removeItem("cliente");
