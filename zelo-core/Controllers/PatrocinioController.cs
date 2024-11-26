@@ -35,7 +35,7 @@ public class PatrocinioController : ControllerBase
                     trabalhador.Cpf = dados.GetString(0);
                     trabalhador.Nome = dados.GetString(1);
                     trabalhador.DataCadastro = dados.GetDateTime(2);
-                    trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
+                    trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf, "trabalhador");
 
                     servico.Codigo = dados.GetInt32(4);
                     servico.Nome = dados.GetString(3);

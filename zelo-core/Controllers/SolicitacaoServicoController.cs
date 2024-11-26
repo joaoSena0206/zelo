@@ -46,7 +46,7 @@ public class SolicitacaoServicoController : ControllerBase
                         trabalhador.Cpf = dados.GetString(4);
                         trabalhador.Nome = dados.GetString(0);
                         trabalhador.ValorVisita = dados.GetDecimal(3);
-                        trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf);
+                        trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf, "trabalhador");
 
                         servico.Codigo = dados.GetInt32(5);
                         servico.Nome = dados.GetString(1);
@@ -416,6 +416,7 @@ public class SolicitacaoServicoController : ControllerBase
         try
         {
             List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
+            TrabalhadorController trabalhadorController = new TrabalhadorController();
 
             string comando = $@"SELECT 
                             cliente.nm_cliente,
@@ -445,6 +446,7 @@ public class SolicitacaoServicoController : ControllerBase
 
                     cliente.Nome = dados.GetString("nm_cliente");
                     cliente.Cpf = dados.GetString(6);
+                    cliente.Avaliacao = trabalhadorController.PegarEstrelas(cliente.Cpf, "cliente");
                     solicitacaoServico.Cliente = cliente;
 
                     solicitacaoServico.DtSolicitacaoServico = dados.GetDateTime("dt_solicitacao_servico");
@@ -500,6 +502,7 @@ public class SolicitacaoServicoController : ControllerBase
         try
         {
             List<SolicitacaoServico> listahistoricotrabalhador = new List<SolicitacaoServico>();
+            TrabalhadorController trabalhadorController = new TrabalhadorController();
 
             string comando = "";
 
@@ -555,7 +558,8 @@ public class SolicitacaoServicoController : ControllerBase
 
                     trabalhador.Cpf = dados.GetString(1);
                     trabalhador.Nome = dados.GetString(2);
-                    
+                    trabalhador.Avaliacao = trabalhadorController.PegarEstrelas(trabalhador.Cpf, "trabalhador");
+
 
                     if (tipo == "favoritos")
                     {

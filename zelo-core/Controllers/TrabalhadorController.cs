@@ -383,7 +383,7 @@ public class TrabalhadorController : ControllerBase
         }
     }
 
-    public decimal PegarEstrelas(string cpf)
+    public decimal PegarEstrelas(string cpf, string tipo)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -394,6 +394,13 @@ public class TrabalhadorController : ControllerBase
 
             string comando = $@"SELECT IFNULL(AVG(qt_estrelas_avaliacao_servico), 5) FROM solicitacao_servico
             WHERE cd_cpf_trabalhador = '{cpf}'";
+
+            if(tipo == "cliente")
+            {
+                comando = $@"SELECT IFNULL(AVG(qt_estrelas_avaliacao_cliente), 5) FROM solicitacao_servico
+                             WHERE cd_cpf_cliente = '{cpf}'";
+            }
+
             MySqlDataReader dados = banco.Consultar(comando);
 
             decimal estrelas = 0;
@@ -456,7 +463,7 @@ public class TrabalhadorController : ControllerBase
                     trabalhador.Cpf = dados.GetString(0);
                     trabalhador.Nome = dados.GetString(1);
                     trabalhador.ValorVisita = dados.GetDecimal(3);
-                    trabalhador.Avaliacao = PegarEstrelas(trabalhador.Cpf);
+                    trabalhador.Avaliacao = PegarEstrelas(trabalhador.Cpf, "trabalhador");
                     trabalhador.LatitudeAtual = dados.GetDecimal(4);
                     trabalhador.LongitudeAtual = dados.GetDecimal(5);
                     trabalhador.TokenFCM = dados.GetString(6);
