@@ -70,6 +70,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             let trabalhoFinalizado = notification.data.trabalhoFinalizado;
 
             if (trabalhoFinalizado == "true") {
+                localStorage.removeItem("codigo");
+
                 this.navCl.navigateRoot("/avaliacao");
             }
 
@@ -90,9 +92,9 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        await this.carregarScriptGoogleMaps();
-        await this.pegarCoords();
-        this.carregarMapa();
+        // await this.carregarScriptGoogleMaps();
+        // await this.pegarCoords();
+        // this.carregarMapa();
     }
 
     async carregarScriptGoogleMaps(): Promise<void> {
@@ -253,10 +255,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
                     this.mapa.setZoom(20);
                     this.mapa.panTo(this.destino);
                 }
-                else {
-                    this.renderizadorDirecoes.setDirections(result);
-                    this.marcadorA.setMap(this.mapa);
-                }
             }
             else {
                 console.error("Erro ao calcular rota: ", status);
@@ -383,8 +381,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
             this.carregar = true;
             this.codigo = await firstValueFrom(this.http.post(link, dadosForm));
             localStorage.setItem("codigo", this.codigo);
-
-            this.enviarCodigo(this.trabalhador.TokenFCM, this.codigo);
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -394,6 +390,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
         finally {
             this.carregar = false;
         }
+
+        let obj = {
+            codigo: this.codigo
+        };
+        this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).set(obj);
     }
 
     async enviarCodigo(token: any, codigo: any) {
