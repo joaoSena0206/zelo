@@ -59,6 +59,7 @@ export class UltimosPedidosPage implements OnInit {
 
       this.historico = res;
 
+      console.log(this.historico)
     }
     catch (erro: any) {
       const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -110,18 +111,6 @@ export class UltimosPedidosPage implements OnInit {
 
             if (btn.textContent == "Recentes") {
                 this.historico.sort((a: any, b: any) => {
-                    if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
-                        return -1;
-                    }
-                    else if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
-                        return 1;
-                    }
-
-                    return 0;
-                });
-            }
-            else if (btn.textContent == "Antigos") {
-                this.historico.sort((a: any, b: any) => {
                     if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
                         return -1;
                     }
@@ -132,6 +121,29 @@ export class UltimosPedidosPage implements OnInit {
                     return 0;
                 });
             }
+            else if (btn.textContent == "Antigos") {
+                this.historico.sort((a: any, b: any) => {
+                    if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
+                        return -1;
+                    }
+                    else if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
+                        return 1;
+                    }
+
+                    return 0;
+                });
+            } else {
+              this.historico.sort((a: any, b: any) => {
+                  if (a.Cliente.Avaliacao > b.Cliente.Avaliacao) {
+                      return -1;
+                  }
+                  else if (a.Cliente.Avalaiacao < b.Cliente.Avaliacao) {
+                      return 1;
+                  }
+
+                  return 0;
+              });
+          }
         }
     }
 }
