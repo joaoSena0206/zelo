@@ -17,6 +17,7 @@
         <div class="btns_filtro">
             <ion-button class="btn_filtro btn_filtro--ativado" (click)="mudarFiltro($event.target)">Recentes</ion-button>
             <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Antigos</ion-button>
+            <ion-button class="btn_filtro" (click)="mudarFiltro($event.target)">Melhor avaliados</ion-button>
         </div>
       </div>
 
@@ -28,6 +29,7 @@
           <div style="padding: 10px;">
             <h3 style="font-weight: bold; font-size: 22px;">{{historico.Cliente.Nome}}</h3>
             <p style="margin: 3px 0;">{{historico.DtSolicitacaoServico}}</p>
+            <p style="display: flex; align-items: center;"><ion-icon style="margin-right: 3px;" name="star-outline"></ion-icon>{{historico.Cliente.Avaliacao.toFixed(1).replace(".", ",")}}</p>
           </div>
           <div class="txt-ver-perfil">
             <ion-text (click)="VerPerfil(historico.Cliente.Cpf, historico.Cliente.Nome);">Ver perfil</ion-text>
