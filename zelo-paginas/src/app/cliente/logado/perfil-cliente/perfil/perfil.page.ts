@@ -97,9 +97,11 @@ export class PerfilPage implements OnInit {
             res = await firstValueFrom(this.http.get(link, { headers: headerNgrok }));
             this.lista = res;
 
-            this.MediaEstrelas = this.lista.MediaEstrelas;
+            this.MediaEstrelas = Number(this.lista.MediaEstrelas).toFixed(1);
             this.TotalAvaliacao = this.lista.TotalAvaliacoes;
             this.TotalChamado = this.lista.TotalServicos;
+
+            this.carregarEstrelas(this.MediaEstrelas.replace(',', '.'));
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -108,6 +110,26 @@ export class PerfilPage implements OnInit {
         }
         finally {
             this.carregar = false;
+        }
+    }
+
+    nomeIconeEstrela: any = ['', '', '', '', ''];
+
+    carregarEstrelas(MediaEstrela: any){
+        for (let i = 1; i < 6; i++) {
+            if(i <= MediaEstrela)
+            {
+                this.nomeIconeEstrela[i - 1] = 'star';
+            }
+            else{
+                if(i - MediaEstrela < 1)
+                {
+                    this.nomeIconeEstrela[i - 1] = 'star-half-outline';
+                }
+                else{
+                    this.nomeIconeEstrela[i - 1] = 'star-outline';
+                }
+            }
         }
     }
 }
