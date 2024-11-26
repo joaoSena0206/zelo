@@ -55,6 +55,13 @@ export class AvaliacaoPage implements OnInit {
         try {
             this.carregar = true;
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+
+            localStorage.removeItem("servico");
+            localStorage.removeItem("endereco");
+            localStorage.removeItem("solicitacao");
+            localStorage.removeItem("trabalhadorEscolhido");
+            localStorage.removeItem("codigo");
+
             this.navCl.navigateRoot("inicial");
         }
         catch (erro: any) {
