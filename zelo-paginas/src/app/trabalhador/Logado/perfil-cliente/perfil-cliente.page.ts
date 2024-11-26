@@ -124,7 +124,7 @@ export class PerfilClientePage implements OnInit {
 
         try {
             this.carregar = true;
-            let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok }));
+            let resposta = await firstValueFrom(this.http.post(link, dadosForm));
             this.listaDadosPerfil = resposta
 
             for (let i = 0; i < this.listaDadosPerfil.length; i++) {

@@ -40,6 +40,7 @@ export class InicialPage implements OnInit {
     modal: any;
     dominio = dominio;
     situacaoServico: any;
+    msgTrabalho: any;
 
     constructor(private http: HttpClient, private navCl: NavController) {
 
@@ -196,6 +197,8 @@ export class InicialPage implements OnInit {
             botaoSituacao?.classList.remove('btn_situacao_trabalhador');
             botaoSituacao?.classList.add('btn_situacao_trabalhador_disponivel');
 
+            this.msgTrabalho = 'Deseja parar de trabalhar?';
+
             img?.setAttribute(
                 'src',
                 '../../../assets/icon/Trabalhador/Icone inicial/IconeAtivo.svg'
@@ -206,6 +209,8 @@ export class InicialPage implements OnInit {
         else {
             botaoSituacao?.classList.add('btn_situacao_trabalhador');
             botaoSituacao?.classList.remove('btn_situacao_trabalhador_disponivel');
+
+            this.msgTrabalho = 'Deseja trabalhar agora?';
 
             img?.setAttribute('src', '../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg');
 
@@ -451,7 +456,6 @@ export class InicialPage implements OnInit {
         return urlImg;
     }
 
-    msgTrabalho: any = 'Deseja trabalhar agora?';
     situacao: any = '';
     resultado: any = '';
 

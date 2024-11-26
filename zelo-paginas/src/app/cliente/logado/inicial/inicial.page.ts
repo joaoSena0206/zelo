@@ -229,4 +229,10 @@ export class InicialPage implements OnInit {
 
         this.navCl.navigateForward("/descricao-servico");
     }
+
+    VerPerfil(Cpf: any, Nome: any){
+        let clienteVerPerfil = {Cpf: Cpf, Nome: Nome}
+        localStorage.setItem('perfil', JSON.stringify(clienteVerPerfil))
+        this.navCl.navigateBack("/perfil-trabalhador")
+      }
 }

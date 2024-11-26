@@ -16,7 +16,8 @@
 
                 <div class="estrelas">
                     <ion-icon class="estrela"
-                        *ngFor="let estrelas of gerarArrayEstrelas(mediaEstrela)" name="star">
+                        *ngFor="let estrela of gerarArrayEstrelas(mediaEstrela) let i = index"
+                        [name]="nomeIconeEstrela[i]">
                     </ion-icon>
                 </div>
             </div>

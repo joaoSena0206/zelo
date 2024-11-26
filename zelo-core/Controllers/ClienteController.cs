@@ -477,7 +477,7 @@ public class ClienteController : ControllerBase
             select T.cd_cpf_trabalhador, T.nm_trabalhador, SS.qt_estrelas_avaliacao_cliente, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_cliente 
             from solicitacao_servico SS 
             join trabalhador T on(SS.cd_cpf_trabalhador = T.cd_cpf_trabalhador) 
-            where nm_codigo_aleatorio != '' and SS.cd_cpf_cliente = '{cpfCliente}';";
+            where nm_codigo_aleatorio != '' and SS.cd_cpf_cliente = '{cpfCliente}' and SS.qt_estrelas_avaliacao_cliente != 0";
 
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -495,9 +495,17 @@ public class ClienteController : ControllerBase
 
                     servicoTrabalhador.QtEstrelasAvaliacaoServico = dados.GetDecimal(2);
                     servicoTrabalhador.DtSolicitacaoServico = dados.GetDateTime(3);
-                    servicoTrabalhador.DsComentarioAvaliacaoCliente = dados.GetString(4);
 
                     servicoTrabalhador.Trabalhador = trabalhador;
+
+                    try
+                    {
+                        servicoTrabalhador.DsComentarioAvaliacaoCliente = dados.GetString(4);
+                    }
+                    catch
+                    {
+                        servicoTrabalhador.DsComentarioAvaliacaoCliente = "";
+                    }
 
                     listaSolicitacaoServico.Add(servicoTrabalhador);
                 }

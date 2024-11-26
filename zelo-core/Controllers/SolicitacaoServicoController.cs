@@ -333,30 +333,44 @@ public class SolicitacaoServicoController : ControllerBase
         try
         {
             string comando = "";
-            int estrelas = 0;
+            decimal estrelas = 0;
             int QtAvaliacoes = 0;
             int QtServicos = 0;
 
-            if(tipo == "trabalhador")
+            MySqlDataReader dados; ;
+            TrabalhadorController trabalhadorController = new TrabalhadorController();
+
+            if (tipo == "trabalhador")
             {
                 comando = $"SELECT COALESCE(ROUND(AVG(qt_estrelas_avaliacao_servico)), 5) AS avg_estrelas, COUNT(qt_estrelas_avaliacao_servico) AS count_estrelas, COUNT(nm_codigo_aleatorio) AS count_codigos FROM solicitacao_servico WHERE cd_cpf_trabalhador = '{cpf}' AND nm_codigo_aleatorio != ''";
+                dados = banco.Consultar(comando);
+
+                if (dados != null)
+                {
+                    if (dados.Read())
+                    {
+                        estrelas = trabalhadorController.PegarEstrelas(cpf, "trabalhador"); ;
+                        QtAvaliacoes = dados.GetInt32(1);
+                        QtServicos = dados.GetInt32(2);
+                    }
+                }
             }
             else
             {
                 comando = $"SELECT COALESCE(ROUND(AVG(qt_estrelas_avaliacao_cliente)), 5) AS avg_estrelas, COUNT(qt_estrelas_avaliacao_cliente) AS count_estrelas, COUNT(nm_codigo_aleatorio) AS count_codigos FROM solicitacao_servico WHERE cd_cpf_cliente = '{cpf}' AND nm_codigo_aleatorio != ''";
-            }
+                dados = banco.Consultar(comando);
 
-            MySqlDataReader dados = banco.Consultar(comando);
-
-            if (dados != null)
-            {
-                if (dados.Read())
+                if (dados != null)
                 {
-                    estrelas = dados.GetInt32(0);
-                    QtAvaliacoes = dados.GetInt32(1);
-                    QtServicos = dados.GetInt32(2);
+                    if (dados.Read())
+                    {
+                        estrelas = trabalhadorController.PegarEstrelas(cpf, "cliente"); ;
+                        QtAvaliacoes = dados.GetInt32(1);
+                        QtServicos = dados.GetInt32(2);
+                    }
                 }
             }
+            
 
             if (!dados.IsClosed)
             {
@@ -572,7 +586,7 @@ public class SolicitacaoServicoController : ControllerBase
                         trabalhador.ValorVisita = dados.GetDecimal(4);
                         solicitacaoServico.QtEstrelasAvaliacaoServico = dados.GetDecimal(5);
                     }
-                    
+
                     solicitacaoServico.Servico = servico;
                     solicitacaoServico.Trabalhador = trabalhador;
                     

@@ -22,8 +22,9 @@
                 </div> -->
 
                 <div class="estrelas">
-                    <ion-icon class="estrela_perfil" *ngFor="let estrela of gerarArrayEstrelas(MediaEstrelas)"
-                        name="star"></ion-icon>
+                    <ion-icon class="estrela_perfil"
+                        *ngFor="let estrela of gerarArrayEstrelas(MediaEstrelas) let i = index"
+                        [name]="nomeIconeEstrela[i]"></ion-icon>
                 </div>
             </div>
             <p style="font-size: 22px; margin-bottom: 10px; color: white; font-weight: bold;">{{cliente.Nome}}</p>
