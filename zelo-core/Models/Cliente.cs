@@ -42,12 +42,18 @@ public class Cliente
 		set;
     }
 
+    public decimal Avaliacao
+    {
+        get;
+        set;
+    }
+
     public Cliente()
 	{
 
 	}
 
-	public Cliente(string cpf, string nome, DateTime dataNascimento,string email, string senha, bool confirmado, string token)
+	public Cliente(string cpf, string nome, DateTime dataNascimento,string email, string senha, bool confirmado, string token, decimal avaliacao)
 	{
 		this.Cpf = cpf;
 		this.Nome = nome;
@@ -56,5 +62,6 @@ public class Cliente
 		this.Senha = senha;
 		this.Confirmado = confirmado;
         this.TokenFCM = token;
+        this.Avaliacao = avaliacao;
     }
 }
