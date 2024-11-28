@@ -65,7 +65,7 @@ export class PagamentoCarteiraPage implements OnInit {
                 localStorage.removeItem("idPagamento");
                 localStorage.removeItem("ValorDepositarCarteira");
 
-                this.navCl.navigateRoot("/escolher-trabalhador");
+                this.navCl.navigateRoot("/carteira-cliente");
             }
             else {
                 if (segundosRestantes < 0) {
@@ -130,7 +130,7 @@ export class PagamentoCarteiraPage implements OnInit {
 
                 clearInterval(this.id);
 
-                this.navCl.navigateRoot("escolher-trabalhador");
+                this.navCl.navigateRoot("carteira-cliente");
             }
         });
 
@@ -266,7 +266,7 @@ export class PagamentoCarteiraPage implements OnInit {
                 localStorage.removeItem("idPagamento");
                 localStorage.removeItem("ValorDepositarCarteira");
 
-                this.navCl.navigateBack("/escolher-trabalhador");
+                this.navCl.navigateBack("/carteira-cliente");
             }
         }, 1000);
     }
