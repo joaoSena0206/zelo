@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
     styleUrls: ['./carteira-cliente.page.scss'],
 })
 export class CarteiraClientePage implements OnInit {
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
 
     constructor(private navCl: NavController) { }
 

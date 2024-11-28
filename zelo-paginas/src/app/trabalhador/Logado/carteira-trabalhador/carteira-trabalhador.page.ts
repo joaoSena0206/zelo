@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
     styleUrls: ['./carteira-trabalhador.page.scss'],
 })
 export class CarteiraTrabalhadorPage implements OnInit {
+    trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
 
     constructor(private navCl: NavController) { }
 
