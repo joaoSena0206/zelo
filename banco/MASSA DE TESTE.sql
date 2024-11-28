@@ -2,17 +2,17 @@ USE Zelo;
 
 -- TABELA: Trabalhador
 INSERT INTO trabalhador VALUES
-('12345678901', 'Ana Silva', '1990-05-15', '2023-01-01', 'ana.silva@example.com', md5('senha123'), 'pix-ana', TRUE, TRUE, 50.00, -23.550520, -46.633308, ""),
-('23456789012', 'Bruno Santos', '1985-08-22', '2023-02-10', 'bruno.santos@example.com', md5('senha456'), 'pix-bruno', TRUE, FALSE, 75.00, -22.906847, -43.172896, ""),
-('34567890123', 'Carla Oliveira', '1992-12-30', '2023-03-15', 'carla.oliveira@example.com', md5('senha789'), 'pix-carla', FALSE, TRUE, 60.00, -30.034647, -51.217658, ""),
-('45678901234', 'David Pereira', '1988-04-10', '2023-04-20', 'david.pereira@example.com', md5('senha012'), 'pix-david', TRUE, TRUE, 45.00, -15.780148, -47.929220, ""),
-('56789012345', 'Eliana Costa', '1995-11-05', '2023-05-30', 'eliana.costa@example.com', md5('senha345'), 'pix-eliana', FALSE, FALSE, 30.00, -12.971399, -38.501305, ""),
-('67890123456', 'Fernando Lima', '1980-03-25', '2023-06-10', 'fernando.lima@example.com', md5('senha678'), 'pix-fernando', TRUE, TRUE, 90.00, -23.550520, -46.633308, ""),
-('78901234567', 'Gabriela Rocha', '1997-07-14', '2023-07-25', 'gabriela.rocha@example.com', md5('senha901'), 'pix-gabi', TRUE, FALSE, 80.00, -3.71722, -38.5433, ""),
-('53890618880', 'Marco Juino', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), 'pix-marco', TRUE, TRUE, 0.1, -23.9524, -46.3603, ""),
-('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), 'pix-joao', FALSE, TRUE, 0.1, -23.9738, -46.3437, ""),
-('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'pix-julberto', TRUE, TRUE, 32.65, -23.9336, -46.3221, ""),
-('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'pix-robson', TRUE, TRUE, 25.50, -23.9560, -46.3305, "");
+('12345678901', 'Ana Silva', '1990-05-15', '2023-01-01', 'ana.silva@example.com', md5('senha123'), 'pix-ana', TRUE, TRUE, 50.00, -23.550520, -46.633308, "", 100.00),
+('23456789012', 'Bruno Santos', '1985-08-22', '2023-02-10', 'bruno.santos@example.com', md5('senha456'), 'pix-bruno', TRUE, FALSE, 75.00, -22.906847, -43.172896, "", 200.00),
+('34567890123', 'Carla Oliveira', '1992-12-30', '2023-03-15', 'carla.oliveira@example.com', md5('senha789'), 'pix-carla', FALSE, TRUE, 60.00, -30.034647, -51.217658, "", 150.00),
+('45678901234', 'David Pereira', '1988-04-10', '2023-04-20', 'david.pereira@example.com', md5('senha012'), 'pix-david', TRUE, TRUE, 45.00, -15.780148, -47.929220, "", 50.00),
+('56789012345', 'Eliana Costa', '1995-11-05', '2023-05-30', 'eliana.costa@example.com', md5('senha345'), 'pix-eliana', FALSE, FALSE, 30.00, -12.971399, -38.501305, "", 75.00),
+('67890123456', 'Fernando Lima', '1980-03-25', '2023-06-10', 'fernando.lima@example.com', md5('senha678'), 'pix-fernando', TRUE, TRUE, 90.00, -23.550520, -46.633308, "", 300.00),
+('78901234567', 'Gabriela Rocha', '1997-07-14', '2023-07-25', 'gabriela.rocha@example.com', md5('senha901'), 'pix-gabi', TRUE, FALSE, 80.00, -3.71722, -38.5433, "", 250.00),
+('53890618880', 'Marco Juino', '2006-06-24', '2024-09-20', 'marcojuino.07@gmail.com', md5('1234'), 'pix-marco', TRUE, TRUE, 0.1, -23.9524, -46.3603, "", 100.00),
+('50082480818', 'João Sena', '2006-06-24', '2024-09-20', 'joaosena0206@gmail.com', md5('1234'), 'pix-joao', FALSE, TRUE, 0.1, -23.9738, -46.3437, "", 25.92),
+('56787654566', 'Julberto', '2006-05-24', '2021-05-20', 'julberto@gmail.com', md5('123'), 'pix-julberto', TRUE, TRUE, 32.65, -23.9336, -46.3221, "", 50.00),
+('56787654567', 'Robson Santos', '2006-05-24', '2020-05-20', 'robsonsantos@gmail.com', md5('123'), 'pix-robson', TRUE, TRUE, 25.50, -23.9560, -46.3305, "", 75.00);
 
 -- TABELA: Patrocinio
 INSERT INTO patrocinio VALUES
@@ -35,11 +35,11 @@ INSERT INTO servico_trabalhador (cd_cpf_trabalhador, cd_servico) VALUES
 
 -- TABELA: Cliente
 INSERT INTO cliente VALUES
-('50082480818', 'João Sena', '2006-06-02', 'joaosena0206@gmail.com', md5('1234'), true, ""),
-('12345218909', 'Roberto', '2003-05-08', 'roberto@gmail.com', md5('Roberto1234!'), true, ""),
-('12345674322', 'Julio', '2000-01-08', 'julio@gmail.com', md5('JulioSenha!'), true, ""),
-('12345678909', 'Alberto', '1998-09-08', 'alberto@gmail.com', md5('Alberto5678!'), true, ""),
-('12345672469', 'Fabio', '1995-04-08', 'fabio@gmail.com', md5('Fabio2022!'), true, "");
+('50082480818', 'João Sena', '2006-06-02', 'joaosena0206@gmail.com', md5('1234'), true, "", 100.00),
+('12345218909', 'Roberto', '2003-05-08', 'roberto@gmail.com', md5('Roberto1234!'), true, "", 200.00),
+('12345674322', 'Julio', '2000-01-08', 'julio@gmail.com', md5('JulioSenha!'), true, "", 150.00),
+('12345678909', 'Alberto', '1998-09-08', 'alberto@gmail.com', md5('Alberto5678!'), true, "", 50.00),
+('12345672469', 'Fabio', '1995-04-08', 'fabio@gmail.com', md5('Fabio2022!'), true, "", 75.00);
 
 -- TABELA: Endereco
 INSERT INTO endereco VALUES
