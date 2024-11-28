@@ -14,7 +14,7 @@ export class CarteiraClientePage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.back();
+        this.navCl.navigateRoot("/inicial");
     }
 
     salvarValor(valor: any) {
