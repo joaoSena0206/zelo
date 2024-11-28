@@ -20,7 +20,7 @@ public class ClienteController : ControllerBase
 
             #region Adiciona o cliente no banco
 
-            string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
+            string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '', 0)";
             banco.Executar(comando);
 
             return Ok();
@@ -174,7 +174,7 @@ public class ClienteController : ControllerBase
         {
             #region Pega os dados do cliente no banco, caso existam
 
-            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
+            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente, vl_saldo_carteira FROM cliente
             WHERE nm_email_cliente = '{email}' AND nm_senha_cliente = md5('{senha}');";
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -187,6 +187,7 @@ public class ClienteController : ControllerBase
                 cliente.DataNascimento = dados.GetDateTime(2);
                 cliente.Email = email;
                 cliente.Confirmado = dados.GetBoolean(3);
+                cliente.SaldoCarteira = dados.GetDecimal(4);
             }
 
             if (String.IsNullOrEmpty(cliente.Cpf))
