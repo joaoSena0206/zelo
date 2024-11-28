@@ -168,3 +168,17 @@ Create Table endereco
 	CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco, cd_cep_endereco),
 	CONSTRAINT fk_endereco_cpf_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente)
 );
+
+CREATE TABLE transacao_carteira
+(
+	cd_transacao_carteira INT,
+	cd_cpf_cliente CHAR(11),
+	cd_cpf_trabalhador CHAR(11),
+	ic_debito_transacao BOOL,
+	vl_transacao_carteira DECIMAL (5,2),
+	dt_transacao_carteira DATE,
+
+	CONSTRAINT pk_transacao_carteira PRIMARY KEY (cd_transacao_carteira),
+	CONSTRAINT fk_transacao_carteira_cliente FOREIGN KEY (cd_cpf_cliente) REFERENCES cliente(cd_cpf_cliente),
+	CONSTRAINT fk_transacao_carteira_trabalhador FOREIGN KEY (cd_cpf_trabalhador) REFERENCES trabalhador(cd_cpf_trabalhador)
+);
