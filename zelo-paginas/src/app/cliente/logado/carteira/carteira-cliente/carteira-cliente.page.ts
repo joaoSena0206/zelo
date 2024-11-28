@@ -17,16 +17,13 @@ export class CarteiraClientePage implements OnInit {
         this.navCl.back();
     }
 
-    marcogay(valor: any) {
+    salvarValor(valor: any) {
         let modal = document.querySelector("#example-modal") as HTMLIonModalElement;
         if (valor != "custom-checked") {
             localStorage.setItem("ValorDepositarCarteira", valor);
-            this.navCl.navigateRoot("/pagamento-carteira");
-
             modal.dismiss();
+
+            this.navCl.navigateRoot("/pagamento-carteira");
         }
     }
-
-
-
 }
