@@ -6,6 +6,7 @@ import { dominio, headerNgrok } from 'src/app/gerais';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Clipboard } from '@capacitor/clipboard';
 import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
+import { loadZone } from 'zone.js/lib/zone';
 
 @Component({
     selector: 'app-pagamento-carteira',
@@ -22,14 +23,12 @@ export class PagamentoCarteiraPage implements OnInit {
     id: any;
     result: any;
     situacao: any;
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
 
     constructor(private navCl: NavController, private http: HttpClient, private sanitizer: DomSanitizer) { }
 
     async ngOnInit() {
         PushNotifications.removeAllListeners();
-
-        const toast = document.querySelector("ion-toast") as HTMLIonToastElement;
-        toast.present();
 
         if (!localStorage.getItem("tempoPagamento")) {
             let tempo = {
@@ -194,8 +193,25 @@ export class PagamentoCarteiraPage implements OnInit {
             let res: any = await firstValueFrom(this.http.get(link));
 
             if (res.status == "approved") {
-                link = dominio + "/Cliente/EnviarConfirmacao";
+                link = dominio + "/Cliente/AtualizarSaldo";
                 clearInterval(this.id);
+
+                let valor = localStorage.getItem("ValorDepositarCarteira");
+                let saldoAtual = this.cliente.SaldoCarteira;
+
+                let dadosForm = new FormData();
+                dadosForm.append("cpf", this.cliente.Cpf);
+                dadosForm.append("valor", Number(valor) + saldoAtual);
+
+                await firstValueFrom(this.http.post(link, dadosForm));
+
+                this.cliente.SaldoCarteira = Number(valor) + saldoAtual;
+                localStorage.setItem("cliente", JSON.stringify(this.cliente));
+
+                localStorage.removeItem("ValorDepositarCarteira");
+                localStorage.removeItem("idPagamento");
+                localStorage.removeItem("tempoAtual");
+                localStorage.removeItem("tempoPagamento");
 
                 this.navCl.navigateRoot("carteira-cliente");
             }
