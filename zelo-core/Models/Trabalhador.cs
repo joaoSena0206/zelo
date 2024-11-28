@@ -84,12 +84,18 @@ public class Trabalhador
         set;
     }
 
+    public decimal SaldoCarteira
+    {
+        get;
+        set;
+    }
+
     public Trabalhador()
     {
 
     }
 
-    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita, decimal lat, decimal longitude, string token)
+    public Trabalhador(string cpf, string nome, DateTime dataNascimento, DateTime dataCadastro,string email, string senha, string pix, bool disponivel, decimal avaliacao, decimal valorVisita, decimal lat, decimal longitude, string token, decimal saldoCarteira)
     {
         this.Cpf = cpf;
         this.Nome = nome;
@@ -104,5 +110,6 @@ public class Trabalhador
         this.LatitudeAtual = lat;
         this.LongitudeAtual = longitude;
         this.TokenFCM = token;
+        this.SaldoCarteira = saldoCarteira;
     }
 }
