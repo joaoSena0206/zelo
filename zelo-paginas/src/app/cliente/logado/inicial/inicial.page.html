@@ -4,7 +4,10 @@
 
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-title>Olá, <ion-text class="nm_titulo">{{ cliente.Nome }}</ion-text></ion-title>
+        <div style="display: flex;">
+            <ion-title>Olá, <ion-text class="nm_titulo">{{ cliente.Nome }}!</ion-text></ion-title>
+            <ion-icon class="iconeCarteira" [routerLink]="['/carteira-cliente']" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
+        </div>
     </ion-toolbar>
 </ion-header>
 
