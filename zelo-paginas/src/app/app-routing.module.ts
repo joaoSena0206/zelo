@@ -185,8 +185,13 @@ const routes: Routes = [
   },
   {
     path: 'carteira-cliente',
-    loadChildren: () => import('./cliente/logado/carteira-cliente/carteira-cliente.module').then( m => m.CarteiraClientePageModule)
+    loadChildren: () => import('./cliente/logado/carteira/carteira-cliente/carteira-cliente.module').then( m => m.CarteiraClientePageModule)
   },
+  {
+    path: 'pagamento-carteira',
+    loadChildren: () => import('./cliente/logado/carteira/pagamento-carteira/pagamento-carteira.module').then( m => m.PagamentoCarteiraPageModule)
+  },
+
 
 
 

@@ -18,8 +18,16 @@ export class CarteiraClientePage implements OnInit {
   }
 
   marcogay(valor: any) {
-    console.log(valor);
-    localStorage.setItem("ValorDepositarCarteira", valor);
+    let modal = document.querySelector("#example-modal") as HTMLIonModalElement;
+    if(valor != "custom-checked")
+    {
+      localStorage.setItem("ValorDepositarCarteira", valor);
+      this.navCl.navigateRoot("/pagamento-carteira");
+
+      modal.dismiss();
+    }
   }
+
+
 
 }

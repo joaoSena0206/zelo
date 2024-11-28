@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true">
+  <ion-alert header="Erro" [buttons]="['Ok']"></ion-alert>
+  <div *ngIf="carregar" class="divCarregamento">
+      <div class="carregamento"></div>
+  </div>
+  <ion-toast message="Serviço aceito!" position="top" style="--background: rgb(3, 199, 3); --border-radius: 20px;" [duration]="2000"></ion-toast>
+  <ion-toast id="toastPix" message="Pix copiado" position="bottom" style="--border-radius: 20px;" [duration]="2000"></ion-toast>
+
+  <div class="wrapper">
+      <div class="divMin">
+          <p>{{ tempo.min + ':' + tempo.seg }}</p>
+      </div>
+
+      <div class="content">
+          <div class="divFundo">
+              <div class="iconCheck">
+                  <ion-icon src="../../../../../assets/icon/cliente/check.svg"></ion-icon>
+              </div>
+
+              <div class="divQr">
+                  <p>Pedido realizado com sucesso!</p>
+                  <img [src]="qrCode">
+              </div>
+
+              <div class="divCodPix">
+                  <ion-input disabled [value]="copiaCola"></ion-input>
+
+                  <ion-button (click)="copiarPix()">
+                      <ion-icon name="document-text-outline"></ion-icon>
+                      <p>Copiar código</p>
+                  </ion-button>
+              </div>
+
+              <p>1 - Acesse o aplicativo do seu banco</p>
+              <p>2 - Escolha pagar com Pix Copie e Cole</p>
+              <p style="margin-bottom: 10px;">3 - Copie e cole o código e confirme o pagamento</p>
+
+              <p style="margin-bottom: 10px;">Este código tem validade de 15 minutos.</p>
+
+              <p style="margin-bottom: 10px;">Assim que realizar o pagamento, o pedido será aprovado e você receberá
+                  um e-mail de confirmação.</p>
+
+              <p style="font-weight: bold;">O serviço será pago a parte para o trabalhador!</p>
+          </div>
+      </div>
+  </div>
+</ion-content>
