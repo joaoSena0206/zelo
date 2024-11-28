@@ -172,7 +172,7 @@ public class TrabalhadorController : ControllerBase
     }
 
     [HttpPost("AtualizarSaldo")]
-    public IActionResult AtualizarSaldo([FromForm] bool debito, [FromForm] decimal valor, [FromForm] string cpf)
+    public IActionResult AtualizarSaldo([FromForm] decimal valor, [FromForm] string cpf)
     {
         Banco banco = new Banco();
         banco.Conectar();
