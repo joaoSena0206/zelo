@@ -21,7 +21,7 @@ public class TrabalhadorController : ControllerBase
 
             #region Adiciona o trabalhador no banco
 
-            string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0, null, null, '')";
+            string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0, null, null, '', 0)";
             banco.Executar(comando);
 
 
@@ -181,7 +181,7 @@ public class TrabalhadorController : ControllerBase
         {
             #region Pega os dados do trabalhador no banco, caso existam
 
-            string comando = $@"SELECT cd_cpf_trabalhador, nm_trabalhador, dt_nascimento_trabalhador, ic_email_confirmado_trabalhador, nm_pix_trabalhador, vl_visita_trabalhador FROM trabalhador
+            string comando = $@"SELECT cd_cpf_trabalhador, nm_trabalhador, dt_nascimento_trabalhador, ic_email_confirmado_trabalhador, nm_pix_trabalhador, vl_visita_trabalhador, vl_saldo_carteira FROM trabalhador
             WHERE nm_email_trabalhador = '{email}' AND nm_senha_trabalhador = md5('{senha}');";
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -196,6 +196,7 @@ public class TrabalhadorController : ControllerBase
                 trabalhador.Confirmado = dados.GetBoolean(3);
                 trabalhador.Pix = dados.GetString(4);
                 trabalhador.ValorVisita = dados.GetDecimal(5);
+                trabalhador.SaldoCarteira = dados.GetDecimal(6);
             }
 
             if (String.IsNullOrEmpty(trabalhador.Cpf))
