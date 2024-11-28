@@ -1,0 +1,51 @@
+<ion-content [fullscreen]="true">
+  <div class="wrapper">
+    <div class="contener">
+
+      <div class="areaVermelha"></div>
+
+      <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
+
+      <ion-text>
+        <h1 class="content__h1">Carteira</h1>
+      </ion-text>
+    
+      <ion-card class="card_anuncio">
+        <h6>Saldo:</h6>
+        <h1>R$0,00</h1>
+        <h6 class="txtSacar">Sacar</h6>
+      </ion-card>
+
+      <div class="divHistorico">
+        <h1>Histórico de transações</h1>
+
+        <div class="divValores">
+          <h2 class="data">22/11/2024</h2>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+          <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$200,00</p>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+        </div>
+        
+        <div class="divValores">
+          <h2 class="data">17/11/2024</h2>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+          <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+          <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
+        </div>
+        
+        <div class="divValores">
+          <h2 class="data">15/11/2024</h2>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+          <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$300,00</p>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+          <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
