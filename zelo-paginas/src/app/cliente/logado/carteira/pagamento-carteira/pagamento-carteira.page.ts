@@ -8,13 +8,12 @@ import { Clipboard } from '@capacitor/clipboard';
 import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
 
 @Component({
-  selector: 'app-pagamento-carteira',
-  templateUrl: './pagamento-carteira.page.html',
-  styleUrls: ['./pagamento-carteira.page.scss'],
+    selector: 'app-pagamento-carteira',
+    templateUrl: './pagamento-carteira.page.html',
+    styleUrls: ['./pagamento-carteira.page.scss'],
 })
 export class PagamentoCarteiraPage implements OnInit {
-
-  mercadoPagoVersion: any;
+    mercadoPagoVersion: any;
     tempo: any;
     copiaCola: any;
     qrCode: any;
@@ -60,17 +59,11 @@ export class PagamentoCarteiraPage implements OnInit {
             if ((minutosRestantes == 0 && segundosRestantes == 0) || (minutosRestantes < 0)) {
                 clearInterval(this.id);
 
-                let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
-                if (solicitacao.Trabalhador != null) {
-                    solicitacao.Trabalhador.Cpf = null;
-                }
-
-                this.enviarCancelamento();
-
                 localStorage.removeItem("tempoPagamento");
                 localStorage.removeItem("tempoAtual");
                 localStorage.removeItem("trabalhadorEscolhido");
                 localStorage.removeItem("idPagamento");
+                localStorage.removeItem("ValorDepositarCarteira");
 
                 this.navCl.navigateRoot("/escolher-trabalhador");
             }
@@ -103,9 +96,9 @@ export class PagamentoCarteiraPage implements OnInit {
                         localStorage.removeItem("trabalhadorEscolhido");
                         localStorage.removeItem("tempoPagamento");
                         localStorage.removeItem("tempoAtual");
+                        localStorage.removeItem("ValorDepositarCarteira");
 
                         clearInterval(this.id);
-                        this.enviarCancelamento();
 
                         this.navCl.navigateRoot("inicial");
                     }
@@ -133,6 +126,7 @@ export class PagamentoCarteiraPage implements OnInit {
                 localStorage.removeItem("idPagamento");
                 localStorage.removeItem("tempoPagamento");
                 localStorage.removeItem("tempoAtual");
+                localStorage.removeItem("ValorDepositarCarteira");
 
                 clearInterval(this.id);
 
@@ -150,6 +144,7 @@ export class PagamentoCarteiraPage implements OnInit {
                 localStorage.removeItem("idPagamento");
                 localStorage.removeItem("tempoPagamento");
                 localStorage.removeItem("tempoAtual");
+                localStorage.removeItem("ValorDepositarCarteira");
 
                 clearInterval(this.id);
 
@@ -158,28 +153,9 @@ export class PagamentoCarteiraPage implements OnInit {
         });
     }
 
-    async enviarCancelamento() {
-        let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
-        let cliente = JSON.parse(localStorage.getItem("cliente")!);
-        let link = dominio + "/Cliente/EnviarPagamentoCancelado";
-        let dadosForm = new FormData();
-        dadosForm.append("pago", "false");
-        dadosForm.append("token", trabalhador.TokenFCM);
-        dadosForm.append("nmCliente", cliente.Nome);
-
-        try {
-            await firstValueFrom(this.http.post(link, dadosForm));
-        }
-        catch {
-            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-            alert.message = "Erro ao conectar-se ao servidor";
-            alert.present();
-        }
-    }
-
     async fazerPagamentoMp() {
         let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
-        let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
+        let valor = localStorage.getItem("ValorDepositarCarteira");
         let cliente = JSON.parse(localStorage.getItem("cliente")!);
 
         let dataExpiracao = new Date();
@@ -187,10 +163,9 @@ export class PagamentoCarteiraPage implements OnInit {
 
         let link = dominio + "/Cliente/GerarPagamento";
         let dadosForm = new FormData();
-        dadosForm.append("valorVisita", trabalhador.ValorVisita);
+        dadosForm.append("valorVisita", valor!);
         dadosForm.append("email", cliente.Email);
         dadosForm.append("cpf", cliente.Cpf);
-        dadosForm.append("cdSolicitacao", solicitacao.CdSolicitacaoServico);
         dadosForm.append("expiracao", dataExpiracao.toISOString());
 
         try {
@@ -200,13 +175,6 @@ export class PagamentoCarteiraPage implements OnInit {
             this.copiaCola = res.point_of_interaction.transaction_data.qr_code;
             this.qrCode = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + res.point_of_interaction.transaction_data.qr_code_base64);
             localStorage.setItem("idPagamento", res.id);
-
-            link = dominio + "/SolicitacaoServico/EnviarIdPagamento";
-            dadosForm = new FormData();
-            dadosForm.append("token", trabalhador.TokenFCM);
-            dadosForm.append("id", res.id);
-
-            await firstValueFrom(this.http.post(link, dadosForm));
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -225,27 +193,19 @@ export class PagamentoCarteiraPage implements OnInit {
         try {
             let res: any = await firstValueFrom(this.http.get(link));
 
-            if (res.status != "approved") {
+            if (res.status == "approved") {
                 link = dominio + "/Cliente/EnviarConfirmacao";
                 clearInterval(this.id);
 
-                let trabalhador = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
-                let dadosForm = new FormData();
-                dadosForm.append("token", trabalhador.TokenFCM);
-                dadosForm.append("cliente", localStorage.getItem("cliente")!);
-                dadosForm.append("solicitacao", localStorage.getItem("solicitacao")!);
-
-                let res = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-
-                this.navCl.navigateRoot("trabalhador-caminho");
+                this.navCl.navigateRoot("carteira-cliente");
             }
             else if (res.status == "cancelled") {
                 localStorage.removeItem("idPagamento");
                 localStorage.removeItem("trabalhadorEscolhido");
                 localStorage.removeItem("tempoPagamento");
                 localStorage.removeItem("tempoAtual");
+                localStorage.removeItem("ValorDepositarCarteira");
 
-                this.enviarCancelamento();
                 clearInterval(this.id);
 
                 this.navCl.navigateRoot("inicial");
@@ -300,17 +260,11 @@ export class PagamentoCarteiraPage implements OnInit {
             if (Number(this.tempo.min) == 0 && Number(this.tempo.seg) == 0) {
                 clearInterval(this.id);
 
-                let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
-                if (solicitacao.Trabalhador != null) {
-                    solicitacao.Trabalhador.Cpf = null;
-                }
-
-                this.enviarCancelamento();
-
                 localStorage.removeItem("tempoPagamento");
                 localStorage.removeItem("tempoAtual");
                 localStorage.removeItem("trabalhadorEscolhido");
                 localStorage.removeItem("idPagamento");
+                localStorage.removeItem("ValorDepositarCarteira");
 
                 this.navCl.navigateBack("/escolher-trabalhador");
             }
