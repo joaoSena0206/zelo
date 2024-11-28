@@ -189,7 +189,6 @@ export class PagamentoPage implements OnInit {
         dadosForm.append("valorVisita", trabalhador.ValorVisita);
         dadosForm.append("email", cliente.Email);
         dadosForm.append("cpf", cliente.Cpf);
-        dadosForm.append("cdSolicitacao", solicitacao.CdSolicitacaoServico);
         dadosForm.append("expiracao", dataExpiracao.toISOString());
 
         try {
