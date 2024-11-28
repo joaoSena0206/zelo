@@ -3,6 +3,7 @@ using FirebaseAdmin.Messaging;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Mysqlx;
 
 [ApiController]
 [Route("Cliente")]
@@ -212,7 +213,29 @@ public class ClienteController : ControllerBase
         }
     }
 
+    [HttpPost("AtualizarSaldo")]
+    public IActionResult AtualizarSaldo([FromForm] bool debito, [FromForm] decimal valor, [FromForm] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
 
+        try
+        {
+            string comando = $@"UPDATE cliente SET vl_saldo_carteira = {valor}
+            WHERE cd_cpf_cliente = '{cpf}'";
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
 
     [HttpPost("EnviarSolicitacao")]
     public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao, [FromForm] string[] listaBase64) 

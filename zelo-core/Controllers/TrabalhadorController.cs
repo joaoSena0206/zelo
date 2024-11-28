@@ -171,6 +171,30 @@ public class TrabalhadorController : ControllerBase
         }
     }
 
+    [HttpPost("AtualizarSaldo")]
+    public IActionResult AtualizarSaldo([FromForm] bool debito, [FromForm] decimal valor, [FromForm] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = $@"UPDATE trabalhador SET vl_saldo_carteira = {valor}
+            WHERE cd_cpf_trabalhador = '{cpf}'";
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
     [HttpPost("Logar")]
     public IActionResult Logar([FromForm] string email, [FromForm] string senha)
     {
