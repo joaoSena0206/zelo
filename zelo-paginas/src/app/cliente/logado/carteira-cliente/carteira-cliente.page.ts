@@ -17,4 +17,9 @@ export class CarteiraClientePage implements OnInit {
     this.navCl.back();
   }
 
+  marcogay(valor: any) {
+    console.log(valor);
+    localStorage.setItem("ValorDepositarCarteira", valor);
+  }
+
 }
