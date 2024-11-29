@@ -6,7 +6,10 @@
     <ion-toolbar>
         <div style="display: flex;">
             <ion-title>Olá, <ion-text class="nm_titulo">{{Nome}}!</ion-text></ion-title>
-            <ion-icon class="iconeCarteira" [routerLink]="['/carteira-trabalhador']" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
+            <div [routerLink]="['/carteira-trabalhador']" style="display: flex;">
+                <p style="display: flex; align-items: center; font-size: 20px;">R$0,00</p>
+                <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
+            </div>   
         </div>
     </ion-toolbar>
 </ion-header>
