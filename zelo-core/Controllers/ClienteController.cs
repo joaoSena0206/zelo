@@ -3,6 +3,7 @@ using FirebaseAdmin.Messaging;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Mysqlx;
 
 [ApiController]
 [Route("Cliente")]
@@ -20,7 +21,7 @@ public class ClienteController : ControllerBase
 
             #region Adiciona o cliente no banco
 
-            string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
+            string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '', 0)";
             banco.Executar(comando);
 
             return Ok();
@@ -174,7 +175,7 @@ public class ClienteController : ControllerBase
         {
             #region Pega os dados do cliente no banco, caso existam
 
-            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
+            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente, vl_saldo_carteira FROM cliente
             WHERE nm_email_cliente = '{email}' AND nm_senha_cliente = md5('{senha}');";
             MySqlDataReader dados = banco.Consultar(comando);
 
@@ -187,6 +188,7 @@ public class ClienteController : ControllerBase
                 cliente.DataNascimento = dados.GetDateTime(2);
                 cliente.Email = email;
                 cliente.Confirmado = dados.GetBoolean(3);
+                cliente.SaldoCarteira = dados.GetDecimal(4);
             }
 
             if (String.IsNullOrEmpty(cliente.Cpf))
@@ -211,7 +213,29 @@ public class ClienteController : ControllerBase
         }
     }
 
+    [HttpPost("AtualizarSaldo")]
+    public IActionResult AtualizarSaldo([FromForm] bool debito, [FromForm] decimal valor, [FromForm] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
 
+        try
+        {
+            string comando = $@"UPDATE cliente SET vl_saldo_carteira = {valor}
+            WHERE cd_cpf_cliente = '{cpf}'";
+            banco.Executar(comando);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
 
     [HttpPost("EnviarSolicitacao")]
     public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string endereco, [FromForm] string solicitacao, [FromForm] string[] listaBase64) 
@@ -331,7 +355,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("GerarPagamento")]
-    public async Task<IActionResult> GerarPagamento([FromForm] decimal valorVisita, [FromForm] string email, [FromForm] string cpf, [FromForm] int cdSolicitacao, [FromForm] string expiracao)
+    public async Task<IActionResult> GerarPagamento([FromForm] decimal valorVisita, [FromForm] string email, [FromForm] string cpf, [FromForm] string expiracao)
     {
         try
         {

@@ -1,23 +1,49 @@
 <ion-content [fullscreen]="true">
-  <div class="wrapper">
-    <div class="contener">
+    <div class="wrapper">
+        <div class="contener">
 
-      <div class="areaVermelha"></div>
+            <div class="areaVermelha"></div>
 
-      <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
+            <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
 
-      <ion-text>
-        <h1 class="content__h1">Carteira</h1>
-      </ion-text>
-    
-      <ion-card class="card_anuncio">
-        <h6>Saldo:</h6>
-        <h1>R$0,00</h1>
-        <h6 id="open-custom-dialog" class="txtSacar">Depositar</h6>
-      </ion-card>
+            <ion-text>
+                <h1 class="content__h1">Carteira</h1>
+            </ion-text>
 
-      <div class="divHistorico">
-        <h1>Histórico de transações</h1>
+            <ion-card class="card_anuncio">
+                <h6>Saldo:</h6>
+                <h1>R$ {{ cliente.SaldoCarteira.toFixed(2).replace(".", ",") }}</h1>
+                <h6 id="open-custom-dialog" class="txtSacar">Depositar</h6>
+            </ion-card>
+
+            <div class="divHistorico">
+                <h1>Histórico de transações</h1>
+
+                <div class="divValores">
+                    <h2 class="data">22/11/2024</h2>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                    <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$200,00</p>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                </div>
+
+                <div class="divValores">
+                    <h2 class="data">17/11/2024</h2>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                    <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                    <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
+                </div>
+
+                <div class="divValores">
+                    <h2 class="data">15/11/2024</h2>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                    <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$300,00</p>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                    <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
+                </div>
+
+            </div>
 
         <div class="divValores">
           <h2 class="data">22/11/2024</h2>
@@ -85,39 +111,38 @@
       </div>
 
     </div>
-  </div>
 
 </ion-content>
 
 <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
-  <ng-template>
-      <ion-card class="poupop">
+    <ng-template>
+        <ion-card class="poupop">
 
-        <ion-icon (click)="modal.dismiss();" class="iconeFechar" name="close-circle-outline"></ion-icon>
+            <ion-icon (click)="modal.dismiss();" class="iconeFechar" name="close-circle-outline"></ion-icon>
 
-        <h1 class="h1Poupop">Escolha o valor a ser depositado:</h1>
-        <ion-list class="listaPoupop">
+            <h1 class="h1Poupop">Escolha o valor a ser depositado:</h1>
+            <ion-list class="listaPoupop">
 
-          <ion-radio-group #radio value="custom-checked">
-            <ion-item lines="none" button>
-              <ion-radio value="50" aria-label="Custom checkbox"></ion-radio>
-              <ion-label style="margin-left: -10px;">R$50,00</ion-label>
-            </ion-item>
-            
-            <ion-item lines="none" button>
-              <ion-radio value="100" aria-label="Custom checkbox that is checked"></ion-radio>
-              <ion-label>R$100,00</ion-label>
-            </ion-item>
+                <ion-radio-group #radio value="custom-checked">
+                    <ion-item lines="none" button>
+                        <ion-radio value="1" aria-label="Custom checkbox"></ion-radio>
+                        <ion-label style="margin-left: -10px;">R$50,00</ion-label>
+                    </ion-item>
 
-            <ion-item lines="none" button>
-              <ion-radio value="150" aria-label="Custom checkbox"></ion-radio>
-              <ion-label>R$150,00</ion-label>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
+                    <ion-item lines="none" button>
+                        <ion-radio value="100" aria-label="Custom checkbox that is checked"></ion-radio>
+                        <ion-label>R$100,00</ion-label>
+                    </ion-item>
 
-        <ion-button (click)="Confirmar(radio.value)" class="form__btn">Confirmar</ion-button>
+                    <ion-item lines="none" button>
+                        <ion-radio value="150" aria-label="Custom checkbox"></ion-radio>
+                        <ion-label>R$150,00</ion-label>
+                    </ion-item>
+                </ion-radio-group>
+            </ion-list>
 
-      </ion-card>
-  </ng-template>
+            <ion-button (click)="salvarValor(radio.value)" class="form__btn">Confirmar</ion-button>
+
+        </ion-card>
+    </ng-template>
 </ion-modal>
