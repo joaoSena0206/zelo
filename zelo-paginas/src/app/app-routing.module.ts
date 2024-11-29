@@ -191,6 +191,11 @@ const routes: Routes = [
     path: 'pagamento-carteira',
     loadChildren: () => import('./cliente/logado/carteira/pagamento-carteira/pagamento-carteira.module').then( m => m.PagamentoCarteiraPageModule)
   },
+  {
+    path: 'escolher-transporte',
+    loadChildren: () => import('./trabalhador/Logado/Servico/escolher-transporte/escolher-transporte.module').then( m => m.EscolherTransportePageModule)
+  },
+
 
 
 
