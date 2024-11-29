@@ -17,7 +17,7 @@ export class CarteiraClientePage implements OnInit {
     this.navCl.back();
   }
 
-  marcogay(valor: any) {
+  Confirmar(valor: any) {
     let modal = document.querySelector("#example-modal") as HTMLIonModalElement;
     if(valor != "custom-checked")
     {
