@@ -21,7 +21,7 @@ public class ClienteController : ControllerBase
 
             #region Adiciona o cliente no banco
 
-            string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '', 0)";
+            string comando = $"Insert into cliente values('{cliente.Cpf}', '{cliente.Nome}', '{cliente.DataNascimento.ToString("yyyy-MM-dd")}','{cliente.Email}', md5('{cliente.Senha}'), false, '')";
             banco.Executar(comando);
 
             return Ok();
@@ -202,30 +202,6 @@ public class ClienteController : ControllerBase
             return Ok(cliente);
 
             #endregion
-        }
-        catch (Exception erro)
-        {
-            return BadRequest(erro.Message);
-        }
-        finally
-        {
-            banco.Desconectar();
-        }
-    }
-
-    [HttpPost("AtualizarSaldo")]
-    public IActionResult AtualizarSaldo([FromForm] bool debito, [FromForm] decimal valor, [FromForm] string cpf)
-    {
-        Banco banco = new Banco();
-        banco.Conectar();
-
-        try
-        {
-            string comando = $@"UPDATE cliente SET vl_saldo_carteira = {valor}
-            WHERE cd_cpf_cliente = '{cpf}'";
-            banco.Executar(comando);
-
-            return Ok();
         }
         catch (Exception erro)
         {
