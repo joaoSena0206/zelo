@@ -7,7 +7,7 @@
         <div style="display: flex;">
             <ion-title>Olá, <ion-text class="nm_titulo">{{ cliente.Nome }}!</ion-text></ion-title>
             <div [routerLink]="['/carteira-cliente']" style="display: flex;">
-                <p style="display: flex; align-items: center; font-size: 20px;">R$0,00</p>
+                <p style="display: flex; align-items: center; font-size: 20px;">R$ {{ cliente.SaldoCarteira.toFixed(2).replace(".", ",") }}</p>
                 <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
             </div>
         </div>

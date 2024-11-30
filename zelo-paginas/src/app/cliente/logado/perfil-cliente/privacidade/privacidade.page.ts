@@ -67,7 +67,7 @@ export class PrivacidadePage implements OnInit {
         estado: new FormControl(""),
         cidade: new FormControl(""),
         bairro: new FormControl(""),
-        rua: new FormControl({ value: this.rua, disabled: true }),
+        rua: new FormControl({ disabled: true }),
         numero: new FormControl({ value: this.listaEndereco[0].Numero, disabled: true }, Validators.required),
         complemento: new FormControl({ value: this.listaEndereco[0].Complemento, disabled: true }),
         pontoReferencia: new FormControl({ value: this.listaEndereco[0].Referencia, disabled: true })
