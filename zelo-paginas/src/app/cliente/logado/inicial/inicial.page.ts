@@ -29,6 +29,8 @@ export class InicialPage implements OnInit {
     constructor(private http: HttpClient, private navCl: NavController) { }
 
     ngOnInit() {
+        localStorage.setItem("saldoCarteira", "0");
+
         this.pegarSaldo();
         this.carregarCategorias();
         this.carregarPatrocinados();

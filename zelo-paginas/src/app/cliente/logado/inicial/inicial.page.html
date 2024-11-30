@@ -7,7 +7,8 @@
         <div style="display: flex;">
             <ion-title>Olá, <ion-text class="nm_titulo">{{ cliente.Nome }}!</ion-text></ion-title>
             <div [routerLink]="['/carteira-cliente']" style="display: flex;">
-                <p style="display: flex; align-items: center; font-size: 20px;">R$ {{ saldo ? saldo.toFixed(2).replace(".", ",") : "0,00" }}</p>
+                <p style="display: flex; align-items: center; font-size: 20px;">R$ {{ saldo ?
+                    saldo.toFixed(2).replace(".", ",") : "0,00" }}</p>
                 <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
             </div>
         </div>
@@ -49,7 +50,8 @@
             <div class="div_trabalhadores" *ngIf="patrocinados ? patrocinados.length > 0 : false">
                 <ion-card *ngFor="let patrocinado of patrocinados">
                     <figure>
-                        <img draggable="false" [src]="dominio + '/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'" alt="">
+                        <img draggable="false"
+                            [src]="dominio + '/Imgs/Trabalhadores/' + patrocinado.Trabalhador.Cpf + '.jpg'" alt="">
                         <div class="info_trabalhador">
                             <div class="fundoLaranja"></div>
                             <div class="divInfos">
@@ -92,12 +94,13 @@
                     <div class="areaUltimoPedido" [class]="i >= 5 ? 'escondido' : ''">
                         <div class="infoTrabalhorPedido">
                             <figure class="fotoTrabalhadorPedido">
-                                <img style="border-radius: 100px;" draggable="false" [src]="dominio + '/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
+                                <img style="border-radius: 100px;" draggable="false"
+                                    [src]="dominio + '/Imgs/Perfil/Trabalhador/' + pedido.Trabalhador.Cpf + '.jpg'">
                             </figure>
 
                             <div>
                                 <div>
-                                    
+
                                     <h3 class="titulo tituloPedido">{{ pedido.Servico.Nome }}</h3>
                                     <h3 class="titulo tituloPedido">{{ pedido.Trabalhador.Nome }}</h3>
 
@@ -120,7 +123,8 @@
                             }}
                         </p>
 
-                        <p (click)="VerPerfil(pedido.Trabalhador.Cpf, pedido.Trabalhador.Nome);" class="verPerfil">Ver perfil</p>
+                        <p (click)="VerPerfil(pedido.Trabalhador.Cpf, pedido.Trabalhador.Nome);" class="verPerfil">Ver
+                            perfil</p>
                     </div>
                 </ng-container>
             </div>
