@@ -258,10 +258,8 @@ export class PrivacidadePage implements OnInit {
     }
 
     formatCPF(cpf: string): string {
-        cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
-        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        cpf = cpf.replace(/\D/g, '');
+        cpf = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '***.$2.$3.**');
 
         this.cpfFormatado = cpf;
         return cpf;
