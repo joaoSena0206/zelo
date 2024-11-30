@@ -15,7 +15,7 @@ export class CarteiraTrabalhadorPage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.navigateRoot("/inicial");
+        this.navCl.navigateRoot("/trabalhador/inicial");
     }
 
 }
