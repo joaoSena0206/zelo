@@ -38,6 +38,38 @@ public class ClienteController : ControllerBase
         }
     }
 
+    [HttpGet("PegarSaldo")]
+    public IActionResult PegarSaldo([FromQuery] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = $@"SELECT SUM(vl_transacao_carteira)
+            FROM transacao_carteira
+            WHERE cd_cpf_cliente = '{cpf}'";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            decimal saldo = 0;
+
+            if (dados != null && dados.Read())
+            {
+                saldo = dados.GetDecimal(0);
+            }
+
+            return Ok(saldo);
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
     [HttpPost("AdicionarFotoPerfil")]
     public async Task<IActionResult> AdicionarFotoPerfil([FromForm] string cpf, [FromForm] IFormFile? file = null)
     {
