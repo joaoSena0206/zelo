@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import {
@@ -24,10 +24,12 @@ export class InicialPage implements OnInit {
     mostrar: boolean = true;
     dominio: any = dominio;
     listaEndereco: any = [];
+    saldo: any;
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
     ngOnInit() {
+        this.pegarSaldo();
         this.carregarCategorias();
         this.carregarPatrocinados();
         this.carregarHistorico();
@@ -49,42 +51,46 @@ export class InicialPage implements OnInit {
         if (localStorage.getItem("confirmacao")) {
             this.navCl.navigateRoot("confirmacao-trabalhador");
         }
-        else if (localStorage.getItem("idPagamento"))
-        {
+        else if (localStorage.getItem("idPagamento")) {
             this.navCl.navigateRoot("pagamento");
         }
-        else
-        {
+        else {
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("servico");
             localStorage.removeItem("endereco");
         }
     }
 
-    async buscarEndereco()
-    { 
-    let link = dominio + "/Cliente/BuscarEndereco";
-    let dadosForm = new FormData();
-    dadosForm.append("cpf", this.cliente.Cpf);
+    async pegarSaldo() {
+        let link = dominio + "/Cliente/PegarSaldo?cpf=" + this.cliente.Cpf;
+        let res: any = await firstValueFrom(this.http.get(link));
 
-    try {
-        this.carregar = true;
-
-        let res = await firstValueFrom(this.http.post(link, dadosForm));
-
-        this.carregar = false;
-
-        this.listaEndereco = res;
-
-        localStorage.setItem('endereco', JSON.stringify(this.listaEndereco));
+        this.saldo = res;
+        localStorage.setItem("saldoCarteira", res); 
     }
-    catch 
-    {
-        const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-        alert.message = "Erro ao conectar-se ao servidor";
-        alert.present();
+
+    async buscarEndereco() {
+        let link = dominio + "/Cliente/BuscarEndereco";
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", this.cliente.Cpf);
+
+        try {
+            this.carregar = true;
+
+            let res = await firstValueFrom(this.http.post(link, dadosForm));
+
+            this.carregar = false;
+
+            this.listaEndereco = res;
+
+            localStorage.setItem('endereco', JSON.stringify(this.listaEndereco));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
-  }
 
     async enviarToken(token: any) {
         let link = dominio + "/Cliente/AdicionarTokenFCM";
@@ -230,9 +236,9 @@ export class InicialPage implements OnInit {
         this.navCl.navigateForward("/descricao-servico");
     }
 
-    VerPerfil(Cpf: any, Nome: any){
-        let clienteVerPerfil = {Cpf: Cpf, Nome: Nome}
+    VerPerfil(Cpf: any, Nome: any) {
+        let clienteVerPerfil = { Cpf: Cpf, Nome: Nome }
         localStorage.setItem('perfil', JSON.stringify(clienteVerPerfil))
         this.navCl.navigateBack("/perfil-trabalhador")
-      }
+    }
 }
