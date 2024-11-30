@@ -11,6 +11,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CarteiraClientePage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    saldo: any = Number(localStorage.getItem("saldoCarteira"));
     carregar: boolean = false;
     transacoes: any;
 
