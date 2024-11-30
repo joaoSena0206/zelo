@@ -72,7 +72,7 @@ public class TransacaoCarteiraController : ControllerBase
 
             string json = "[";
 
-            if (dados != null)
+            if (dados != null && dados.HasRows)
             {
                 while (dados.Read())
                 {
@@ -81,6 +81,10 @@ public class TransacaoCarteiraController : ControllerBase
                 }
 
                 json = json.Substring(0, json.Length - 1).Replace("'", "\"") + "]";
+            }
+            else
+            {
+                json += "]";
             }
 
             dados.Close();
