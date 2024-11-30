@@ -15,6 +15,7 @@ import { Capacitor } from '@capacitor/core';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CropperComponent } from 'angular-cropperjs';
+import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 
 @Component({
     selector: 'app-privacidade',
@@ -63,7 +64,7 @@ export class PrivacidadePage implements OnInit {
 
     endereco = new FormGroup({
         identificacao: new FormControl({ value: this.listaEndereco[0].Identificacao, disabled: true }, Validators.required),
-        cep: new FormControl({ value: this.listaEndereco[0].Cep, disabled: true }, [Validators.required, validadorTamanhoMinimo()]),
+        cep: new FormControl({ value: this.listaEndereco[0].Cep.substring(0, 5) + "-" + this.listaEndereco[0].Cep.substring(5), disabled: true }, [Validators.required, validadorTamanhoMinimo()]),
         estado: new FormControl(""),
         cidade: new FormControl(""),
         bairro: new FormControl(""),
@@ -106,6 +107,7 @@ export class PrivacidadePage implements OnInit {
     }
 
     ngOnInit() {
+
     }
 
     async pegarFoto(div: any) {
@@ -267,8 +269,6 @@ export class PrivacidadePage implements OnInit {
     ngAfterViewInit() {
         this.FormatarData();
 
-        console.log(this.listaEndereco)
-
         const inputs = document.querySelectorAll("ion-input");
 
         inputs.forEach((input: HTMLIonInputElement) => {
@@ -293,7 +293,7 @@ export class PrivacidadePage implements OnInit {
 
 
         this.formatCPF(this.cpf);
-        this.buscarCep2(this.listaEndereco[0].Cep)
+        this.buscarCep2(this.endereco.controls['cep'].value);
     }
 
     formatCPF(cpf: string): string {
@@ -331,11 +331,6 @@ export class PrivacidadePage implements OnInit {
     abilitarInput(inputElement: any) {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
 
-        if(input.id == "inputNome" || input.id == "inputEmail")
-        {
-            input.disabled = false;
-        }
-
         if (input.classList.contains("txt")) {
             input = inputElement.parentElement.children[1] as HTMLIonInputElement;
         }
@@ -344,6 +339,9 @@ export class PrivacidadePage implements OnInit {
 
         if (input.id == "Identificacao" || input.id == "numero" || input.id == "complemento" || input.id == "referencia" || input.id == "cep") {
             this.endereco.controls[controlName as keyof typeof this.endereco.controls].enable();
+        }
+        else if (input.id == "inputNome" || input.id == "inputEmail") {
+            this.formDados.controls[controlName as keyof typeof this.formDados.controls].enable();
         }
 
         input.style.border = 'black 1px solid';
@@ -603,11 +601,6 @@ export class PrivacidadePage implements OnInit {
         }
     }
 
-    estado: any;
-    cidade: any;
-    bairro: any;
-    rua: any;
-
     buscarCep(cepControl: FormControl) {
         let cep = cepControl.value;
 
@@ -629,7 +622,7 @@ export class PrivacidadePage implements OnInit {
                     this.endereco.controls['bairro'].setValue(dados.bairro);
                     this.endereco.controls['rua'].setValue(dados.logradouro);
 
-                    
+
                 });
             }
             catch {
@@ -656,10 +649,10 @@ export class PrivacidadePage implements OnInit {
                         this.validarControl(this.endereco.controls['cep']);
                     }
 
-                    this.estado = dados.uf;
-                    this.cidade = dados.localidade;
-                    this.bairro = dados.bairro;
-                    this.rua = dados.logradouro;
+                    this.endereco.controls['estado'].setValue(dados.uf);
+                    this.endereco.controls['cidade'].setValue(dados.localidade);
+                    this.endereco.controls['bairro'].setValue(dados.bairro);
+                    this.endereco.controls['rua'].setValue(dados.logradouro);
                 });
             }
             catch {
