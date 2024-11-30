@@ -21,13 +21,45 @@ public class TrabalhadorController : ControllerBase
 
             #region Adiciona o trabalhador no banco
 
-            string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0, null, null, '', 0)";
+            string comando = $"Insert into trabalhador values('{trabalhador.Cpf}', '{trabalhador.Nome}', '{trabalhador.DataNascimento.ToString("yyyy-MM-dd")}', '{trabalhador.DataCadastro.ToString("yyyy-MM-dd")}','{trabalhador.Email}', md5('{trabalhador.Senha}'), null, false, false, 0, null, null, '')";
             banco.Executar(comando);
 
 
             return Ok();
 
             #endregion
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+        finally
+        {
+            banco.Desconectar();
+        }
+    }
+
+    [HttpGet("PegarSaldo")]
+    public IActionResult PegarSaldo([FromQuery] string cpf)
+    {
+        Banco banco = new Banco();
+        banco.Conectar();
+
+        try
+        {
+            string comando = $@"SELECT SUM(vl_transacao_carteira)
+            FROM transacao_carteira
+            WHERE cd_cpf_trabalhador = '{cpf}'";
+            MySqlDataReader dados = banco.Consultar(comando);
+
+            decimal saldo = 0;
+
+            if (dados != null && dados.Read())
+            {
+                saldo = dados.GetDecimal(0);
+            }
+
+            return Ok(saldo);
         }
         catch (Exception erro)
         {
@@ -220,7 +252,6 @@ public class TrabalhadorController : ControllerBase
                 trabalhador.Confirmado = dados.GetBoolean(3);
                 trabalhador.Pix = dados.GetString(4);
                 trabalhador.ValorVisita = dados.GetDecimal(5);
-                trabalhador.SaldoCarteira = dados.GetDecimal(6);
             }
 
             if (String.IsNullOrEmpty(trabalhador.Cpf))
