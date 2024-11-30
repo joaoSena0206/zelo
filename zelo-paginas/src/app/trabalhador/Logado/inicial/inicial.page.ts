@@ -41,12 +41,15 @@ export class InicialPage implements OnInit {
     dominio = dominio;
     situacaoServico: any;
     msgTrabalho: any;
+    saldo: any;
 
     constructor(private http: HttpClient, private navCl: NavController) {
 
     }
 
     ngOnInit() {
+        localStorage.setItem("saldoCarteira", "0");
+
         PushNotifications.removeAllListeners();
 
         PushNotifications.requestPermissions().then(result => {
@@ -103,16 +106,21 @@ export class InicialPage implements OnInit {
         if (localStorage.getItem("confirmacao")) {
             this.navCl.navigateRoot("confirmacao-trabalhador");
         }
-        else if (localStorage.getItem("idPagamento"))
-        {
+        else if (localStorage.getItem("idPagamento")) {
             this.navCl.navigateRoot("pagamento");
         }
-        else
-        {
+        else {
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("servico");
             localStorage.removeItem("endereco");
         }
+    }
+    async pegarSaldo() {
+        let link = dominio + "/Trabalhador/PegarSaldo?cpf=" + this.trabalhador.Cpf;
+        let res: any = await firstValueFrom(this.http.get(link));
+
+        this.saldo = res;
+        localStorage.setItem("saldoCarteira", res);
     }
 
     analisarServico() {
@@ -168,6 +176,7 @@ export class InicialPage implements OnInit {
     }
 
     ngAfterViewInit() {
+        this.pegarSaldo();
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
         this.modal = document.querySelector('#modal_servico_solicitado') as HTMLIonModalElement;

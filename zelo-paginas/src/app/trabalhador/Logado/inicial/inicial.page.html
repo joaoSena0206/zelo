@@ -7,9 +7,10 @@
         <div style="display: flex;">
             <ion-title>Olá, <ion-text class="nm_titulo">{{Nome}}!</ion-text></ion-title>
             <div [routerLink]="['/carteira-trabalhador']" style="display: flex;">
-                <p style="display: flex; align-items: center; font-size: 20px;">R$0,00</p>
+                <p style="display: flex; align-items: center; font-size: 20px;">R$ {{ saldo ?
+                    saldo.toFixed(2).replace(".", ",") : "0,00" }}</p>
                 <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
-            </div>   
+            </div>
         </div>
     </ion-toolbar>
 </ion-header>
@@ -17,9 +18,10 @@
 <ion-content [fullscreen]="true">
     <div class="content">
 
-        <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
+        <ion-alert header="Erro" [buttons]="['Ok']"
+            message="A message should be a short, complete sentence."></ion-alert>
 
-        <ion-button style="height: 55px;"  shape="round" id="abrir_modal_servico" class="btn_situacao_trabalhador">
+        <ion-button style="height: 55px;" shape="round" id="abrir_modal_servico" class="btn_situacao_trabalhador">
             <img class="img_btn_situacao" src="../../../../assets/icon/Trabalhador/Icone inicial/IconeOff.svg" alt="">
             <p class="txtSituacao" style="margin: 15px; font-size: 20px;">{{ situacao }}</p>
         </ion-button>
@@ -31,7 +33,9 @@
 
         <div class="local_ultimos_trabalhos">
             <ion-card class="card_servico" *ngFor="let historico of historico">
-                <img draggable="false" class="img_pedido" [src]="dominio + '/Imgs/Solicitacao/' + historico.CdSolicitacaoServico + '/1.jpeg'" [alt]="historico.Nome">
+                <img draggable="false" class="img_pedido"
+                    [src]="dominio + '/Imgs/Solicitacao/' + historico.CdSolicitacaoServico + '/1.jpeg'"
+                    [alt]="historico.Nome">
 
                 <p class="nm_cliente_pedido">{{historico.Cliente.Nome}}</p>
 
@@ -121,7 +125,8 @@
 
             <div class="area_vermelha">
                 <div class="circulo_branca">
-                    <img style="border-radius: 100px;" [src]="dominio + '/Imgs/Perfil/Cliente/' + clienteServico.Cpf + '.jpg'" alt="Foto Cliente">
+                    <img style="border-radius: 100px;"
+                        [src]="dominio + '/Imgs/Perfil/Cliente/' + clienteServico.Cpf + '.jpg'" alt="Foto Cliente">
                 </div>
             </div>
 
@@ -139,7 +144,7 @@
     </ng-template>
 </ion-modal>
 
-<ion-footer class="footer" style="position: fixed;" shape="round"  >
+<ion-footer class="footer" style="position: fixed;" shape="round">
     <ion-tabs class="ion_tabs">
         <ion-tab-bar class="ion_tab_bar" slot="bottom">
 
