@@ -207,7 +207,7 @@ public class ClienteController : ControllerBase
         {
             #region Pega os dados do cliente no banco, caso existam
 
-            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente, vl_saldo_carteira FROM cliente
+            string comando = $@"SELECT cd_cpf_cliente, nm_cliente, dt_nascimento_cliente, ic_email_confirmado_cliente FROM cliente
             WHERE nm_email_cliente = '{email}' AND nm_senha_cliente = md5('{senha}');";
             MySqlDataReader dados = banco.Consultar(comando);
 
