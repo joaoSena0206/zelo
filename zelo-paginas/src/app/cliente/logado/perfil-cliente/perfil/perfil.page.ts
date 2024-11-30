@@ -54,7 +54,8 @@ export class PerfilPage implements OnInit {
 
     sair() {
         localStorage.removeItem("logado");
-        localStorage.removeItem("trabalhador");
+        localStorage.removeItem("cliente");
+        localStorage.removeItem("saldoCarteira");
 
         this.navCl.navigateRoot("");
     }
