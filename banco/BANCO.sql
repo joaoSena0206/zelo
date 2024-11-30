@@ -95,7 +95,6 @@ Create Table cliente
 	nm_senha_cliente VARCHAR(255),
 	ic_email_confirmado_cliente BOOL,
 	nm_token_fcm VARCHAR(255),
-	vl_saldo_carteira DECIMAL(5, 2),
 
 	CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
@@ -174,7 +173,6 @@ CREATE TABLE transacao_carteira
 	cd_transacao_carteira INT,
 	cd_cpf_cliente CHAR(11),
 	cd_cpf_trabalhador CHAR(11),
-	ic_debito_transacao BOOL,
 	vl_transacao_carteira DECIMAL (5,2),
 	dt_transacao_carteira DATE,
 
