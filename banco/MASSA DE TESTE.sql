@@ -35,11 +35,11 @@ INSERT INTO servico_trabalhador (cd_cpf_trabalhador, cd_servico) VALUES
 
 -- TABELA: Cliente
 INSERT INTO cliente VALUES
-('50082480818', 'João Sena', '2006-06-02', 'joaosena0206@gmail.com', md5('1234'), true, "", 100.00),
-('12345218909', 'Roberto', '2003-05-08', 'roberto@gmail.com', md5('Roberto1234!'), true, "", 200.00),
-('12345674322', 'Julio', '2000-01-08', 'julio@gmail.com', md5('JulioSenha!'), true, "", 150.00),
-('12345678909', 'Alberto', '1998-09-08', 'alberto@gmail.com', md5('Alberto5678!'), true, "", 50.00),
-('12345672469', 'Fabio', '1995-04-08', 'fabio@gmail.com', md5('Fabio2022!'), true, "", 75.00);
+('50082480818', 'João Sena', '2006-06-02', 'joaosena0206@gmail.com', md5('1234'), true, ""),
+('12345218909', 'Roberto', '2003-05-08', 'roberto@gmail.com', md5('Roberto1234!'), true, ""),
+('12345674322', 'Julio', '2000-01-08', 'julio@gmail.com', md5('JulioSenha!'), true, ""),
+('12345678909', 'Alberto', '1998-09-08', 'alberto@gmail.com', md5('Alberto5678!'), true, ""),
+('12345672469', 'Fabio', '1995-04-08', 'fabio@gmail.com', md5('Fabio2022!'), true, "");
 
 
 -- TABELA: Transações da Carteira
@@ -47,35 +47,36 @@ INSERT INTO transacao_carteira (cd_transacao_carteira, cd_cpf_cliente, cd_cpf_tr
 VALUES
 (11, '50082480818', NULL, 50.00, '2024-01-03'),
 (12, '50082480818', NULL, -20.00, '2024-01-04'),
-(13, '50082480818', NULL, 70.00, '2024-01-05');
+(13, '50082480818', NULL, 70.00, '2024-01-05'),
+(14, '50082480818', NULL, 60.00, '2024-01-05');
 
 INSERT INTO transacao_carteira (cd_transacao_carteira, cd_cpf_cliente, cd_cpf_trabalhador, vl_transacao_carteira, dt_transacao_carteira)
 VALUES
-(14, '12345218909', NULL, 200.00, '2024-01-06'),
-(15, '12345218909', NULL, -50.00, '2024-01-07'),
-(16, '12345218909', NULL, -25.00, '2024-01-08'),
-(17, '12345218909', NULL, 100.00, '2024-01-09');
+(15, '12345218909', NULL, 200.00, '2024-01-06'),
+(16, '12345218909', NULL, -50.00, '2024-01-07'),
+(17, '12345218909', NULL, -25.00, '2024-01-08'),
+(18, '12345218909', NULL, 100.00, '2024-01-09');
 
 INSERT INTO transacao_carteira (cd_transacao_carteira, cd_cpf_cliente, cd_cpf_trabalhador, vl_transacao_carteira, dt_transacao_carteira)
 VALUES
-(18, '12345674322', NULL, 300.00, '2024-01-10'),
-(19, '12345674322', NULL, -150.00, '2024-01-11'),
-(20, '12345674322', NULL, -50.00, '2024-01-12');
+(19, '12345674322', NULL, 300.00, '2024-01-10'),
+(20, '12345674322', NULL, -150.00, '2024-01-11'),
+(21, '12345674322', NULL, -50.00, '2024-01-12');
 
 INSERT INTO transacao_carteira (cd_transacao_carteira, cd_cpf_cliente, cd_cpf_trabalhador, vl_transacao_carteira, dt_transacao_carteira)
 VALUES
-(21, '12345678909', NULL, 80.00, '2024-01-13'),
-(22, '12345678909', NULL, -30.00, '2024-01-14'),
-(23, '12345678909', NULL, 70.00, '2024-01-15'),
-(24, '12345678909', NULL, -20.00, '2024-01-16');
+(22, '12345678909', NULL, 80.00, '2024-01-13'),
+(23, '12345678909', NULL, -30.00, '2024-01-14'),
+(24, '12345678909', NULL, 70.00, '2024-01-15'),
+(25, '12345678909', NULL, -20.00, '2024-01-16');
 
 INSERT INTO transacao_carteira (cd_transacao_carteira, cd_cpf_cliente, cd_cpf_trabalhador, vl_transacao_carteira, dt_transacao_carteira)
 VALUES
-(25, '12345672469', NULL, 60.00, '2024-01-17'),
-(26, '12345672469', NULL, -25.00, '2024-01-18'),
-(27, '12345672469', NULL, 40.00, '2024-01-19'),
-(28, '12345672469', NULL, -15.00, '2024-01-20'),
-(29, '12345672469', NULL, 50.00, '2024-01-21');
+(26, '12345672469', NULL, 60.00, '2024-01-17'),
+(27, '12345672469', NULL, -25.00, '2024-01-18'),
+(28, '12345672469', NULL, 40.00, '2024-01-19'),
+(29, '12345672469', NULL, -15.00, '2024-01-20'),
+(30, '12345672469', NULL, 50.00, '2024-01-21');
 
 
 -- TABELA: Endereco
