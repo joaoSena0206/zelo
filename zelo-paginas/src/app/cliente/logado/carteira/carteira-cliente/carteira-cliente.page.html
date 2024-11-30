@@ -23,7 +23,7 @@
                   <h2 class="data">22/11/2024</h2>
                   
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                   <div class="transacao">
@@ -31,7 +31,7 @@
                     <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$200,00</p>
                   </div>
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
                   <h2 class="data">17/11/2024</h2>
                 
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                   <div class="transacao">
@@ -48,11 +48,11 @@
                     <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
                   </div>
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                   <div class="transacao">
@@ -65,7 +65,7 @@
                   <h2 class="data">15/11/2024</h2>
                   
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                   <div class="transacao">
@@ -73,11 +73,11 @@
                     <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$300,00</p>
                   </div>
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                   <div class="transacao">
-                    <p>Depositado</p>
+                    <p>Creditado</p>
                     <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
                   </div>
                 </div>
@@ -95,7 +95,7 @@
 
             <ion-icon (click)="modal.dismiss();" class="iconeFechar" name="close-circle-outline"></ion-icon>
 
-            <h1 class="h1Poupop">Escolha o valor a ser depositado:</h1>
+            <h1 class="h1Poupop">Escolha o valor a ser Creditado:</h1>
             <ion-list class="listaPoupop">
 
                 <ion-radio-group #radio value="custom-checked">
@@ -116,7 +116,7 @@
                 </ion-radio-group>
             </ion-list>
 
-            <ion-button (click)="salvarValor(radio.value)" class="form__btn">Confirmar</ion-button>
+            <ion-button (click)="salvarValor(radio.value); modal.dismiss()" class="form__btn">Confirmar</ion-button>
 
         </ion-card>
     </ng-template>
