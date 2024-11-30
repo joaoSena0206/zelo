@@ -61,6 +61,24 @@ export class PrivacidadePage implements OnInit {
         email: new FormControl({ value: this.cliente.Email, disabled: true }, [Validators.required, Validators.email])
     });
 
+    endereco = new FormGroup({
+        identificacao: new FormControl({ value: this.listaEndereco[0].Identificacao, disabled: true }, Validators.required),
+        cep: new FormControl({ value: this.listaEndereco[0].Cep, disabled: true }, [Validators.required, validadorTamanhoMinimo()]),
+        estado: new FormControl(""),
+        cidade: new FormControl(""),
+        bairro: new FormControl(""),
+        rua: new FormControl({ value: this.rua, disabled: true }),
+        numero: new FormControl({ value: this.listaEndereco[0].Numero, disabled: true }, Validators.required),
+        complemento: new FormControl({ value: this.listaEndereco[0].Complemento, disabled: true }),
+        pontoReferencia: new FormControl({ value: this.listaEndereco[0].Referencia, disabled: true })
+    });
+
+    readonly cepMask: MaskitoOptions = {
+        mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]
+    };
+
+    readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+
     erro: any = {
         form: "",
         formDados: "",
@@ -72,6 +90,7 @@ export class PrivacidadePage implements OnInit {
         cep: "Cep obrigatório",
         numero: "Numero obrigatório"
     };
+
     situacao4: any;
 
     constructor(private fb: FormBuilder, private navCl: NavController, private http: HttpClient, private eRef: ElementRef, private toastController: ToastController, private sanitizer: DomSanitizer) {
@@ -248,6 +267,8 @@ export class PrivacidadePage implements OnInit {
     ngAfterViewInit() {
         this.FormatarData();
 
+        console.log(this.listaEndereco)
+
         const inputs = document.querySelectorAll("ion-input");
 
         inputs.forEach((input: HTMLIonInputElement) => {
@@ -272,17 +293,17 @@ export class PrivacidadePage implements OnInit {
 
 
         this.formatCPF(this.cpf);
+        this.buscarCep2(this.listaEndereco[0].Cep)
     }
 
     formatCPF(cpf: string): string {
-        cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
-        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        cpf = cpf.replace(/\D/g, '');
+        cpf = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '***.$2.$3.**');
 
         this.cpfFormatado = cpf;
         return cpf;
     }
+
 
     FormatarData() {
         const dateString: string = this.cliente.DataNascimento;
@@ -309,6 +330,11 @@ export class PrivacidadePage implements OnInit {
 
     abilitarInput(inputElement: any) {
         let input = inputElement.parentElement.children[0] as HTMLIonInputElement;
+
+        if(input.id == "inputNome" || input.id == "inputEmail")
+        {
+            input.disabled = false;
+        }
 
         if (input.classList.contains("txt")) {
             input = inputElement.parentElement.children[1] as HTMLIonInputElement;
@@ -557,24 +583,6 @@ export class PrivacidadePage implements OnInit {
         await toast.present();
     }
 
-    endereco = new FormGroup({
-        identificacao: new FormControl("", Validators.required),
-        cep: new FormControl("", [Validators.required, validadorTamanhoMinimo()]),
-        estado: new FormControl(""),
-        cidade: new FormControl(""),
-        bairro: new FormControl(""),
-        rua: new FormControl(""),
-        numero: new FormControl("", Validators.required),
-        complemento: new FormControl(""),
-        pontoReferencia: new FormControl("")
-    });
-
-    readonly cepMask: MaskitoOptions = {
-        mask: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]
-    };
-
-    readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
-
     validarControl(control: FormControl) {
         let nome = this.acharNomeControl(control);
 
@@ -594,6 +602,11 @@ export class PrivacidadePage implements OnInit {
             }
         }
     }
+
+    estado: any;
+    cidade: any;
+    bairro: any;
+    rua: any;
 
     buscarCep(cepControl: FormControl) {
         let cep = cepControl.value;
@@ -615,6 +628,38 @@ export class PrivacidadePage implements OnInit {
                     this.endereco.controls['cidade'].setValue(dados.localidade);
                     this.endereco.controls['bairro'].setValue(dados.bairro);
                     this.endereco.controls['rua'].setValue(dados.logradouro);
+
+                    
+                });
+            }
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao puxar os dados do CEP";
+                alert.present();
+            }
+        }
+    }
+
+    buscarCep2(ceep: any) {
+        let cep = ceep;
+
+        if (cep.length == 9) {
+            const link = `https://viacep.com.br/ws/${cep.replace("-", "")}/json/`;
+
+            try {
+                this.http.get(link).subscribe(res => {
+                    let dados: any = res;
+
+                    if (dados.erro == "true") {
+                        this.endereco.controls['cep'].setErrors({ invalido: { msg: "Cep inválido" } });
+
+                        this.validarControl(this.endereco.controls['cep']);
+                    }
+
+                    this.estado = dados.uf;
+                    this.cidade = dados.localidade;
+                    this.bairro = dados.bairro;
+                    this.rua = dados.logradouro;
                 });
             }
             catch {
@@ -626,8 +671,6 @@ export class PrivacidadePage implements OnInit {
     }
 
 }
-
-
 
 export function validadorSenha(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
