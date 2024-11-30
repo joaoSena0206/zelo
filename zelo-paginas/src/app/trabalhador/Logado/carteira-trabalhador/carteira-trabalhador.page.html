@@ -1,91 +1,43 @@
 <ion-content [fullscreen]="true">
-  <div class="wrapper">
-    <div class="contener">
-
-      <div class="areaVermelha"></div>
-
-      <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
-
-      <ion-text>
-        <h1 class="content__h1">Carteira</h1>
-      </ion-text>
-    
-      <ion-card class="card_anuncio">
-        <h6>Saldo:</h6>
-        <h1>R$ {{ trabalhador.SaldoCarteira.toFixed(2).replace(".", ",") }}</h1>
-        <h6 class="txtSacar">Sacar</h6>
-      </ion-card>
-
-      <div class="divHistorico">
-        <h1>Histórico de transações</h1>
-
-        <div class="divValores">
-          <h2 class="data">22/11/2024</h2>
-          
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-          <div class="transacao">
-            <p>Sacado</p>
-            <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$200,00</p>
-          </div>
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-        </div>
-        
-        <div class="divValores">
-          <h2 class="data">17/11/2024</h2>
-        
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-          <div class="transacao">
-            <p>Sacado</p>
-            <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
-          </div>
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-          <div class="transacao">
-            <p>Sacado</p>
-            <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
-          </div>
-        </div>
-        
-        <div class="divValores">
-          <h2 class="data">15/11/2024</h2>
-          
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-          <div class="transacao">
-            <p>Sacado</p>
-            <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$300,00</p>
-          </div>
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-          <div class="transacao">
-            <p>Ganho</p>
-            <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-          </div>
-        </div>
-        
-        
-      </div>
-
+    <ion-alert header="Erro" [buttons]="['Ok']"></ion-alert>
+    <div *ngIf="carregar" class="divCarregamento">
+        <div class="carregamento"></div>
     </div>
-  </div>
+
+    <div class="wrapper">
+        <div class="contener">
+
+            <div class="areaVermelha"></div>
+
+            <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
+
+            <ion-text>
+                <h1 class="content__h1">Carteira</h1>
+            </ion-text>
+
+            <ion-card class="card_anuncio">
+                <h6>Saldo:</h6>
+                <h1>R$ {{ saldo.toFixed(2).replace(".", ",") }}</h1>
+                <h6 class="txtSacar">Sacar</h6>
+            </ion-card>
+
+            <div class="divHistorico" *ngIf="transacoes ? transacoes.length > 0 : false">
+                <h1>Histórico de transações</h1>
+
+                <div class="divValores" *ngFor="let transacao of transacoes">
+                    <h2 class="data">{{ transacao.data }}</h2>
+
+                    <div class="transacao" *ngFor="let valor of transacao.transacao.split(',')">
+                        <p>{{ valor > 0 ? 'Creditado' : 'Debitado' }}</p>
+                        <p [class]="valor > 0 ? 'ganho' : 'saque'"
+                            style="display: flex; gap: 5px; align-items: center;"><ion-icon
+                                [class]="valor > 0 ? 'ganho' : 'saque'"
+                                [name]="valor > 0 ? 'add-outline' : 'remove-outline'"></ion-icon> R$ {{
+                            valor.replace(".", ",").replace("-", "") }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </ion-content>
