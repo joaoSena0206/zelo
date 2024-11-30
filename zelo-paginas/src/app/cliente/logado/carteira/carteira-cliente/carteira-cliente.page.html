@@ -29,55 +29,13 @@
 
                     <div class="transacao" *ngFor="let valor of transacao.transacao.split(',')">
                         <p>{{ valor > 0 ? 'Creditado' : 'Debitado' }}</p>
-                        <p [class]="valor > 0 ? 'ganho' : 'saque'" style="display: flex; gap: 5px; align-items: center;"><ion-icon [class]="valor > 0 ? 'ganho' : 'saque'" [name]="valor > 0 ? 'add-outline' : 'remove-outline'"></ion-icon> R$ {{ valor.replace(".", ",").replace("-", "") }}</p>
+                        <p [class]="valor > 0 ? 'ganho' : 'saque'"
+                            style="display: flex; gap: 5px; align-items: center;"><ion-icon
+                                [class]="valor > 0 ? 'ganho' : 'saque'"
+                                [name]="valor > 0 ? 'add-outline' : 'remove-outline'"></ion-icon> R$ {{
+                            valor.replace(".", ",").replace("-", "") }}</p>
                     </div>
                 </div>
-
-                <!-- <div class="divValores">
-                    <h2 class="data">17/11/2024</h2>
-
-                    <div class="transacao">
-                        <p>Creditado</p>
-                        <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Debitado</p>
-                        <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Creditado</p>
-                        <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Creditado</p>
-                        <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Debitado</p>
-                        <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$400,00</p>
-                    </div>
-                </div>
-
-                <div class="divValores">
-                    <h2 class="data">15/11/2024</h2>
-
-                    <div class="transacao">
-                        <p>Creditado</p>
-                        <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Debitado</p>
-                        <p class="saque"><ion-icon class="saque" name="remove-outline"></ion-icon> R$300,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Creditado</p>
-                        <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-                    </div>
-                    <div class="transacao">
-                        <p>Creditado</p>
-                        <p class="ganho"><ion-icon class="ganho" name="add-outline"></ion-icon> R$100,00</p>
-                    </div>
-                </div> -->
             </div>
         </div>
 
