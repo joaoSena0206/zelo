@@ -220,7 +220,6 @@ public class ClienteController : ControllerBase
                 cliente.DataNascimento = dados.GetDateTime(2);
                 cliente.Email = email;
                 cliente.Confirmado = dados.GetBoolean(3);
-                cliente.SaldoCarteira = dados.GetDecimal(4);
             }
 
             if (String.IsNullOrEmpty(cliente.Cpf))
