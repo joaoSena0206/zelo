@@ -237,7 +237,7 @@ public class TrabalhadorController : ControllerBase
         {
             #region Pega os dados do trabalhador no banco, caso existam
 
-            string comando = $@"SELECT cd_cpf_trabalhador, nm_trabalhador, dt_nascimento_trabalhador, ic_email_confirmado_trabalhador, nm_pix_trabalhador, vl_visita_trabalhador, vl_saldo_carteira FROM trabalhador
+            string comando = $@"SELECT cd_cpf_trabalhador, nm_trabalhador, dt_nascimento_trabalhador, ic_email_confirmado_trabalhador, nm_pix_trabalhador, vl_visita_trabalhador FROM trabalhador
             WHERE nm_email_trabalhador = '{email}' AND nm_senha_trabalhador = md5('{senha}');";
             MySqlDataReader dados = banco.Consultar(comando);
 
