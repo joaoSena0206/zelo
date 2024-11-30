@@ -19,10 +19,8 @@ export class CarteiraClientePage implements OnInit {
     }
 
     salvarValor(valor: any) {
-        let modal = document.querySelector("#example-modal") as HTMLIonModalElement;
         if (valor != "custom-checked") {
             localStorage.setItem("ValorDepositarCarteira", valor);
-            modal.dismiss();
 
             this.navCl.navigateRoot("/pagamento-carteira");
         }
