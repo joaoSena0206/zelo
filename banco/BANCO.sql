@@ -50,7 +50,6 @@ Create Table trabalhador
 	cd_latitude_atual_trabalhador DECIMAL(10, 8),
 	cd_longitude_atual_trabalhador DECIMAL(11, 8),
 	nm_token_fcm VARCHAR(255),
-	vl_saldo_carteira DECIMAL(5, 2),
 
 	CONSTRAINT pk_trabalhador PRIMARY KEY (cd_cpf_trabalhador)
 );
