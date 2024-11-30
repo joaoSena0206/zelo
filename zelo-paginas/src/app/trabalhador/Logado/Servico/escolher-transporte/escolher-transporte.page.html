@@ -1,13 +1,135 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>escolher-transporte</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">escolher-transporte</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="wrapper">
+    <div class="content">
+
+      <ion-text>
+        <h1 class="content__h1">Escolhe o meio de locomoção:</h1>
+      </ion-text>
+
+      <ion-button id="abrir_modal_remover_certificado" (click)="PegarTransporte('A pé')">
+        <div>
+          <ion-icon src="../../../../../assets/icon/Trabalhador/Transporte/andar.svg"></ion-icon>
+          <p>A pé</p>
+        </div>
+      </ion-button>
+
+      <ion-button id="abrir_modal_remover_certificado2" (click)="PegarTransporte('Bicicleta')">
+        <div>
+          <ion-icon name="bicycle-outline"></ion-icon>
+          <p>Bicicleta</p>
+        </div>
+      </ion-button>
+
+      <ion-button id="abrir_modal_remover_certificado3" (click)="PegarTransporte('Moto')">
+        <div>
+          <ion-icon src="../../../../../assets/icon/Trabalhador/Transporte/moto.svg"></ion-icon>
+          <p>Moto</p>
+        </div>
+      </ion-button>
+      
+      <ion-button id="abrir_modal_remover_certificado4" (click)="PegarTransporte('Carro')">
+        <div>
+          <ion-icon name="car-outline"></ion-icon>
+          <p>Carro</p>
+        </div>
+      </ion-button>
+    </div>
+  </div>
+
 </ion-content>
+
+<ion-modal id="modal_certificado" #modal_certificado trigger="abrir_modal_remover_certificado">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_certificado.dismiss();" class="iconeFechar2"
+                  name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Transporte escolhido: A pé</h1>
+              <ion-button (click)="ProximaPagina();" class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>
+
+<ion-modal id="modal_certificado" #modal_certificado2 trigger="abrir_modal_remover_certificado2">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_certificado2.dismiss();" class="iconeFechar2"
+                  name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Transporte escolhido: Bicicleta</h1>
+              <ion-button (click)="ProximaPagina();" class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>
+
+<ion-modal id="modal_certificado" #modal_certificado3 trigger="abrir_modal_remover_certificado3">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_certificado3.dismiss();" class="iconeFechar2"
+                  name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Transporte escolhido: Moto</h1>
+              <ion-button (click)="ProximaPagina();" class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>
+
+<ion-modal id="modal_certificado" #modal_certificado4 trigger="abrir_modal_remover_certificado4">
+  <ng-template>
+
+      <ion-card class="poupop">
+
+          <div class="area_vermelha">
+              <ion-icon (click)="modal_certificado4.dismiss();" class="iconeFechar2"
+                  name="close-circle-outline"></ion-icon>
+              <div class="circulo_branca">
+                  <ion-icon class="iconeInterrogacao"
+                      src="../../../../../assets/icon/Trabalhador/Icone Serviço/interrogação.svg"></ion-icon>
+              </div>
+          </div>
+
+          <div class="area_branca">
+              <h1 class="h1_denuncia">Transporte escolhido: Carro</h1>
+              <ion-button (click)="ProximaPagina();" class="form__btn">Confirmar</ion-button>
+          </div>
+
+      </ion-card>
+
+  </ng-template>
+</ion-modal>

@@ -1,0 +1,142 @@
+*
+{
+    font-family: "Arimo", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+    color: black;
+    font-size: 15px;
+}
+
+.content{
+    padding: 30px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #D9D9D9;
+    height: 100vh;
+}
+
+.content__h1
+{
+    font-weight: 700;
+    font-size: 32px;
+    margin: 50px 0 20px 0;
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.content ion-button{
+    height: 130px;
+    width: 80%;
+    margin: 20px;
+    --background: #CB2316;
+    --border-radius: 20px;
+    position: relative;
+}
+
+ion-icon{
+    height: 50px;
+    width: 50px;
+    color: white;
+    stroke: white;
+
+}
+
+p{
+   color: white;
+}
+
+ion-button div{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.poupop {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin: auto;
+}
+
+.poupop h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+
+#modal_dados, #modal_certificado{
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+#modal_dados, #modal_certificado{
+    padding: 0 10px;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 22px;
+    text-transform: none;
+}
+
+.area_vermelha {
+    width: 100%;
+    background-color: #CB2316;
+    height: 110px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    position: relative;
+}
+
+.area_branca{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.iconeFechar2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+.iconeInterrogacao {
+    height: 67px;
+    width: 65px;
+}
+
+.circulo_branca {
+    height: 102px;
+    width: 102px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -20px;
+}
