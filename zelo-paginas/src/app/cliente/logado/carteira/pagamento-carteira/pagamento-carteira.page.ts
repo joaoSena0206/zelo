@@ -193,7 +193,7 @@ export class PagamentoCarteiraPage implements OnInit {
             let res: any = await firstValueFrom(this.http.get(link));
 
             if (res.status == "approved") {
-                link = dominio + "/Cliente/AtualizarSaldo";
+                link = dominio + "/TransacaoCarteira/AdicionarTransacao";
                 clearInterval(this.id);
 
                 let valor = localStorage.getItem("ValorDepositarCarteira");
@@ -201,7 +201,8 @@ export class PagamentoCarteiraPage implements OnInit {
 
                 let dadosForm = new FormData();
                 dadosForm.append("cpf", this.cliente.Cpf);
-                dadosForm.append("valor", Number(valor) + saldoAtual);
+                dadosForm.append("valor", valor!);
+                dadosForm.append("cliente", "true");
 
                 await firstValueFrom(this.http.post(link, dadosForm));
 
