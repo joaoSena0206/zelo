@@ -21,7 +21,7 @@
                 <h6 id="open-custom-dialog" class="txtSacar">Depositar</h6>
             </ion-card>
 
-            <div class="divHistorico" *ngIf="transacoes">
+            <div class="divHistorico" *ngIf="transacoes ? transacoes.length > 0 : false">
                 <h1>Histórico de transações</h1>
 
                 <div class="divValores" *ngFor="let transacao of transacoes">
