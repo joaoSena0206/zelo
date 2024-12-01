@@ -99,8 +99,7 @@
                                                 <div class="divBtns">
                                                     <ion-button
                                                         (click)="dismissModal(trabalhador.Trabalhador.Cpf)">Cancelar</ion-button>
-                                                    <ion-button
-                                                        (click)="contratarTrabalhador(trabalhador.Trabalhador)">Confirmar</ion-button>
+                                                    <ion-button (click)="abrirModalpagamento(trabalhador.Trabalhador.Cpf)" >Confirmar</ion-button>
                                                 </div>
                                             </div>
 
@@ -118,3 +117,33 @@
         </div>
     </div>
 </ion-content>
+
+<ion-modal id="modal_certificado" #modal_certificado trigger="abrir_modal_pagamento">
+    <ng-template>
+  
+        <ion-card class="poupop">
+            <div class="divOpcoesdePagamento">
+                <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <h1>Opções de pagamento</h1>
+            </div>
+            <div class="divCarteira">
+                <h1>Carteira</h1>
+                <div class="divCarteiraValor">
+                    <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
+                    <div>
+                        <p>R$ 0,00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="divPix">
+                <h1>Forma de pagamento</h1>
+                <div style="display: flex; align-items: center; margin-top: 10px;">
+                    <img style="height: 25px; width: 25px; margin-right: 10px;" src="../../../../../assets/icon/cliente/pix.png" alt="">
+                    <p>Pix</p>
+                </div>
+            </div>
+
+        </ion-card>
+  
+    </ng-template>
+</ion-modal>
