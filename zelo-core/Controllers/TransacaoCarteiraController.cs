@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 public class TransacaoCarteiraController : ControllerBase
 {
     [HttpPost("AdicionarTransacao")]
-    public IActionResult AdicionarTransacao([FromForm] decimal valor, [FromForm] string cpf, [FromForm] bool cliente)
+    public IActionResult AdicionarTransacao([FromForm] string valor, [FromForm] string cpf, [FromForm] bool cliente)
     {
         Banco banco = new Banco();
         banco.Conectar();
@@ -35,12 +35,12 @@ public class TransacaoCarteiraController : ControllerBase
 	                '{cpf}',
 	                {valor},
 	                '{data.ToString("yyyy-MM-dd")}'
-                )'";
+                )";
             }
 
             banco.Executar(comando);
 
-            return Ok();
+            return Ok("sucesso");
         }
         catch (Exception erro)
         {
