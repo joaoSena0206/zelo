@@ -21,10 +21,13 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhadorEscolhido")!);
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
     solicitacao: any = JSON.parse(localStorage.getItem("solicitacao")!);
+    tipoPagamento: any = localStorage.getItem("tipoPagamento");
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
     ngOnInit() {
+        PushNotifications.removeAllListeners();
+
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let cpf = this.trabalhador.Cpf;
             let solicitacao = JSON.parse(localStorage.getItem("solicitacao")!);
@@ -134,7 +137,28 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
             localStorage.setItem("solicitacao", JSON.stringify(solicitacao));
             localStorage.removeItem("confirmacao");
 
-            this.navCl.navigateRoot("/pagamento");
+            if (this.tipoPagamento == "pix") {
+                this.navCl.navigateRoot("/pagamento");
+            }
+            else if (this.tipoPagamento == "carteira") {
+                link = dominio + "/TransacaoCarteira/AdicionarTransacao";
+                dadosForm = new FormData();
+                dadosForm.append("cpf", this.cliente.Cpf);
+                dadosForm.append("cliente", "true");
+                dadosForm.append("valor", "-" + this.trabalhador.ValorVisita);
+
+                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+                if (res == "sucesso") {
+                    dadosForm.set("cpf", this.trabalhador.Cpf);
+                    dadosForm.set("cliente", "false");
+                    dadosForm.set("valor", (Number(this.trabalhador.ValorVisita) - Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+                    await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+                    this.navCl.navigateRoot("/trabalhador-caminho");
+                }
+            }
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
