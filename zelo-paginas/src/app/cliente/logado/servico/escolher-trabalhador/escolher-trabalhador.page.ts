@@ -23,6 +23,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     tokenCliente: any;
     dominio = dominio;
     saldo: any = Number(localStorage.getItem("saldoCarteira"));
+    trabalhadorEscolhido: any;
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -34,12 +35,15 @@ export class EscolherTrabalhadorPage implements OnInit {
     ngAfterViewInit() {
     }
 
-    async pegarSolicitacao() {
-
+    pagamento(tipo: any) {
+        localStorage.setItem("tipoPagamento", tipo);
+        
+        this.contratarTrabalhador();
     }
 
-    async contratarTrabalhador(trabalhador: any) {
+    async contratarTrabalhador() {
         let dadosForm = new FormData();
+        let trabalhador = this.trabalhadorEscolhido;
 
         dadosForm.append("token", trabalhador.TokenFCM);
         dadosForm.append("cliente", localStorage.getItem("cliente")!);
@@ -51,15 +55,9 @@ export class EscolherTrabalhadorPage implements OnInit {
         try {
             let resposta = await firstValueFrom(this.http.post(link, dadosForm, { headers: headerNgrok, responseType: "text" }));
 
-            const modal = document.querySelector("#modal_" + trabalhador.Cpf) as HTMLIonModalElement;
-            modal.dismiss();
-            const data = await modal.onDidDismiss();
+            localStorage.setItem("trabalhadorEscolhido", JSON.stringify(trabalhador));
 
-            if (data) {
-                localStorage.setItem("trabalhadorEscolhido", JSON.stringify(trabalhador));
-
-                this.navCl.navigateRoot("/confirmacao-trabalhador");
-            }
+            this.navCl.navigateRoot("/confirmacao-trabalhador");
         }
         catch {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
@@ -226,8 +224,10 @@ export class EscolherTrabalhadorPage implements OnInit {
         this.navCl.navigateBack("perfil-trabalhador")
     }
 
-    abrirModalpagamento(Cpf: any) {
-        this.dismissModal(Cpf);
+    abrirModalpagamento(trabalhador: any) {
+        this.dismissModal(trabalhador.Cpf);
+        this.trabalhadorEscolhido = trabalhador;
+
         let modalPagamento = document.querySelector("#modal_certificado") as HTMLIonModalElement;
         modalPagamento.present();
     }
