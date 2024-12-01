@@ -286,3 +286,77 @@ h3.titulo:nth-child(2) {
 .divWrapper {
     width: 100%;
 }
+
+//--------------------------------------------------------------------------------------//
+
+.poupop {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 25px;
+    margin: auto;
+    padding: 20px 20px 40px 20px;
+    width: 400px;
+}
+
+#modal_certificado{
+    --width: fit-content;
+    --height: fit-content;
+    --border-radius: 25px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+#modal_certificado{
+    padding: 0 20px;
+}
+
+.form__btn {
+    --padding-top: 18px;
+    --padding-bottom: 18px;
+    --padding-left: 66px;
+    --padding-right: 66px;
+    --border-radius: 20px;
+    color: white;
+    --background: #CB2316;
+    font-size: 22px;
+    text-transform: none;
+}
+
+.iconeFechar2 {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    height: 30px;
+    width: 30px;
+    color: black;
+}
+
+.divOpcoesdePagamento h1{
+    font-size: 25px;
+    color: black;
+    margin: 0;
+}
+
+.divOpcoesdePagamento{
+    margin-bottom: 40px;
+}
+
+.divCarteira h1, .divPix h1{
+    text-align: start;
+    color: black;
+    font-size: 22px;
+    margin: 0;
+}
+
+.divCarteiraValor{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.divCarteiraValor ion-icon{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
