@@ -362,7 +362,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("GerarPagamento")]
-    public async Task<IActionResult> GerarPagamento([FromForm] decimal valorVisita, [FromForm] string email, [FromForm] string cpf, [FromForm] string expiracao)
+    public async Task<IActionResult> GerarPagamento([FromForm] string valorVisita, [FromForm] string email, [FromForm] string cpf, [FromForm] string expiracao)
     {
         try
         {
