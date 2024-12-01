@@ -224,4 +224,10 @@ export class EscolherTrabalhadorPage implements OnInit {
         this.dismissModal(Cpf);
         this.navCl.navigateBack("perfil-trabalhador")
       }
+
+      abrirModalpagamento(Cpf: any){
+        this.dismissModal(Cpf);
+        let modalPagamento = document.querySelector("#modal_certificado") as HTMLIonModalElement;
+        modalPagamento.present();
+      }
 }
