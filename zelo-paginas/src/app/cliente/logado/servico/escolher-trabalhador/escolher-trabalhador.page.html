@@ -101,9 +101,9 @@
 
                                                 <div class="divBtns">
                                                     <ion-button
-                                                        (click)="dismissModal(trabalhador.Trabalhador.Cpf)">Cancelar</ion-button>
+                                                        (click)="dismissModal(trabalhador.Trabalhador)">Cancelar</ion-button>
                                                     <ion-button
-                                                        (click)="abrirModalpagamento(trabalhador.Trabalhador.Cpf)">Confirmar</ion-button>
+                                                        (click)="abrirModalpagamento(trabalhador.Trabalhador)">Confirmar</ion-button>
                                                 </div>
                                             </div>
 
@@ -134,9 +134,9 @@
                     name="close-circle-outline"></ion-icon>
                 <h1>Opções de pagamento</h1>
             </div>
-            <div class="divCarteira">
+            <div class="divCarteira" *ngIf="saldo >= trabalhadorEscolhido.ValorVisita">
                 <h1>Carteira</h1>
-                <div class="divCarteiraValor ion-activatable ripple-parent">
+                <div class="divCarteiraValor ion-activatable ripple-parent" (click)="pagamento('carteira'); modal_certificado.dismiss()">
                     <ion-ripple-effect></ion-ripple-effect>
                     <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
                     <div>
@@ -146,7 +146,7 @@
             </div>
             <div class="divPix">
                 <h1>Forma de pagamento</h1>
-                <div class="ion-activatable ripple-parent"
+                <div class="ion-activatable ripple-parent" (click)="pagamento('pix'); modal_certificado.dismiss()"
                     style="display: flex; align-items: center; padding-top: 10px; position: relative; padding-bottom: 10px;">
                     <ion-ripple-effect></ion-ripple-effect>
                     <img style="height: 25px; width: 25px; margin-right: 10px;"
