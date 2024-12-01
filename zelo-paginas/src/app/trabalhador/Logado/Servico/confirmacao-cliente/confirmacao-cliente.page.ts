@@ -20,7 +20,7 @@ export class ConfirmacaoClientePage implements OnInit {
     id: any;
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     clienteServico: any = JSON.parse(localStorage.getItem("cliente")!);
-    idPagamento: any = "123456";
+    idPagamento: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -55,7 +55,7 @@ export class ConfirmacaoClientePage implements OnInit {
             try {
                 let res: any = await firstValueFrom(this.http.get(link));
 
-                if (res.status != "approved") {
+                if (res.status == "approved") {
                     clearInterval(this.id);
 
                     localStorage.removeItem("confirmacao");
