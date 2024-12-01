@@ -30,8 +30,9 @@
 
                             <div>
                                 <div>
-                                    <h3 class="titulo tituloPedido" style="margin-bottom: 5px; color: #F66701;">{{ trabalhador.Servico.Nome
-                                    }}</h3>
+                                    <h3 class="titulo tituloPedido" style="margin-bottom: 5px; color: #F66701;">{{
+                                        trabalhador.Servico.Nome
+                                        }}</h3>
 
                                     <h3 class="titulo tituloPedido">{{ trabalhador.Trabalhador.Nome }}</h3>
 
@@ -68,7 +69,9 @@
 
                                                     <div>
                                                         <div>
-                                                            <h3 class="titulo tituloPedido" style="margin-bottom: 5px; color: #F66701;">{{ trabalhador.Servico.Nome
+                                                            <h3 class="titulo tituloPedido"
+                                                                style="margin-bottom: 5px; color: #F66701;">{{
+                                                                trabalhador.Servico.Nome
                                                                 }}</h3>
 
                                                             <h3 class="titulo tituloPedido">{{
@@ -99,11 +102,14 @@
                                                 <div class="divBtns">
                                                     <ion-button
                                                         (click)="dismissModal(trabalhador.Trabalhador.Cpf)">Cancelar</ion-button>
-                                                    <ion-button (click)="abrirModalpagamento(trabalhador.Trabalhador.Cpf)" >Confirmar</ion-button>
+                                                    <ion-button
+                                                        (click)="abrirModalpagamento(trabalhador.Trabalhador.Cpf)">Confirmar</ion-button>
                                                 </div>
                                             </div>
 
-                                            <p class="verPerfil" (click)="VerPerfil(trabalhador.Trabalhador.Cpf, trabalhador.Trabalhador.Nome);">Ver perfil</p>
+                                            <p class="verPerfil"
+                                                (click)="VerPerfil(trabalhador.Trabalhador.Cpf, trabalhador.Trabalhador.Nome);">
+                                                Ver perfil</p>
                                         </div>
                                     </div>
                                 </ng-template>
@@ -111,7 +117,8 @@
                         </div>
                     </div>
 
-                    <p class="verPerfil" (click)="VerPerfil(trabalhador.Trabalhador.Cpf, trabalhador.Trabalhador.Nome);">Ver perfil</p>
+                    <p class="verPerfil"
+                        (click)="VerPerfil(trabalhador.Trabalhador.Cpf, trabalhador.Trabalhador.Nome);">Ver perfil</p>
                 </div>
             </div>
         </div>
@@ -120,30 +127,35 @@
 
 <ion-modal id="modal_certificado" #modal_certificado trigger="abrir_modal_pagamento">
     <ng-template>
-  
+
         <ion-card class="poupop">
             <div class="divOpcoesdePagamento">
-                <ion-icon class="iconeFechar2" name="close-circle-outline"></ion-icon>
+                <ion-icon (click)="modal_certificado.dismiss()" class="iconeFechar2"
+                    name="close-circle-outline"></ion-icon>
                 <h1>Opções de pagamento</h1>
             </div>
             <div class="divCarteira">
                 <h1>Carteira</h1>
-                <div class="divCarteiraValor">
+                <div class="divCarteiraValor ion-activatable ripple-parent">
+                    <ion-ripple-effect></ion-ripple-effect>
                     <ion-icon class="iconeCarteira" src="../../../../assets/icon/geral/carteira.svg"></ion-icon>
                     <div>
-                        <p>R$ 0,00</p>
+                        <p>R$ {{ saldo.toFixed(2).replace(".", ",") }}</p>
                     </div>
                 </div>
             </div>
             <div class="divPix">
                 <h1>Forma de pagamento</h1>
-                <div style="display: flex; align-items: center; margin-top: 10px;">
-                    <img style="height: 25px; width: 25px; margin-right: 10px;" src="../../../../../assets/icon/cliente/pix.png" alt="">
+                <div class="ion-activatable ripple-parent"
+                    style="display: flex; align-items: center; padding-top: 10px; position: relative; padding-bottom: 10px;">
+                    <ion-ripple-effect></ion-ripple-effect>
+                    <img style="height: 25px; width: 25px; margin-right: 10px;"
+                        src="../../../../../assets/icon/cliente/pix.png" alt="">
                     <p>Pix</p>
                 </div>
             </div>
 
         </ion-card>
-  
+
     </ng-template>
 </ion-modal>
