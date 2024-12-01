@@ -22,6 +22,7 @@ export class EscolherTrabalhadorPage implements OnInit {
     trabalhadores: any;
     tokenCliente: any;
     dominio = dominio;
+    saldo: any = Number(localStorage.getItem("saldoCarteira"));
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
@@ -218,16 +219,16 @@ export class EscolherTrabalhadorPage implements OnInit {
         return;
     }
 
-    VerPerfil(Cpf: any, Nome: any){
-        let clienteVerPerfil = {Cpf: Cpf, Nome: Nome}
+    VerPerfil(Cpf: any, Nome: any) {
+        let clienteVerPerfil = { Cpf: Cpf, Nome: Nome }
         localStorage.setItem('perfil', JSON.stringify(clienteVerPerfil))
         this.dismissModal(Cpf);
         this.navCl.navigateBack("perfil-trabalhador")
-      }
+    }
 
-      abrirModalpagamento(Cpf: any){
+    abrirModalpagamento(Cpf: any) {
         this.dismissModal(Cpf);
         let modalPagamento = document.querySelector("#modal_certificado") as HTMLIonModalElement;
         modalPagamento.present();
-      }
+    }
 }
