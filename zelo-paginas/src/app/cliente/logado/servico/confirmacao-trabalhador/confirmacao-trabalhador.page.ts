@@ -141,23 +141,7 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
                 this.navCl.navigateRoot("/pagamento");
             }
             else if (this.tipoPagamento == "carteira") {
-                link = dominio + "/TransacaoCarteira/AdicionarTransacao";
-                dadosForm = new FormData();
-                dadosForm.append("cpf", this.cliente.Cpf);
-                dadosForm.append("cliente", "true");
-                dadosForm.append("valor", "-" + this.trabalhador.ValorVisita);
-
-                let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-
-                if (res == "sucesso") {
-                    dadosForm.set("cpf", this.trabalhador.Cpf);
-                    dadosForm.set("cliente", "false");
-                    dadosForm.set("valor", (Number(this.trabalhador.ValorVisita) - Number(this.trabalhador.ValorVisita) * 0.1).toString())
-
-                    await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
-
-                    this.navCl.navigateRoot("/trabalhador-caminho");
-                }
+                this.navCl.navigateRoot("/trabalhador-caminho");
             }
         }
         catch {

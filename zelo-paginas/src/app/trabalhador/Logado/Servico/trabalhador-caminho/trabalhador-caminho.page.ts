@@ -51,6 +51,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
     constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController, private firestore: AngularFirestore) { }
 
     ngOnInit() {
+        PushNotifications.removeAllListeners();
+
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let situacao = notification.data.situacaoServico;
 
@@ -58,7 +60,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 localStorage.removeItem("codigo");
                 localStorage.removeItem("endereco");
                 localStorage.removeItem("solicitacao");
-                localStorage.removeItem("trabalhador");
+                localStorage.removeItem("cliente");
 
                 clearInterval(this.watchId);
                 clearInterval(this.id);
@@ -80,6 +82,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
             if (res.codigo) {
                 localStorage.setItem("codigo", res.codigo);
                 esperarCodigo.unsubscribe();
+
+                this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).delete();
             }
         });
 
@@ -447,6 +451,22 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             clearInterval(this.watchId);
             clearInterval(this.id);
+
+            link = dominio + "/TransacaoCarteira/AdicionarTransacao"
+            dadosForm = new FormData();
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+            dadosForm.append("cliente", "false");
+            dadosForm.append("valor", "-" + (Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+            link = dominio + "/TransacaoCarteira/AdicionarTransacao"
+            dadosForm = new FormData();
+            dadosForm.append("cpf", this.cliente.Cpf);
+            dadosForm.append("cliente", "true");
+            dadosForm.append("valor", (Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
             this.navCl.navigateRoot("/trabalhador/inicial");
             this.modalCancelar.dismiss();

@@ -9,6 +9,9 @@ import {
     PushNotifications,
     Token,
 } from '@capacitor/push-notifications';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ActivationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-inicial',
@@ -25,17 +28,23 @@ export class InicialPage implements OnInit {
     dominio: any = dominio;
     listaEndereco: any = [];
     saldo: any;
+    routerSubscription: any;
 
-    constructor(private http: HttpClient, private navCl: NavController) { }
+    constructor(private http: HttpClient, private navCl: NavController, private firestore: AngularFirestore, private router: Router) { }
 
     ngOnInit() {
         localStorage.setItem("saldoCarteira", "0");
 
-        this.pegarSaldo();
         this.carregarCategorias();
         this.carregarPatrocinados();
         this.carregarHistorico();
         this.buscarEndereco();
+
+        this.routerSubscription = this.router.events.subscribe(event => {
+            if (event instanceof ActivationEnd) {
+                this.pegarSaldo();
+            }
+        });
 
         PushNotifications.requestPermissions().then(result => {
             if (result.receive === "granted") {
@@ -64,11 +73,13 @@ export class InicialPage implements OnInit {
     }
 
     async pegarSaldo() {
+        this.carregar = true;
         let link = dominio + "/Cliente/PegarSaldo?cpf=" + this.cliente.Cpf;
         let res: any = await firstValueFrom(this.http.get(link));
+        this.carregar = false;
 
         this.saldo = res;
-        localStorage.setItem("saldoCarteira", res); 
+        localStorage.setItem("saldoCarteira", res);
     }
 
     async buscarEndereco() {
