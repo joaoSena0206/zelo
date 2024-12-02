@@ -7,6 +7,8 @@ import { first, firstValueFrom } from 'rxjs';
 import { Geolocation } from '@capacitor/geolocation';
 import { ActionPerformed, PushNotifications, PushNotificationSchema } from '@capacitor/push-notifications';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 
 @Component({
     selector: 'app-trabalhador-caminho',
@@ -36,7 +38,16 @@ export class TrabalhadorCaminhoPage implements OnInit {
     marcadorA: google.maps.Marker;
     marcadorB: google.maps.Marker;
 
-    constructor(private navCl: NavController, private http: HttpClient, private firestore: AngularFirestore) { }
+    form = new FormGroup({
+        input1: new FormControl("", Validators.required),
+        input2: new FormControl("", Validators.required),
+        input3: new FormControl("", Validators.required),
+        input4: new FormControl("", Validators.required),
+        input5: new FormControl("", Validators.required)
+    });
+    erro: string = "Código obrigatório!";
+
+    constructor(private toastController: ToastController, private navCl: NavController, private http: HttpClient, private firestore: AngularFirestore) { }
 
     ngOnInit() {
         localStorage.removeItem("idPagamento");
@@ -45,12 +56,12 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
 
-        if (!localStorage.getItem("codigo")) {
-            this.gerarCodigo();
-        }
-        else {
-            this.codigo = localStorage.getItem("codigo");
-        }
+        let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
+            if (res.codigo) {
+                localStorage.setItem("codigo", res.codigo);
+                esperarCodigo.unsubscribe();
+            }
+        });
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let situacao = notification.data.situacaoServico;
@@ -89,12 +100,67 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.navCl.navigateRoot("inicial");
             }
         });
+
+        if (localStorage.getItem("codigoConfirmado") == "true") {
+
+            let div1 = document.querySelector('.divFoto') as HTMLDivElement;
+            let div2 = document.querySelector('.divTempo') as HTMLDivElement;
+            let div3 = document.querySelector('.divBotao') as HTMLDivElement;
+            let div4 = document.querySelector('.div_4') as HTMLDivElement;
+            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+
+            div1.style.display = 'flex';
+            div2.style.display = 'flex';
+            divCodigo.style.display = 'none';
+            div3.style.display = "flex";
+            div4.style.display = "flex";
+        }
     }
 
     async ionViewDidEnter() {
         // await this.carregarScriptGoogleMaps();
         // await this.pegarCoords();
         // this.carregarMapa();
+
+        const btns = document.querySelectorAll(".form__btn");
+        const btnReenviar = document.querySelector(".form__btn--reenviar");
+
+        if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+            (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        }
+
+        window.addEventListener("resize", function () {
+            const btns = document.querySelectorAll(".form__btn");
+
+            if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+                (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+            }
+        });
+    }
+
+    ngAfterViewInit() {
+        const inputs = document.querySelectorAll("ion-input");
+
+        for (let i = 0; i < inputs.length; i++) {
+            let todosPreenchidos = false;
+
+            inputs[i].addEventListener("ionInput", function () {
+                let apagado = false;
+
+                if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
+                    apagado = true;
+                }
+
+                inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
+
+                if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
+                    inputs[i + 1].setFocus();
+                }
+                else if (inputs[i].value == "" && i != 0 && apagado == false) {
+                    inputs[i - 1].setFocus();
+                }
+            });
+        }
     }
 
     async carregarScriptGoogleMaps(): Promise<void> {
@@ -372,47 +438,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.navCl.navigateRoot("/cliente/chat");
     }
 
-    async gerarCodigo() {
-        let link = dominio + "/SolicitacaoServico/GerarCodigoAleatorio";
-        let dadosForm = new FormData();
-        dadosForm.append("cdSolicitacao", this.solicitacao.CdSolicitacaoServico);
-
-        try {
-            this.carregar = true;
-            this.codigo = await firstValueFrom(this.http.post(link, dadosForm));
-            localStorage.setItem("codigo", this.codigo);
-        }
-        catch {
-            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-            alert.message = "Erro ao conectar-se ao servidor";
-            alert.present();
-        }
-        finally {
-            this.carregar = false;
-        }
-
-        let obj = {
-            codigo: this.codigo
-        };
-        this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).set(obj);
-    }
-
-    async enviarCodigo(token: any, codigo: any) {
-        let link = dominio + "/SolicitacaoServico/EnviarCodigo";
-        let dadosForm = new FormData();
-        dadosForm.append("token", token);
-        dadosForm.append("codigo", codigo);
-
-        try {
-            await firstValueFrom(this.http.post(link, dadosForm));
-        }
-        catch {
-            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-            alert.message = "Erro ao conectar-se ao servidor";
-            alert.present();
-        }
-    }
-
     mudartxtCancelar() {
         let txtAdvertenciaCancelar = document.querySelector('.txt_cancelar_poupop') as HTMLTextAreaElement;
         let btnProsseguir = document.querySelector(".form__btn") as HTMLIonButtonElement;
@@ -497,5 +522,123 @@ export class TrabalhadorCaminhoPage implements OnInit {
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
         }
+    }
+
+    abrirDivCodigo() {
+        let div1 = document.querySelector('.divFoto') as HTMLDivElement;
+        let div2 = document.querySelector('.divTempo') as HTMLDivElement;
+        let div3 = document.querySelector('.divBotao') as HTMLDivElement;
+        let div4 = document.querySelector('.div_4') as HTMLDivElement;
+        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+
+        divCodigo.style.display = 'flex';
+
+        div1.style.display = "none";
+        div2.style.display = 'none';
+        div3.style.display = 'none';
+        div4.style.display = 'none';
+
+        const inputs = document.querySelectorAll("ion-input");
+
+        for (let i = 0; i < inputs.length; i++) {
+            let todosPreenchidos = false;
+
+            inputs[i].addEventListener("ionInput", function () {
+                let apagado = false;
+
+                if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
+                    apagado = true;
+                }
+
+                inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
+
+                if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
+                    inputs[i + 1].setFocus();
+                }
+                else if (inputs[i].value == "" && i != 0 && apagado == false) {
+                    inputs[i - 1].setFocus();
+                }
+            });
+        }
+    }
+
+    fecharDivCodigo() {
+
+        let div1 = document.querySelector('.divFoto') as HTMLDivElement;
+        let div2 = document.querySelector('.divTempo') as HTMLDivElement;
+        let div3 = document.querySelector('.divBotao') as HTMLDivElement;
+        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+        let div4 = document.querySelector('.div_4') as HTMLDivElement;
+
+        divCodigo.style.display = 'none';
+
+        div1.style.display = "flex";
+        div2.style.display = 'flex';
+        div3.style.display = 'flex';
+        div4.style.display = "flex";
+    }
+
+    async verificarCodigo() {
+
+        let codigoAleatorio = localStorage.getItem('codigo');
+
+        let codigo = "";
+        codigo += this.form.controls["input1"].value;
+        codigo += this.form.controls["input2"].value;
+        codigo += this.form.controls["input3"].value;
+        codigo += this.form.controls["input4"].value;
+        codigo += this.form.controls["input5"].value;
+
+        if (codigo == codigoAleatorio) {
+            let div1 = document.querySelector('.divFoto') as HTMLDivElement;
+            let div2 = document.querySelector('.divTempo') as HTMLDivElement;
+            let div3 = document.querySelector('.divBotao') as HTMLDivElement;
+            let div4 = document.querySelector('.div_4') as HTMLDivElement;
+
+            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+
+            divCodigo.style.display = 'none';
+            div1.style.display = "flex";
+            div2.style.display = "flex";
+            div4.style.display = "flex";
+
+            let dadosForm = new FormData();
+            dadosForm.append("token", this.tokenTrabalhador);
+            dadosForm.append("cliente", localStorage.getItem("cliente")!);
+            dadosForm.append("codigoConfirmado", "true");
+            let link = dominio + "/SolicitacaoServico/EnviarCodigoConfirmado";
+
+            try {
+                let resposta = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            }
+            catch (erro: any) {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
+            }
+
+            localStorage.setItem("codigoConfirmado", "true");
+            this.showTemporaryToast();
+        }
+        else {
+            let erro = document.querySelector('#spanCodigo');
+            erro?.classList.remove('escondido');
+        }
+    }
+
+    async showTemporaryToast() {
+        const toast = await this.toastController.create({
+            message: 'Serviço inicializado!',
+            duration: 2000,
+            position: 'top',
+            cssClass: 'custom-toast',
+        });
+
+        await toast.present();
+    }
+
+    AtivarBotaoSalvar(botao: any) {
+        let erro = document.querySelector('#spanCodigo');
+        erro?.classList.add('escondido');
     }
 }

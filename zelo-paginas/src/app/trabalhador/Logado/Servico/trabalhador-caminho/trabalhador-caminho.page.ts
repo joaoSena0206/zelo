@@ -32,6 +32,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     tempoTermino: any;
     ultimaPosicao: google.maps.LatLng;
     watchId: any;
+    codigo: any;
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     destino: google.maps.LatLng;
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
@@ -51,8 +52,45 @@ export class TrabalhadorCaminhoPage implements OnInit {
     constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private navCl: NavController, private firestore: AngularFirestore) { }
 
     ngOnInit() {
+
+        if (!localStorage.getItem("codigo")) {
+            this.gerarCodigo();
+        }
+        else {
+            this.codigo = localStorage.getItem("codigo");
+        }
+
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let situacao = notification.data.situacaoServico;
+            let codigoVerificado = notification.data.CodigoConfirmado;
+
+            if(codigoVerificado == "true")
+            {
+
+            }
+
+            if (codigoVerificado == "true") {
+
+                let div1 = document.querySelector('.div_1') as HTMLDivElement;
+                let div2 = document.querySelector('.div_2') as HTMLDivElement;
+                let div3 = document.querySelector('.div_3') as HTMLDivElement;
+                let div4 = document.querySelector('.div_4') as HTMLDivElement;
+                let divCodigo = document.querySelector('.divcodigo') as HTMLAreaElement;
+                let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
+                let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
+    
+                divRelogio.style.display = 'flex';
+                divTrabalhoIniciado.style.display = 'flex';
+                divCodigo.style.display = 'none';
+                div1.style.display = "flex";
+                div2.style.display = "none";
+                div3.style.display = "none";
+                div4.style.display = "none";
+    
+                this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
+    
+                this.temporizador();
+            }
 
             if (situacao == "false") {
                 localStorage.removeItem("codigo");
@@ -76,12 +114,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             }
         });
 
-        let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
-            if (res.codigo) {
-                localStorage.setItem("codigo", res.codigo);
-                esperarCodigo.unsubscribe();
-            }
-        });
+        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {});
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
 
@@ -93,23 +126,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             this.tempo = temporizador;
             localStorage.setItem("temporizador", JSON.stringify(temporizador));
-        }
-        if (localStorage.getItem("codigoConfirmado") == "true") {
-            this.abrirDivCodigo();
-
-            let div1 = document.querySelector('.div_1') as HTMLDivElement;
-            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
-            let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
-            let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
-
-            divRelogio.style.display = 'flex';
-            divTrabalhoIniciado.style.display = 'flex';
-            divCodigo.style.display = 'none';
-            div1.style.display = "flex";
-
-            this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
-
-            this.temporizador();
         }
 
         PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {
@@ -422,9 +438,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             }
         }, intervalo);
     }
-
-
-
+    
     codigoAleatorio: string;
 
     tokenCliente: any = this.cliente.TokenFCM;
@@ -501,94 +515,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     //-----------------------------------------------------------------------------------------------------------//
-
-    abrirDivCodigo() {
-        let div1 = document.querySelector('.div_1') as HTMLDivElement;
-        let div2 = document.querySelector('.div_2') as HTMLDivElement;
-        let div3 = document.querySelector('.div_3') as HTMLDivElement;
-        let div4 = document.querySelector('.div_4') as HTMLDivElement;
-        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
-
-        divCodigo.style.display = 'flex';
-
-        div1.style.display = "none";
-        div2.style.display = 'none';
-        div3.style.display = 'none';
-        div4.style.display = 'none';
-
-        const inputs = document.querySelectorAll("ion-input");
-
-        for (let i = 0; i < inputs.length; i++) {
-            let todosPreenchidos = false;
-
-            inputs[i].addEventListener("ionInput", function () {
-                let apagado = false;
-
-                if (/[^\d]/g.test(inputs[i].value?.toString()!)) {
-                    apagado = true;
-                }
-
-                inputs[i].value = inputs[i].value?.toString().replace(/[^\d]/g, "");
-
-                if (inputs[i].value != "" && i != inputs.length - 1 && apagado == false) {
-                    inputs[i + 1].setFocus();
-                }
-                else if (inputs[i].value == "" && i != 0 && apagado == false) {
-                    inputs[i - 1].setFocus();
-                }
-            });
-        }
-    }
-
-    fecharDivCodigo() {
-
-        let div1 = document.querySelector('.div_1') as HTMLDivElement;
-        let div2 = document.querySelector('.div_2') as HTMLDivElement;
-        let div3 = document.querySelector('.div_3') as HTMLDivElement;
-        let div4 = document.querySelector('.div_4') as HTMLDivElement;
-        let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
-
-        divCodigo.style.display = 'none';
-
-        div1.style.display = "flex";
-        div2.style.display = 'flex';
-        div3.style.display = 'flex';
-        div4.style.display = 'flex';
-    }
-
-    //-----------------------------------------------------------------------------------------------------------//
-
-    async verificarCodigo() {
-
-        let codigoAleatorio = localStorage.getItem('codigo');
-
-        let codigo = "";
-        codigo += this.form.controls["input1"].value;
-        codigo += this.form.controls["input2"].value;
-        codigo += this.form.controls["input3"].value;
-        codigo += this.form.controls["input4"].value;
-        codigo += this.form.controls["input5"].value;
-
-        if (codigo == codigoAleatorio) {
-            let div1 = document.querySelector('.div_1') as HTMLDivElement;
-            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
-            let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
-            let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
-
-            divRelogio.style.display = 'flex';
-            divTrabalhoIniciado.style.display = 'flex';
-            divCodigo.style.display = 'none';
-            div1.style.display = "flex";
-
-            localStorage.setItem("codigoConfirmado", "true");
-
-            this.temporizador();
-        }
-        else {
-            let erro = document.querySelector('#spanCodigo');
-            erro?.classList.remove('escondido');
-        }
-    }
 
     AtivarBotaoSalvar(botao: any) {
         let erro = document.querySelector('#spanCodigo');
@@ -697,5 +623,46 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.setItem("temporizador", JSON.stringify(this.tempo));
 
         }, 1000);
+    }
+
+    async gerarCodigo() {
+        let link = dominio + "/SolicitacaoServico/GerarCodigoAleatorio";
+        let dadosForm = new FormData();
+        dadosForm.append("cdSolicitacao", this.solicitacao.CdSolicitacaoServico);
+
+        try {
+            this.carregar = true;
+            this.codigo = await firstValueFrom(this.http.post(link, dadosForm));
+            localStorage.setItem("codigo", this.codigo);
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
+        finally {
+            this.carregar = false;
+        }
+
+        let obj = {
+            codigo: this.codigo
+        };
+        this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).set(obj);
+    }
+
+    async enviarCodigo(token: any, codigo: any) {
+        let link = dominio + "/SolicitacaoServico/EnviarCodigo";
+        let dadosForm = new FormData();
+        dadosForm.append("token", token);
+        dadosForm.append("codigo", codigo);
+
+        try {
+            await firstValueFrom(this.http.post(link, dadosForm));
+        }
+        catch {
+            const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+            alert.message = "Erro ao conectar-se ao servidor";
+            alert.present();
+        }
     }
 }
