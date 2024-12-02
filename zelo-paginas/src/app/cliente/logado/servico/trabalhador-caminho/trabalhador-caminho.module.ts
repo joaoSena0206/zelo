@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { TrabalhadorCaminhoPageRoutingModule } from './trabalhador-caminho-routing.module';
 
 import { TrabalhadorCaminhoPage } from './trabalhador-caminho.page';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TrabalhadorCaminhoPageRoutingModule
+    TrabalhadorCaminhoPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [TrabalhadorCaminhoPage]
 })
