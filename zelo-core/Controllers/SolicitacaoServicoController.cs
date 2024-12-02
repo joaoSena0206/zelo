@@ -743,4 +743,35 @@ public class SolicitacaoServicoController : ControllerBase
             banco.Desconectar();
         }
     }
+
+    [HttpPost("EnviarCodigoConfirmado")]
+    public async Task<IActionResult> EnviarSolicitacao([FromForm] string token, [FromForm] string codigoConfirmado)
+    {
+        try
+        {
+            Trabalhador cliente = JsonSerializer.Deserialize<Trabalhador>(Request.Form["cliente"]);
+
+            var msg = new Message()
+            {
+                Notification = new Notification()
+                {
+                    Title = "Situação do código",
+                    Body = $"Enviada por {cliente.Nome}"
+                },
+                Data = new Dictionary<string, string>()
+                {
+                    {"CodigoConfirmado", codigoConfirmado}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
 }
