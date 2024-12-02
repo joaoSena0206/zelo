@@ -16,6 +16,7 @@ import {
     PushNotifications,
     Token,
 } from '@capacitor/push-notifications';
+import { ActivationEnd, Router } from '@angular/router';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 
@@ -42,13 +43,20 @@ export class InicialPage implements OnInit {
     situacaoServico: any;
     msgTrabalho: any;
     saldo: any;
+    routerSubscription: any;
 
-    constructor(private http: HttpClient, private navCl: NavController) {
+    constructor(private http: HttpClient, private navCl: NavController, private router: Router) {
 
     }
 
     ngOnInit() {
         localStorage.setItem("saldoCarteira", "0");
+
+        this.routerSubscription = this.router.events.subscribe(event => {
+            if (event instanceof ActivationEnd) {
+                this.pegarSaldo();
+            }
+        });
 
         PushNotifications.removeAllListeners();
 
@@ -115,9 +123,12 @@ export class InicialPage implements OnInit {
             localStorage.removeItem("endereco");
         }
     }
+
     async pegarSaldo() {
+        this.carregar = true;
         let link = dominio + "/Trabalhador/PegarSaldo?cpf=" + this.trabalhador.Cpf;
         let res: any = await firstValueFrom(this.http.get(link));
+        this.carregar = false;
 
         this.saldo = res;
         localStorage.setItem("saldoCarteira", res);
@@ -180,6 +191,10 @@ export class InicialPage implements OnInit {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
         this.modal = document.querySelector('#modal_servico_solicitado') as HTMLIonModalElement;
+    }
+
+    ionViewWillEnter() {
+        this.pegarSaldo();
     }
 
     async ionViewDidEnter() {

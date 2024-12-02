@@ -59,6 +59,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         else {
             this.codigo = localStorage.getItem("codigo");
         }
+        PushNotifications.removeAllListeners();
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let situacao = notification.data.situacaoServico;
@@ -96,7 +97,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 localStorage.removeItem("codigo");
                 localStorage.removeItem("endereco");
                 localStorage.removeItem("solicitacao");
-                localStorage.removeItem("trabalhador");
+                localStorage.removeItem("cliente");
 
                 clearInterval(this.watchId);
                 clearInterval(this.id);
@@ -115,6 +116,15 @@ export class TrabalhadorCaminhoPage implements OnInit {
         });
 
         PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {});
+        
+        let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
+            if (res.codigo) {
+                localStorage.setItem("codigo", res.codigo);
+                esperarCodigo.unsubscribe();
+
+                this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).delete();
+            }
+        });
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
 
@@ -461,6 +471,22 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             clearInterval(this.watchId);
             clearInterval(this.id);
+
+            link = dominio + "/TransacaoCarteira/AdicionarTransacao"
+            dadosForm = new FormData();
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+            dadosForm.append("cliente", "false");
+            dadosForm.append("valor", "-" + (Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+            link = dominio + "/TransacaoCarteira/AdicionarTransacao"
+            dadosForm = new FormData();
+            dadosForm.append("cpf", this.cliente.Cpf);
+            dadosForm.append("cliente", "true");
+            dadosForm.append("valor", (Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
             this.navCl.navigateRoot("/trabalhador/inicial");
             this.modalCancelar.dismiss();

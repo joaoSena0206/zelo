@@ -48,37 +48,46 @@ export class ConfirmacaoClientePage implements OnInit {
     }
 
     async checarPagamento() {
-        if (this.idPagamento) {
-            let id = this.idPagamento;
-            let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+        setTimeout(async () => {
+            if (this.idPagamento) {
+                let id = this.idPagamento;
+                let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
 
-            try {
-                let res: any = await firstValueFrom(this.http.get(link));
+                try {
+                    let res: any = await firstValueFrom(this.http.get(link));
 
-                if (res.status == "approved") {
-                    clearInterval(this.id);
+                    if (res.status == "approved") {
+                        clearInterval(this.id);
 
-                    localStorage.removeItem("confirmacao");
+                        localStorage.removeItem("confirmacao");
 
-                    this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+                        this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+                    }
+                    else if (res.status == "cancelled") {
+                        clearInterval(this.id);
+
+                        localStorage.removeItem("cliente");
+                        localStorage.removeItem("endereco");
+                        localStorage.removeItem("solicitacao");
+                        localStorage.removeItem("confirmacao");
+
+                        this.navCl.navigateRoot("trabalhador/inicial");
+                    }
                 }
-                else if (res.status == "cancelled") {
-                    clearInterval(this.id);
-
-                    localStorage.removeItem("cliente");
-                    localStorage.removeItem("endereco");
-                    localStorage.removeItem("solicitacao");
-                    localStorage.removeItem("confirmacao");
-
-                    this.navCl.navigateRoot("trabalhador/inicial");
+                catch {
+                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                    alert.message = "Erro ao conectar-se ao servidor";
+                    alert.present();
                 }
             }
-            catch {
-                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                alert.message = "Erro ao conectar-se ao servidor";
-                alert.present();
+            else {
+                clearInterval(this.id);
+
+                localStorage.removeItem("confirmacao");
+
+                this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
             }
-        }
+        }, 1000);
     }
 
     async enviarCancelamento() {

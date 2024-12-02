@@ -10,11 +10,28 @@ import { NavController, ToastController } from '@ionic/angular';
     styleUrls: ['./avaliacao.page.scss'],
 })
 export class AvaliacaoPage implements OnInit {
+    cliente: any = JSON.parse(localStorage.getItem("cliente")!);
 
     constructor(private http: HttpClient, private navCl: NavController) { }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.carregarEstrelas(5);
+
+        let link = dominio + "/TransacaoCarteira/AdicionarTransacao";
+        let dadosForm = new FormData();
+        dadosForm.append("cpf", this.cliente.Cpf);
+        dadosForm.append("cliente", "true");
+        dadosForm.append("valor", "-" + this.trabalhador.ValorVisita);
+
+        let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+        if (res == "sucesso") {
+            dadosForm.set("cpf", this.trabalhador.Cpf);
+            dadosForm.set("cliente", "false");
+            dadosForm.set("valor", (Number(this.trabalhador.ValorVisita) - Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+        }
     }
 
     nomeIconeEstrela: any = ['', '', '', '', ''];

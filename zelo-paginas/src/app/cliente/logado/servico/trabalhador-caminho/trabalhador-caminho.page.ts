@@ -50,6 +50,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
     constructor(private toastController: ToastController, private navCl: NavController, private http: HttpClient, private firestore: AngularFirestore) { }
 
     ngOnInit() {
+        PushNotifications.removeAllListeners();
+
         localStorage.removeItem("idPagamento");
         localStorage.removeItem("tempoPagamento");
         localStorage.removeItem("tempoAtual");
@@ -502,6 +504,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
     async ignorarServico() {
         let dadosForm = new FormData();
+        console.log(this.tokenTrabalhador);
         dadosForm.append("token", this.tokenTrabalhador);
         dadosForm.append("trabalhador", localStorage.getItem("cliente")!);
         dadosForm.append("situacaoServico", "false");
@@ -512,7 +515,23 @@ export class TrabalhadorCaminhoPage implements OnInit {
             localStorage.removeItem("endereco");
             localStorage.removeItem("solicitacao");
             localStorage.removeItem("confirmacao");
-            localStorage.removeItem("codigo")
+            localStorage.removeItem("codigo");
+
+            link = dominio + "/TransacaoCarteira/AdicionarTransacao"
+            dadosForm = new FormData();
+            dadosForm.append("cpf", this.cliente.Cpf);
+            dadosForm.append("cliente", "true");
+            dadosForm.append("valor", "-" + (Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+            link = dominio + "/TransacaoCarteira/AdicionarTransacao"
+            dadosForm = new FormData();
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+            dadosForm.append("cliente", "false");
+            dadosForm.append("valor", (Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
             this.navCl.navigateRoot("inicial");
             this.modalCancelar.dismiss();
