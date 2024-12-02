@@ -75,12 +75,12 @@
                 </div>
             </div>
 
-            <div>
+            <!-- <div>
                 <ion-icon src="../../../../../assets/icon/cliente/bloqueio.svg"></ion-icon>
                 <p>Código de verificação: <ion-text>{{ codigo }}</ion-text></p>
-            </div>
+            </div> -->
 
-            <div>
+            <div class="divTempo">
                 <div>
                     <ion-icon src="../../../../../assets/icon/cliente/localizador.svg"></ion-icon>
                     <p>{{ this.distancia }}</p>
@@ -97,8 +97,14 @@
                 </div>
             </div>
 
-            <div>
-                <ion-button class="btnCancelar" id="abrir_modal_cancelar">Cancelar</ion-button>
+            <div class="divBotao">
+                <div class="div_4">
+                    <ion-button id="abrir_modal_cancelar" class="btn_cancelar">Cancelar</ion-button>
+                    <ion-button (click)="abrirDivCodigo();" class="btn_iniciar">Iniciar</ion-button>
+                </div>
+
+                <!-- <ion-button class="btnCancelar" id="abrir_modal_cancelar">Cancelar</ion-button> -->
+
                 <ion-modal id="modal_cancelar" #modal_cancelar trigger="abrir_modal_cancelar">
                     <ng-template>
 
@@ -122,6 +128,60 @@
                         </ion-card>
                     </ng-template>
                 </ion-modal>
+
+            </div>
+
+            <div class="div_codigo">
+
+                <ion-icon class="iconeFechar" (click)="fecharDivCodigo();" name="close-circle-outline"></ion-icon>
+
+                <h4 style="margin-bottom: 10px;">Digite o código que o usuário informar</h4>
+
+                <div style="display: flex; flex-direction: column; margin-bottom: 20px" [formGroup]="form">
+
+                    <div style="display: flex;">
+                        <ion-item class="ion_item">
+                            <ion-input (keyup)="AtivarBotaoSalvar($event)"
+                                [class.inputErro]="form.controls['input1'].invalid && (form.controls['input1'].touched || form.controls['input1'].dirty)"
+                                formControlName="input1" class="form__input" maxlength="1"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="ion_item">
+                            <ion-input (keyup)="AtivarBotaoSalvar($event)"
+                                [class.inputErro]="form.controls['input2'].invalid && (form.controls['input2'].touched || form.controls['input2'].dirty)"
+                                formControlName="input2" class="form__input" maxlength="1"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="ion_item">
+                            <ion-input (keyup)="AtivarBotaoSalvar($event)"
+                                [class.inputErro]="form.controls['input3'].invalid && (form.controls['input3'].touched || form.controls['input3'].dirty)"
+                                formControlName="input3" class="form__input" maxlength="1"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="ion_item">
+                            <ion-input (keyup)="AtivarBotaoSalvar($event)"
+                                [class.inputErro]="form.controls['input4'].invalid && (form.controls['input4'].touched || form.controls['input4'].dirty)"
+                                formControlName="input4" class="form__input" maxlength="1"></ion-input>
+                        </ion-item>
+
+                        <ion-item class="ion_item">
+                            <ion-input (keyup)="AtivarBotaoSalvar($event)"
+                                [class.inputErro]="form.controls['input5'].invalid && (form.controls['input5'].touched || form.controls['input5'].dirty)"
+                                formControlName="input5" class="form__input" maxlength="1"></ion-input>
+                        </ion-item>
+                    </div>
+
+                    <span
+                        [ngClass]="form.invalid && (form.controls['input1'].touched || form.controls['input1'].dirty) && (form.controls['input2'].touched || form.controls['input2'].dirty) && (form.controls['input3'].touched || form.controls['input3'].dirty) && (form.controls['input4'].touched || form.controls['input4'].dirty) && (form.controls['input5'].touched || form.controls['input5'].dirty) ? 'erro' : 'escondido'">{{
+                        erro
+                        }}</span>
+
+                    <span id="spanCodigo" class="erro escondido">Código inválido!</span>
+                </div>
+
+
+                <ion-button class="form__btn nm_btn" id="btnDenuncia" (click)="verificarCodigo();">Enviar</ion-button>
+
             </div>
         </div>
     </div>

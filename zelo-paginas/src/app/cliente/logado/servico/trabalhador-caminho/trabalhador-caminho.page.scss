@@ -26,6 +26,7 @@
     flex-grow: 1;
     background-color: #E4E4E4;
     padding: 25px 25px;
+    position: relative;
 }
 
 .div_1 {
@@ -84,7 +85,7 @@
 
 .div_2 {
     display: flex;
-    margin: 15px 0;
+    margin: 0 0  15px 0;
 }
 
 .area_txt_inicio {
@@ -163,18 +164,15 @@
 
 .btn_cancelar {
     --background: #FA5050;
+    text-transform: none;
 }
 
 .btn_iniciar {
     --background: #64BF7E;
+    text-transform: none;
 }
 
 //------------------------------------------------------//
-
-.div_codigo {
-    height: 100%;
-    position: relative;
-}
 
 .ion_item {
     border-radius: 11px;
@@ -191,6 +189,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    height: 100%;
+    position: relative;
 }
 
 .form__input {
@@ -208,8 +208,8 @@
 
 .iconeFechar {
     position: absolute;
-    right: 0;
-    top: 10px;
+    right: -10px;
+    top: -5px;
     height: 30px;
     width: 30px;
 }
@@ -425,33 +425,33 @@ h2 {
     margin-bottom: 5px;
 }
 
-.area_informacao>div:nth-child(2) {
+/* .area_informacao>div:nth-child(2) {
     gap: 15px;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-}
+} */
 
 ion-modal {
     --background: transparent;
     --box-shadow: none;
 }
 
-.area_informacao>div:nth-child(2) ion-icon {
+/* .area_informacao>div:nth-child(2) ion-icon {
     font-size: clamp(40px, 6vw, 60px);
-}
+} */
 
-.area_informacao>div:nth-child(2) p {
+/* .area_informacao>div:nth-child(2) p {
     font-size: clamp(17px, 5vw, 22px);
     font-weight: bold;
-}
+} */
 
 ion-text {
     color: #F66701;
     font-size: clamp(17px, 5vw, 22px);
 }
 
-.area_informacao>div:nth-child(3) {
+.area_informacao>div:nth-child(2) {
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -460,6 +460,7 @@ ion-text {
         display: flex;
         align-items: center;
         gap: 5px;
+        margin-bottom: 15px;
     }
 
     p {
@@ -487,10 +488,10 @@ ion-text {
     margin-top: 20px;
 }
 
-.area_informacao>div:nth-child(4) {
+/* .area_informacao>div:nth-child(4) {
     display: flex;
     justify-content: center;
-}
+} */
 
 .area_informacao[_ngcontent-ng-c4165334628]>div[_ngcontent-ng-c4165334628]:nth-child(2) {
     margin-bottom: 30px;
@@ -602,4 +603,29 @@ ion-text {
 ion-popover {
     width: fit-content;
     --box-shadow: none;
+}
+
+.escondido
+{
+    display: none;
+}
+
+.erro {
+    color: red;
+    font-size: 15px;
+}
+
+.inputErro {
+    border: solid 1px red;
+}
+
+::ng-deep .custom-toast {
+    --background: rgb(3, 199, 3);
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    width: 300px;
+    position: fixed; 
+    left: 50%;
+    transform: translateX(-50%);
 }
