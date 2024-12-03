@@ -178,13 +178,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        // await this.carregarScriptGoogleMaps();
-        // await this.pegarCoords();
+        await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
 
         let data = new Date();
         this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
 
-        // this.carregarMapa();
+        this.carregarMapa();
 
         const btns = document.querySelectorAll(".form__btn");
         const btnReenviar = document.querySelector(".form__btn--reenviar");
