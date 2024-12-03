@@ -27,6 +27,8 @@ export class UltimosPedidosPage implements OnInit {
   constructor(private http: HttpClient, private navCl: NavController) { }
 
   ngOnInit() {
+    const btn = document.querySelectorAll(".btn_filtro--ativado");
+    this.mudarFiltro(btn);
   }
 
   voltarPag() {

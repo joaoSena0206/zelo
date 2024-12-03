@@ -201,18 +201,22 @@ export class InicialPage implements OnInit {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        let dadosForm = new FormData();
-        dadosForm.append("cpf", this.trabalhador.Cpf);
-
         let res;
 
         try {
+            this.carregar = true;
+            let dadosForm = new FormData();
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+
             res = await firstValueFrom(this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }));
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
+        }
+        finally {
+            this.carregar = false;
         }
 
         if (res == "true") {
@@ -528,19 +532,23 @@ export class InicialPage implements OnInit {
             this.checarPermissao();
         }
 
-        let link = dominio + "/Trabalhador/AtualizarSituacao";
-
-        let dadosForm = new FormData();
-        dadosForm.append("codigoResultado", this.resultado!);
-        dadosForm.append("cpf", this.trabalhador.Cpf);
-
         try {
+            this.carregar = true;
+
+            let link = dominio + "/Trabalhador/AtualizarSituacao";
+            let dadosForm = new FormData();
+            dadosForm.append("codigoResultado", this.resultado!);
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+
             this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => { })
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
+        }
+        finally {
+            this.carregar = false;
         }
     }
 }
