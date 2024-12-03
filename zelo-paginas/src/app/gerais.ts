@@ -5,7 +5,7 @@ export const headerNgrok = new HttpHeaders({
     "ngrok-skip-browser-warning": "true"
 });
 
-export const dominio = "https://thanks-theme-restored-tell.trycloudflare.com";
+export const dominio = "https://annex-lanes-cope-adventures.trycloudflare.com";
 export const apiGoogle = "AIzaSyCQvbNhFUQJI31Zflx_h3wxLqTd70GE13o";
 export const ambient_firebase = {
     apiKey: "AIzaSyBYK20Z_BR4TnpM27C1Hm-M-aI7o51oEIg",
