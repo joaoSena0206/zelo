@@ -34,7 +34,7 @@
         <div class="local_ultimos_trabalhos">
             <ion-card class="card_servico" *ngFor="let historico of historico">
                 <img draggable="false" class="img_pedido"
-                    [src]="dominio + '/Imgs/Solicitacao/' + historico.CdSolicitacaoServico + '/1.jpeg'"
+                    [src]="historico.img"
                     [alt]="historico.Nome">
 
                 <p class="nm_cliente_pedido">{{historico.Cliente.Nome}}</p>
