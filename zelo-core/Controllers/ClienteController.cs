@@ -38,6 +38,30 @@ public class ClienteController : ControllerBase
         }
     }
 
+    [HttpPost("EnviarTipoPagamento")]
+    public async Task<IActionResult> EnviarTipoPagamento([FromForm] string token, [FromForm] string tipo)
+    {
+        try
+        {
+            var msg = new Message()
+            {
+                Data = new Dictionary<string, string>()
+                {
+                    {"tipo", tipo}
+                },
+                Token = token
+            };
+
+            string resposta = await FirebaseMessaging.DefaultInstance.SendAsync(msg);
+
+            return Ok();
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro.Message);
+        }
+    }
+
     [HttpGet("PegarSaldo")]
     public IActionResult PegarSaldo([FromQuery] string cpf)
     {

@@ -21,6 +21,7 @@ export class ConfirmacaoClientePage implements OnInit {
     trabalhador: any = JSON.parse(localStorage.getItem("trabalhador")!);
     clienteServico: any = JSON.parse(localStorage.getItem("cliente")!);
     idPagamento: any;
+    tipoPagamento: any;
 
     constructor(private navCl: NavController, private http: HttpClient) { }
 
@@ -28,7 +29,13 @@ export class ConfirmacaoClientePage implements OnInit {
         PushNotifications.removeAllListeners();
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
-            this.idPagamento = notification.data.id;
+            if (notification.data.id) {
+                this.idPagamento = notification.data.id;
+            }
+            else if (notification.data.tipo) {
+                this.tipoPagamento = notification.data.tipo;
+            }
+
         });
 
         if (!localStorage.getItem("confirmacao")) {
@@ -48,46 +55,44 @@ export class ConfirmacaoClientePage implements OnInit {
     }
 
     async checarPagamento() {
-        setTimeout(async () => {
-            if (this.idPagamento) {
-                let id = this.idPagamento;
-                let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
+        if (this.idPagamento) {
+            let id = this.idPagamento;
+            let link = dominio + "/Cliente/ChecarPagamento?id=" + id;
 
-                try {
-                    let res: any = await firstValueFrom(this.http.get(link));
+            try {
+                let res: any = await firstValueFrom(this.http.get(link));
 
-                    if (res.status == "approved") {
-                        clearInterval(this.id);
+                if (res.status == "approved") {
+                    clearInterval(this.id);
 
-                        localStorage.removeItem("confirmacao");
+                    localStorage.removeItem("confirmacao");
 
-                        this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
-                    }
-                    else if (res.status == "cancelled") {
-                        clearInterval(this.id);
-
-                        localStorage.removeItem("cliente");
-                        localStorage.removeItem("endereco");
-                        localStorage.removeItem("solicitacao");
-                        localStorage.removeItem("confirmacao");
-
-                        this.navCl.navigateRoot("trabalhador/inicial");
-                    }
+                    this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
                 }
-                catch {
-                    const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
-                    alert.message = "Erro ao conectar-se ao servidor";
-                    alert.present();
+                else if (res.status == "cancelled") {
+                    clearInterval(this.id);
+
+                    localStorage.removeItem("cliente");
+                    localStorage.removeItem("endereco");
+                    localStorage.removeItem("solicitacao");
+                    localStorage.removeItem("confirmacao");
+
+                    this.navCl.navigateRoot("trabalhador/inicial");
                 }
             }
-            else {
-                clearInterval(this.id);
-
-                localStorage.removeItem("confirmacao");
-
-                this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+            catch {
+                const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
+                alert.message = "Erro ao conectar-se ao servidor";
+                alert.present();
             }
-        }, 1000);
+        }
+        else if (this.tipoPagamento) {
+            clearInterval(this.id);
+
+            localStorage.removeItem("confirmacao");
+
+            this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+        }
     }
 
     async enviarCancelamento() {

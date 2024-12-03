@@ -141,6 +141,13 @@ export class ConfirmacaoTrabalhadorPage implements OnInit {
                 this.navCl.navigateRoot("/pagamento");
             }
             else if (this.tipoPagamento == "carteira") {
+                link = dominio + "/Cliente/EnviarTipoPagamento";
+                dadosForm = new FormData();
+                dadosForm.append("token", this.trabalhador.TokenFCM);
+                dadosForm.append("tipo", "carteira");
+
+                await firstValueFrom(this.http.post(link, dadosForm));
+
                 this.navCl.navigateRoot("/trabalhador-caminho");
             }
         }
