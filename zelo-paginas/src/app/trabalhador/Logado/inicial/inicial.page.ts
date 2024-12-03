@@ -17,6 +17,7 @@ import {
     Token,
 } from '@capacitor/push-notifications';
 import { ActivationEnd, Router } from '@angular/router';
+import { isStr } from 'ionicons/dist/types/components/icon/utils';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 
@@ -433,7 +434,7 @@ export class InicialPage implements OnInit {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
 
-        let res: any;
+        let res;
 
         try {
             this.carregar = true;
@@ -449,6 +450,32 @@ export class InicialPage implements OnInit {
         }
 
         this.historico = res;
+
+        for (let i = 0; i < this.historico.length; i++) {
+            link = dominio + '/Imgs/Solicitacao/' + this.historico[i].CdSolicitacaoServico + '/1.jpeg';
+            let res2: any;
+            try {
+                res2 = await firstValueFrom(this.http.get(link, { responseType: "blob" }));
+            }
+            catch
+            {
+                res2 = null;
+            }
+
+            this.historico[i].img = await this.blobParaBase64(res2);
+        }
+    }
+
+    blobParaBase64(blob: any) {
+        if (!blob) {
+            return '../../../assets/icon/geral/sem-foto.jpg';
+        }
+
+        return new Promise((resolve, _) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
     }
 
     async carregarImgServico(cdSolicitacao: any) {
