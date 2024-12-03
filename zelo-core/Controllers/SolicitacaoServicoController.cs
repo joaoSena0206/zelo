@@ -727,9 +727,12 @@ public class SolicitacaoServicoController : ControllerBase
 
         try
         {
-            string comando = $@"UPDATE solicitacao_servico SET ds_comentario_avaliacao_{tipo} = '{comentario}', qt_estrelas_avaliacao_{tipo} = {estrelas}
-                            WHERE cd_solicitacao_servico = {cdServico}";
-            
+
+            string comando = $@"UPDATE solicitacao_servico 
+                                SET ds_comentario_avaliacao_{tipo} = COALESCE(ds_comentario_avaliacao_{tipo}, '{comentario}'), 
+                                    qt_estrelas_avaliacao_{tipo} = {estrelas}
+                                WHERE cd_solicitacao_servico = {cdServico}";
+
             banco.Executar(comando);
 
             return Ok();
