@@ -145,12 +145,11 @@ public class SolicitacaoServicoController : ControllerBase
 	            {codigoSolicitacao},
 	            '{cpf}',
 	            {codigoServico},
-	            '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',
+	            '{dataAtual.ToString("yyyy-MM-dd HH:mm:ss")}',  
 	            '{desc}',
                 NULL
             )";
             banco.Executar(comando);
-            banco.Desconectar();
 
             await AdicionarImgs(codigoSolicitacao, Request.Form.Files);
 
