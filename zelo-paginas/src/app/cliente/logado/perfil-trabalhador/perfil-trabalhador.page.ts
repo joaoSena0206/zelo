@@ -153,6 +153,7 @@ export class PerfilTrabalhadorPage implements OnInit {
 
             this.mudarFiltro('Todas');
             this.calcularPorcentagem(this.listaDadosPerfil);
+            console.log(this.listaDadosPerfil[0].DsComentarioAvaliacaoServico);
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
