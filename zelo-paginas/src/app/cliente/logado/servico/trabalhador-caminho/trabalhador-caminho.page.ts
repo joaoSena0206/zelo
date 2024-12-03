@@ -533,6 +533,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
 
             await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
 
+            link = dominio + "/SolicitacaoServico/ExcluirSolicitacao"
+            dadosForm = new FormData();
+            dadosForm.append("cdSolicitacao", this.solicitacao.CdSolicitacaoServico);
+            await firstValueFrom(this.http.post(link, dadosForm));
+
             this.navCl.navigateRoot("inicial");
             this.modalCancelar.dismiss();
         }
