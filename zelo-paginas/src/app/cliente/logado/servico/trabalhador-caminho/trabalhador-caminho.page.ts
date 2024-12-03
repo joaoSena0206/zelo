@@ -120,9 +120,9 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        // await this.carregarScriptGoogleMaps();
-        // await this.pegarCoords();
-        // this.carregarMapa();
+        await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
+        this.carregarMapa();
 
         const btns = document.querySelectorAll(".form__btn");
         const btnReenviar = document.querySelector(".form__btn--reenviar");

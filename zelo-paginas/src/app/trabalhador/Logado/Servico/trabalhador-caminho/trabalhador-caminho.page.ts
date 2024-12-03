@@ -60,6 +60,16 @@ export class TrabalhadorCaminhoPage implements OnInit {
             this.codigo = localStorage.getItem("codigo");
         }
 
+        if (!localStorage.getItem("temporizador")) {
+            let temporizador = {
+                min: "00",
+                seg: "00"
+            };
+
+            this.tempo = temporizador;
+            localStorage.setItem("temporizador", JSON.stringify(temporizador));
+        }
+
         PushNotifications.removeAllListeners();
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
@@ -85,7 +95,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 div4.style.display = "none";
     
                 this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
-    
+                this.cdr.detectChanges();
+
                 this.temporizador();
             }
 
@@ -112,7 +123,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
         });
         
         let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
-            if (res.codigo) {
+            if (res) {
                 localStorage.setItem("codigo", res.codigo);
                 esperarCodigo.unsubscribe();
 
@@ -121,16 +132,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
         });
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
-
-        if (!localStorage.getItem("temporizador")) {
-            let temporizador = {
-                min: 0,
-                seg: 0
-            };
-
-            this.tempo = temporizador;
-            localStorage.setItem("temporizador", JSON.stringify(temporizador));
-        }
 
         PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {
             let situacao = action.notification.data.situacaoServico;
@@ -177,13 +178,13 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        // await this.carregarScriptGoogleMaps();
-        // await this.pegarCoords();
+        await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
 
         let data = new Date();
         this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
 
-        // this.carregarMapa();
+        this.carregarMapa();
 
         const btns = document.querySelectorAll(".form__btn");
         const btnReenviar = document.querySelector(".form__btn--reenviar");
@@ -647,8 +648,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.tempo.seg = "0" + this.tempo.seg.toString();
             }
 
+            this.cdr.detectChanges();
             localStorage.setItem("temporizador", JSON.stringify(this.tempo));
-
         }, 1000);
     }
 

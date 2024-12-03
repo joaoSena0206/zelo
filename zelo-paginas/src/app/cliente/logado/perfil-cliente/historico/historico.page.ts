@@ -80,6 +80,17 @@ export class HistoricoPage implements OnInit {
 
       this.historico[i].DtSolicitacaoServico = this.listaDataServico[i];
       
+
+      this.historico.sort((a: any, b: any) => {
+          if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
+              return -1;
+          }
+          else if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
+              return 1;
+          }
+
+          return 0;
+      });
     }
     
   }
@@ -96,10 +107,10 @@ export class HistoricoPage implements OnInit {
 
             if (btn.textContent == "Recentes") {
                 this.historico.sort((a: any, b: any) => {
-                    if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
+                    if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
                         return -1;
                     }
-                    else if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
+                    else if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
                         return 1;
                     }
 
@@ -108,10 +119,10 @@ export class HistoricoPage implements OnInit {
             }
             else if (btn.textContent == "Antigos") {
                 this.historico.sort((a: any, b: any) => {
-                    if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
+                    if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
                         return -1;
                     }
-                    else if (a.DtSolicitacaoServico < b.DtSolicitacaoServico) {
+                    else if (a.DtSolicitacaoServico > b.DtSolicitacaoServico) {
                         return 1;
                     }
 

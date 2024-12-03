@@ -17,6 +17,7 @@ import {
     Token,
 } from '@capacitor/push-notifications';
 import { ActivationEnd, Router } from '@angular/router';
+import { isStr } from 'ionicons/dist/types/components/icon/utils';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>("BackgroundGeolocation");
 
@@ -201,18 +202,22 @@ export class InicialPage implements OnInit {
         const botaoSituacao = document.querySelector('#abrir_modal_servico');
         const img = document.querySelector('.img_btn_situacao');
 
-        let dadosForm = new FormData();
-        dadosForm.append("cpf", this.trabalhador.Cpf);
-
         let res;
 
         try {
+            this.carregar = true;
+            let dadosForm = new FormData();
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+
             res = await firstValueFrom(this.http.post(dominio + '/Trabalhador/VerificarSituacao', dadosForm, { responseType: 'text', headers: headerNgrok }));
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
+        }
+        finally {
+            this.carregar = false;
         }
 
         if (res == "true") {
@@ -429,7 +434,7 @@ export class InicialPage implements OnInit {
         let trabalhador = JSON.parse(localStorage.getItem("trabalhador")!);
         let link = dominio + `/SolicitacaoServico/CarregarUltimosPedidos?cpf=${trabalhador.Cpf}&tipo=trabalhador`;
 
-        let res: any;
+        let res;
 
         try {
             this.carregar = true;
@@ -445,6 +450,32 @@ export class InicialPage implements OnInit {
         }
 
         this.historico = res;
+
+        for (let i = 0; i < this.historico.length; i++) {
+            link = dominio + '/Imgs/Solicitacao/' + this.historico[i].CdSolicitacaoServico + '/1.jpeg';
+            let res2: any;
+            try {
+                res2 = await firstValueFrom(this.http.get(link, { responseType: "blob" }));
+            }
+            catch
+            {
+                res2 = null;
+            }
+
+            this.historico[i].img = await this.blobParaBase64(res2);
+        }
+    }
+
+    blobParaBase64(blob: any) {
+        if (!blob) {
+            return '../../../assets/icon/geral/sem-foto.jpg';
+        }
+
+        return new Promise((resolve, _) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
     }
 
     async carregarImgServico(cdSolicitacao: any) {
@@ -528,19 +559,23 @@ export class InicialPage implements OnInit {
             this.checarPermissao();
         }
 
-        let link = dominio + "/Trabalhador/AtualizarSituacao";
-
-        let dadosForm = new FormData();
-        dadosForm.append("codigoResultado", this.resultado!);
-        dadosForm.append("cpf", this.trabalhador.Cpf);
-
         try {
+            this.carregar = true;
+
+            let link = dominio + "/Trabalhador/AtualizarSituacao";
+            let dadosForm = new FormData();
+            dadosForm.append("codigoResultado", this.resultado!);
+            dadosForm.append("cpf", this.trabalhador.Cpf);
+
             this.http.post(link, dadosForm, { responseType: 'text', headers: headerNgrok }).subscribe(res => { })
         }
         catch (erro: any) {
             const alert = document.querySelector("ion-alert") as HTMLIonAlertElement;
             alert.message = "Erro ao conectar-se ao servidor";
             alert.present();
+        }
+        finally {
+            this.carregar = false;
         }
     }
 }
