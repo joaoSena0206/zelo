@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { dominio, headerNgrok } from 'src/app/gerais';
 import { first, firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,10 +14,10 @@ import { NavController, ToastController } from '@ionic/angular';
 })
 export class AvaliacaoPage implements OnInit {
 
-    constructor(private http: HttpClient, private navCl: NavController) { }
+    constructor(private http: HttpClient, private navCl: NavController, private toastController: ToastController, private router: Router) { }
 
     ngOnInit() {
-        this.carregarEstrelas(5);
+        this.carregarEstrelas(0);
     }
 
     nomeIconeEstrela: any = ['', '', '', '', ''];
@@ -49,6 +51,24 @@ export class AvaliacaoPage implements OnInit {
 
         let dadosForm = new FormData();
         dadosForm.append("tipo", "cliente");
+
+        if(comentario.value == "")
+        {
+            dadosForm.append("comentario", null!);
+        }
+
+        if(this.EstrelaSelecionada == 0)
+        {
+            let erro = document.querySelector(".erro") as HTMLIonAlertElement;
+            erro.classList.remove("escondido");
+            return;
+        }
+        else
+        {
+            let erro = document.querySelector(".erro") as HTMLIonAlertElement;
+            erro.classList.add("escondido");
+        }
+
         dadosForm.append("comentario", comentario.value?.toString()!);
         dadosForm.append("estrelas", this.EstrelaSelecionada);
         dadosForm.append("cdServico", this.cdSolicitacao.CdSolicitacaoServico);
@@ -74,6 +94,25 @@ export class AvaliacaoPage implements OnInit {
 
     voltarPag() {
         this.navCl.navigateBack("/trabalhador/inicial")
+    }
+
+    ionViewDidLeave() {
+        const nextUrl = this.router.url;
+
+        if (nextUrl === '/trabalhador/inicial') {
+            this.showTemporaryToast();
+        }
+    }
+
+    async showTemporaryToast() {
+        const toast = await this.toastController.create({
+          message: 'Pedido completo com sucesso!',
+          duration: 2000,
+          position: 'top',
+          cssClass: 'custom-toast',
+        });
+    
+        await toast.present();
     }
 
 }
