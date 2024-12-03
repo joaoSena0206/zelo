@@ -454,15 +454,16 @@ export class InicialPage implements OnInit {
         for (let i = 0; i < this.historico.length; i++) {
             link = dominio + '/Imgs/Solicitacao/' + this.historico[i].CdSolicitacaoServico + '/1.jpeg';
             let res2: any;
+
             try {
                 res2 = await firstValueFrom(this.http.get(link, { responseType: "blob" }));
-            }
-            catch
-            {
-                res2 = null;
-            }
+                let urlImg = URL.createObjectURL(res2);
 
-            this.historico[i].img = await this.blobParaBase64(res2);
+                this.historico[i].img = urlImg;
+            }
+            catch {
+                this.historico[i].img = '../../../assets/icon/geral/sem-foto.jpg';
+            }
         }
     }
 

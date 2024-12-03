@@ -110,12 +110,13 @@ export class UltimosPedidosPage implements OnInit {
             let res2: any;
             try {
                 res2 = await firstValueFrom(this.http.get(link, { responseType: "blob" }));
+                let urlImg = URL.createObjectURL(res2);
+
+                this.historico[i].img = urlImg;
             }
             catch {
-                res2 = null;
+                this.historico[i].img = '../../../assets/icon/geral/sem-foto.jpg';
             }
-
-            this.historico[i].img = await this.blobParaBase64(res2);
         }
     }
 
