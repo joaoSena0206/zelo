@@ -3,7 +3,7 @@
 </div>
 
 <ion-content [fullscreen]="true">
-    <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
+    <ion-icon class="content__seta" (click)="voltarPag()" name="close-outline"></ion-icon>
 
     <div class="content">
         <ion-alert header="Erro" [buttons]="['Ok']"
@@ -20,10 +20,10 @@
 
             <div class="estrelas_avaliações">
                 <!-- <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon> -->
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star-outline"></ion-icon> -->
                 <ion-icon *ngFor="let estrela of nomeIconeEstrela let i = index" (click)="carregarEstrelas(i + 1)"
                     name="{{nomeIconeEstrela[i]}}"></ion-icon>
             </div>
@@ -32,6 +32,8 @@
 
             <ion-textarea class="area_texto">
             </ion-textarea>
+
+            <span class="erro escondido">Selecione a quantidade de estrelas!</span>
         </ion-card>
 
         <ion-button (click)="enviar()" class="btn">Enviar</ion-button>
