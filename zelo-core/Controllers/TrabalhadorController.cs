@@ -799,10 +799,21 @@ public class TrabalhadorController : ControllerBase
             #region Busca os dados no banco
 
             string comando = $@"
-            select SS.cd_cpf_cliente, C.nm_cliente, SS.qt_estrelas_avaliacao_servico, SS.dt_solicitacao_servico, SS.ds_comentario_avaliacao_servico 
-            from solicitacao_servico SS 
-            join cliente C on(SS.cd_cpf_cliente = C.cd_cpf_cliente) 
-            where SS.cd_cpf_trabalhador = '{cpfTrabalhador}' and nm_codigo_aleatorio != '' and SS.qt_estrelas_avaliacao_cliente != 0";
+                                        SELECT 
+                                SS.cd_cpf_cliente, 
+                                C.nm_cliente, 
+                                SS.qt_estrelas_avaliacao_servico, 
+                                SS.dt_solicitacao_servico, 
+                                COALESCE(SS.ds_comentario_avaliacao_servico, '') AS ds_comentario_avaliacao_servico
+                            FROM 
+                                solicitacao_servico SS
+                            JOIN 
+                                cliente C ON SS.cd_cpf_cliente = C.cd_cpf_cliente
+                            WHERE 
+                                SS.cd_cpf_trabalhador = '{cpfTrabalhador}' 
+                                AND nm_codigo_aleatorio != '' 
+                                AND SS.qt_estrelas_avaliacao_cliente != 0;
+                            ";
 
             MySqlDataReader dados = banco.Consultar(comando);
 
