@@ -59,16 +59,12 @@ export class TrabalhadorCaminhoPage implements OnInit {
         else {
             this.codigo = localStorage.getItem("codigo");
         }
+
         PushNotifications.removeAllListeners();
 
         PushNotifications.addListener("pushNotificationReceived", (notification: PushNotificationSchema) => {
             let situacao = notification.data.situacaoServico;
             let codigoVerificado = notification.data.CodigoConfirmado;
-
-            if(codigoVerificado == "true")
-            {
-
-            }
 
             if (codigoVerificado == "true") {
 
@@ -114,8 +110,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.navCl.navigateRoot("/avaliacao");
             }
         });
-
-        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {});
         
         let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
             if (res.codigo) {
@@ -153,6 +147,8 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 this.navCl.navigateRoot("inicial");
             }
         });
+
+        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {});
     }
 
     ngAfterViewInit() {
@@ -487,6 +483,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
             dadosForm.append("valor", (Number(this.trabalhador.ValorVisita) * 0.1).toString())
 
             await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+
+            link = dominio + "/SolicitacaoServico/ExcluirSolicitacao"
+            dadosForm = new FormData();
+            dadosForm.append("cdSolicitacao", this.solicitacao.CdSolicitacaoServico);
+            await firstValueFrom(this.http.post(link, dadosForm));
 
             this.navCl.navigateRoot("/trabalhador/inicial");
             this.modalCancelar.dismiss();
