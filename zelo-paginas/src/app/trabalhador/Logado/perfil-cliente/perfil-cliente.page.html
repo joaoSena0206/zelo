@@ -155,7 +155,10 @@
 
       <p class="txt_avaliacao">Avaliado em {{listaData[i]}}</p>
 
-      <p class="txt_avaliacao">{{avaliacao.DsComentarioAvaliacaoCliente}}</p>
+
+      <p class="txt_avaliacao" *ngIf="avaliacao.DsComentarioAvaliacaoCliente !== 'null' && avaliacao.DsComentarioAvaliacaoCliente.trim() !== ''">
+        {{avaliacao.DsComentarioAvaliacaoCliente}}
+      </p>
 
     </div>
   </div>
