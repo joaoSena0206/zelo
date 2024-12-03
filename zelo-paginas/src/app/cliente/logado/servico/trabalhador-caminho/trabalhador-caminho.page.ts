@@ -59,9 +59,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
 
         let esperarCodigo = this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).valueChanges().subscribe((res: any) => {
-            if (res.codigo) {
+            if (res) {
                 localStorage.setItem("codigo", res.codigo);
                 esperarCodigo.unsubscribe();
+
+                this.firestore.collection("codigos").doc(this.solicitacao.CdSolicitacaoServico.toString()).delete();
             }
         });
 
@@ -120,9 +122,9 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        await this.carregarScriptGoogleMaps();
-        await this.pegarCoords();
-        this.carregarMapa();
+        // await this.carregarScriptGoogleMaps();
+        // await this.pegarCoords();
+        // this.carregarMapa();
 
         const btns = document.querySelectorAll(".form__btn");
         const btnReenviar = document.querySelector(".form__btn--reenviar");
