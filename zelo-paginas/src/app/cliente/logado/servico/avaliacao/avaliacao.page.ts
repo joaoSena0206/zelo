@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AvaliacaoPage implements OnInit {
     cliente: any = JSON.parse(localStorage.getItem("cliente")!);
+    tipoPagamento: any = localStorage.getItem("tipoPagamento")!;
 
     constructor(private http: HttpClient, private navCl: NavController, private toastController: ToastController, private router: Router) { }
 
@@ -20,19 +21,20 @@ export class AvaliacaoPage implements OnInit {
 
         let link = dominio + "/TransacaoCarteira/AdicionarTransacao";
         let dadosForm = new FormData();
-        dadosForm.append("cpf", this.cliente.Cpf);
-        dadosForm.append("cliente", "true");
-        dadosForm.append("valor", "-" + this.trabalhador.ValorVisita);
 
-        let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+        if (this.tipoPagamento == "carteira") {
+            dadosForm.append("cpf", this.cliente.Cpf);
+            dadosForm.append("cliente", "true");
+            dadosForm.append("valor", "-" + this.trabalhador.ValorVisita);
 
-        if (res == "sucesso") {
-            dadosForm.set("cpf", this.trabalhador.Cpf);
-            dadosForm.set("cliente", "false");
-            dadosForm.set("valor", (Number(this.trabalhador.ValorVisita) - Number(this.trabalhador.ValorVisita) * 0.1).toString())
-
-            await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
+            let res: any = await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
         }
+
+        dadosForm.set("cpf", this.trabalhador.Cpf);
+        dadosForm.set("cliente", "false");
+        dadosForm.set("valor", (Number(this.trabalhador.ValorVisita) - Number(this.trabalhador.ValorVisita) * 0.1).toString())
+
+        await firstValueFrom(this.http.post(link, dadosForm, { responseType: "text" }));
     }
 
     nomeIconeEstrela: any = ['', '', '', '', ''];
@@ -67,19 +69,16 @@ export class AvaliacaoPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("tipo", "servico");
 
-        if(comentario.value == "")
-        {
+        if (comentario.value == "") {
             dadosForm.append("comentario", null!);
         }
 
-        if(this.EstrelaSelecionada == 0)
-        {
+        if (this.EstrelaSelecionada == 0) {
             let erro = document.querySelector(".erro") as HTMLIonAlertElement;
             erro.classList.remove("escondido");
             return;
         }
-        else
-        {
+        else {
             let erro = document.querySelector(".erro") as HTMLIonAlertElement;
             erro.classList.add("escondido");
         }
@@ -124,12 +123,12 @@ export class AvaliacaoPage implements OnInit {
 
     async showTemporaryToast() {
         const toast = await this.toastController.create({
-          message: 'Pedido completo com sucesso!',
-          duration: 2000,
-          position: 'top',
-          cssClass: 'custom-toast',
+            message: 'Pedido completo com sucesso!',
+            duration: 2000,
+            position: 'top',
+            cssClass: 'custom-toast',
         });
-    
+
         await toast.present();
     }
 
