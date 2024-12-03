@@ -122,24 +122,39 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        // await this.carregarScriptGoogleMaps();
-        // await this.pegarCoords();
-        // this.carregarMapa();
+        await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
+        this.carregarMapa();
 
-        const btns = document.querySelectorAll(".form__btn");
-        const btnReenviar = document.querySelector(".form__btn--reenviar");
+        // const btns = document.querySelectorAll(".form__btn");
+        // const btnReenviar = document.querySelector(".form__btn--reenviar");
 
-        if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
-            (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        // if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+        //     (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        // }
+
+        // window.addEventListener("resize", function () {
+        //     const btns = document.querySelectorAll(".form__btn");
+
+        //     if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+        //         (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        //     }
+        // });
+
+        if (localStorage.getItem("codigoConfirmado") == "true") {
+            let div1 = document.querySelector('.divFoto') as HTMLDivElement;
+            let div2 = document.querySelector('.divTempo') as HTMLDivElement;
+            let div3 = document.querySelector('.divBotao') as HTMLDivElement;
+            let div4 = document.querySelector('.div_4') as HTMLDivElement;
+
+            let divCodigo = document.querySelector('.div_codigo') as HTMLAreaElement;
+
+            divCodigo.style.display = 'none';
+            div1.style.display = "flex";
+            div2.style.display = "flex";
+            div4.style.display = "flex";
+            div3.style.display = "none";
         }
-
-        window.addEventListener("resize", function () {
-            const btns = document.querySelectorAll(".form__btn");
-
-            if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
-                (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
-            }
-        });
     }
 
     ngAfterViewInit() {
@@ -439,7 +454,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     abrirChat() {
-        this.navCl.navigateRoot("/cliente/chat");
+        this.navCl.navigateRoot("/chat");
     }
 
     mudartxtCancelar() {

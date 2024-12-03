@@ -18,8 +18,6 @@ export class ChatPage implements OnInit {
     constructor(private renderer: Renderer2, private firestore: AngularFirestore, private navCl: NavController) { }
 
     ngOnInit() {
-
-
     }
 
     voltarPag() {

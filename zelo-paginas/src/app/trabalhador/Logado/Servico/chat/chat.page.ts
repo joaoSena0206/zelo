@@ -78,7 +78,7 @@ export class ChatPage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.navigateRoot("trabalhador/trabalhador-caminho");
+        this.navCl.back();
     }
 
     enviarMsg(valor: any) {

@@ -17,6 +17,8 @@ export class AvaliacaoPage implements OnInit {
     constructor(private http: HttpClient, private navCl: NavController, private toastController: ToastController, private router: Router) { }
 
     async ngOnInit() {
+        localStorage.removeItem("codigoConfirmado");
+
         this.carregarEstrelas(0);
 
         let link = dominio + "/TransacaoCarteira/AdicionarTransacao";

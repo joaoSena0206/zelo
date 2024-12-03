@@ -77,7 +77,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
             let codigoVerificado = notification.data.CodigoConfirmado;
 
             if (codigoVerificado == "true") {
-
                 let div1 = document.querySelector('.div_1') as HTMLDivElement;
                 let div2 = document.querySelector('.div_2') as HTMLDivElement;
                 let div3 = document.querySelector('.div_3') as HTMLDivElement;
@@ -85,7 +84,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 let divCodigo = document.querySelector('.divcodigo') as HTMLAreaElement;
                 let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
                 let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
-    
+
                 divRelogio.style.display = 'flex';
                 divTrabalhoIniciado.style.display = 'flex';
                 divCodigo.style.display = 'none';
@@ -93,9 +92,11 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 div2.style.display = "none";
                 div3.style.display = "none";
                 div4.style.display = "none";
-    
+
                 this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
                 this.cdr.detectChanges();
+
+                localStorage.setItem("codigoConfirmado", "true");
 
                 this.temporizador();
             }
@@ -140,7 +141,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             }
         });
 
-        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => {});
+        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => { });
     }
 
     ngAfterViewInit() {
@@ -169,28 +170,53 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     async ionViewDidEnter() {
-        // await this.carregarScriptGoogleMaps();
-        // await this.pegarCoords();
+        await this.carregarScriptGoogleMaps();
+        await this.pegarCoords();
 
         let data = new Date();
         this.tempoAtual = data.toLocaleTimeString().substring(0, data.toLocaleTimeString().length - 3);
 
-        // this.carregarMapa();
+        this.carregarMapa();
 
-        const btns = document.querySelectorAll(".form__btn");
-        const btnReenviar = document.querySelector(".form__btn--reenviar");
+        // const btns = document.querySelectorAll(".form__btn");
+        // const btnReenviar = document.querySelector(".form__btn--reenviar");
 
-        if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
-            (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
-        }
+        // if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+        //     (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        // }
 
-        window.addEventListener("resize", function () {
-            const btns = document.querySelectorAll(".form__btn");
+        // window.addEventListener("resize", function () {
+        //     const btns = document.querySelectorAll(".form__btn");
 
-            if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
-                (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        //     if ((btns[0] as HTMLIonButtonElement).offsetHeight != (btns[1] as HTMLIonButtonElement).offsetHeight) {
+        //         (btns[0] as HTMLIonButtonElement).style.height = (btns[1] as HTMLIonButtonElement).offsetHeight + "px";
+        //     }
+        // });
+
+        if (localStorage.getItem("codigoConfirmado") == "true") {
+            let div1 = document.querySelector('.div_1') as HTMLDivElement;
+            let div2 = document.querySelector('.div_2') as HTMLDivElement;
+            let div3 = document.querySelector('.div_3') as HTMLDivElement;
+            let div4 = document.querySelector('.div_4') as HTMLDivElement;
+            let divCodigo = document.querySelector('.divcodigo') as HTMLAreaElement;
+            let divTrabalhoIniciado = document.querySelector('.div_trabalho_iniciado') as HTMLDivElement;
+            let divRelogio = document.querySelector('.div_relogio') as HTMLDivElement;
+
+            divRelogio.style.display = 'flex';
+            divTrabalhoIniciado.style.display = 'flex';
+            divCodigo.style.display = 'none';
+            div1.style.display = "flex";
+            div2.style.display = "none";
+            div3.style.display = "none";
+            div4.style.display = "none";
+
+            this.tempo = JSON.parse(localStorage.getItem("temporizador")!);
+            this.cdr.detectChanges();
+
+            if (!this.id) {
+                this.temporizador();
             }
-        });
+        }
     }
 
     async carregarScriptGoogleMaps(): Promise<void> {
@@ -286,7 +312,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     abrirChat() {
-        this.navCl.navigateRoot("/trabalhador/chat");
+        this.navCl.navigateForward("/trabalhador/chat");
     }
 
     async rastrearTempoReal() {
@@ -436,7 +462,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
             }
         }, intervalo);
     }
-    
+
     codigoAleatorio: string;
 
     tokenCliente: any = this.cliente.TokenFCM;

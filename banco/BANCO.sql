@@ -128,7 +128,7 @@ Create Table solicitacao_servico
 	cd_cpf_trabalhador CHAR(11),
 	cd_cpf_cliente CHAR(11),
 	cd_servico INT,
-	dt_solicitacao_servico DATETIME,
+	dt_solicitacao_servico DATETIME	,
 	ds_servico TEXT,
 	ds_comentario_avaliacao_servico TEXT null,
 	qt_estrelas_avaliacao_servico DECIMAL(2, 1),

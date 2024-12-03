@@ -17,6 +17,8 @@ export class AvaliacaoPage implements OnInit {
     constructor(private http: HttpClient, private navCl: NavController, private toastController: ToastController, private router: Router) { }
 
     ngOnInit() {
+        localStorage.removeItem("codigoConfirmado");
+
         this.carregarEstrelas(0);
     }
 
@@ -52,19 +54,16 @@ export class AvaliacaoPage implements OnInit {
         let dadosForm = new FormData();
         dadosForm.append("tipo", "cliente");
 
-        if(comentario.value == "")
-        {
+        if (comentario.value == "") {
             dadosForm.append("comentario", null!);
         }
 
-        if(this.EstrelaSelecionada == 0)
-        {
+        if (this.EstrelaSelecionada == 0) {
             let erro = document.querySelector(".erro") as HTMLIonAlertElement;
             erro.classList.remove("escondido");
             return;
         }
-        else
-        {
+        else {
             let erro = document.querySelector(".erro") as HTMLIonAlertElement;
             erro.classList.add("escondido");
         }
@@ -106,12 +105,12 @@ export class AvaliacaoPage implements OnInit {
 
     async showTemporaryToast() {
         const toast = await this.toastController.create({
-          message: 'Pedido completo com sucesso!',
-          duration: 2000,
-          position: 'top',
-          cssClass: 'custom-toast',
+            message: 'Pedido completo com sucesso!',
+            duration: 2000,
+            position: 'top',
+            cssClass: 'custom-toast',
         });
-    
+
         await toast.present();
     }
 
