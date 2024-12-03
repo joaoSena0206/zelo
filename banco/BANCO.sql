@@ -130,9 +130,9 @@ Create Table solicitacao_servico
 	cd_servico INT,
 	dt_solicitacao_servico DATE,
 	ds_servico TEXT,
-	ds_comentario_avaliacao_servico TEXT,
+	ds_comentario_avaliacao_servico TEXT null,
 	qt_estrelas_avaliacao_servico DECIMAL(2, 1),
-	ds_comentario_avaliacao_cliente TEXT,
+	ds_comentario_avaliacao_cliente TEXT null,
 	qt_estrelas_avaliacao_cliente DECIMAL(2, 1),
 	nm_codigo_aleatorio CHAR(5),
 
