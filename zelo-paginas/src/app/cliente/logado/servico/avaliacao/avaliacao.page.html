@@ -3,7 +3,7 @@
 </div>
 
 <ion-content [fullscreen]="true">
-    <ion-icon (click)="voltarPag()" class="content__seta" name="chevron-back-outline"></ion-icon>
+    <ion-icon class="content__seta" (click)="voltarPag()" name="close-outline"></ion-icon>
 
     <div class="content">
         <ion-alert header="Erro" [buttons]="['Ok']" message="A message should be a short, complete sentence."></ion-alert>
@@ -29,6 +29,8 @@
 
             <ion-textarea class="area_texto">
             </ion-textarea>
+
+            <span class="erro escondido">Selecione a quantidade de estrelas!</span>
         </ion-card>
 
         <ion-button class="btn" (click)="enviar()">Enviar</ion-button>
