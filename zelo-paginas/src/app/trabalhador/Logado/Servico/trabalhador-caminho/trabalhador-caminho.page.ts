@@ -312,7 +312,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     abrirChat() {
-        this.navCl.navigateForward("/trabalhador/chat");
+        this.navCl.navigateRoot("/trabalhador/chat");
     }
 
     async rastrearTempoReal() {

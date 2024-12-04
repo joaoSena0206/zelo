@@ -67,7 +67,7 @@ export class ChatPage implements OnInit {
             });
         });
 
-    }       
+    }
 
     ngOnDestroy() {
         this.msgOuvida.unsubscribe();
@@ -78,7 +78,7 @@ export class ChatPage implements OnInit {
     }
 
     voltarPag() {
-        this.navCl.back();
+        this.navCl.navigateRoot("/trabalhador/trabalhador-caminho");
     }
 
     enviarMsg(valor: any) {

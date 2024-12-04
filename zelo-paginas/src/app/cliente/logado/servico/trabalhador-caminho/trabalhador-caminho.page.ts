@@ -454,7 +454,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
     }
 
     abrirChat() {
-        this.navCl.navigateRoot("/chat");
+        this.navCl.navigateRoot("/cliente/chat");
     }
 
     mudartxtCancelar() {
