@@ -72,6 +72,10 @@ export class InicialPage implements OnInit {
         }
     }
 
+    ngAfterViewInit() {
+        this.carregar = false;
+    }
+
     async pegarSaldo() {
         this.carregar = true;
         let link = dominio + "/Cliente/PegarSaldo?cpf=" + this.cliente.Cpf;

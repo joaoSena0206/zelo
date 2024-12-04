@@ -192,10 +192,8 @@ export class InicialPage implements OnInit {
         this.carregarHistorico();
         this.carregarComentarioAnonimo();
         this.modal = document.querySelector('#modal_servico_solicitado') as HTMLIonModalElement;
-    }
 
-    ionViewWillEnter() {
-        this.pegarSaldo();
+        this.carregar = false;
     }
 
     async ionViewDidEnter() {
