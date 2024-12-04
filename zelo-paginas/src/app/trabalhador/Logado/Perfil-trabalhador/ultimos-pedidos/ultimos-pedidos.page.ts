@@ -82,27 +82,7 @@ export class UltimosPedidosPage implements OnInit {
         }
 
         for (let i = 0; i < this.historico.length; i++) {
-
             const dateString: string = this.historico[i].DtSolicitacaoServico;
-            const timestamp: number = Date.parse(dateString);
-            const date: Date = new Date(timestamp);
-
-            let dia = date.getDate();
-            let mes = date.getMonth() + 1;
-            let ano = date.getFullYear();
-
-            let DataFormatada = null;
-
-            if (mes < 10) {
-                DataFormatada = dia + "/" + "0" + mes + "/" + ano;
-            }
-            else {
-                DataFormatada = dia + "/" + mes + "/" + ano;
-            }
-
-            this.listaDataServico.push(DataFormatada);
-
-            this.historico[i].DtSolicitacaoServico = this.listaDataServico[i];
         }
 
         for (let i = 0; i < this.historico.length; i++) {

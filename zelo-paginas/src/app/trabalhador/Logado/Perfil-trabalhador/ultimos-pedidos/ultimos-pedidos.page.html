@@ -28,7 +28,7 @@
           </div>
           <div style="padding: 10px;">
             <h3 style="font-weight: bold; font-size: 22px;">{{historico.Cliente.Nome}}</h3>
-            <p style="margin: 3px 0;">{{historico.DtSolicitacaoServico}}</p>
+            <p style="margin: 3px 0;">{{historico.DtSolicitacaoServico | date: 'dd/MM/yyyy'}}</p>
             <p style="display: flex; align-items: center;"><ion-icon style="margin-right: 3px;" name="star-outline"></ion-icon>{{historico.Cliente.Avaliacao.toFixed(1).replace(".", ",")}}</p>
           </div>
           <div class="txt-ver-perfil">

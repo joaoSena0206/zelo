@@ -106,6 +106,7 @@ export class TrabalhadorCaminhoPage implements OnInit {
                 localStorage.removeItem("endereco");
                 localStorage.removeItem("solicitacao");
                 localStorage.removeItem("cliente");
+                localStorage.removeItem("confirmacao");
 
                 clearInterval(this.watchId);
                 clearInterval(this.id);
@@ -124,24 +125,6 @@ export class TrabalhadorCaminhoPage implements OnInit {
         });
 
         this.modalCancelar = document.querySelector('#modal_cancelar') as HTMLIonModalElement;
-
-        PushNotifications.addListener("pushNotificationActionPerformed", (action: ActionPerformed) => {
-            let situacao = action.notification.data.situacaoServico;
-
-            if (situacao == "false") {
-                localStorage.removeItem("codigo");
-                localStorage.removeItem("endereco");
-                localStorage.removeItem("solicitacao");
-                localStorage.removeItem("trabalhador");
-
-                clearInterval(this.watchId);
-                clearInterval(this.id);
-
-                this.navCl.navigateRoot("inicial");
-            }
-        });
-
-        PushNotifications.addListener("pushNotificationActionPerformed", (res: ActionPerformed) => { });
     }
 
     ngAfterViewInit() {
