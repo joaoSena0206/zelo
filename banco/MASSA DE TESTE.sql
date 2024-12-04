@@ -120,6 +120,13 @@ INSERT INTO solicitacao_servico VALUES
 (5, '53890618880', '12345672469', 7, '2024-09-27', 'Estou com problema no encanamento da loja.', 'Ótimo trabalho realizado.', 5.0, 'Sem problemas, excelente atendimento.', 5.0, '63833'),
 (6, '53890618880', '50082480818', 8, '2024-09-28', 'A água da pia não está saindo, preciso de ajuda!', 'Ótimo trabalhador, muito eficiente!', 5.0, 'Profissional educado e simpático, gostei muito.', 5.0, '67565');
 
+INSERT INTO solicitacao_servico VALUES
+(7, '12345678901', '50082480818', 4, '2024-10-01', 'Estou com uma infiltração no teto da cozinha que parece vir do encanamento. Preciso resolver com urgência.', 'Ótimo profissional, resolveu o problema no mesmo dia.', 5.0, 'Trabalho excelente, sem reclamações.', 5.0, '87321'),
+(8, '23456789012', '12345218909', 4, '2024-10-02', 'Minha máquina de lavar está vazando água no chão e preciso verificar o encanamento.', 'Serviço rápido e eficaz, muito educado.', 4.0, 'Bom trabalho, mas atrasou um pouco no horário combinado.', 4.0, '75398'),
+(9, '34567890123', '12345674322', 5, '2024-10-03', 'O ar-condicionado está com um ruído estranho e não está gelando como antes.', 'Excelente serviço, tudo foi resolvido de forma profissional.', 5.0, 'Satisfeito com o resultado, recomendo!', 5.0, '98273'),
+(10, '45678901234', '12345678909', 6, '2024-10-04', 'A descarga do banheiro está com vazamento contínuo e a água não para de sair.', 'Problema resolvido rapidamente, muito bom profissional.', 5.0, 'Sem queixas, atendimento impecável.', 5.0, '92831'),
+(11, '56789012345', '12345672469', 7, '2024-10-05', 'Os disjuntores da caixa de força estão desarmando com frequência. Preciso de revisão elétrica.', 'Muito competente, serviço técnico de qualidade.', 5.0, 'Profissional muito atencioso, gostei bastante!', 5.0, '73492'),
+(12, '67890123456', '50082480818', 8, '2024-10-12', 'Preciso instalar um novo filtro de água e revisar o encanamento da pia.', 'Trabalho feito de forma limpa e organizada.', 5.0, 'Recomendo totalmente, profissional excelente.', 5.0, '67324');
 
 -- TABELA: Img_Solicitacao
 INSERT INTO img_solicitacao VALUES
